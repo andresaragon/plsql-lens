@@ -1,0 +1,20 @@
+{
+ "B_tree_sitter_sql": {
+  "files": 264,
+  "clean": 0,
+  "ms_per_kloc": 14.869481152222171,
+  "kloc": 29.473
+ },
+ "C_sqlglot_oracle": {
+  "files": 264,
+  "no_exception": 113,
+  "files_fully_structured": 0,
+  "stmts": 113,
+  "command_stmts": 113,
+  "ms_per_kloc": 16.215849285791307
+ },
+ "versions": {
+  "tree_sitter_language_pack": "1.22.1",
+  "sqlglot": "30.24.0"
+ }
+}

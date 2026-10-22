@@ -1,0 +1,27 @@
+PL/SQL Lens — third-party material
+
+The PL/SQL files under corpus/ are copied unmodified from the open-source
+projects below and remain under their original licenses (a copy of each
+license is stored next to the files). They are used only as parser input
+and test data. Nothing from any employer or client is included.
+
+1. utPLSQL
+   URL:     https://github.com/utPLSQL/utPLSQL
+   Commit:  028ea26ae95b49863f4ed552a1704f053b8d8236
+   License: Apache-2.0 (corpus/utplsql/LICENSE)
+   Copied:  source/**/*.{pks,pkb,tps,tpb,trg}  ->  corpus/utplsql/
+
+2. OraOpenSource Logger
+   URL:     https://github.com/OraOpenSource/Logger
+   Commit:  600f0c44cd0cc7f064776d31de50e9006d3476c4
+   License: MIT (corpus/logger/LICENSE)
+   Copied:  source/packages/logger.pks, source/packages/logger.pkb,
+            source/procedures/logger_configure.plb  ->  corpus/logger/
+
+3. Oracle Database Sample Schemas
+   URL:     https://github.com/oracle-samples/db-sample-schemas
+   Commit:  6660bad68c07bd143430ace58565b3f727e17263
+   License: MIT (corpus/oracle-db-sample-schemas/LICENSE)
+   Copied:  human_resources/hr_code.sql, order_entry/poe_v3.sql,
+            order_entry/coe_v3.sql, order_entry/xdbUtilities.sql
+            ->  corpus/oracle-db-sample-schemas/

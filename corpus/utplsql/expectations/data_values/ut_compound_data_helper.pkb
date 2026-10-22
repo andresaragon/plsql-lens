@@ -1,0 +1,853 @@
+create or replace noneditionable package body ut_compound_data_helper is
+  /*
+  utPLSQL - Version 3
+  Copyright 2016 - 2026 utPLSQL Project
+
+  Licensed under the Apache License, Version 2.0 (the "License").
+  You may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  */
+
+  g_diff_count        integer;
+  type t_type_name_map is table of varchar2(128) index by binary_integer;
+  type t_types_no_length is table of varchar2(128) index by varchar2(128);
+  g_type_name_map           t_type_name_map;
+  g_anytype_name_map        t_type_name_map;
+  g_type_no_length_map      t_types_no_length;
+
+  g_compare_sql_template varchar2(4000) :=
+  q'[
+    with exp as (
+      select 
+        ucd.*, 
+        {:duplicate_number:} "UT3$_Dup#No"
+      from (
+        select 
+          ucd."UT3$_Item#Data"
+          ,x.data_id "UT3$_Data#Id"
+          ,ucd."UT3$_Position#" + x.item_no "UT3$_Item#No"
+          {:columns:}
+        from ut_compound_data_tmp x,
+          xmltable('/ROWSET/ROW' passing x.item_data columns
+            "UT3$_Item#Data" xmltype path '*'
+            ,"UT3$_Position#" for ordinality
+            {:xml_to_columns:} ) ucd
+          where x.data_id = :exp_guid
+          ) ucd
+    )
+    , act as (
+      select 
+        ucd.*,
+        {:duplicate_number:} "UT3$_Dup#No"
+      from (
+        select 
+          ucd."UT3$_Item#Data"
+          ,x.data_id "UT3$_Data#Id"
+          ,ucd."UT3$_Position#" + x.item_no "UT3$_Item#No"
+          {:columns:}
+        from ut_compound_data_tmp x,
+          xmltable('/ROWSET/ROW' passing x.item_data columns 
+            "UT3$_Item#Data" xmltype path '*'
+            ,"UT3$_Position#" for ordinality
+            {:xml_to_columns:} ) ucd
+          where x.data_id = :act_guid
+          ) ucd
+    )   
+    select /*+ no_parallel */
+      a."UT3$_Item#Data" as act_item_data,
+      a."UT3$_Data#Id" act_data_id,
+      e."UT3$_Item#Data" as exp_item_data,
+      e."UT3$_Data#Id" exp_data_id,
+      {:item_no:} as item_no, 
+      nvl(e."UT3$_Dup#No",a."UT3$_Dup#No") dup_no
+    from act a {:join_type:} exp e on ( {:join_condition:} )
+    where {:where_condition:}]';
+
+  function get_columns_diff(
+    a_expected ut_cursor_column_tab,
+    a_actual ut_cursor_column_tab,
+    a_order_enforced boolean := false
+  ) return tt_column_diffs is
+    l_results        tt_column_diffs;
+  begin
+    execute immediate q'[with
+          expected_cols as (
+            select display_path exp_column_name,column_position exp_col_pos,
+                   replace(column_type_name,'VARCHAR2','CHAR') exp_col_type_compare, column_type_name exp_col_type
+              from table(:a_expected)
+              where parent_name is null and hierarchy_level = 1 and column_name is not null
+          ),
+          actual_cols as (
+            select display_path act_column_name,column_position act_col_pos,
+                   replace(column_type_name,'VARCHAR2','CHAR') act_col_type_compare, column_type_name act_col_type
+              from table(:a_actual)
+              where parent_name is null and hierarchy_level = 1 and column_name is not null
+          ),
+          joined_cols as (
+            select e.*,a.*]'
+              || case when a_order_enforced then ',
+                   row_number() over(partition by case when a.act_col_pos + e.exp_col_pos is not null then 1 end order by a.act_col_pos) a_pos_nn,
+                   row_number() over(partition by case when a.act_col_pos + e.exp_col_pos is not null then 1 end order by e.exp_col_pos) e_pos_nn'
+                else
+                  null
+                end ||q'[
+              from expected_cols e
+              full outer join actual_cols a
+                on e.exp_column_name = a.act_column_name
+          )
+          select /*+ no_parallel */ case
+                   when exp_col_pos is null and act_col_pos is not null then '+'
+                   when exp_col_pos is not null and act_col_pos is null then '-'
+                   when exp_col_type_compare != act_col_type_compare then 't'
+                   else 'p'
+                 end as diff_type,
+                 exp_column_name, exp_col_type, exp_col_pos,
+                 act_column_name, act_col_type, act_col_pos
+            from joined_cols
+                 --column is unexpected (extra) or missing
+           where act_col_pos is null or exp_col_pos is null
+              --column type is not matching (except CHAR/VARCHAR2)
+              or act_col_type_compare != exp_col_type_compare]'
+              || case when a_order_enforced then q'[
+              --column position is not matching (both when excluded extra/missing columns as well as when they are included)
+              or (a_pos_nn != e_pos_nn and exp_col_pos != act_col_pos)]'
+              end ||q'[
+           order by exp_col_pos, act_col_pos]'
+      bulk collect into l_results using a_expected, a_actual;
+    return l_results;
+  end;
+
+  function generate_not_equal_stmt(
+    a_data_info ut_cursor_column, a_pk_table ut_varchar2_list
+  ) return varchar2
+  is
+    l_pk_tab ut_varchar2_list := coalesce(a_pk_table,ut_varchar2_list());
+    l_index integer;
+    l_sql_stmt varchar2(32767);
+    l_exists boolean := false;
+  begin 
+    l_index := l_pk_tab.first;
+    if l_pk_tab.count > 0 then
+      loop
+        if a_data_info.access_path = l_pk_tab(l_index) then
+          l_exists := true;
+        end if;
+        exit when l_index = l_pk_tab.count or (a_data_info.access_path = l_pk_tab(l_index));
+        l_index := a_pk_table.next(l_index);
+      end loop;
+    end if;  
+    if not(l_exists) then  
+      l_sql_stmt := ' (decode(a.'||a_data_info.transformed_name||','||' e.'||a_data_info.transformed_name||',1,0) = 0)';
+    end if; 
+    return l_sql_stmt;
+  end;
+   
+  function generate_join_by_stmt(
+    a_data_info ut_cursor_column, a_pk_table ut_varchar2_list
+  ) return varchar2
+  is
+    l_pk_tab ut_varchar2_list := coalesce(a_pk_table,ut_varchar2_list());
+    l_index integer;
+    l_sql_stmt varchar2(32767);
+  begin 
+    if l_pk_tab.count <> 0 then
+    l_index:= l_pk_tab.first;
+    loop
+      if l_pk_tab(l_index) in (a_data_info.access_path, a_data_info.parent_name)  then
+        --When then table is nested and join is on whole table
+        l_sql_stmt := l_sql_stmt ||' a.'||a_data_info.transformed_name||q'[ = ]'||' e.'||a_data_info.transformed_name;
+      end if;
+      exit when (a_data_info.access_path = l_pk_tab(l_index)) or l_index = l_pk_tab.count;
+      l_index := l_pk_tab.next(l_index);
+    end loop;   
+    end if;    
+    return l_sql_stmt;
+  end;
+  
+  function generate_equal_sql(a_col_name in varchar2) return varchar2 is
+  begin
+    return ' decode(a.'||a_col_name||','||' e.'||a_col_name||',1,0) = 1 ';
+  end;
+
+  function generate_partition_stmt(
+    a_data_info ut_cursor_column, a_pk_table in ut_varchar2_list, a_alias varchar2 := 'ucd.'
+  ) return varchar2
+  is
+    l_index integer;
+    l_sql_stmt varchar2(32767);
+  begin    
+    if a_pk_table is not empty then
+      l_index:= a_pk_table.first;
+      loop
+        if a_pk_table(l_index) in (a_data_info.access_path, a_data_info.parent_name) then
+          --When then table is nested and join is on whole table
+          l_sql_stmt := l_sql_stmt ||a_alias||a_data_info.transformed_name;
+        end if;        
+        exit when (a_data_info.access_path = a_pk_table(l_index)) or l_index = a_pk_table.count;
+        l_index := a_pk_table.next(l_index);
+      end loop;
+    else
+      l_sql_stmt := a_alias||a_data_info.transformed_name;
+    end if;
+    return l_sql_stmt; 
+  end;   
+  
+  function generate_select_stmt(a_data_info ut_cursor_column, a_alias varchar2 := 'ucd.')
+  return varchar2
+  is
+    l_alias varchar2(10) := a_alias;
+    l_col_syntax varchar2(4000);
+  begin
+    if a_data_info.is_sql_diffable = 0 then 
+      l_col_syntax :=  'ut_utils.get_hash('||l_alias||a_data_info.transformed_name||'.getClobVal()) as '||a_data_info.transformed_name ;
+    elsif a_data_info.is_sql_diffable = 1  and a_data_info.column_type = 'DATE' then
+      l_col_syntax :=  'to_date('||l_alias||a_data_info.transformed_name||') as '|| a_data_info.transformed_name;
+    elsif  a_data_info.is_sql_diffable = 1  and a_data_info.column_type in ('TIMESTAMP') then
+      l_col_syntax :=  'to_timestamp('||l_alias||a_data_info.transformed_name||','''||ut_utils.gc_timestamp_format||''') as '|| a_data_info.transformed_name;
+    elsif a_data_info.is_sql_diffable = 1  and a_data_info.column_type in ('TIMESTAMP WITH TIME ZONE') then
+      l_col_syntax :=  'to_timestamp_tz('||l_alias||a_data_info.transformed_name||','''||ut_utils.gc_timestamp_tz_format||''') as '|| a_data_info.transformed_name;
+    elsif a_data_info.is_sql_diffable = 1  and a_data_info.column_type in ('TIMESTAMP WITH LOCAL TIME ZONE') then
+      l_col_syntax :=  ' cast( to_timestamp_tz('||l_alias||a_data_info.transformed_name||','''||ut_utils.gc_timestamp_tz_format||''') AS TIMESTAMP WITH LOCAL TIME ZONE) as '|| a_data_info.transformed_name;
+    else
+      l_col_syntax :=  l_alias||a_data_info.transformed_name||' as '|| a_data_info.transformed_name;
+    end if;       
+    return l_col_syntax;
+  end;
+      
+  function generate_xmltab_stmt(a_data_info ut_cursor_column) return varchar2 is
+    l_col_type varchar2(4000);
+  begin
+    if a_data_info.is_sql_diffable = 0 then
+      l_col_type := 'XMLTYPE';
+    elsif  a_data_info.is_sql_diffable = 1  and a_data_info.column_type in ('DATE','TIMESTAMP','TIMESTAMP WITH TIME ZONE',
+      'TIMESTAMP WITH LOCAL TIME ZONE') then
+      l_col_type := 'VARCHAR2(50)';
+    elsif  a_data_info.is_sql_diffable = 1  and type_no_length(a_data_info.column_type) then
+      l_col_type := a_data_info.column_type;
+    elsif a_data_info.is_sql_diffable = 1  and a_data_info.column_type in ('VARCHAR2','CHAR') then
+      l_col_type := 'VARCHAR2('||greatest(a_data_info.column_len,4000)||')';
+    elsif a_data_info.is_sql_diffable = 1 and a_data_info.column_type in ('NUMBER') then
+      --We cannot use a precision and scale as dbms_sql.describe_columns3 return precision 0 for dual table
+      -- there is also no need for that as we not process data but only read and compare as they are stored
+      l_col_type := a_data_info.column_type;
+    else 
+      l_col_type := a_data_info.column_type
+        ||case when a_data_info.column_len is not null
+          then '('||a_data_info.column_len||')'
+          else null
+          end;
+    end if;
+    return  a_data_info.transformed_name||' '||l_col_type||q'[ PATH ']'||a_data_info.access_path||q'[']';
+  end;
+  
+  procedure gen_sql_pieces_out_of_cursor(
+    a_data_info   ut_cursor_column_tab,
+    a_pk_table    ut_varchar2_list,
+    a_unordered   boolean,
+    a_xml_stmt    out nocopy clob,
+    a_select_stmt out nocopy clob,
+    a_partition_stmt out nocopy clob,
+    a_join_by_stmt out nocopy clob,
+    a_not_equal_stmt out nocopy clob
+  ) is
+    l_partition_tmp clob;
+    l_xmltab_list    ut_varchar2_list := ut_varchar2_list();
+    l_select_list    ut_varchar2_list := ut_varchar2_list();
+    l_partition_list ut_varchar2_list := ut_varchar2_list();
+    l_equal_list     ut_varchar2_list := ut_varchar2_list();
+    l_join_by_list   ut_varchar2_list := ut_varchar2_list();
+    l_not_equal_list ut_varchar2_list := ut_varchar2_list();
+    
+    procedure add_element_to_list(a_list in out ut_varchar2_list, a_list_element in varchar2)
+    is
+    begin
+      if a_list_element is not null then
+        a_list.extend;
+        a_list(a_list.last) := a_list_element;
+      end if;
+    end;
+    
+  begin
+    if a_data_info is not empty then
+      for i in 1..a_data_info.count loop
+        if a_data_info(i).has_nested_col = 0 and a_data_info(i).column_type <> 'OBJECT' then
+          --Get XMLTABLE column list
+          add_element_to_list(l_xmltab_list,generate_xmltab_stmt(a_data_info(i)));
+          --Get Select statment list of columns
+          add_element_to_list(l_select_list, generate_select_stmt(a_data_info(i)));
+          --Get columns by which we partition
+          add_element_to_list(l_partition_list,generate_partition_stmt(a_data_info(i), a_pk_table));
+          --Get equal statement
+          add_element_to_list(l_equal_list,generate_equal_sql(a_data_info(i).transformed_name));
+          --Generate join by stmt
+          add_element_to_list(l_join_by_list,generate_join_by_stmt(a_data_info(i), a_pk_table));
+          --Generate not equal stmt
+          add_element_to_list(l_not_equal_list,generate_not_equal_stmt(a_data_info(i), a_pk_table));
+        end if;
+      end loop;
+      
+      a_xml_stmt    := nullif(','||ut_utils.table_to_clob(l_xmltab_list, ' , '),',');
+      a_select_stmt := nullif(','||ut_utils.table_to_clob(l_select_list, ' , '),',');
+      l_partition_tmp := ut_utils.table_to_clob(l_partition_list, ' , ');
+      ut_utils.append_to_clob(a_partition_stmt,' row_number() over (partition by '||l_partition_tmp||' order by '||l_partition_tmp||' ) ');
+      
+      if a_pk_table.count > 0 then   
+        -- If key defined do the join or these and where on diffrences as well as on duplicate number when rows are same.
+        a_join_by_stmt := ' e."UT3$_Dup#No" = a."UT3$_Dup#No" and '||ut_utils.table_to_clob(l_join_by_list, ' and ');
+      elsif a_unordered then
+        -- If no key defined do the join on all columns
+        a_join_by_stmt := ' e."UT3$_Dup#No" = a."UT3$_Dup#No" and '||ut_utils.table_to_clob(l_equal_list, ' and ');
+      else
+        -- Else join on rownumber
+        a_join_by_stmt := 'a."UT3$_Item#No" = e."UT3$_Item#No" ';
+      end if;
+      a_not_equal_stmt := ut_utils.table_to_clob(l_not_equal_list, ' or ');
+    else
+      --Partition by piece when no data
+      ut_utils.append_to_clob(a_partition_stmt,' 1  ');
+      a_join_by_stmt := 'a."UT3$_Item#No" = e."UT3$_Item#No" ';
+    end if;
+  end;
+  
+  function gen_compare_sql(
+    a_other ut_data_value_refcursor,
+    a_join_by_list ut_varchar2_list,
+    a_unordered boolean,
+    a_inclusion_type boolean,
+    a_is_negated boolean
+  ) return clob is
+    l_compare_sql    clob;    
+    l_xmltable_stmt  clob;
+    l_select_stmt    clob;
+    l_partition_stmt clob;
+    l_join_on_stmt   clob;
+    l_not_equal_stmt clob;
+    l_where_stmt     clob;
+    l_join_by_list   ut_varchar2_list;
+     
+    function get_join_type(a_inclusion_compare in boolean,a_negated in boolean) return varchar2 is
+    begin
+     return
+       case
+         when a_inclusion_compare and not(a_negated) then ' right outer join '
+         when a_inclusion_compare and a_negated then ' inner join '
+         else ' full outer join '
+       end;
+    end;
+    
+    function get_item_no(a_unordered boolean) return varchar2 is
+    begin
+      return
+        case 
+          when a_unordered then 'row_number() over ( order by nvl(e."UT3$_Item#No",a."UT3$_Item#No"))'
+          else 'nvl(e."UT3$_Item#No",a."UT3$_Item#No") '
+        end;
+    end;
+
+  begin
+      /**
+      * We already estabilished cursor equality so now we add anydata root if we compare anydata
+      * to join by.
+      */
+    l_join_by_list := 
+      case 
+        when a_other is of (ut_data_value_anydata) then ut_utils.add_prefix(a_join_by_list, a_other.cursor_details.get_root) 
+        else a_join_by_list
+      end;
+      
+    dbms_lob.createtemporary(l_compare_sql, true);   
+    --Initiate a SQL template with placeholders
+    ut_utils.append_to_clob(l_compare_sql, g_compare_sql_template);
+    --Generate a pieceso of dynamic SQL that will substitute placeholders
+    gen_sql_pieces_out_of_cursor(
+      a_other.cursor_details.cursor_columns_info, l_join_by_list, a_unordered,
+      l_xmltable_stmt, l_select_stmt, l_partition_stmt, l_join_on_stmt, 
+      l_not_equal_stmt
+    );
+      
+    l_compare_sql := replace(l_compare_sql,'{:duplicate_number:}',l_partition_stmt);
+    l_compare_sql := replace(l_compare_sql,'{:columns:}',l_select_stmt);
+    l_compare_sql := replace(l_compare_sql,'{:xml_to_columns:}',l_xmltable_stmt);
+    l_compare_sql := replace(l_compare_sql,'{:item_no:}',get_item_no(a_unordered));
+    l_compare_sql := replace(l_compare_sql,'{:join_type:}',get_join_type(a_inclusion_type,a_is_negated));
+    l_compare_sql := replace(l_compare_sql,'{:join_condition:}',l_join_on_stmt);
+
+    if l_not_equal_stmt is not null and ((l_join_by_list.count > 0 and not a_is_negated) or (not a_unordered)) then
+        ut_utils.append_to_clob(l_where_stmt,' ( '||l_not_equal_stmt||' ) or ');
+    end if;
+    --If its inclusion we expect a actual set to fully match and have no extra elements over expected
+    if a_inclusion_type then
+      ut_utils.append_to_clob(l_where_stmt,case when a_is_negated then ' 1 = 1 ' else ' ( a."UT3$_Data#Id" is null ) ' end);
+    else
+      ut_utils.append_to_clob(l_where_stmt,' (a."UT3$_Data#Id" is null or e."UT3$_Data#Id" is null) ');
+    end if;    
+    
+    l_compare_sql := replace(l_compare_sql,'{:where_condition:}',l_where_stmt);
+    return l_compare_sql;
+  end;
+   
+  function get_column_extract_path(a_cursor_info ut_cursor_column_tab) return ut_varchar2_list is
+    l_column_list ut_varchar2_list := ut_varchar2_list();
+  begin
+    for i in 1..a_cursor_info.count loop
+      --This avoids extracting single columns from nested objects.
+      --as we can go down to any level but we will lose visibility of parent.
+      if a_cursor_info(i).hierarchy_level = 1 then
+        l_column_list.extend;
+        l_column_list(l_column_list.last) := a_cursor_info(i).access_path;
+      end if;
+    end loop;
+    return l_column_list;
+  end;
+  
+  function get_rows_diff_by_sql(
+    a_act_cursor_info ut_cursor_column_tab, a_exp_cursor_info ut_cursor_column_tab,
+    a_expected_dataset_guid raw, a_actual_dataset_guid raw, a_diff_id raw,
+    a_join_by_list ut_varchar2_list, a_unordered boolean, a_enforce_column_order boolean := false,
+    a_extract_path varchar2
+  ) return tt_row_diffs is
+    l_act_extract_xpath  varchar2(32767):= ut_utils.to_xpath(get_column_extract_path(a_act_cursor_info));
+    l_exp_extract_xpath  varchar2(32767):= ut_utils.to_xpath(get_column_extract_path(a_exp_cursor_info));
+    l_join_xpath     varchar2(32767) := ut_utils.to_xpath(a_join_by_list);
+    l_results        tt_row_diffs;
+    l_sql            varchar2(32767);
+    l_column_order   varchar2(100);
+  begin
+    if a_enforce_column_order then
+      l_column_order := 'col_no';
+    else
+      l_column_order := 'col_name';
+    end if;
+    l_sql := q'[
+    with
+    exp_cols as (
+      select
+          i.exp_item_data, i.exp_data_id, i.item_no rn, rownum col_no, i.diff_id,
+          s.column_value col, s.column_value.getRootElement() col_name,
+          nvl( s.column_value.getclobval(), empty_clob() ) col_val
+        from (
+          select
+              ucd.exp_data_id, extract( ucd.exp_item_data, :column_path ) exp_item_data,
+              ucd.item_no, ucd.diff_id
+            from ut_compound_data_diff_tmp ucd
+           where ucd.diff_id = :diff_id
+             and ucd.exp_data_id = :self_guid
+          ) i,
+          table( xmlsequence( extract( i.exp_item_data, :extract_path ) ) ) s
+    ),
+    act_cols as (
+      select
+          i.act_item_data, i.act_data_id, i.item_no rn, rownum col_no, i.diff_id,
+          s.column_value col, s.column_value.getRootElement() col_name,
+          nvl( s.column_value.getclobval(), empty_clob() ) col_val
+        from (
+          select
+              ucd.act_data_id, extract( ucd.act_item_data, :column_path ) act_item_data,
+              ucd.item_no, ucd.diff_id
+            from ut_compound_data_diff_tmp ucd
+           where ucd.diff_id = :diff_id
+             and ucd.act_data_id = :other_guid
+          ) i,
+          table( xmlsequence( extract( i.act_item_data, :extract_path ) ) ) s
+    ),
+    data_diff as (
+      select rn, diff_type, xmlserialize(content data_item no indent) diffed_row, null pk_value, col_name, diff_id
+        from (
+          select nvl(exp.rn, act.rn) rn,
+                 exp.diff_id diff_id,
+                 xmlagg(exp.col order by exp.col_no) exp_item,
+                 xmlagg(act.col order by nvl(exp.col_no, act.col_no)) act_item,
+                 max(nvl(exp.col_name,act.col_name)) col_name
+            from exp_cols exp
+            join act_cols act
+              on exp.rn = act.rn and exp.col_name = act.col_name
+           where dbms_lob.compare(exp.col_val, act.col_val) != 0
+           group by nvl(exp.rn, act.rn), exp.diff_id
+        )
+      unpivot ( data_item for diff_type in (exp_item as 'Expected:', act_item as 'Actual:') )
+    ),
+    unordered_diff as (
+      select rn, diff_type, xmlserialize(content data_item no indent) diffed_row, null pk_value, col_name, diff_id
+        from (
+          select nvl(exp.rn, act.rn) rn,
+                 exp.diff_id diff_id,
+                 xmlagg(exp.col order by exp.col_name) exp_item,
+                 xmlagg(act.col order by act.col_name) act_item,
+                 max(nvl(exp.col_name,act.col_name)) col_name
+            from exp_cols exp
+            join act_cols act
+              on exp.rn = act.rn and exp.col_name = act.col_name
+           where dbms_lob.compare(exp.col_val, act.col_val) != 0
+           group by nvl(exp.rn, act.rn), exp.diff_id
+        )
+      unpivot ( data_item for diff_type in (exp_item as 'Expected:', act_item as 'Actual:') )
+    )
+    select /*+ no_parallel */ rn, diff_type, diffed_row, pk_value
+    from (
+      select rn, diff_type, diffed_row, pk_value,
+             case when diff_type = 'Actual:' then 1 else 2 end rnk,
+             1 final_order,
+             col_name
+      from ( ]'
+        || case when a_unordered then q'[
+        select /*+ no_unnest */
+               u.rn, u.diff_type, u.diffed_row,
+               replace(
+                 extract( case when i.exp_data_id is null then i.act_item_data else i.exp_item_data end, :join_by ).getclobval(),
+                  chr(10)
+               ) pk_value,
+               u.col_name
+          from data_diff u
+          join ut_compound_data_diff_tmp i
+              on i.diff_id = u.diff_id
+             and i.item_no = u.rn]'
+        else q'[
+        select rn, diff_type, diffed_row, pk_value, col_name
+          from data_diff
+         where :join_by is null ]'
+        end ||q'[
+      )
+      union all
+      select
+          item_no as rn,
+          case when exp_data_id is null then 'Extra:' else 'Missing:' end as diff_type,
+          xmlserialize(
+            content (
+              extract( (case when exp_data_id is null then act_item_data else exp_item_data end),'/*/*')
+            ) no indent
+          ) diffed_row,
+          nvl2(
+            :join_by,
+            replace(
+              extract( case when exp_data_id is null then act_item_data else exp_item_data end, :join_by ).getclobval(),
+              chr(10)
+            ),
+            null
+          ) pk_value,
+          case when exp_data_id is null then 1 else 2 end rnk,
+          2 final_order,
+          null col_name
+        from ut_compound_data_diff_tmp i
+       where diff_id = :diff_id
+         and act_data_id is null or exp_data_id is null
+   )
+   order by final_order,]'
+    ||case when a_enforce_column_order or (not(a_enforce_column_order) and not(a_unordered)) then
+     q'[
+         case when final_order = 1 then rn else rnk end,
+         case when final_order = 1 then rnk else rn end
+     ]'
+      when a_unordered then
+     q'[
+         case when final_order = 1 then col_name else to_char(rnk) end,
+         case when final_order = 1 then to_char(rn) else col_name end,
+         case when final_order = 1 then to_char(rnk) else col_name end
+     ]'
+   end;
+   execute immediate l_sql
+   bulk collect into l_results
+    using l_exp_extract_xpath, a_diff_id, a_expected_dataset_guid, a_extract_path,
+          l_act_extract_xpath, a_diff_id, a_actual_dataset_guid, a_extract_path,
+          l_join_xpath, l_join_xpath, l_join_xpath, a_diff_id;
+    return l_results;
+  end;
+  
+  function get_fixed_size_hash(a_string varchar2, a_base integer :=0,a_size integer := 9999999) return number is
+  begin
+    return dbms_utility.get_hash_value(a_string,a_base,a_size);
+  end;
+
+  procedure insert_diffs_result(a_diff_tab t_diff_tab, a_diff_id raw) is
+  begin  
+    forall idx in 1..a_diff_tab.count save exceptions
+    insert /*+ no_parallel */ into ut_compound_data_diff_tmp
+    ( diff_id, act_item_data, act_data_id, exp_item_data, exp_data_id, item_no, duplicate_no )
+    values 
+    (a_diff_id, 
+    xmlelement( name "ROW", a_diff_tab(idx).act_item_data), a_diff_tab(idx).act_data_id,
+    xmlelement( name "ROW", a_diff_tab(idx).exp_item_data), a_diff_tab(idx).exp_data_id,
+    a_diff_tab(idx).item_no, a_diff_tab(idx).dup_no);
+  exception
+    when ut_utils.ex_failure_for_all then
+      raise_application_error(ut_utils.gc_dml_for_all,'Failure to insert a diff tmp data.');
+  end;
+  
+  procedure set_rows_diff(a_rows_diff integer) is
+  begin
+    g_diff_count := a_rows_diff;
+  end;
+  
+  procedure cleanup_diff is
+  begin
+    g_diff_count := 0;
+    delete from ut_compound_data_diff_tmp;
+    delete from ut_json_data_diff_tmp;
+  end;
+  
+  function get_rows_diff_count return integer is
+  begin
+    return g_diff_count;
+  end;
+
+  function is_sql_compare_allowed(a_type_name varchar2)
+  return boolean is
+    l_assert boolean;
+  begin
+    --clob/blob/xmltype/object/nestedcursor/nestedtable
+    if a_type_name IN (g_type_name_map(dbms_sql.blob_type),
+                       g_type_name_map(dbms_sql.clob_type),
+                       g_type_name_map(dbms_sql.long_type),
+                       g_type_name_map(dbms_sql.long_raw_type),
+                       g_type_name_map(dbms_sql.bfile_type),
+                       g_anytype_name_map(dbms_types.typecode_namedcollection))
+    then    
+      l_assert := false;
+    else
+      l_assert := true;
+    end if;
+    return l_assert;
+  end;
+
+  function get_column_type_desc(a_type_code in integer, a_dbms_sql_desc in boolean)
+  return varchar2 is
+  begin
+   return
+     case
+       when a_dbms_sql_desc then g_type_name_map(a_type_code)
+       else g_anytype_name_map(a_type_code)
+     end;
+  end;
+
+  function get_compare_cursor(a_diff_cursor_text in clob,a_self_id raw, a_other_id raw) return sys_refcursor is
+    l_diff_cursor sys_refcursor;
+  begin
+    open l_diff_cursor for a_diff_cursor_text using a_self_id, a_other_id;
+    return l_diff_cursor;
+  end;
+ 
+  function create_err_cursor_msg(a_error_stack varchar2) return varchar2 is
+  begin
+    return 'SQL exception thrown when fetching data from cursor:'||
+      ut_utils.remove_error_from_stack(sqlerrm,ut_utils.gc_xml_processing)||chr(10)||
+      ut_expectation_processor.who_called_expectation(a_error_stack)||chr(10)||
+      'Check the query and data for errors.';   
+  end;
+
+  procedure save_cursor_data_for_diff(a_data_id raw, a_set_id integer, a_xml xmltype) is
+  begin
+    insert /*+ no_parallel */ into ut_compound_data_tmp (data_id, item_no, item_data) values (a_data_id, a_set_id, a_xml);
+  end;
+
+  function get_row_data_as_xml(a_data_id raw, a_max_rows integer) return ut_utils.t_clob_tab is
+    l_results       ut_utils.t_clob_tab;
+  begin
+    select /*+ no_parallel */ xmlserialize( content ucd.item_data no indent)
+      bulk collect into l_results
+      from ut_compound_data_tmp tmp
+        ,xmltable ( '/ROWSET' passing tmp.item_data
+           columns item_data xmltype PATH '*'
+         ) ucd
+     where tmp.data_id = a_data_id
+           and rownum <= a_max_rows;
+
+    return l_results;
+  end;
+
+  function type_no_length ( a_type_name varchar2) return boolean is
+  begin
+    return case 
+      when g_type_no_length_map.exists(a_type_name) then
+        true
+      else
+        false
+      end;
+  end;
+  
+  function compare_json_data(a_act_json_data ut_json_leaf_tab,a_exp_json_data ut_json_leaf_tab) return tt_json_diff_tab is
+    l_result_diff tt_json_diff_tab := tt_json_diff_tab();
+  begin
+
+    with
+      differences as (
+        select case
+                 when (a.element_name is null or e.element_name is null) then gc_json_missing
+                 when a.json_type != e.json_type then gc_json_type
+                 when (decode(a.element_value,e.element_value,1,0) = 0) then gc_json_notequal
+                 else gc_json_unknown
+               end  as difference_type,
+               case
+                 when (a.element_name is null or e.element_name is null) then 1
+                 when a.json_type != e.json_type then 2
+                 when (decode(a.element_value,e.element_value,1,0) = 0) then 3
+                 else 4
+               end  as order_by_type,
+               a.element_name as act_element_name,
+               a.element_value as act_element_value,
+               a.hierarchy_level as act_hierarchy_level,
+               a.index_position as act_index_position,
+               a.json_type as act_json_type,
+               a.access_path as act_access_path,
+               a.parent_name as act_par_name,
+               a.parent_path as act_parent_path,
+               e.element_name as exp_element_name,
+               e.element_value as exp_element_value,
+               e.hierarchy_level as exp_hierarchy_level,
+               e.index_position as exp_index_position,
+               e.json_type as exp_json_type,
+               e.access_path as exp_access_path,
+               e.parent_name as exp_par_name,
+               e.parent_path as exp_parent_path
+        from table(a_act_json_data) a
+          full outer join table(a_exp_json_data) e
+            on decode(a.parent_name,e.parent_name,1,0)= 1
+              and decode(a.parent_path,e.parent_path,1,0)= 1
+              and (
+                case when a.parent_type = 'object' or e.parent_type = 'object' then
+                  decode(a.element_name,e.element_name,1,0)
+                else 1 end = 1
+              )
+              and (
+                case when a.parent_type = 'array' or e.parent_type = 'array' then
+                  decode(a.index_position,e.index_position,1,0)
+                else 1 end = 1
+              )
+              and a.hierarchy_level = e.hierarchy_level
+        where (a.element_name is null or e.element_name is null)
+           or (a.json_type != e.json_type)
+           or (decode(a.element_value,e.element_value,1,0) = 0)
+     )
+     select /*+ no_parallel */ difference_type,
+            act_element_name, act_element_value, act_json_type, act_access_path, act_parent_path,
+            exp_element_name, exp_element_value, exp_json_type, exp_access_path, exp_parent_path
+     bulk collect into l_result_diff
+     from differences a
+     where not exists (
+         select 1 from differences b
+         where (a.act_par_name = b.act_element_name and a.act_hierarchy_level - 1 = b.act_hierarchy_level)
+            or (a.exp_par_name = b.exp_element_name and a.exp_hierarchy_level - 1 = b.exp_hierarchy_level)
+           and a.difference_type = gc_json_missing and b.difference_type = gc_json_missing
+       )
+    order by order_by_type,
+             nvl(act_hierarchy_level,exp_hierarchy_level),
+             nvl(act_index_position,exp_index_position) nulls first,
+             nvl(act_element_name,exp_element_name) ;
+     return l_result_diff;
+  end;
+  
+  function insert_json_diffs(a_diff_id raw, a_act_json_data ut_json_leaf_tab, a_exp_json_data ut_json_leaf_tab) return integer is
+    l_diffs tt_json_diff_tab := compare_json_data(a_act_json_data,a_exp_json_data);
+  begin
+    forall i in 1..l_diffs.count
+    insert /*+ no_parallel */ into ut_json_data_diff_tmp (
+      diff_id, difference_type,
+      act_element_name, act_element_value, act_json_type, act_access_path, act_parent_path,
+      exp_element_name, exp_element_value, exp_json_type, exp_access_path, exp_parent_path
+    )
+    values (
+      a_diff_id,l_diffs(i).difference_type,
+      l_diffs(i).act_element_name,l_diffs(i).act_element_value,l_diffs(i).act_json_type, l_diffs(i).act_access_path, l_diffs(i).act_parent_path,
+      l_diffs(i).exp_element_name,l_diffs(i).exp_element_value,l_diffs(i).exp_json_type,l_diffs(i).exp_access_path, l_diffs(i).exp_parent_path
+    );
+     
+    return l_diffs.count;
+  end;
+  
+  function get_json_diffs_type(a_diff_id raw) return tt_json_diff_type_tab is
+    l_diffs_summary tt_json_diff_type_tab := tt_json_diff_type_tab();
+  begin
+    select /*+ no_parallel */ d.difference_type,count(1)
+    bulk collect into l_diffs_summary
+    from ut_json_data_diff_tmp d
+    where diff_id = a_diff_id
+    group by d.difference_type;
+    
+    return l_diffs_summary;
+  end;
+
+  function get_json_diffs_tmp(a_diff_id raw) return tt_json_diff_tab is
+    l_diffs tt_json_diff_tab;
+  begin
+    select /*+ no_parallel */ difference_type,
+           act_element_name, act_element_value, act_json_type, act_access_path, act_parent_path,
+           exp_element_name, exp_element_value, exp_json_type, exp_access_path, exp_parent_path
+    bulk collect into l_diffs
+    from ut_json_data_diff_tmp
+    where diff_id = a_diff_id;
+
+    return l_diffs;
+  end;
+  
+  function get_json_object(a_json_t json) return json_element_t is
+    l_obj json_element_t;
+  begin
+     $if dbms_db_version.version >= 21 $then
+       l_obj := case when a_json_t is null then cast (null as json_element_t ) else json_element_t.parse(json_query(a_json_t, '$' returning clob)) end;
+     $end
+	 return l_obj;
+  end;
+  
+begin
+  g_anytype_name_map(dbms_types.typecode_date)             := 'DATE';
+  g_anytype_name_map(dbms_types.typecode_number)           := 'NUMBER';
+  g_anytype_name_map(3 /*INTEGER in object type*/)         := 'NUMBER';
+  g_anytype_name_map(dbms_types.typecode_raw)              := 'RAW';
+  g_anytype_name_map(dbms_types.typecode_char)             := 'CHAR';
+  g_anytype_name_map(dbms_types.typecode_varchar2)         := 'VARCHAR2';
+  g_anytype_name_map(dbms_types.typecode_varchar)          := 'VARCHAR';
+  g_anytype_name_map(dbms_types.typecode_blob)             := 'BLOB';
+  g_anytype_name_map(dbms_types.typecode_bfile)            := 'BFILE';
+  g_anytype_name_map(dbms_types.typecode_clob)             := 'CLOB';
+  g_anytype_name_map(dbms_types.typecode_timestamp)        := 'TIMESTAMP';
+  g_anytype_name_map(dbms_types.typecode_timestamp_tz)     := 'TIMESTAMP WITH TIME ZONE';
+  g_anytype_name_map(dbms_types.typecode_timestamp_ltz)    := 'TIMESTAMP WITH LOCAL TIME ZONE';
+  g_anytype_name_map(dbms_types.typecode_interval_ym)      := 'INTERVAL YEAR TO MONTH';
+  g_anytype_name_map(dbms_types.typecode_interval_ds)      := 'INTERVAL DAY TO SECOND';
+  g_anytype_name_map(dbms_types.typecode_bfloat)           := 'BINARY_FLOAT';
+  g_anytype_name_map(dbms_types.typecode_bdouble)          := 'BINARY_DOUBLE';
+  g_anytype_name_map(dbms_types.typecode_urowid)           := 'UROWID';
+  g_anytype_name_map(dbms_types.typecode_varray)           := 'VARRRAY';
+  g_anytype_name_map(dbms_types.typecode_table)            := 'TABLE';
+  g_anytype_name_map(dbms_types.typecode_namedcollection)  := 'NAMEDCOLLECTION';  
+  g_anytype_name_map(dbms_types.typecode_object)           := 'OBJECT';
+ 
+  g_type_name_map( dbms_sql.binary_bouble_type )           := 'BINARY_DOUBLE';
+  g_type_name_map( dbms_sql.bfile_type )                   := 'BFILE';
+  g_type_name_map( dbms_sql.binary_float_type )            := 'BINARY_FLOAT';
+  g_type_name_map( dbms_sql.blob_type )                    := 'BLOB';
+  g_type_name_map( dbms_sql.long_raw_type )                := 'LONG RAW';
+  g_type_name_map( dbms_sql.char_type )                    := 'CHAR';
+  g_type_name_map( dbms_sql.clob_type )                    := 'CLOB';
+  g_type_name_map( dbms_sql.long_type )                    := 'LONG';
+  g_type_name_map( dbms_sql.date_type )                    := 'DATE';
+  g_type_name_map( dbms_sql.interval_day_to_second_type )  := 'INTERVAL DAY TO SECOND';
+  g_type_name_map( dbms_sql.interval_year_to_month_type )  := 'INTERVAL YEAR TO MONTH';
+  g_type_name_map( dbms_sql.raw_type )                     := 'RAW';
+  g_type_name_map( dbms_sql.timestamp_type )               := 'TIMESTAMP';
+  g_type_name_map( dbms_sql.timestamp_with_tz_type )       := 'TIMESTAMP WITH TIME ZONE';
+  g_type_name_map( dbms_sql.timestamp_with_local_tz_type ) := 'TIMESTAMP WITH LOCAL TIME ZONE';
+  g_type_name_map( dbms_sql.varchar2_type )                := 'VARCHAR2';
+  g_type_name_map( dbms_sql.number_type )                  := 'NUMBER';
+  g_type_name_map( dbms_sql.rowid_type )                   := 'ROWID';
+  g_type_name_map( dbms_sql.urowid_type )                  := 'UROWID';  
+  g_type_name_map( dbms_sql.user_defined_type )            := 'USER_DEFINED_TYPE';
+  g_type_name_map( dbms_sql.ref_type )                     := 'REF_TYPE';
+    
+    
+  /**
+  * List of types that have no length but can produce a max_len from desc_cursor function.
+  */
+  g_type_no_length_map('ROWID')                            := 'ROWID';
+  g_type_no_length_map('INTERVAL DAY TO SECOND')           := 'INTERVAL DAY TO SECOND';
+  g_type_no_length_map('INTERVAL YEAR TO MONTH')           := 'INTERVAL YEAR TO MONTH';
+  g_type_no_length_map('BINARY_DOUBLE')                    := 'BINARY_DOUBLE';
+  g_type_no_length_map('BINARY_FLOAT')                     := 'BINARY_FLOAT';
+end;
+/
