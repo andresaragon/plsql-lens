@@ -92,6 +92,8 @@ class FileIR:
     lines: int
     units: tuple[Unit, ...] = ()
     issues: tuple[ParseIssue, ...] = field(default=())
+    # (target line, rule ids) from ``-- plsql-lens: disable=…`` comments
+    suppressions: tuple[tuple[int, frozenset[str]], ...] = ()
 
     @property
     def ok(self) -> bool:

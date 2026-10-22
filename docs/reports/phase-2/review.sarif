@@ -1,0 +1,2209 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "plsql-lens",
+          "version": "0.1.0",
+          "rules": [
+            {
+              "id": "PLL001",
+              "name": "WHENOTHERSwithoutRAISE/logging",
+              "shortDescription": {
+                "text": "WHEN OTHERS without RAISE/logging"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              }
+            },
+            {
+              "id": "PLL002",
+              "name": "DynamicSQLbyconcatenation",
+              "shortDescription": {
+                "text": "Dynamic SQL by concatenation"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              }
+            },
+            {
+              "id": "PLL003",
+              "name": "COMMIT/ROLLBACKinsidealoop",
+              "shortDescription": {
+                "text": "COMMIT/ROLLBACK inside a loop"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              }
+            },
+            {
+              "id": "PLL004",
+              "name": "SELECTINTOwithoutexceptionhandling",
+              "shortDescription": {
+                "text": "SELECT INTO without exception handling"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              }
+            },
+            {
+              "id": "PLL005",
+              "name": "Row-by-rowDMLincursorloops",
+              "shortDescription": {
+                "text": "Row-by-row DML in cursor loops"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              }
+            },
+            {
+              "id": "PLL006",
+              "name": "Implicitconversions",
+              "shortDescription": {
+                "text": "Implicit conversions"
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              }
+            },
+            {
+              "id": "PLL007",
+              "name": "Magicliterals",
+              "shortDescription": {
+                "text": "Magic literals"
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "PLL001",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "text": "WHEN OTHERS handler swallows the error: no re-raise, logging or use of SQLERRM/SQLCODE Fix: Log the error and re-raise with RAISE, or handle specific exceptions."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 108,
+                  "startColumn": 10
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 20000 is repeated 3 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 136,
+                  "startColumn": 34
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal ': ' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 172,
+                  "startColumn": 61
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'USERENV' is repeated 8 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 302,
+                  "startColumn": 30
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal ': ' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 306,
+                  "startColumn": 53
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal ': ' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 308,
+                  "startColumn": 37
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal ', ' is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 308,
+                  "startColumn": 54
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'ALL' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 321,
+                  "startColumn": 29
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'INSTANCE' is repeated 3 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 321,
+                  "startColumn": 41
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'ALL' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 331,
+                  "startColumn": 29
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'SESSION_USER' is repeated 3 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 333,
+                  "startColumn": 20
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'ALL' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 342,
+                  "startColumn": 29
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'ALL' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 356,
+                  "startColumn": 29
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'INSTANCE' is repeated 3 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 356,
+                  "startColumn": 35
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'INSTANCE' is repeated 3 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 360,
+                  "startColumn": 20
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'ALL' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 366,
+                  "startColumn": 29
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal ', ' is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 387,
+                  "startColumn": 26
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'TRUE' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 415,
+                  "startColumn": 34
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'USERENV' is repeated 8 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 416,
+                  "startColumn": 66
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'SESSION_USER' is repeated 3 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 416,
+                  "startColumn": 76
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 20000 is repeated 3 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 420,
+                  "startColumn": 37
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'userenv' is repeated 9 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 513,
+                  "startColumn": 40
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'client_identifier' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 513,
+                  "startColumn": 50
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'TRUE' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 517,
+                  "startColumn": 30
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL006",
+          "ruleIndex": 5,
+          "level": "note",
+          "message": {
+            "text": "Implicit conversion: comparing date with number Fix: Convert explicitly (TO_NUMBER/TO_CHAR/TO_DATE) or fix the types."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 553,
+                  "startColumn": 41
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 24 is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 554,
+                  "startColumn": 24
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 60 is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 554,
+                  "startColumn": 27
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 60 is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 554,
+                  "startColumn": 30
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL006",
+          "ruleIndex": 5,
+          "level": "note",
+          "message": {
+            "text": "Implicit conversion: comparing date with number Fix: Convert explicitly (TO_NUMBER/TO_CHAR/TO_DATE) or fix the types."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 555,
+                  "startColumn": 41
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 24 is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 555,
+                  "startColumn": 45
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 24 is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 556,
+                  "startColumn": 24
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 60 is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 556,
+                  "startColumn": 27
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL006",
+          "ruleIndex": 5,
+          "level": "note",
+          "message": {
+            "text": "Implicit conversion: comparing date with number Fix: Convert explicitly (TO_NUMBER/TO_CHAR/TO_DATE) or fix the types."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 557,
+                  "startColumn": 41
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 24 is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 558,
+                  "startColumn": 24
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL006",
+          "ruleIndex": 5,
+          "level": "note",
+          "message": {
+            "text": "Implicit conversion: comparing date with number Fix: Convert explicitly (TO_NUMBER/TO_CHAR/TO_DATE) or fix the types."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 559,
+                  "startColumn": 41
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL006",
+          "ruleIndex": 5,
+          "level": "note",
+          "message": {
+            "text": "Implicit conversion: comparing date with number Fix: Convert explicitly (TO_NUMBER/TO_CHAR/TO_DATE) or fix the types."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 561,
+                  "startColumn": 41
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 60 is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 561,
+                  "startColumn": 43
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL006",
+          "ruleIndex": 5,
+          "level": "note",
+          "message": {
+            "text": "Implicit conversion: comparing date with number Fix: Convert explicitly (TO_NUMBER/TO_CHAR/TO_DATE) or fix the types."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 563,
+                  "startColumn": 41
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 10 is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 600,
+                  "startColumn": 67
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 5 is repeated 3 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 600,
+                  "startColumn": 75
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 10 is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 601,
+                  "startColumn": 70
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'm' is repeated 3 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 652,
+                  "startColumn": 66
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'm' is repeated 3 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 653,
+                  "startColumn": 66
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 10 is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 654,
+                  "startColumn": 55
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 10 is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 654,
+                  "startColumn": 64
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 10 is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 654,
+                  "startColumn": 72
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 10 is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 654,
+                  "startColumn": 81
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 2 is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 744,
+                  "startColumn": 10
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL002",
+          "ruleIndex": 1,
+          "level": "error",
+          "message": {
+            "text": "Dynamic SQL is built by string concatenation instead of bind variables Fix: Use bind variables (USING / OPEN \u2026 FOR \u2026 USING); wrap identifiers with DBMS_ASSERT."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 769,
+                  "startColumn": 9
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL004",
+          "ruleIndex": 3,
+          "level": "warning",
+          "message": {
+            "text": "SELECT INTO without NO_DATA_FOUND/TOO_MANY_ROWS handling in scope Fix: Add a handler for NO_DATA_FOUND and TOO_MANY_ROWS in the enclosing block, or use an explicit cursor."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 788,
+                  "startColumn": 7
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'userenv' is repeated 9 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 977,
+                  "startColumn": 40
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'client_identifier' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 977,
+                  "startColumn": 50
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'm' is repeated 3 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 1053,
+                  "startColumn": 63
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 5 is repeated 3 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 1063,
+                  "startColumn": 26
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 10 is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 1068,
+                  "startColumn": 42
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 10 is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 1071,
+                  "startColumn": 90
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 2 is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 1133,
+                  "startColumn": 18
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 2 is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 1138,
+                  "startColumn": 17
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal ': ' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 1480,
+                  "startColumn": 59
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'a' is repeated 4 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 1715,
+                  "startColumn": 33
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'a' is repeated 4 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 1715,
+                  "startColumn": 72
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'a' is repeated 4 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 1763,
+                  "startColumn": 35
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'a' is repeated 4 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 1763,
+                  "startColumn": 74
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 60 is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 1872,
+                  "startColumn": 136
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'userenv' is repeated 9 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 1962,
+                  "startColumn": 34
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'client_identifier' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 1962,
+                  "startColumn": 44
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 2 is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 1988,
+                  "startColumn": 30
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal ': ' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2230,
+                  "startColumn": 47
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL004",
+          "ruleIndex": 3,
+          "level": "warning",
+          "message": {
+            "text": "SELECT INTO without NO_DATA_FOUND/TOO_MANY_ROWS handling in scope Fix: Add a handler for NO_DATA_FOUND and TOO_MANY_ROWS in the enclosing block, or use an explicit cursor."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2257,
+                  "startColumn": 7
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'TRUE' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2280,
+                  "startColumn": 44
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'userenv' is repeated 9 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2294,
+                  "startColumn": 42
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'client_identifier' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2294,
+                  "startColumn": 52
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 20000 is repeated 3 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2359,
+                  "startColumn": 33
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal ', ' is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2373,
+                  "startColumn": 25
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal ', ' is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2373,
+                  "startColumn": 53
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal ', ' is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2373,
+                  "startColumn": 77
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal ', ' is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2373,
+                  "startColumn": 103
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal ', ' is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2374,
+                  "startColumn": 33
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal ', ' is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2374,
+                  "startColumn": 57
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal ', ' is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2374,
+                  "startColumn": 82
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal ', ' is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2375,
+                  "startColumn": 33
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'TRUE' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2376,
+                  "startColumn": 39
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'USERENV' is repeated 8 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2380,
+                  "startColumn": 40
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'USERENV' is repeated 8 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2381,
+                  "startColumn": 49
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'USERENV' is repeated 8 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2382,
+                  "startColumn": 55
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'USERENV' is repeated 8 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2383,
+                  "startColumn": 54
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'USERENV' is repeated 8 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2384,
+                  "startColumn": 59
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'USERENV' is repeated 8 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2385,
+                  "startColumn": 59
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'SESSION_USER' is repeated 3 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2385,
+                  "startColumn": 69
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 24 is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2402,
+                  "startColumn": 63
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'TRUE' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2622,
+                  "startColumn": 38
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'userenv' is repeated 9 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2831,
+                  "startColumn": 52
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'userenv' is repeated 9 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2832,
+                  "startColumn": 22
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'userenv' is repeated 9 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2834,
+                  "startColumn": 22
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'client_identifier' is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2834,
+                  "startColumn": 32
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'userenv' is repeated 9 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2838,
+                  "startColumn": 32
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 'userenv' is repeated 9 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2839,
+                  "startColumn": 22
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 10 is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2898,
+                  "startColumn": 17
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 2 is repeated 5 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2902,
+                  "startColumn": 20
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 5 is repeated 3 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2905,
+                  "startColumn": 20
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "PLL007",
+          "ruleIndex": 6,
+          "level": "note",
+          "message": {
+            "text": "Magic literal 10 is repeated 10 times in this unit Fix: Declare a named constant and reference it."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "corpus/logger/logger.pkb"
+                },
+                "region": {
+                  "startLine": 2910,
+                  "startColumn": 20
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

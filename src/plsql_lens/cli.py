@@ -9,7 +9,10 @@ from typing import Annotated
 
 import typer
 
-from .inventory import build_inventory, render_mermaid
+from .inventory import build_inventory, collect_files, render_mermaid
+from .parser import parse_file
+from .rules import RULES, review
+from .rules.output import to_json, to_sarif, to_table
 
 app = typer.Typer(help="Analyze Oracle PL/SQL packages.", no_args_is_help=True)
 
@@ -43,6 +46,44 @@ def inventory(
         if fmt is Format.json
         else render_mermaid(inv, level.value)
     )
+    if output is None:
+        typer.echo(text, nl=False)
+    else:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(text)
+
+
+class ReviewFormat(StrEnum):
+    table = "table"
+    json = "json"
+    sarif = "sarif"
+
+
+@app.command(name="review")
+def review_cmd(
+    path: Annotated[Path, typer.Argument(exists=True, help="File or directory to review.")],
+    fmt: Annotated[ReviewFormat, typer.Option("--format", help="Output format.")] = (
+        ReviewFormat.table
+    ),
+    output: Annotated[Path | None, typer.Option("-o", "--output", help="Write to a file.")] = None,
+    rules: Annotated[
+        str | None, typer.Option("--rules", help="Comma-separated rule ids (default: all).")
+    ] = None,
+) -> None:
+    """Run the review rules on PATH."""
+    selected = [r.strip().upper() for r in rules.split(",")] if rules else None
+    unknown = [r for r in selected or [] if r not in RULES]
+    if unknown:
+        raise typer.BadParameter(f"unknown rule(s): {', '.join(unknown)}", param_hint="--rules")
+    findings = []
+    for f in collect_files([path]):
+        findings.extend(review(parse_file(f), selected))
+    render = {
+        ReviewFormat.table: to_table,
+        ReviewFormat.json: to_json,
+        ReviewFormat.sarif: to_sarif,
+    }
+    text = render[fmt](findings)
     if output is None:
         typer.echo(text, nl=False)
     else:

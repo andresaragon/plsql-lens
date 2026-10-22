@@ -248,5 +248,5 @@ def build_inventory(paths: Iterable[str | Path]) -> Inventory:
             rel = str(f.resolve().relative_to(base))
         except ValueError:
             rel = str(f)
-        irs.append(FileIR(rel, ir.lines, ir.units, ir.issues))
+        irs.append(FileIR(rel, ir.lines, ir.units, ir.issues, ir.suppressions))
     return build_inventory_from_irs(irs)

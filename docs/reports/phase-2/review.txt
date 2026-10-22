@@ -1,0 +1,103 @@
+SEVERITY  RULE    LOCATION                           MESSAGE
+--------  ------  ---------------------------------  -------
+HIGH      PLL001  corpus/logger/logger.pkb:108:10    WHEN OTHERS handler swallows the error: no re-raise, logging or use of SQLERRM/SQLCODE
+INFO      PLL007  corpus/logger/logger.pkb:136:34    Magic literal 20000 is repeated 3 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:172:61    Magic literal ': ' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:302:30    Magic literal 'USERENV' is repeated 8 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:306:53    Magic literal ': ' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:308:37    Magic literal ': ' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:308:54    Magic literal ', ' is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:321:29    Magic literal 'ALL' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:321:41    Magic literal 'INSTANCE' is repeated 3 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:331:29    Magic literal 'ALL' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:333:20    Magic literal 'SESSION_USER' is repeated 3 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:342:29    Magic literal 'ALL' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:356:29    Magic literal 'ALL' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:356:35    Magic literal 'INSTANCE' is repeated 3 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:360:20    Magic literal 'INSTANCE' is repeated 3 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:366:29    Magic literal 'ALL' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:387:26    Magic literal ', ' is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:415:34    Magic literal 'TRUE' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:416:66    Magic literal 'USERENV' is repeated 8 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:416:76    Magic literal 'SESSION_USER' is repeated 3 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:420:37    Magic literal 20000 is repeated 3 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:513:40    Magic literal 'userenv' is repeated 9 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:513:50    Magic literal 'client_identifier' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:517:30    Magic literal 'TRUE' is repeated 5 times in this unit
+LOW       PLL006  corpus/logger/logger.pkb:553:41    Implicit conversion: comparing date with number
+INFO      PLL007  corpus/logger/logger.pkb:554:24    Magic literal 24 is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:554:27    Magic literal 60 is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:554:30    Magic literal 60 is repeated 5 times in this unit
+LOW       PLL006  corpus/logger/logger.pkb:555:41    Implicit conversion: comparing date with number
+INFO      PLL007  corpus/logger/logger.pkb:555:45    Magic literal 24 is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:556:24    Magic literal 24 is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:556:27    Magic literal 60 is repeated 5 times in this unit
+LOW       PLL006  corpus/logger/logger.pkb:557:41    Implicit conversion: comparing date with number
+INFO      PLL007  corpus/logger/logger.pkb:558:24    Magic literal 24 is repeated 5 times in this unit
+LOW       PLL006  corpus/logger/logger.pkb:559:41    Implicit conversion: comparing date with number
+LOW       PLL006  corpus/logger/logger.pkb:561:41    Implicit conversion: comparing date with number
+INFO      PLL007  corpus/logger/logger.pkb:561:43    Magic literal 60 is repeated 5 times in this unit
+LOW       PLL006  corpus/logger/logger.pkb:563:41    Implicit conversion: comparing date with number
+INFO      PLL007  corpus/logger/logger.pkb:600:67    Magic literal 10 is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:600:75    Magic literal 5 is repeated 3 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:601:70    Magic literal 10 is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:652:66    Magic literal 'm' is repeated 3 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:653:66    Magic literal 'm' is repeated 3 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:654:55    Magic literal 10 is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:654:64    Magic literal 10 is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:654:72    Magic literal 10 is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:654:81    Magic literal 10 is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:744:10    Magic literal 2 is repeated 5 times in this unit
+HIGH      PLL002  corpus/logger/logger.pkb:769:9     Dynamic SQL is built by string concatenation instead of bind variables
+MEDIUM    PLL004  corpus/logger/logger.pkb:788:7     SELECT INTO without NO_DATA_FOUND/TOO_MANY_ROWS handling in scope
+INFO      PLL007  corpus/logger/logger.pkb:977:40    Magic literal 'userenv' is repeated 9 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:977:50    Magic literal 'client_identifier' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:1053:63   Magic literal 'm' is repeated 3 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:1063:26   Magic literal 5 is repeated 3 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:1068:42   Magic literal 10 is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:1071:90   Magic literal 10 is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:1133:18   Magic literal 2 is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:1138:17   Magic literal 2 is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:1480:59   Magic literal ': ' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:1715:33   Magic literal 'a' is repeated 4 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:1715:72   Magic literal 'a' is repeated 4 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:1763:35   Magic literal 'a' is repeated 4 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:1763:74   Magic literal 'a' is repeated 4 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:1872:136  Magic literal 60 is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:1962:34   Magic literal 'userenv' is repeated 9 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:1962:44   Magic literal 'client_identifier' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:1988:30   Magic literal 2 is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2230:47   Magic literal ': ' is repeated 5 times in this unit
+MEDIUM    PLL004  corpus/logger/logger.pkb:2257:7    SELECT INTO without NO_DATA_FOUND/TOO_MANY_ROWS handling in scope
+INFO      PLL007  corpus/logger/logger.pkb:2280:44   Magic literal 'TRUE' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2294:42   Magic literal 'userenv' is repeated 9 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2294:52   Magic literal 'client_identifier' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2359:33   Magic literal 20000 is repeated 3 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2373:25   Magic literal ', ' is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2373:53   Magic literal ', ' is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2373:77   Magic literal ', ' is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2373:103  Magic literal ', ' is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2374:33   Magic literal ', ' is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2374:57   Magic literal ', ' is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2374:82   Magic literal ', ' is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2375:33   Magic literal ', ' is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2376:39   Magic literal 'TRUE' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2380:40   Magic literal 'USERENV' is repeated 8 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2381:49   Magic literal 'USERENV' is repeated 8 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2382:55   Magic literal 'USERENV' is repeated 8 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2383:54   Magic literal 'USERENV' is repeated 8 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2384:59   Magic literal 'USERENV' is repeated 8 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2385:59   Magic literal 'USERENV' is repeated 8 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2385:69   Magic literal 'SESSION_USER' is repeated 3 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2402:63   Magic literal 24 is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2622:38   Magic literal 'TRUE' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2831:52   Magic literal 'userenv' is repeated 9 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2832:22   Magic literal 'userenv' is repeated 9 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2834:22   Magic literal 'userenv' is repeated 9 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2834:32   Magic literal 'client_identifier' is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2838:32   Magic literal 'userenv' is repeated 9 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2839:22   Magic literal 'userenv' is repeated 9 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2898:17   Magic literal 10 is repeated 10 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2902:20   Magic literal 2 is repeated 5 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2905:20   Magic literal 5 is repeated 3 times in this unit
+INFO      PLL007  corpus/logger/logger.pkb:2910:20   Magic literal 10 is repeated 10 times in this unit

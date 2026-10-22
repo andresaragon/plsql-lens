@@ -7,6 +7,7 @@ else token by token, so unknown syntax never aborts a file.
 
 from __future__ import annotations
 
+import re
 from collections.abc import Iterable
 
 from .ir import Call, FileIR, Param, ParseIssue, Stmt, Subprogram, Unit
@@ -678,8 +679,31 @@ def _is_decl_ctx(toks: list[Token], i: int) -> bool:
     return toks[i - 1].kind == IDENT and toks[i - 1].text in ("exception", "pragma", "of", "is")
 
 
+_DIRECTIVE = re.compile(r"--\s*plsql-lens:\s*disable\s*=\s*([A-Za-z0-9_,\s]+)")
+
+
+def _suppressions(src: str, toks: list[Token]) -> tuple[tuple[int, frozenset[str]], ...]:
+    """Resolve ``-- plsql-lens: disable=…`` comments to the code line they apply to."""
+    code_lines = sorted({t.line for t in toks})
+    out: list[tuple[int, frozenset[str]]] = []
+    for n, line in enumerate(src.splitlines(), 1):
+        m = _DIRECTIVE.search(line)
+        if not m:
+            continue
+        ids = frozenset(x.strip().upper() for x in m.group(1).split(",") if x.strip())
+        if line[: m.start()].strip():  # trailing comment: applies to its own line
+            out.append((n, ids))
+        else:  # comment alone on its line: applies to the next line holding code
+            nxt = next((c for c in code_lines if c > n), None)
+            if nxt is not None:
+                out.append((nxt, ids))
+    return tuple(out)
+
+
 def parse_source(src: str, path: str = "<memory>") -> FileIR:
     toks = tokenize(src)
     parser = _Parser(toks)
     units = parser.parse_file()
-    return FileIR(path, src.count("\n") + 1, tuple(units), tuple(parser.issues))
+    return FileIR(
+        path, src.count("\n") + 1, tuple(units), tuple(parser.issues), _suppressions(src, toks)
+    )
