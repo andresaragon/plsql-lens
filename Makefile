@@ -1,6 +1,6 @@
 .PHONY: demo-f1 test lint
 test:
-	uv run pytest
+	uv run pytest --cov=plsql_lens --cov-fail-under=85
 lint:
 	uv run ruff check . && uv run ruff format --check . && uv run mypy
 demo-f1:

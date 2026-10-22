@@ -9,8 +9,9 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 
-from .ir import Call, FileIR, Param, ParseIssue, Subprogram, Unit
+from .ir import Call, FileIR, Param, ParseIssue, Stmt, Subprogram, Unit
 from .lexer import IDENT, OP, Token, tokenize
+from .statements import split_statements
 
 _MODES = {"in", "out", "nocopy"}
 _CREATE_MODS = {"or", "replace", "editionable", "noneditionable", "force", "noforce"}
@@ -102,6 +103,7 @@ class _Parser:
         self.t = toks
         self.i = 0
         self.issues: list[ParseIssue] = []
+        self.end_line = 0  # line of the END closing the last parsed body
 
     # -- token helpers ---------------------------------------------------
     def peek(self, k: int = 0) -> Token | None:
@@ -264,22 +266,34 @@ class _Parser:
             self.skip_to_semicolon()
             return Subprogram(kw.text, name, params, return_type, kw.line, True)
         calls: list[Call] = []
-        nested, names = self.parse_declarations(calls, depth + 1)
-        self.parse_block_body(calls, name)
+        nested, names, types = self.parse_declarations(calls, depth + 1)
+        body = self.parse_block_body(calls, name)
         local = frozenset(names | {p.name for p in params})
         return Subprogram(
-            kw.text, name, params, return_type, kw.line, True, tuple(calls), nested, local
+            kw.text,
+            name,
+            params,
+            return_type,
+            kw.line,
+            True,
+            tuple(calls),
+            nested,
+            local,
+            body,
+            self.end_line,
+            tuple([(p.name, p.type) for p in params] + types),
         )
 
     def parse_declarations(
         self, calls: list[Call], depth: int
-    ) -> tuple[tuple[Subprogram, ...], set[str]]:
+    ) -> tuple[tuple[Subprogram, ...], set[str], list[tuple[str, str]]]:
         """Declarative part up to (not including) ``BEGIN``/``END``.
 
-        Returns the nested subprograms and the names declared locally.
+        Returns the nested subprograms, the names declared locally and (name, type) pairs.
         """
         nested: list[Subprogram] = []
         names: set[str] = set()
+        types: list[tuple[str, str]] = []
         while (tok := self.peek()) is not None:
             if tok.kind == IDENT and tok.text in ("begin", "end"):
                 break
@@ -295,17 +309,29 @@ class _Parser:
             first = self.t[start]
             if first.kind == IDENT and first.text not in ("cursor", "type", "subtype", "pragma"):
                 names.add(first.text)
-        return tuple(nested), names
+                decl = self.t[start + 1 : self.i - 1]
+                if decl and decl[0].kind == IDENT and decl[0].text == "constant":
+                    decl = decl[1:]
+                type_toks: list[Token] = []
+                for tok in decl:
+                    if (tok.kind == OP and tok.text == ":=") or (
+                        tok.kind == IDENT and tok.text in ("default", "not")
+                    ):
+                        break
+                    type_toks.append(tok)
+                if type_toks:
+                    types.append((first.text, _join(type_toks)))
+        return tuple(nested), names, types
 
-    def parse_block_body(self, calls: list[Call], name: str) -> None:
+    def parse_block_body(self, calls: list[Call], name: str) -> tuple[Stmt, ...]:
         """At ``BEGIN``: consume through the matching ``END [name];``, collecting calls."""
         tok = self.peek()
         if tok is None:
             self.issue(f"unexpected end of file in body of {name}")
-            return
+            return ()
         if not (tok.kind == IDENT and tok.text == "begin"):
             self.issue(f"expected BEGIN in {name}", tok)
-            return
+            return ()
         stack = ["begin"]
         self.i += 1
         start = self.i
@@ -324,14 +350,16 @@ class _Parser:
                         stack.pop()
                     self.i += 1
                     if not stack:
+                        self.end_line = self.t[self.i - 1].line
                         _collect_calls(self.t[start : self.i - 1], calls)
+                        body = split_statements(self.t[start : self.i - 1])
                         # optional label, then ';'
                         while (t2 := self.peek()) is not None and not (
                             t2.kind == OP and t2.text == ";"
                         ):
                             self.i += 1
                         self.i += 1
-                        return
+                        return body
                     continue
                 if w in ("begin", "if", "loop", "case"):
                     prev = self.t[self.i - 1] if self.i else None
@@ -344,6 +372,8 @@ class _Parser:
             self.i += 1
         self.issue(f"unterminated body of {name}", self.t[start - 1])
         _collect_calls(self.t[start:], calls)
+        self.end_line = self.t[-1].line
+        return split_statements(self.t[start:])
 
     # -- package / type / top-level ---------------------------------------
     def parse_package(self, body: bool, line: int, name: str) -> Unit:
@@ -370,9 +400,15 @@ class _Parser:
                     calls=tuple(init_calls),
                 )
             if tok.kind == IDENT and tok.text == "begin" and body:
-                self.parse_block_body(init_calls, name)
+                body_stmts = self.parse_block_body(init_calls, name)
                 return Unit(
-                    "package_body", name, line, subprograms=tuple(subs), calls=tuple(init_calls)
+                    "package_body",
+                    name,
+                    line,
+                    subprograms=tuple(subs),
+                    calls=tuple(init_calls),
+                    body=body_stmts,
+                    end_line=self.end_line,
                 )
             if tok.kind == IDENT and tok.text in ("procedure", "function"):
                 sp = self.parse_subprogram()
@@ -486,8 +522,8 @@ class _Parser:
             if self.is_kw("language") or self.is_kw("external"):
                 self.skip_to_semicolon()
             else:
-                nested, names = self.parse_declarations(calls, 1)
-                self.parse_block_body(calls, name)
+                nested, names, types = self.parse_declarations(calls, 1)
+                body_stmts = self.parse_block_body(calls, name)
                 return Unit(
                     kind,
                     name,
@@ -497,6 +533,9 @@ class _Parser:
                     nested,
                     tuple(calls),
                     frozenset(names | {p.name for p in params}),
+                    body_stmts,
+                    self.end_line,
+                    tuple([(p.name, p.type) for p in params] + types),
                 )
         else:
             self.skip_to_semicolon()
@@ -528,12 +567,21 @@ class _Parser:
             return Unit("trigger", name, line, calls=tuple(calls))
         nested: tuple[Subprogram, ...] = ()
         names: set[str] = set()
+        types: list[tuple[str, str]] = []
         if self.is_kw("declare"):
             self.i += 1
-            nested, names = self.parse_declarations(calls, 1)
-        self.parse_block_body(calls, name)
+            nested, names, types = self.parse_declarations(calls, 1)
+        body_stmts = self.parse_block_body(calls, name)
         return Unit(
-            "trigger", name, line, subprograms=nested, calls=tuple(calls), locals=frozenset(names)
+            "trigger",
+            name,
+            line,
+            subprograms=nested,
+            calls=tuple(calls),
+            locals=frozenset(names),
+            body=body_stmts,
+            end_line=self.end_line,
+            local_types=tuple(types),
         )
 
     def parse_file(self) -> list[Unit]:

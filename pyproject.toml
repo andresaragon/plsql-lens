@@ -36,3 +36,7 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 [tool.mypy]
 strict = true
 files = ["src"]
+
+[tool.coverage.report]
+# SPEC §7: >= 85 % lines on src/, excluding Oracle-container integration paths (none exist yet).
+omit = ["src/plsql_lens/testgen/runner*"]

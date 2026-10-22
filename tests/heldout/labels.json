@@ -1,0 +1,443 @@
+{
+ "corpus/utplsql/core/ut_suite_builder.pkb": [
+  {
+   "rule": "PLL007",
+   "line": 287
+  },
+  {
+   "rule": "PLL007",
+   "line": 288
+  },
+  {
+   "rule": "PLL007",
+   "line": 290
+  }
+ ],
+ "corpus/utplsql/core/ut_suite_cache_manager.pkb": [],
+ "corpus/utplsql/reporters/ut_realtime_reporter.tpb": [
+  {
+   "rule": "PLL007",
+   "line": 40
+  },
+  {
+   "rule": "PLL007",
+   "line": 40
+  },
+  {
+   "rule": "PLL007",
+   "line": 45
+  },
+  {
+   "rule": "PLL007",
+   "line": 48
+  },
+  {
+   "rule": "PLL007",
+   "line": 49
+  },
+  {
+   "rule": "PLL007",
+   "line": 50
+  },
+  {
+   "rule": "PLL007",
+   "line": 57
+  },
+  {
+   "rule": "PLL007",
+   "line": 57
+  },
+  {
+   "rule": "PLL007",
+   "line": 59
+  },
+  {
+   "rule": "PLL007",
+   "line": 61
+  },
+  {
+   "rule": "PLL007",
+   "line": 69
+  },
+  {
+   "rule": "PLL007",
+   "line": 70
+  },
+  {
+   "rule": "PLL007",
+   "line": 75
+  },
+  {
+   "rule": "PLL007",
+   "line": 75
+  },
+  {
+   "rule": "PLL007",
+   "line": 76
+  },
+  {
+   "rule": "PLL007",
+   "line": 81
+  },
+  {
+   "rule": "PLL007",
+   "line": 82
+  },
+  {
+   "rule": "PLL007",
+   "line": 83
+  },
+  {
+   "rule": "PLL007",
+   "line": 93
+  },
+  {
+   "rule": "PLL007",
+   "line": 93
+  },
+  {
+   "rule": "PLL007",
+   "line": 95
+  },
+  {
+   "rule": "PLL007",
+   "line": 95
+  },
+  {
+   "rule": "PLL007",
+   "line": 96
+  },
+  {
+   "rule": "PLL007",
+   "line": 96
+  },
+  {
+   "rule": "PLL007",
+   "line": 97
+  },
+  {
+   "rule": "PLL007",
+   "line": 98
+  },
+  {
+   "rule": "PLL007",
+   "line": 99
+  },
+  {
+   "rule": "PLL007",
+   "line": 100
+  },
+  {
+   "rule": "PLL007",
+   "line": 101
+  },
+  {
+   "rule": "PLL007",
+   "line": 102
+  },
+  {
+   "rule": "PLL007",
+   "line": 103
+  },
+  {
+   "rule": "PLL007",
+   "line": 104
+  },
+  {
+   "rule": "PLL007",
+   "line": 105
+  },
+  {
+   "rule": "PLL007",
+   "line": 105
+  },
+  {
+   "rule": "PLL007",
+   "line": 105
+  },
+  {
+   "rule": "PLL007",
+   "line": 106
+  },
+  {
+   "rule": "PLL007",
+   "line": 108
+  },
+  {
+   "rule": "PLL007",
+   "line": 118
+  },
+  {
+   "rule": "PLL007",
+   "line": 118
+  },
+  {
+   "rule": "PLL007",
+   "line": 119
+  },
+  {
+   "rule": "PLL007",
+   "line": 119
+  },
+  {
+   "rule": "PLL007",
+   "line": 120
+  },
+  {
+   "rule": "PLL007",
+   "line": 121
+  },
+  {
+   "rule": "PLL007",
+   "line": 131
+  },
+  {
+   "rule": "PLL007",
+   "line": 131
+  },
+  {
+   "rule": "PLL007",
+   "line": 132
+  },
+  {
+   "rule": "PLL007",
+   "line": 132
+  },
+  {
+   "rule": "PLL007",
+   "line": 133
+  },
+  {
+   "rule": "PLL007",
+   "line": 133
+  },
+  {
+   "rule": "PLL007",
+   "line": 134
+  },
+  {
+   "rule": "PLL007",
+   "line": 134
+  },
+  {
+   "rule": "PLL007",
+   "line": 135
+  },
+  {
+   "rule": "PLL007",
+   "line": 136
+  },
+  {
+   "rule": "PLL007",
+   "line": 137
+  },
+  {
+   "rule": "PLL007",
+   "line": 138
+  },
+  {
+   "rule": "PLL007",
+   "line": 139
+  },
+  {
+   "rule": "PLL007",
+   "line": 140
+  },
+  {
+   "rule": "PLL007",
+   "line": 141
+  },
+  {
+   "rule": "PLL007",
+   "line": 142
+  },
+  {
+   "rule": "PLL007",
+   "line": 143
+  },
+  {
+   "rule": "PLL007",
+   "line": 143
+  },
+  {
+   "rule": "PLL007",
+   "line": 143
+  },
+  {
+   "rule": "PLL007",
+   "line": 144
+  },
+  {
+   "rule": "PLL007",
+   "line": 145
+  },
+  {
+   "rule": "PLL007",
+   "line": 145
+  },
+  {
+   "rule": "PLL007",
+   "line": 146
+  },
+  {
+   "rule": "PLL007",
+   "line": 147
+  },
+  {
+   "rule": "PLL007",
+   "line": 158
+  },
+  {
+   "rule": "PLL007",
+   "line": 158
+  },
+  {
+   "rule": "PLL007",
+   "line": 159
+  },
+  {
+   "rule": "PLL007",
+   "line": 159
+  },
+  {
+   "rule": "PLL007",
+   "line": 160
+  },
+  {
+   "rule": "PLL007",
+   "line": 161
+  },
+  {
+   "rule": "PLL007",
+   "line": 162
+  },
+  {
+   "rule": "PLL007",
+   "line": 163
+  },
+  {
+   "rule": "PLL007",
+   "line": 173
+  },
+  {
+   "rule": "PLL007",
+   "line": 173
+  },
+  {
+   "rule": "PLL007",
+   "line": 174
+  },
+  {
+   "rule": "PLL007",
+   "line": 174
+  },
+  {
+   "rule": "PLL007",
+   "line": 175
+  },
+  {
+   "rule": "PLL007",
+   "line": 176
+  },
+  {
+   "rule": "PLL007",
+   "line": 177
+  },
+  {
+   "rule": "PLL007",
+   "line": 177
+  },
+  {
+   "rule": "PLL007",
+   "line": 178
+  },
+  {
+   "rule": "PLL007",
+   "line": 178
+  },
+  {
+   "rule": "PLL007",
+   "line": 179
+  },
+  {
+   "rule": "PLL007",
+   "line": 180
+  },
+  {
+   "rule": "PLL007",
+   "line": 181
+  },
+  {
+   "rule": "PLL007",
+   "line": 182
+  },
+  {
+   "rule": "PLL007",
+   "line": 183
+  },
+  {
+   "rule": "PLL007",
+   "line": 184
+  },
+  {
+   "rule": "PLL007",
+   "line": 185
+  },
+  {
+   "rule": "PLL007",
+   "line": 186
+  },
+  {
+   "rule": "PLL007",
+   "line": 187
+  },
+  {
+   "rule": "PLL007",
+   "line": 187
+  },
+  {
+   "rule": "PLL007",
+   "line": 187
+  },
+  {
+   "rule": "PLL007",
+   "line": 188
+  },
+  {
+   "rule": "PLL007",
+   "line": 194
+  },
+  {
+   "rule": "PLL007",
+   "line": 201
+  },
+  {
+   "rule": "PLL007",
+   "line": 201
+  },
+  {
+   "rule": "PLL007",
+   "line": 202
+  },
+  {
+   "rule": "PLL007",
+   "line": 203
+  },
+  {
+   "rule": "PLL007",
+   "line": 230
+  },
+  {
+   "rule": "PLL007",
+   "line": 240
+  },
+  {
+   "rule": "PLL007",
+   "line": 251
+  },
+  {
+   "rule": "PLL007",
+   "line": 276
+  }
+ ]
+}

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from .ir import Call, FileIR, Param, ParseIssue, Subprogram, Unit
+from .ir import Call, FileIR, Param, ParseIssue, Stmt, Subprogram, Unit
 from .structure import parse_source
 
 
@@ -19,6 +19,7 @@ __all__ = [
     "FileIR",
     "Param",
     "ParseIssue",
+    "Stmt",
     "Subprogram",
     "Unit",
     "parse_file",

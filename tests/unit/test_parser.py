@@ -72,7 +72,7 @@ def test_package_body_nested_subprograms_and_calls() -> None:
 
 
 def test_inventory_resolves_edges_and_ignores_local_and_text_matches() -> None:
-    inv = build_inventory([FIXTURES])
+    inv = build_inventory([FIXTURES / "shop.pks", FIXTURES / "shop.pkb"])
     keys = {u.key for u in inv.units}
     assert {"package:shop", "procedure:shop.add_item", "function:shop.total"} <= keys
     edges = {(e.caller, e.callee) for e in inv.edges}
@@ -126,10 +126,24 @@ def test_garbage_does_not_raise() -> None:
 
 
 def test_mermaid_output_is_well_formed() -> None:
-    inv = build_inventory([FIXTURES])
+    inv = build_inventory([FIXTURES / "shop.pks", FIXTURES / "shop.pkb"])
     unit = render_mermaid(inv, "unit")
     assert unit.startswith("flowchart LR")
     assert 'n0["' in unit and "-->" in unit
     pkg = render_mermaid(inv, "package")
     assert "-->" not in pkg  # one package, no inter-package edges
     assert 'n0["shop"]' in pkg
+
+
+def test_local_variable_types_are_recorded() -> None:
+    ir = parse_source(
+        "CREATE PROCEDURE p(a_in NUMBER) IS l_n NUMBER; l_s CONSTANT VARCHAR2(10) := 'x';"
+        " l_d l_t.col%TYPE; CURSOR c IS SELECT 1 FROM dual; BEGIN NULL; END;"
+    )
+    unit = ir.units[0]
+    assert dict(unit.local_types) == {
+        "a_in": "number",
+        "l_n": "number",
+        "l_s": "varchar2(10)",
+        "l_d": "l_t.col%type",
+    }

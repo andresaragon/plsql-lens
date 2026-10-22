@@ -1,0 +1,17 @@
+{
+  "_doc": "Real code from corpus/ (provenance in NOTICE). Expectations were decided by reading the code against docs/rules.md, not from rule output. None of these files is in the held-out reserve.",
+  "cases": [
+    {"file": "corpus/logger/logger.pkb", "rule": "PLL001", "line": 108, "expect": true, "note": "WHEN OTHERS THEN RETURN FALSE in is_number"},
+    {"file": "corpus/utplsql/core/ut_metadata.pkb", "rule": "PLL001", "line": 51, "expect": true, "note": "WHEN OTHERS THEN RETURN FALSE"},
+    {"file": "corpus/utplsql/core/ut_metadata.pkb", "rule": "PLL001", "line": 68, "expect": true, "note": "WHEN OTHERS THEN RETURN FALSE"},
+    {"file": "corpus/logger/logger.pkb", "rule": "PLL001", "line": 2002, "expect": false, "note": "WHEN OTHERS THEN RAISE"},
+    {"file": "corpus/logger/logger.pkb", "rule": "PLL001", "line": 2311, "expect": false, "note": "WHEN OTHERS THEN RAISE (nested block)"},
+    {"file": "corpus/utplsql/core/ut_metadata.pkb", "rule": "PLL002", "line": 42, "expect": true, "note": "view name concatenated into the statement"},
+    {"file": "corpus/utplsql/core/ut_metadata.pkb", "rule": "PLL002", "line": 60, "expect": true, "note": "view name concatenated into the statement"},
+    {"file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql", "rule": "PLL003", "line": 595, "expect": true, "note": "COMMIT inside a FOR loop"},
+    {"file": "corpus/logger/logger.pkb", "rule": "PLL004", "line": 2257, "expect": true, "note": "SELECT INTO in status; sibling blocks handle, enclosing block does not"},
+    {"file": "corpus/logger/logger.pkb", "rule": "PLL004", "line": 1964, "expect": false, "note": "get_pref has WHEN NO_DATA_FOUND"},
+    {"file": "corpus/logger/logger.pkb", "rule": "PLL004", "line": 1055, "expect": false, "note": "SELECT ... FROM dual"},
+    {"file": "corpus/utplsql/core/ut_utils.pkb", "rule": "PLL004", "line": 656, "expect": false, "note": "SELECT ... FROM dual"}
+  ]
+}
