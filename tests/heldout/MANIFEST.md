@@ -16,3 +16,9 @@ final measurement (F4).
 - `'</'` (2 chars) and `'.%'` count as literals (only SINGLE non-alphanumeric chars are exempt); `'.%'` occurs only twice, so unlabeled.
 - PLL004 exempt cases in the cache manager: `SELECT MIN(..) INTO`, `SELECT COUNT(1) INTO .. FROM DUAL`, and `BULK COLLECT INTO`. `COMMIT`s there are outside any loop (PLL003 none).
 - `to_char(x, fmt)` and `to_char(x)` are not PLL006(a) (only TO_DATE/TO_TIMESTAMP).
+
+## Addendum: two more sealed files (same method; labeled by reading only)
+- Added `corpus/utplsql/core/annotations/ut_annotation_manager.pkb` (4 PLL002: dynamic SQL via `||` at 37, 73, 108 `OPEN..FOR`, 266 `OPEN..FOR`; no other rule) and `corpus/utplsql/core/types/ut_run_info.tpb` (5 PLL002 + 5 PLL007). `ut_run_info.tpb` is a TYPE body, treated as one unit (as above).
+- `'select /*+ no_parallel */ '` inside a string literal is a real literal (not a hint): 5 identical occurrences in `ut_run_info.tpb` (23/30/34/39/43); the later literals of those statements differ, so unlabeled.
+- Manager: no PLL007. Multi-line `q'[...]'` literals count as one literal each; near-duplicates differ in whitespace/text (e.g. lines 46-47 vs 87-88), `')'` and `'Y'` are exempt/only 2x. `200` (4x) and `250` (2x) occur only in subprogram DECLARE sections (not executable code), so unlabeled.
+- Manager PLL004: only `BULK COLLECT INTO` (line 286); PLL006: no TO_DATE; comparisons involve calls, `%rowcount`, `.count`, `ora_sysevent`, not simple typed operands. No COMMIT/ROLLBACK or DML anywhere.

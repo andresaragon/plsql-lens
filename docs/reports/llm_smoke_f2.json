@@ -1,0 +1,40 @@
+{
+  "version": "0.1.0",
+  "findings": [
+    {
+      "rule_id": "PLL001",
+      "severity": "high",
+      "file": "tests/fixtures/rules/PLL001/pos_1.pkb",
+      "line": 10,
+      "col": 10,
+      "message": "WHEN OTHERS handler swallows the error: no re-raise, logging or use of SQLERRM/SQLCODE",
+      "rationale": "A catch-all handler that neither re-raises nor records the error hides failures from callers and from operators.",
+      "fix_hint": "Log the error and re-raise with RAISE, or handle specific exceptions.",
+      "unit": "pkg_order_cleanup.archive_order",
+      "explanation": "The `WHEN OTHERS THEN NULL;` handler in `archive_order` discards any error raised by `pkg_order_store.set_status` or `pkg_order_store.touch`. The caller gets no exception, so an order can fail to be archived while the caller assumes it succeeded, and nothing is logged for operators to find. Re-raising the original exception preserves the failure for the caller.",
+      "patch": "  EXCEPTION\n    WHEN OTHERS THEN\n      RAISE;"
+    },
+    {
+      "rule_id": "PLL001",
+      "severity": "high",
+      "file": "tests/fixtures/rules/PLL001/pos_1.pkb",
+      "line": 28,
+      "col": 10,
+      "message": "WHEN OTHERS handler swallows the error: no re-raise, logging or use of SQLERRM/SQLCODE",
+      "rationale": "A catch-all handler that neither re-raises nor records the error hides failures from callers and from operators.",
+      "fix_hint": "Log the error and re-raise with RAISE, or handle specific exceptions.",
+      "unit": "pkg_order_cleanup.refresh_totals",
+      "explanation": null,
+      "patch": null
+    }
+  ],
+  "llm_usage": {
+    "calls": 1,
+    "input_tokens": 40715,
+    "output_tokens": 400,
+    "cost_usd": 0.0030608000000000007,
+    "models": [
+      "claude-haiku-5-5"
+    ]
+  }
+}

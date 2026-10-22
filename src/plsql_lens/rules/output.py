@@ -32,6 +32,22 @@ def to_table(findings: Sequence[Finding]) -> str:
     return "\n".join(lines) + "\n"
 
 
+Notes = Sequence["tuple[str | None, str | None]"]  # per finding: (explanation, patch)
+
+
+def table_notes(findings: Sequence[Finding], notes: Notes) -> str:
+    """Append-only section listing LLM explanations under a table."""
+    parts = []
+    for f, (expl, patch) in zip(findings, notes, strict=False):
+        if expl:
+            parts.append(f"\n{f.rule_id} {f.location}\n  {expl}")
+            if patch:
+                parts.append(
+                    "  Suggested patch:\n" + "\n".join(f"    {ln}" for ln in patch.splitlines())
+                )
+    return "\n".join(parts) + ("\n" if parts else "")
+
+
 def _finding_dict(f: Finding) -> dict[str, Any]:
     return {
         "rule_id": f.rule_id,
@@ -46,12 +62,21 @@ def _finding_dict(f: Finding) -> dict[str, Any]:
     }
 
 
-def to_json(findings: Sequence[Finding]) -> str:
-    doc = {"version": __version__, "findings": [_finding_dict(f) for f in findings]}
+def to_json(
+    findings: Sequence[Finding],
+    notes: Notes | None = None,
+    usage: dict[str, object] | None = None,
+) -> str:
+    items = [_finding_dict(f) for f in findings]
+    for item, (expl, patch) in zip(items, notes or [], strict=False):
+        item["explanation"], item["patch"] = expl, patch
+    doc: dict[str, Any] = {"version": __version__, "findings": items}
+    if usage is not None:
+        doc["llm_usage"] = usage
     return json.dumps(doc, indent=2) + "\n"
 
 
-def to_sarif(findings: Sequence[Finding]) -> str:
+def to_sarif(findings: Sequence[Finding], notes: Notes | None = None) -> str:
     ids = sorted(RULES)
     rules = [
         {
@@ -79,6 +104,9 @@ def to_sarif(findings: Sequence[Finding]) -> str:
             ],
         }
         results.append(res)
+    for res, (expl, patch) in zip(results, notes or [], strict=False):
+        if expl:
+            res["properties"] = {"explanation": expl, "suggestedPatch": patch}
     doc = {
         "$schema": _SARIF_SCHEMA,
         "version": "2.1.0",

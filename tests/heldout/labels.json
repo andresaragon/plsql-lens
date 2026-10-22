@@ -439,5 +439,65 @@
    "rule": "PLL007",
    "line": 276
   }
+ ],
+ "corpus/utplsql/core/annotations/ut_annotation_manager.pkb": [
+  {
+   "rule": "PLL002",
+   "line": 37
+  },
+  {
+   "rule": "PLL002",
+   "line": 73
+  },
+  {
+   "rule": "PLL002",
+   "line": 108
+  },
+  {
+   "rule": "PLL002",
+   "line": 266
+  }
+ ],
+ "corpus/utplsql/core/types/ut_run_info.tpb": [
+  {
+   "rule": "PLL002",
+   "line": 22
+  },
+  {
+   "rule": "PLL002",
+   "line": 29
+  },
+  {
+   "rule": "PLL002",
+   "line": 33
+  },
+  {
+   "rule": "PLL002",
+   "line": 38
+  },
+  {
+   "rule": "PLL002",
+   "line": 42
+  },
+  {
+   "rule": "PLL007",
+   "line": 23
+  },
+  {
+   "rule": "PLL007",
+   "line": 30
+  },
+  {
+   "rule": "PLL007",
+   "line": 34
+  },
+  {
+   "rule": "PLL007",
+   "line": 39
+  },
+  {
+   "rule": "PLL007",
+   "line": 43
+  }
  ]
 }

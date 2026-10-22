@@ -10,9 +10,12 @@ from typing import Annotated
 import typer
 
 from .inventory import build_inventory, collect_files, render_mermaid
+from .llm import LLMError, UsageLog, explain_findings, make_provider
 from .parser import parse_file
 from .rules import RULES, review
-from .rules.output import to_json, to_sarif, to_table
+from .rules.output import table_notes, to_json, to_sarif, to_table
+
+SEVERITY_RANK = {"info": 0, "low": 1, "medium": 2, "high": 3}
 
 app = typer.Typer(help="Analyze Oracle PL/SQL packages.", no_args_is_help=True)
 
@@ -69,6 +72,19 @@ def review_cmd(
     rules: Annotated[
         str | None, typer.Option("--rules", help="Comma-separated rule ids (default: all).")
     ] = None,
+    explain: Annotated[
+        bool, typer.Option("--explain", help="Ask an LLM to explain findings (never changes them).")
+    ] = False,
+    llm: Annotated[str, typer.Option("--llm", help="claude-cli | anthropic-api | fake")] = (
+        "claude-cli"
+    ),
+    llm_model: Annotated[str | None, typer.Option("--llm-model")] = None,
+    llm_recordings: Annotated[
+        Path | None, typer.Option("--llm-recordings", help="Recorded responses (fake provider).")
+    ] = None,
+    explain_max: Annotated[
+        int, typer.Option("--explain-max", help="Max findings sent to the LLM (most severe first).")
+    ] = 10,
 ) -> None:
     """Run the review rules on PATH."""
     selected = [r.strip().upper() for r in rules.split(",")] if rules else None
@@ -76,14 +92,43 @@ def review_cmd(
     if unknown:
         raise typer.BadParameter(f"unknown rule(s): {', '.join(unknown)}", param_hint="--rules")
     findings = []
+    sources: dict[str, str] = {}
     for f in collect_files([path]):
-        findings.extend(review(parse_file(f), selected))
-    render = {
-        ReviewFormat.table: to_table,
-        ReviewFormat.json: to_json,
-        ReviewFormat.sarif: to_sarif,
-    }
-    text = render[fmt](findings)
+        ir = parse_file(f)
+        found = review(ir, selected)
+        if found and explain:
+            sources[str(f)] = f.read_text(encoding="utf-8", errors="replace")
+        findings.extend(found)
+    notes = None
+    usage = None
+    if explain:
+        try:
+            provider = make_provider(llm, model=llm_model, recordings=llm_recordings)
+        except LLMError as e:
+            raise typer.BadParameter(str(e), param_hint="--llm") from e
+        order = sorted(range(len(findings)), key=lambda i: -SEVERITY_RANK[findings[i].severity])
+        log = UsageLog()
+        done = explain_findings([findings[i] for i in order], sources, provider, log, explain_max)
+        by_index = {i: e for i, e in zip(order, done, strict=True)}
+        notes = [(by_index[i].explanation, by_index[i].patch) for i in range(len(findings))]
+        usage = log.to_dict()
+        failures = [e.error for e in done if e.error and "limit" not in e.error]
+        if failures:
+            typer.echo(
+                f"warning: {len(failures)} finding(s) not explained: {failures[0]}", err=True
+            )
+        typer.echo(
+            f"LLM usage: {log.calls} calls, {log.input_tokens} in / "
+            f"{log.output_tokens} out tokens, "
+            f"cost {usage['cost_usd']}",
+            err=True,
+        )
+    if fmt is ReviewFormat.table:
+        text = to_table(findings) + (table_notes(findings, notes) if notes else "")
+    elif fmt is ReviewFormat.json:
+        text = to_json(findings, notes, usage)
+    else:
+        text = to_sarif(findings, notes)
     if output is None:
         typer.echo(text, nl=False)
     else:
