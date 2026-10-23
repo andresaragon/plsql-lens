@@ -108,7 +108,9 @@ uv run plsql-lens review tests/fixtures/rules/PLL001/pos_1.pkb --explain --expla
 Rough estimate from token volume: lead ≈ 3–4 USD, six Sonnet subagent runs (fixtures ×2, held-out labelling
 ×2, QC review, plus the resumed F1 labeler is not counted here) ≈ 3–4 USD, LLM smoke call 0.003 USD.
 **≈ 6–8 USD against the 12 USD budget (projected ceiling 15 USD never approached); reserve untouched.**
-Please compare with `/cost` and correct this line.
+**Measured (2026-10-22):** the cloud credit balance went from 69 to 59 USD across F1 and F2 together,
+so F1 + F2 cost **10 USD** against a combined budget of 21 USD (estimates added up to 11–14 USD).
+The balance cannot be split per phase.
 
 ## Left for F3 / F4
 * F3: utPLSQL generation + execution (Docker availability to be verified first).

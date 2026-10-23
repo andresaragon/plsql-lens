@@ -60,4 +60,5 @@ make demo-f1     # regenerates docs/reports/phase-1/{inventory.json,callgraph.mm
 Budget 9 USD (estimate 8–11). **I cannot read `/cost` from inside this session**, so the figure below
 is a rough estimate from token usage, not a measurement: lead ≈ 3–4 USD plus three Sonnet labeling
 subagent runs (≈ 0.9 + 0.8 + 0.2 USD) → **≈ 5–6 USD, within budget; the reserve was not touched.**
-Please check `/cost` and correct this line.
+**Measured (2026-10-22):** the cloud credit balance went from 69 to 59 USD across F1 and F2 together,
+so F1 + F2 cost **10 USD** against a combined budget of 21 USD. The balance cannot be split per phase.
