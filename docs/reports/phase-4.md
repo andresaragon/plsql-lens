@@ -70,3 +70,5 @@ make bench-llm   # re-run the LLM-only baseline — COSTS MONEY (capped at 2 USD
   credit balance at 10 USD; F3 was not measured. Subtracting, F4 so far is roughly 6–13 USD depending on F3's real
   cost, **best guess ≈ 10 USD** including five Sonnet subagent runs (four template writers, one labeler). This is an
   estimate, not a measurement; please compare with your credit balance. No reserve used.
+* **Measured (2026-10-22):** the cloud credit balance went from 50 to 37 USD during F4, so F4 cost **13 USD**
+  against its 14 USD budget, including the LLM baseline. The session meter (25.86 USD cumulative) undercounted.
