@@ -1,0 +1,8 @@
+{
+ "calls": 1,
+ "input_tokens": 7505,
+ "output_tokens": 3830,
+ "cost_usd": 0.068316,
+ "repair_rounds": 0,
+ "model": "claude-sonnet-5-5"
+}

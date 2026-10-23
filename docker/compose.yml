@@ -1,0 +1,15 @@
+# Oracle Database Free for the F3 integration tests.
+# The image is pulled from Docker Hub under Oracle's own license terms; it is not redistributed here.
+# ORACLE_PASSWORD must be set in the environment (docker/up.sh generates one). Never commit it.
+services:
+  oracle:
+    image: gvenzl/oracle-free:23.26.3-slim
+    container_name: plsql-lens-oracle
+    environment:
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD:?set ORACLE_PASSWORD in the environment}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 90
+      start_period: 30s

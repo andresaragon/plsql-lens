@@ -1,0 +1,2687 @@
+{
+  "units": [
+    {
+      "id": "pkg_calc_round_money",
+      "unit": "pkg_calc.round_money",
+      "difficulty": "easy",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 15,
+      "passed": 15,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 20,
+      "calls": 1,
+      "input_tokens": 2745,
+      "output_tokens": 1691,
+      "cost_usd": 0.027886,
+      "cases": [
+        {
+          "name": "Rounds down when third decimal is below 5",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Rounds up when third decimal is above 5",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Half rounds away from zero for positive values",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Half rounds away from zero for negative values",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Negative value rounds down in magnitude",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Value with two decimals is unchanged",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Integer value is unchanged",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Zero returns zero",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Value just below zero rounds to zero",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Boundary 0.005 rounds to 0.01",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Boundary 0.004 rounds to 0",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Carry over to the integer part",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Large value is rounded correctly",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL in returns NULL out",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Result matches ROUND from SQL",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "pkg_calc_percent_of",
+      "unit": "pkg_calc.percent_of",
+      "difficulty": "easy",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 17,
+      "passed": 17,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 17,
+      "calls": 1,
+      "input_tokens": 2789,
+      "output_tokens": 1859,
+      "cost_usd": 0.029741999999999998,
+      "cases": [
+        {
+          "name": "15 percent of 200 is 30",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Result is rounded to 2 decimals",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Half is rounded away from zero for positive values",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Half is rounded away from zero for negative values",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Zero percent returns zero",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Zero value returns zero",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "100 percent returns the value itself",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Percent above 100 increases the value",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Negative percent gives negative result",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Negative value gives negative result",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Two negatives give positive result",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Very small result rounds to zero",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Fractional percent is supported",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL value returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL percent returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Both NULL returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Result agrees with independent SQL computation",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "pkg_calc_safe_divide",
+      "unit": "pkg_calc.safe_divide",
+      "difficulty": "easy",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 14,
+      "passed": 14,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 13,
+      "calls": 1,
+      "input_tokens": 2786,
+      "output_tokens": 1365,
+      "cost_usd": 0.02479,
+      "cases": [
+        {
+          "name": "Divides evenly",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Non-integer result",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Negative dividend",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Negative divisor",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Both negative gives positive",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Zero dividend with non-zero divisor returns zero",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Divisor of one returns dividend",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Divisor zero returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Divisor NULL returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Dividend NULL with valid divisor returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Both NULL returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Zero divided by zero returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Very small divisor gives large result",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Does not raise for zero divisor",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "pkg_calc_clamp",
+      "unit": "pkg_calc.clamp",
+      "difficulty": "medium",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 16,
+      "passed": 16,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 21,
+      "calls": 1,
+      "input_tokens": 2811,
+      "output_tokens": 2165,
+      "cost_usd": 0.0219349,
+      "cases": [
+        {
+          "name": "Value inside range is returned unchanged",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Value below lower bound returns lower bound",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Value above upper bound returns upper bound",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Value equal to lower bound returns lower bound",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Value equal to upper bound returns upper bound",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Equal bounds return that bound",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Negative range works",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Range spanning zero works",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Decimal values are preserved",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL value returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL lower bound returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL upper bound returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "All NULL inputs return NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Lower bound greater than upper bound raises ORA-20001",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Inverted bounds raise ORA-20001 even when value is NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Inverted negative bounds raise ORA-20001",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "pkg_calc_is_leap_year",
+      "unit": "pkg_calc.is_leap_year",
+      "difficulty": "easy",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 10,
+      "passed": 10,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 24,
+      "calls": 1,
+      "input_tokens": 2823,
+      "output_tokens": 1520,
+      "cost_usd": 0.026488000000000005,
+      "cases": [
+        {
+          "name": "Year divisible by 4 and not by 100 is a leap year",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Year not divisible by 4 is not a leap year",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Century year not divisible by 400 is not a leap year",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Century year divisible by 400 is a leap year",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL year returns FALSE",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Year zero is divisible by 400 and is a leap year",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Negative leap year is handled",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Negative non-leap year is handled",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Years adjacent to a leap year are not leap years",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Result is never NULL for NULL input",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "pkg_text_slugify",
+      "unit": "pkg_text.slugify",
+      "difficulty": "medium",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 11,
+      "passed": 0,
+      "failed": 0,
+      "errored": 11,
+      "skipped": 0,
+      "assertions": 11,
+      "calls": 1,
+      "input_tokens": 2878,
+      "output_tokens": 1050,
+      "cost_usd": 0.022008,
+      "cases": [
+        {
+          "name": "Simple words are lower-cased and joined with a dash",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 5\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 5\nORA-06512: at line 6"
+        },
+        {
+          "name": "Already a slug is returned unchanged",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 10\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 10\nORA-06512: at line 6"
+        },
+        {
+          "name": "Runs of non-alphanumerics collapse into a single dash",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 15\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 15\nORA-06512: at line 6"
+        },
+        {
+          "name": "Leading and trailing separators are removed",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 20\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 20\nORA-06512: at line 6"
+        },
+        {
+          "name": "NULL input returns NULL",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 25\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 25\nORA-06512: at line 6"
+        },
+        {
+          "name": "Only separators returns NULL because the result is empty",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 30\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 30\nORA-06512: at line 6"
+        },
+        {
+          "name": "Empty string returns NULL",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 35\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 35\nORA-06512: at line 6"
+        },
+        {
+          "name": "Digits are preserved",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 40\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 40\nORA-06512: at line 6"
+        },
+        {
+          "name": "Single character input",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 45\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 45\nORA-06512: at line 6"
+        },
+        {
+          "name": "Accented characters are treated as separators",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 50\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 50\nORA-06512: at line 6"
+        },
+        {
+          "name": "Upper case is lowered",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 55\nORA-06512: at \"PLLT.TEST_PKG_TEXT_SLUGIFY\", line 55\nORA-06512: at line 6"
+        }
+      ]
+    },
+    {
+      "id": "pkg_text_mask_email",
+      "unit": "pkg_text.mask_email",
+      "difficulty": "medium",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 11,
+      "passed": 0,
+      "failed": 0,
+      "errored": 11,
+      "skipped": 0,
+      "assertions": 13,
+      "calls": 1,
+      "input_tokens": 2898,
+      "output_tokens": 1775,
+      "cost_usd": 0.029338000000000003,
+      "cases": [
+        {
+          "name": "Typical address keeps first char and domain",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 5\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 5\nORA-06512: at line 6"
+        },
+        {
+          "name": "Single-character local part is masked",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 10\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 10\nORA-06512: at line 6"
+        },
+        {
+          "name": "At sign at position 2 is the smallest valid boundary",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 15\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 15\nORA-06512: at line 6"
+        },
+        {
+          "name": "At sign as first character returns NULL",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 20\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 20\nORA-06512: at line 6"
+        },
+        {
+          "name": "No at sign returns NULL",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 25\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 25\nORA-06512: at line 6"
+        },
+        {
+          "name": "Only an at sign returns NULL",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 30\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 30\nORA-06512: at line 6"
+        },
+        {
+          "name": "NULL input yields only the mask because NULL concatenation is ignored",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 37\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 37\nORA-06512: at line 6"
+        },
+        {
+          "name": "Empty string behaves like NULL in Oracle",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 42\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 42\nORA-06512: at line 6"
+        },
+        {
+          "name": "Trailing at sign with no domain",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 47\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 47\nORA-06512: at line 6"
+        },
+        {
+          "name": "Only the first at sign splits the address",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 52\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 52\nORA-06512: at line 6"
+        },
+        {
+          "name": "Case and special first character are preserved",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 57\nORA-06512: at \"PLLT.TEST_PKG_TEXT_MASK_EMAIL\", line 57\nORA-06512: at line 6"
+        }
+      ]
+    },
+    {
+      "id": "pkg_text_is_palindrome",
+      "unit": "pkg_text.is_palindrome",
+      "difficulty": "medium",
+      "compiled": false,
+      "ran": false,
+      "compile_error": "PACKAGE BODY|74:63 PLS-00201: identifier 'REVERSE' must be declared\nPACKAGE BODY|0:0 PL/SQL: Compilation unit analysis terminated",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 0,
+      "passed": 0,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 0,
+      "calls": 1,
+      "input_tokens": 2928,
+      "output_tokens": 1523,
+      "cost_usd": 0.026938000000000004,
+      "cases": []
+    },
+    {
+      "id": "pkg_text_truncate_text",
+      "unit": "pkg_text.truncate_text",
+      "difficulty": "medium",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 15,
+      "passed": 0,
+      "failed": 4,
+      "errored": 11,
+      "skipped": 0,
+      "assertions": 12,
+      "calls": 1,
+      "input_tokens": 2938,
+      "output_tokens": 2348,
+      "cost_usd": 0.035227999999999995,
+      "cases": [
+        {
+          "name": "Text shorter than max length is returned unchanged",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 5\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 5\nORA-06512: at line 6"
+        },
+        {
+          "name": "Text with length equal to max length is returned unchanged",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 10\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 10\nORA-06512: at line 6"
+        },
+        {
+          "name": "Text one character over max length is truncated with ellipsis",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 15\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 15\nORA-06512: at line 6"
+        },
+        {
+          "name": "Long text is cut to max length ending with ellipsis",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 20\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 20\nORA-06512: at line 6"
+        },
+        {
+          "name": "Truncated result has exactly max length characters",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 26\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 26\nORA-06512: at line 6"
+        },
+        {
+          "name": "Minimum allowed max length 4 with fitting text returns text",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 33\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 33\nORA-06512: at line 6"
+        },
+        {
+          "name": "Minimum allowed max length 4 with longer text returns one char plus ellipsis",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 38\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 38\nORA-06512: at line 6"
+        },
+        {
+          "name": "Max length 3 raises ORA-20002",
+          "status": "failed",
+          "message": "Actual: -4063 was expected to equal: -20002\nORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 44\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 44\nORA-06512: at line 6"
+        },
+        {
+          "name": "Max length 0 raises ORA-20002",
+          "status": "failed",
+          "message": "Actual: -4063 was expected to equal: -20002\nORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 50\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 50\nORA-06512: at line 6"
+        },
+        {
+          "name": "Negative max length raises ORA-20002",
+          "status": "failed",
+          "message": "Actual: -4063 was expected to equal: -20002\nORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 56\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 56\nORA-06512: at line 6"
+        },
+        {
+          "name": "Invalid max length raises even when text is NULL",
+          "status": "failed",
+          "message": "Actual: -4063 was expected to equal: -20002\nORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 62\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 62\nORA-06512: at line 6"
+        },
+        {
+          "name": "NULL text returns NULL as documented",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 68\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 68\nORA-06512: at line 6"
+        },
+        {
+          "name": "Empty string text returns NULL",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 73\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 73\nORA-06512: at line 6"
+        },
+        {
+          "name": "NULL max length with non-null text returns NULL as documented",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 79\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 79\nORA-06512: at line 6"
+        },
+        {
+          "name": "Text with spaces and punctuation is truncated by characters",
+          "status": "errored",
+          "message": "ORA-04063: package body \"PLLT.PKG_TEXT\" has errors\nORA-06508: PL/SQL: could not find program unit being called: \"PLLT.PKG_TEXT\"\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 84\nORA-06512: at \"PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT\", line 84\nORA-06512: at line 6"
+        }
+      ]
+    },
+    {
+      "id": "pkg_orders_create_order",
+      "unit": "pkg_orders.create_order",
+      "difficulty": "hard",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 14,
+      "calls": 1,
+      "input_tokens": 3737,
+      "output_tokens": 2480,
+      "cost_usd": 0.039744,
+      "cases": [
+        {
+          "name": "Creates an order and returns a non-null id",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Inserted row exists with the given customer",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "New order gets default status NEW",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "created_at is populated",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Customer is trimmed before insert",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Two calls return different, increasing ids",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Customer of exactly 50 characters is accepted",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Customer of 50 characters padded with spaces is accepted after trim",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Customer of 51 characters fails with value too large",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL customer raises ORA-20010",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Empty string customer raises ORA-20010",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Blank customer raises ORA-20010",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Blank customer inserts no row and leaves id NULL",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "pkg_orders_add_item",
+      "unit": "pkg_orders.add_item",
+      "difficulty": "hard",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 27,
+      "passed": 27,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 24,
+      "calls": 1,
+      "input_tokens": 3940,
+      "output_tokens": 5484,
+      "cost_usd": 0.0552378,
+      "cases": [
+        {
+          "name": "Adds a line to a NEW order with the given values",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Adds several lines to the same NEW order",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Same SKU can be added twice as separate lines",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Added line is reflected in order_total",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Adding to one order does not touch another order",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Boundary: minimum qty of 1",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Boundary: maximum qty 999999",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Boundary: unit price of zero is allowed",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Boundary: maximum unit price 99999999.99",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Boundary: SKU of exactly 20 characters",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Unit price with extra decimals is rounded to 2 places",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Order not found raises ORA-20011 and inserts nothing",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Order not found raises ORA-20011",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL order id raises ORA-20011",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "PAID order raises ORA-20011 and inserts nothing",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "PAID order raises ORA-20011",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "CANCELLED order raises ORA-20011",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL sku raises ORA-01400",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL qty raises ORA-01400",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL unit price raises ORA-01400",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Zero qty violates check constraint",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Negative qty violates check constraint",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Negative unit price violates check constraint",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Qty above 6 digits raises ORA-01438",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Unit price above precision raises ORA-01438",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "SKU longer than 20 characters raises ORA-12899",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Failed insert leaves no lines on the order",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "pkg_orders_order_total",
+      "unit": "pkg_orders.order_total",
+      "difficulty": "hard",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 15,
+      "passed": 15,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 14,
+      "calls": 1,
+      "input_tokens": 3877,
+      "output_tokens": 2967,
+      "cost_usd": 0.045174000000000006,
+      "cases": [
+        {
+          "name": "Order without items returns 0",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Single item returns qty * unit_price",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Multiple items are summed",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Decimal prices are not rounded",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Boundary: qty 1 and price 0 gives 0",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Boundary: minimum qty 1 with minimum non-zero price",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Boundary: maximum qty and price fit in the result",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Only items of the requested order are summed",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Total of a PAID order is calculated",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Total of a CANCELLED order is still calculated",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Result matches independent SQL calculation",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Function does not modify data",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Missing order raises ORA-20012",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL order id raises ORA-20012",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Negative order id raises ORA-20012",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "pkg_orders_cancel_order",
+      "unit": "pkg_orders.cancel_order",
+      "difficulty": "hard",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 10,
+      "passed": 10,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 9,
+      "calls": 1,
+      "input_tokens": 3801,
+      "output_tokens": 2319,
+      "cost_usd": 0.03839,
+      "cases": [
+        {
+          "name": "Cancels a NEW order",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Cancels a PAID order",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Cancelling does not change other orders",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Cancelling does not change customer of the order",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Cancelling an already cancelled order raises ORA-20013",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Second cancel of the same order raises ORA-20013 and status stays CANCELLED",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Missing order raises ORA-20012",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL order id raises ORA-20012",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Zero order id raises ORA-20012",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Negative order id raises ORA-20012",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "pkg_orders_open_orders",
+      "unit": "pkg_orders.open_orders",
+      "difficulty": "hard",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 10,
+      "passed": 10,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 20,
+      "calls": 1,
+      "input_tokens": 3701,
+      "output_tokens": 3933,
+      "cost_usd": 0.05413,
+      "cases": [
+        {
+          "name": "A NEW order is returned by the cursor",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "A PAID order is returned by the cursor",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "A CANCELLED order is not returned",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "An order cancelled after creation disappears from the result",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Rows are returned in ascending order_id order",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Cursor content equals an independent query, in the same order",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Cursor is empty when no NEW or PAID order exists",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Exactly one row is returned for a single open order when all others are cancelled",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Cursor is a snapshot: orders created after opening are not visible",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Mixed statuses: only NEW and PAID are returned",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "pkg_orders_apply_bulk_discount",
+      "unit": "pkg_orders.apply_bulk_discount",
+      "difficulty": "hard",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 17,
+      "passed": 17,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 20,
+      "calls": 1,
+      "input_tokens": 3992,
+      "output_tokens": 4684,
+      "cost_usd": 0.062804,
+      "cases": [
+        {
+          "name": "NULL percentage raises ORA-20014",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Zero percentage raises ORA-20014",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Negative percentage raises ORA-20014",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Percentage just above 50 raises ORA-20014",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Percentage 100 raises ORA-20014",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Invalid percentage leaves prices unchanged",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Returns number of lines in NEW orders",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Reduces unit price by the given percentage",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Result is rounded to 2 decimals",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Upper boundary 50 is accepted",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Small positive percentage 0.01 is accepted",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "PAID orders are not discounted",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "CANCELLED orders are not discounted",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Zero unit price stays zero",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NEW order without items does not change the count",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "All lines of one order are discounted and qty is unchanged",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Applying twice compounds the discount",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "pkg_hr_stats_headcount",
+      "unit": "pkg_hr_stats.headcount",
+      "difficulty": "medium",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 8,
+      "passed": 1,
+      "failed": 0,
+      "errored": 7,
+      "skipped": 0,
+      "assertions": 13,
+      "calls": 1,
+      "input_tokens": 3200,
+      "output_tokens": 2564,
+      "cost_usd": 0.038436,
+      "cases": [
+        {
+          "name": "Returns 0 for a department without employees",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Returns 1 for a department with a single employee - lower boundary",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 32\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 32\nORA-06512: at line 6"
+        },
+        {
+          "name": "Counts all employees of a department",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 39\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 39\nORA-06512: at line 6"
+        },
+        {
+          "name": "Employees of other departments are not counted",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 49\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 49\nORA-06512: at line 6"
+        },
+        {
+          "name": "NULL department id returns 0",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 58\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 58\nORA-06512: at line 6"
+        },
+        {
+          "name": "Employees with NULL department are not counted for a real department",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 65\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 65\nORA-06512: at line 6"
+        },
+        {
+          "name": "Count follows inserts and deletes",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 74\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 74\nORA-06512: at line 6"
+        },
+        {
+          "name": "Result equals independent count query for an unused department after inserts",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 87\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_HEADCOUNT\", line 87\nORA-06512: at line 6"
+        }
+      ]
+    },
+    {
+      "id": "pkg_hr_stats_avg_salary",
+      "unit": "pkg_hr_stats.avg_salary",
+      "difficulty": "medium",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 9,
+      "passed": 3,
+      "failed": 0,
+      "errored": 6,
+      "skipped": 0,
+      "assertions": 11,
+      "calls": 1,
+      "input_tokens": 3222,
+      "output_tokens": 2330,
+      "cost_usd": 0.036184,
+      "cases": [
+        {
+          "name": "Average of several employees",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 14\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 21\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 14\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 21\nORA-06512: at line 6"
+        },
+        {
+          "name": "Result is rounded to 2 decimals",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 14\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 30\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 14\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 30\nORA-06512: at line 6"
+        },
+        {
+          "name": "Single employee returns own salary",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 14\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 38\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 14\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 38\nORA-06512: at line 6"
+        },
+        {
+          "name": "Minimum salary boundary 0.01",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 14\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 45\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 14\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 45\nORA-06512: at line 6"
+        },
+        {
+          "name": "NULL salaries are ignored by the average",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 14\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 52\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 14\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 52\nORA-06512: at line 6"
+        },
+        {
+          "name": "Other departments do not affect the result",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 14\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 62\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 14\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_AVG_SALARY\", line 62\nORA-06512: at line 6"
+        },
+        {
+          "name": "Department without employees returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL department returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Matches independent SQL for an existing department",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "pkg_hr_stats_top_earner",
+      "unit": "pkg_hr_stats.top_earner",
+      "difficulty": "hard",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 7,
+      "passed": 3,
+      "failed": 0,
+      "errored": 4,
+      "skipped": 0,
+      "assertions": 7,
+      "calls": 1,
+      "input_tokens": 3274,
+      "output_tokens": 2612,
+      "cost_usd": 0.039212000000000004,
+      "cases": [
+        {
+          "name": "Single employee department returns that employee",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 27\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 27\nORA-06512: at line 6"
+        },
+        {
+          "name": "Returns the best paid employee among several",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 35\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 35\nORA-06512: at line 6"
+        },
+        {
+          "name": "Tie on salary returns the lowest employee_id",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 46\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 46\nORA-06512: at line 6"
+        },
+        {
+          "name": "Employees of other departments are ignored",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.EMP_JOB_FK) violated - parent key not found\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 58\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 19\nORA-06512: at \"PLLT.TEST_PKG_HR_STATS_TOP_EARNER\", line 58\nORA-06512: at line 6"
+        },
+        {
+          "name": "Result matches independent query on existing data",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Empty department raises ORA-20020",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL department raises ORA-20020",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "pkg_hr_stats_give_raise",
+      "unit": "pkg_hr_stats.give_raise",
+      "difficulty": "hard",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 14,
+      "passed": 14,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 9,
+      "calls": 1,
+      "input_tokens": 3320,
+      "output_tokens": 2881,
+      "cost_usd": 0.042086,
+      "cases": [
+        {
+          "name": "Raises salary by 10 percent",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Raises salary by the maximum 20 percent",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Smallest positive percentage 0.01 is applied",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Result is rounded to 2 decimals",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Only the targeted employee is changed",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Two consecutive raises compound",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Zero percent raises ORA-20021",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Negative percent raises ORA-20021",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Percent just above 20 raises ORA-20021",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL percent raises ORA-20021",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Invalid percent leaves salary unchanged",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Invalid percent is checked before employee existence",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Unknown employee raises ORA-20022",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL employee id raises ORA-20022",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "logger_convert_level_char_to_num",
+      "unit": "logger.convert_level_char_to_num",
+      "difficulty": "easy",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 20,
+      "passed": 20,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 35,
+      "calls": 1,
+      "input_tokens": 7012,
+      "output_tokens": 2994,
+      "cost_usd": 0.057984,
+      "cases": [
+        {
+          "name": "OFF maps to 0",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "PERMANENT maps to 1",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "ERROR maps to 2",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "WARNING maps to 4",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "INFORMATION maps to 8",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "DEBUG maps to 16",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "TIMING maps to 32",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "SYS_CONTEXT maps to 64",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "APEX maps to 128",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Results match the logger package constants",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Unknown level name returns -1",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL input returns -1",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Empty string is treated as NULL and returns -1",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Lowercase name is not matched and returns -1",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Mixed case name is not matched and returns -1",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Leading and trailing spaces are not trimmed and return -1",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Numeric string is not a valid level name and returns -1",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Partial name returns -1",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "All valid levels return distinct values",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Round trip with convert_level_num_to_char for valid levels",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "logger_convert_level_num_to_char",
+      "unit": "logger.convert_level_num_to_char",
+      "difficulty": "easy",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 17,
+      "passed": 17,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 29,
+      "calls": 1,
+      "input_tokens": 6970,
+      "output_tokens": 2125,
+      "cost_usd": 0.049126,
+      "cases": [
+        {
+          "name": "OFF level (0) returns OFF",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "PERMANENT level (1) returns PERMANENT",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "ERROR level (2) returns ERROR",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "WARNING level (4) returns WARNING",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "INFORMATION level (8) returns INFORMATION",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "DEBUG level (16) returns DEBUG",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "TIMING level (32) returns TIMING",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "SYS_CONTEXT level (64) returns SYS_CONTEXT",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "APEX level (128) returns APEX",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL input returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Unknown level just above the highest returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Negative level returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Value between valid levels returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Fractional value returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Large value returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Result round-trips through convert_level_char_to_num",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Constants map to their names",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "logger_sprintf",
+      "unit": "logger.sprintf",
+      "difficulty": "easy",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 14,
+      "calls": 1,
+      "input_tokens": 7330,
+      "output_tokens": 2782,
+      "cost_usd": 0.057136000000000006,
+      "cases": [
+        {
+          "name": "String without placeholders is returned unchanged",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Empty-ish plain text with only spaces is unchanged",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL format string returns NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Single indexed placeholder %s1 is replaced",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Indexed placeholders can be used out of order",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Same indexed placeholder used twice is replaced everywhere",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "All indexed placeholders 1 to 9 are replaced",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Sequential %s placeholders are replaced in order",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Ten sequential %s placeholders are replaced in order",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL argument for indexed placeholder removes the placeholder",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Indexed placeholder followed by sequential placeholder",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Unused arguments are ignored",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Long string near the 4000 char limit is handled",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "logger_tochar",
+      "unit": "logger.tochar",
+      "difficulty": "medium",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 18,
+      "passed": 18,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 29,
+      "calls": 1,
+      "input_tokens": 7068,
+      "output_tokens": 3241,
+      "cost_usd": 0.060677999999999996,
+      "cases": [
+        {
+          "name": "number: integer value",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "number: decimal value",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "number: zero",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "number: negative value",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "number: large value",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "number: null returns null",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "date: contains year and time parts",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "date: midnight boundary keeps time part",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "date: null returns null",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "timestamp: contains date, time and fraction",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "timestamp: null returns null",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "timestamp with time zone: contains date, time and zone",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "timestamp with time zone: null returns null",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "timestamp with local time zone: contains date and time",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "timestamp with local time zone: null returns null",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "boolean: true",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "boolean: false",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "boolean: null returns null",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "logger_date_text_format",
+      "unit": "logger.date_text_format",
+      "difficulty": "medium",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 9,
+      "passed": 9,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 15,
+      "calls": 1,
+      "input_tokens": 6813,
+      "output_tokens": 2301,
+      "cost_usd": 0.050258000000000004,
+      "cases": [
+        {
+          "name": "Returns a non-null text for a date a few minutes in the past",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Returns a non-null text for a date one day in the past",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Returns a non-null text for a date one year in the past",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Returns a non-null text for a date far in the past, 100 years",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Returns a non-null text for sysdate itself, lower boundary",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Same distant date gives the same text on repeated calls",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Dates with very different ages give different texts",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL input does not raise an error",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Result fits into a VARCHAR2 of 4000 characters",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "logger_append_param",
+      "unit": "logger.append_param",
+      "difficulty": "medium",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 24,
+      "passed": 24,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 72,
+      "calls": 1,
+      "input_tokens": 7715,
+      "output_tokens": 6003,
+      "cost_usd": 0.090886,
+      "cases": [
+        {
+          "name": "varchar2: appends one param to an empty table",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "varchar2: multiple appends keep order and indexes",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "varchar2: existing entries are preserved",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "varchar2: NULL name and NULL value are stored as NULL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "varchar2: value of 4000 characters is accepted",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "varchar2: name of 255 characters is accepted",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "varchar2: value longer than 4000 raises value error",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "varchar2: name longer than 255 raises value error",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "number: value converted using logger.tochar",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "number: negative and decimal value",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "number: zero value",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "number: NULL value",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "date: value converted using logger.tochar",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "date: NULL value",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "timestamp: value converted using logger.tochar",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "timestamp: NULL value",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "timestamp with time zone: value converted using logger.tochar",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "timestamp with time zone: NULL value",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "timestamp with local time zone: value converted using logger.tochar",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "timestamp with local time zone: NULL value",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "boolean: TRUE value",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "boolean: FALSE value",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "boolean: NULL value",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "mixed overloads append in sequence",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "logger_ok_to_log",
+      "unit": "logger.ok_to_log",
+      "difficulty": "hard",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 19,
+      "calls": 1,
+      "input_tokens": 7445,
+      "output_tokens": 2869,
+      "cost_usd": 0.058466000000000004,
+      "cases": [
+        {
+          "name": "DEBUG level allows number g_debug",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "DEBUG level allows lower numeric levels",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "DEBUG level rejects number g_timing",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "ERROR level allows g_error boundary",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "ERROR level allows g_permanent",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "ERROR level rejects g_warning",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "INFORMATION boundary: 8 true, 9 false",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "OFF level rejects g_permanent",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "OFF level allows zero",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL number level returns false",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Varchar overload true when level enabled",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Varchar overload false when level not enabled",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Varchar overload agrees with number overload",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "logger_get_pref",
+      "unit": "logger.get_pref",
+      "difficulty": "hard",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 14,
+      "calls": 1,
+      "input_tokens": 7745,
+      "output_tokens": 3527,
+      "cost_usd": 0.066246,
+      "cases": [
+        {
+          "name": "Returns the value of an existing custom preference",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Preference name lookup is case insensitive",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Preference type lookup is case insensitive",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Returns null when the preference does not exist",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Returns null when the preference name is null",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Returns null when the preference type is null",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Returns null when both name and type are null",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Same name under a different type is not returned",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Same name with two types returns the value for the requested type",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Default type is LOGGER and matches explicit LOGGER",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Default type result matches independent query for LEVEL",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Maximum length name that does not exist returns null",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Value with special characters and spaces is returned unchanged",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "logger_log_error",
+      "unit": "logger.log_error",
+      "difficulty": "hard",
+      "compiled": false,
+      "ran": false,
+      "compile_error": "PACKAGE BODY|69:16 PL/SQL: ORA-22849: Type CLOB is not supported for this function or operator.\nPACKAGE BODY|69:5 PL/SQL: SQL Statement ignored\nPACKAGE BODY|83:16 PL/SQL: ORA-22849: Type CLOB is not supported for this function or operator.\nPACKAGE BODY|83:5 PL/SQL: SQL Statement ignored",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 0,
+      "passed": 0,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 0,
+      "calls": 1,
+      "input_tokens": 7419,
+      "output_tokens": 4143,
+      "cost_usd": 0.071102,
+      "cases": []
+    },
+    {
+      "id": "hr_add_job_history",
+      "unit": "add_job_history",
+      "difficulty": "hard",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 16,
+      "passed": 9,
+      "failed": 0,
+      "errored": 7,
+      "skipped": 0,
+      "assertions": 13,
+      "calls": 1,
+      "input_tokens": 2366,
+      "output_tokens": 3211,
+      "cost_usd": 0.041569999999999996,
+      "cases": [
+        {
+          "name": "Inserts one row with the supplied values",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.JHIST_EMP_FK) violated - parent key not found\nORA-06512: at \"PLLT.ADD_JOB_HISTORY\", line 10\nORA-06512: at \"PLLT.TEST_HR_ADD_JOB_HISTORY\", line 17\nORA-06512: at \"PLLT.ADD_JOB_HISTORY\", line 10\nORA-06512: at \"PLLT.TEST_HR_ADD_JOB_HISTORY\", line 17\nORA-06512: at line 6"
+        },
+        {
+          "name": "Inserts exactly one additional row",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.JHIST_EMP_FK) violated - parent key not found\nORA-06512: at \"PLLT.ADD_JOB_HISTORY\", line 10\nORA-06512: at \"PLLT.TEST_HR_ADD_JOB_HISTORY\", line 31\nORA-06512: at \"PLLT.ADD_JOB_HISTORY\", line 10\nORA-06512: at \"PLLT.TEST_HR_ADD_JOB_HISTORY\", line 31\nORA-06512: at line 6"
+        },
+        {
+          "name": "NULL department_id is accepted",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.JHIST_EMP_FK) violated - parent key not found\nORA-06512: at \"PLLT.ADD_JOB_HISTORY\", line 10\nORA-06512: at \"PLLT.TEST_HR_ADD_JOB_HISTORY\", line 39\nORA-06512: at \"PLLT.ADD_JOB_HISTORY\", line 10\nORA-06512: at \"PLLT.TEST_HR_ADD_JOB_HISTORY\", line 39\nORA-06512: at line 6"
+        },
+        {
+          "name": "Minimum interval of one second is accepted",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.JHIST_EMP_FK) violated - parent key not found\nORA-06512: at \"PLLT.ADD_JOB_HISTORY\", line 10\nORA-06512: at \"PLLT.TEST_HR_ADD_JOB_HISTORY\", line 51\nORA-06512: at \"PLLT.ADD_JOB_HISTORY\", line 10\nORA-06512: at \"PLLT.TEST_HR_ADD_JOB_HISTORY\", line 51\nORA-06512: at line 6"
+        },
+        {
+          "name": "Job id of maximum length 10 is accepted",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.JHIST_EMP_FK) violated - parent key not found\nORA-06512: at \"PLLT.ADD_JOB_HISTORY\", line 10\nORA-06512: at \"PLLT.TEST_HR_ADD_JOB_HISTORY\", line 58\nORA-06512: at \"PLLT.ADD_JOB_HISTORY\", line 10\nORA-06512: at \"PLLT.TEST_HR_ADD_JOB_HISTORY\", line 58\nORA-06512: at line 6"
+        },
+        {
+          "name": "Maximum employee id and department id are accepted",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.JHIST_DEPT_FK) violated - parent key not found\nORA-06512: at \"PLLT.ADD_JOB_HISTORY\", line 10\nORA-06512: at \"PLLT.TEST_HR_ADD_JOB_HISTORY\", line 68\nORA-06512: at \"PLLT.ADD_JOB_HISTORY\", line 10\nORA-06512: at \"PLLT.TEST_HR_ADD_JOB_HISTORY\", line 68\nORA-06512: at line 6"
+        },
+        {
+          "name": "Two calls insert two rows",
+          "status": "errored",
+          "message": "ORA-02291: integrity constraint (PLLT.JHIST_EMP_FK) violated - parent key not found\nORA-06512: at \"PLLT.ADD_JOB_HISTORY\", line 10\nORA-06512: at \"PLLT.TEST_HR_ADD_JOB_HISTORY\", line 78\nORA-06512: at \"PLLT.ADD_JOB_HISTORY\", line 10\nORA-06512: at \"PLLT.TEST_HR_ADD_JOB_HISTORY\", line 78\nORA-06512: at line 6"
+        },
+        {
+          "name": "end_date equal to start_date violates check constraint",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "end_date before start_date violates check constraint",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL employee id fails",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL start_date fails",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL end_date fails",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "NULL job_id fails",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "job_id longer than 10 characters fails",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "employee id with 7 digits fails",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "department id with 5 digits fails",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    },
+    {
+      "id": "hr_secure_dml",
+      "unit": "secure_dml",
+      "difficulty": "hard",
+      "compiled": true,
+      "ran": true,
+      "compile_error": "",
+      "run_error": "",
+      "repair_rounds": 0,
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "assertions": 10,
+      "calls": 1,
+      "input_tokens": 2076,
+      "output_tokens": 2700,
+      "cost_usd": 0.035300000000000005,
+      "cases": [
+        {
+          "name": "Outcome matches current office-hours state: raises -20205 outside office hours, otherwise silent",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Only SQLCODE 0 or -20205 is ever produced",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Error message text is correct when blocked, empty when allowed",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Repeated calls are consistent and have no side effects",
+          "status": "passed",
+          "message": ""
+        },
+        {
+          "name": "Error is never -20001",
+          "status": "passed",
+          "message": ""
+        }
+      ]
+    }
+  ],
+  "total": {
+    "units": 30,
+    "compiled": 28,
+    "ran": 28,
+    "compile_rate": 0.9333,
+    "run_rate": 0.9333,
+    "tests": 387,
+    "passed": 326,
+    "failed": 4,
+    "errored": 57,
+    "skipped": 0,
+    "pass_rate": 0.8424,
+    "repair_rounds": 0,
+    "assertions": 522,
+    "assertions_per_test": 1.3488,
+    "calls": 30,
+    "input_tokens": 131619,
+    "output_tokens": 83446,
+    "cost_usd": 1.334503,
+    "cost_usd_per_test": 0.003448,
+    "cost_usd_per_unit": 0.044483
+  },
+  "by_difficulty": {
+    "easy": {
+      "units": 7,
+      "compiled": 7,
+      "ran": 7,
+      "compile_rate": 1.0,
+      "run_rate": 1.0,
+      "tests": 106,
+      "passed": 106,
+      "failed": 0,
+      "errored": 0,
+      "skipped": 0,
+      "pass_rate": 1.0,
+      "repair_rounds": 0,
+      "assertions": 152,
+      "assertions_per_test": 1.434,
+      "calls": 7,
+      "input_tokens": 32455,
+      "output_tokens": 14336,
+      "cost_usd": 0.273152,
+      "cost_usd_per_test": 0.002577,
+      "cost_usd_per_unit": 0.039022
+    },
+    "medium": {
+      "units": 10,
+      "compiled": 9,
+      "ran": 9,
+      "compile_rate": 0.9,
+      "run_rate": 0.9,
+      "tests": 121,
+      "passed": 71,
+      "failed": 4,
+      "errored": 46,
+      "skipped": 0,
+      "pass_rate": 0.5868,
+      "repair_rounds": 0,
+      "assertions": 197,
+      "assertions_per_test": 1.6281,
+      "calls": 10,
+      "input_tokens": 42471,
+      "output_tokens": 25300,
+      "cost_usd": 0.411889,
+      "cost_usd_per_test": 0.003404,
+      "cost_usd_per_unit": 0.041189
+    },
+    "hard": {
+      "units": 13,
+      "compiled": 12,
+      "ran": 12,
+      "compile_rate": 0.9231,
+      "run_rate": 0.9231,
+      "tests": 160,
+      "passed": 149,
+      "failed": 0,
+      "errored": 11,
+      "skipped": 0,
+      "pass_rate": 0.9313,
+      "repair_rounds": 0,
+      "assertions": 173,
+      "assertions_per_test": 1.0813,
+      "calls": 13,
+      "input_tokens": 56693,
+      "output_tokens": 43810,
+      "cost_usd": 0.649462,
+      "cost_usd_per_test": 0.004059,
+      "cost_usd_per_unit": 0.049959
+    }
+  }
+}

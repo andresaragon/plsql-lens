@@ -17,6 +17,9 @@ and test data. Nothing from any employer or client is included.
    License: MIT (corpus/logger/LICENSE)
    Copied:  source/packages/logger.pks, source/packages/logger.pkb,
             source/procedures/logger_configure.plb  ->  corpus/logger/
+   Also copied (F3 test bed, same commit): source/tables/*.sql, source/views/*.sql,
+            source/contexts/logger_context.sql, source/install/post_install_configuration.sql
+            ->  tests/fixtures/testgen/logger/
 
 3. Oracle Database Sample Schemas
    URL:     https://github.com/oracle-samples/db-sample-schemas
@@ -25,3 +28,12 @@ and test data. Nothing from any employer or client is included.
    Copied:  human_resources/hr_code.sql, order_entry/poe_v3.sql,
             order_entry/coe_v3.sql, order_entry/xdbUtilities.sql
             ->  corpus/oracle-db-sample-schemas/
+   Also copied (F3 test bed, same commit): human_resources/hr_create.sql,
+            human_resources/hr_populate.sql  ->  tests/fixtures/testgen/hr/
+
+4. SARIF 2.1.0 JSON Schema (test-only)
+   URL:     https://github.com/microsoft/sarif-sdk
+   Commit:  aaf860dff84137c7a6346f2bd6c4a5642a33b3c5
+   License: MIT (tests/vendor/LICENSE.sarif-sdk)
+   Copied:  src/Sarif/Schemata/sarif-2.1.0.json  ->  tests/vendor/sarif-2.1.0.json
+   Used by tests/unit/test_sarif_schema.py to validate `plsql-lens review --format sarif`.

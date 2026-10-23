@@ -107,13 +107,32 @@ def _run_subprocess(cmd: list[str], prompt: str) -> subprocess.CompletedProcess[
 class ClaudeCliProvider:
     """Runs ``claude -p --output-format json``; billed to the same account as the session."""
 
-    def __init__(self, model: str | None = DEFAULT_MODEL, runner: Runner = _run_subprocess) -> None:
-        self.model, self.runner = model, runner
+    # Flags that cut the CLI's own context from ~40 000 to ~1 300 input tokens per call (F3
+    # measurement, docs/reports/phase-3.md): no tools, skills, MCP servers, settings, session file.
+    LEAN_FLAGS = (
+        "--system-prompt",
+        "You are an expert Oracle PL/SQL engineer. Follow the output format asked.",
+        "--tools", "",
+        "--disable-slash-commands",
+        "--strict-mcp-config",
+        "--setting-sources", "",
+        "--no-session-persistence",
+    )  # fmt: skip
+
+    def __init__(
+        self,
+        model: str | None = DEFAULT_MODEL,
+        runner: Runner = _run_subprocess,
+        lean: bool = True,
+    ) -> None:
+        self.model, self.runner, self.lean = model, runner, lean
 
     def complete(self, prompt: str) -> LLMResponse:
         cmd = ["claude", "-p", "--output-format", "json"]
         if self.model:
             cmd += ["--model", self.model]
+        if self.lean:
+            cmd += list(self.LEAN_FLAGS)
         proc = self.runner(cmd, prompt)
         if proc.returncode != 0:
             raise LLMError(f"claude exited with {proc.returncode}: {proc.stderr.strip()[:300]}")
@@ -194,10 +213,11 @@ def make_provider(
     env: Mapping[str, str] | None = None,
     model: str | None = None,
     recordings: Path | None = None,
+    lean: bool = True,
 ) -> LLMProvider:
     env = os.environ if env is None else env
     if name == "claude-cli":
-        return ClaudeCliProvider(model or DEFAULT_MODEL)
+        return ClaudeCliProvider(model or DEFAULT_MODEL, lean=lean)
     if name == "anthropic-api":
         key = env.get("ANTHROPIC_API_KEY")
         if not key:

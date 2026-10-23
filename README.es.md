@@ -29,5 +29,18 @@ inv = build_inventory(["corpus/logger"])  # unidades + aristas de llamada resuel
 * Resultados medidos: [docs/reports/phase-1.md](docs/reports/phase-1.md); decisión del parser:
   [docs/adr/0001-parser.md](docs/adr/0001-parser.md).
 
+## F3: tests utPLSQL generados (requiere Oracle)
+
+```bash
+make help
+make demo-f3      # ejecuta los tests generados ya commiteados en Oracle (Docker o GitHub Actions) — sin llamadas al LLM
+make testgen-f3   # los regenera con el LLM — cuesta dinero
+uv run plsql-lens testgen corpus/logger/logger.pkb --unit logger.sprintf --manifest tests/fixtures/testgen/manifest.json
+```
+
+Oracle Database Free se descarga de Docker Hub (`gvenzl/oracle-free`) bajo los términos de licencia de Oracle;
+este repositorio no lo redistribuye. Las contraseñas salen solo del entorno (`.env.example`). Ver
+`docker/README.md` y `docs/reports/phase-3.md`.
+
 El PL/SQL de terceros usado como entrada de pruebas está en `corpus/` y listado en [NOTICE](NOTICE).
 Licencia: MIT.

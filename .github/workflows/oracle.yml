@@ -1,0 +1,63 @@
+name: oracle
+# Integration job: Oracle Free + utPLSQL, runs the committed generated tests. Never part of the unit CI.
+# Trigger: workflow_dispatch, or a push to a feat/f3-* branch that touches the F3 test bed.
+on:
+  workflow_dispatch:
+  push:
+    branches: ["feat/f3-**"]
+    paths:
+      - "docker/**"
+      - ".github/workflows/oracle.yml"
+      - "tests/generated/**"
+      - "tests/fixtures/testgen/**"
+      - "src/plsql_lens/testgen/**"
+      - "src/plsql_lens/cli.py"
+jobs:
+  oracle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    env:
+      PLSQL_LENS_SQLPLUS: docker exec -i plsql-lens-oracle sqlplus -s -L pllt/"$ORACLE_PASSWORD"@//localhost/FREEPDB1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync
+      - name: Generate a throw-away password
+        run: |
+          pw="$(openssl rand -hex 12)"
+          echo "::add-mask::$pw"
+          echo "ORACLE_PASSWORD=$pw" >> "$GITHUB_ENV"
+      - name: Start Oracle
+        run: docker compose -f docker/compose.yml up -d --wait --wait-timeout 900
+      - name: Install utPLSQL and create the schema
+        run: |
+          set -o pipefail
+          mkdir -p out/phase-3
+          bash docker/setup.sh 2>&1 | tail -60 | tee out/phase-3/setup-utplsql.log
+      - name: Install the targets
+        run: |
+          set -o pipefail
+          uv run plsql-lens testgen-setup --log out/phase-3/setup-targets-full.log 2>&1 | tee out/phase-3/setup-targets.log
+      - name: Diagnostics (Logger)
+        run: docker exec -i plsql-lens-oracle sqlplus -s -L pllt/"$ORACLE_PASSWORD"@//localhost/FREEPDB1 < docker/diagnose_logger.sql 2>&1 | tee out/phase-3/diag-logger.log
+      - name: Run the committed tests
+        run: uv run plsql-lens testgen-suite --report-dir out/phase-3
+      - name: Integration tests
+        run: uv run pytest -m integration -q
+      - name: Publish results to branch ci-results/f3 (artifact downloads are not reachable from the lead session)
+        if: always()
+        run: |
+          set -e
+          git config --global user.name andresaragon
+          git config --global user.email 16310427+andresaragon@users.noreply.github.com
+          url="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}"
+          git clone --depth 1 --branch ci-results/f3 "$url" results 2>/dev/null || {
+            mkdir results; git -C results init -q -b ci-results/f3; git -C results remote add origin "$url"; }
+          find results -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -r out/phase-3/. results/
+          echo "$GITHUB_SHA" > results/commit.txt
+          git -C results add -A
+          git -C results commit -q -m "oracle run $GITHUB_RUN_ID for $GITHUB_SHA" || exit 0
+          git -C results push -q origin ci-results/f3

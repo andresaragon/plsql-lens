@@ -1,0 +1,38 @@
+[
+ {
+  "target": "pkg_calc_clamp",
+  "lean": false,
+  "prompt_chars": 3660,
+  "input_tokens": 40836,
+  "output_tokens": 2850,
+  "cost_usd": 0.0904829,
+  "model": "claude-sonnet-5-5"
+ },
+ {
+  "target": "pkg_calc_clamp",
+  "lean": true,
+  "prompt_chars": 3660,
+  "input_tokens": 2811,
+  "output_tokens": 2258,
+  "cost_usd": 0.03382,
+  "model": "claude-sonnet-5-5"
+ },
+ {
+  "target": "pkg_orders_add_item",
+  "lean": false,
+  "prompt_chars": 6610,
+  "input_tokens": 41965,
+  "output_tokens": 4563,
+  "cost_usd": 0.10810800000000001,
+  "model": "claude-sonnet-5-5"
+ },
+ {
+  "target": "pkg_orders_add_item",
+  "lean": true,
+  "prompt_chars": 6610,
+  "input_tokens": 3940,
+  "output_tokens": 4408,
+  "cost_usd": 0.059835999999999986,
+  "model": "claude-sonnet-5-5"
+ }
+]

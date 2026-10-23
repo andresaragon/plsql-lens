@@ -1,0 +1,478 @@
+{
+ "_doc": "F3 test targets. 'setup' scripts run in order as the target schema; each target lists why it was chosen.",
+ "setup": [
+  "tests/fixtures/testgen/logger/logger_prefs.sql",
+  "tests/fixtures/testgen/logger/logger_logs.sql",
+  "tests/fixtures/testgen/logger/logger_logs_apex_items.sql",
+  "tests/fixtures/testgen/logger/logger_prefs_by_client_id.sql",
+  "corpus/logger/logger.pks",
+  "corpus/logger/logger.pkb",
+  "tests/fixtures/testgen/logger/logger_logs_5_min.sql",
+  "tests/fixtures/testgen/logger/logger_logs_60_min.sql",
+  "tests/fixtures/testgen/logger/logger_logs_terse.sql",
+  "tests/fixtures/testgen/logger/logger_context.sql",
+  "corpus/logger/logger_configure.plb",
+  "tests/fixtures/testgen/logger/post_install_configuration.sql",
+  "tests/fixtures/testgen/hr/hr_create.sql",
+  "tests/fixtures/testgen/hr/hr_populate.sql",
+  "corpus/oracle-db-sample-schemas/hr_code.sql",
+  "tests/fixtures/testgen/own/orders_tables.sql",
+  "tests/fixtures/testgen/own/pkg_calc.sql",
+  "tests/fixtures/testgen/own/pkg_text.sql",
+  "tests/fixtures/testgen/own/pkg_orders.sql",
+  "tests/fixtures/testgen/own/pkg_hr_stats.sql"
+ ],
+ "targets": [
+  {
+   "id": "pkg_calc_round_money",
+   "unit": "pkg_calc.round_money",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_calc.sql"
+   ],
+   "ddl_files": [],
+   "install": [],
+   "difficulty": "easy",
+   "reason": "pure numeric function; NULL and rounding boundary (half away from zero)"
+  },
+  {
+   "id": "pkg_calc_percent_of",
+   "unit": "pkg_calc.percent_of",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_calc.sql"
+   ],
+   "ddl_files": [],
+   "install": [],
+   "difficulty": "easy",
+   "reason": "pure arithmetic with two NULL-handling branches"
+  },
+  {
+   "id": "pkg_calc_safe_divide",
+   "unit": "pkg_calc.safe_divide",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_calc.sql"
+   ],
+   "ddl_files": [],
+   "install": [],
+   "difficulty": "easy",
+   "reason": "pure; the divisor 0/NULL branch must not raise"
+  },
+  {
+   "id": "pkg_calc_clamp",
+   "unit": "pkg_calc.clamp",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_calc.sql"
+   ],
+   "ddl_files": [],
+   "install": [],
+   "difficulty": "medium",
+   "reason": "pure but raises ORA-20001 for inverted bounds: needs a throws expectation"
+  },
+  {
+   "id": "pkg_calc_is_leap_year",
+   "unit": "pkg_calc.is_leap_year",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_calc.sql"
+   ],
+   "ddl_files": [],
+   "install": [],
+   "difficulty": "easy",
+   "reason": "pure BOOLEAN return: tests the century rules (1900/2000) and NULL"
+  },
+  {
+   "id": "pkg_text_slugify",
+   "unit": "pkg_text.slugify",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_text.sql"
+   ],
+   "ddl_files": [],
+   "install": [],
+   "difficulty": "medium",
+   "reason": "regexp-based string transform; separators, leading/trailing punctuation, NULL"
+  },
+  {
+   "id": "pkg_text_mask_email",
+   "unit": "pkg_text.mask_email",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_text.sql"
+   ],
+   "ddl_files": [],
+   "install": [],
+   "difficulty": "medium",
+   "reason": "string edge cases; contains an unplanned NULL-concatenation quirk (see report)"
+  },
+  {
+   "id": "pkg_text_is_palindrome",
+   "unit": "pkg_text.is_palindrome",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_text.sql"
+   ],
+   "ddl_files": [],
+   "install": [],
+   "difficulty": "medium",
+   "reason": "BOOLEAN with regexp cleaning and NULL/empty handling"
+  },
+  {
+   "id": "pkg_text_truncate_text",
+   "unit": "pkg_text.truncate_text",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_text.sql"
+   ],
+   "ddl_files": [],
+   "install": [],
+   "difficulty": "medium",
+   "reason": "length boundary logic plus a custom exception"
+  },
+  {
+   "id": "pkg_orders_create_order",
+   "unit": "pkg_orders.create_order",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_orders.sql"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/own/orders_tables.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/own/orders_tables.sql"
+   ],
+   "difficulty": "hard",
+   "reason": "OUT parameter, sequence, DML and a validation error; needs table DDL"
+  },
+  {
+   "id": "pkg_orders_add_item",
+   "unit": "pkg_orders.add_item",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_orders.sql"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/own/orders_tables.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/own/orders_tables.sql"
+   ],
+   "difficulty": "hard",
+   "reason": "depends on an existing NEW order (fixture data), FK and check constraints, error branches"
+  },
+  {
+   "id": "pkg_orders_order_total",
+   "unit": "pkg_orders.order_total",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_orders.sql"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/own/orders_tables.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/own/orders_tables.sql"
+   ],
+   "difficulty": "hard",
+   "reason": "aggregate over rows the test must create; missing-order error"
+  },
+  {
+   "id": "pkg_orders_cancel_order",
+   "unit": "pkg_orders.cancel_order",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_orders.sql"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/own/orders_tables.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/own/orders_tables.sql"
+   ],
+   "difficulty": "hard",
+   "reason": "state machine with three outcomes, each needing different prepared rows"
+  },
+  {
+   "id": "pkg_orders_open_orders",
+   "unit": "pkg_orders.open_orders",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_orders.sql"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/own/orders_tables.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/own/orders_tables.sql"
+   ],
+   "difficulty": "hard",
+   "reason": "returns SYS_REFCURSOR: the test must fetch and compare ids"
+  },
+  {
+   "id": "pkg_orders_apply_bulk_discount",
+   "unit": "pkg_orders.apply_bulk_discount",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_orders.sql"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/own/orders_tables.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/own/orders_tables.sql"
+   ],
+   "difficulty": "hard",
+   "reason": "cursor-loop DML returning a row count; percentage validation"
+  },
+  {
+   "id": "pkg_hr_stats_headcount",
+   "unit": "pkg_hr_stats.headcount",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_hr_stats.sql"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/hr/hr_create.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/hr/hr_create.sql",
+    "tests/fixtures/testgen/hr/hr_populate.sql"
+   ],
+   "difficulty": "medium",
+   "reason": "SELECT COUNT over the HR sample data; expected values must be derived at test time"
+  },
+  {
+   "id": "pkg_hr_stats_avg_salary",
+   "unit": "pkg_hr_stats.avg_salary",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_hr_stats.sql"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/hr/hr_create.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/hr/hr_create.sql",
+    "tests/fixtures/testgen/hr/hr_populate.sql"
+   ],
+   "difficulty": "medium",
+   "reason": "aggregate over sample data, NULL for an empty department"
+  },
+  {
+   "id": "pkg_hr_stats_top_earner",
+   "unit": "pkg_hr_stats.top_earner",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_hr_stats.sql"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/hr/hr_create.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/hr/hr_create.sql",
+    "tests/fixtures/testgen/hr/hr_populate.sql"
+   ],
+   "difficulty": "hard",
+   "reason": "ordering with tie-break and NO_DATA_FOUND mapped to a custom error"
+  },
+  {
+   "id": "pkg_hr_stats_give_raise",
+   "unit": "pkg_hr_stats.give_raise",
+   "source_files": [
+    "tests/fixtures/testgen/own/pkg_hr_stats.sql"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/hr/hr_create.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/hr/hr_create.sql",
+    "tests/fixtures/testgen/hr/hr_populate.sql"
+   ],
+   "difficulty": "hard",
+   "reason": "UPDATE with validation, SQL%ROWCOUNT check, rounding; needs a rollback-safe test"
+  },
+  {
+   "id": "logger_convert_level_char_to_num",
+   "unit": "logger.convert_level_char_to_num",
+   "source_files": [
+    "corpus/logger/logger.pks",
+    "corpus/logger/logger.pkb"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql",
+    "tests/fixtures/testgen/logger/logger_context.sql"
+   ],
+   "difficulty": "easy",
+   "reason": "small mapping function from OraOpenSource Logger; invalid input raises"
+  },
+  {
+   "id": "logger_convert_level_num_to_char",
+   "unit": "logger.convert_level_num_to_char",
+   "source_files": [
+    "corpus/logger/logger.pks",
+    "corpus/logger/logger.pkb"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql",
+    "tests/fixtures/testgen/logger/logger_context.sql"
+   ],
+   "difficulty": "easy",
+   "reason": "inverse mapping, third-party code"
+  },
+  {
+   "id": "logger_sprintf",
+   "unit": "logger.sprintf",
+   "source_files": [
+    "corpus/logger/logger.pks",
+    "corpus/logger/logger.pkb"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql",
+    "tests/fixtures/testgen/logger/logger_context.sql"
+   ],
+   "difficulty": "easy",
+   "reason": "string substitution (%s, %s1..%s5, %%) in third-party code"
+  },
+  {
+   "id": "logger_tochar",
+   "unit": "logger.tochar",
+   "source_files": [
+    "corpus/logger/logger.pks",
+    "corpus/logger/logger.pkb"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql",
+    "tests/fixtures/testgen/logger/logger_context.sql"
+   ],
+   "difficulty": "medium",
+   "reason": "overloaded (BOOLEAN/NUMBER/DATE/TIMESTAMP...): which overload the test targets is ambiguous"
+  },
+  {
+   "id": "logger_date_text_format",
+   "unit": "logger.date_text_format",
+   "source_files": [
+    "corpus/logger/logger.pks",
+    "corpus/logger/logger.pkb"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql",
+    "tests/fixtures/testgen/logger/logger_context.sql"
+   ],
+   "difficulty": "medium",
+   "reason": "interval-to-text formatting built on sysdate-relative arithmetic"
+  },
+  {
+   "id": "logger_append_param",
+   "unit": "logger.append_param",
+   "source_files": [
+    "corpus/logger/logger.pks",
+    "corpus/logger/logger.pkb"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql",
+    "tests/fixtures/testgen/logger/logger_context.sql"
+   ],
+   "difficulty": "medium",
+   "reason": "IN OUT collection parameter, overloaded on value type"
+  },
+  {
+   "id": "logger_ok_to_log",
+   "unit": "logger.ok_to_log",
+   "source_files": [
+    "corpus/logger/logger.pks",
+    "corpus/logger/logger.pkb"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql",
+    "tests/fixtures/testgen/logger/logger_context.sql"
+   ],
+   "difficulty": "hard",
+   "reason": "depends on package state, the application context and the preferences table"
+  },
+  {
+   "id": "logger_get_pref",
+   "unit": "logger.get_pref",
+   "source_files": [
+    "corpus/logger/logger.pks",
+    "corpus/logger/logger.pkb"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql",
+    "tests/fixtures/testgen/logger/logger_context.sql"
+   ],
+   "difficulty": "hard",
+   "reason": "reads the preferences table through a union query; unknown prefs and client overrides"
+  },
+  {
+   "id": "logger_log_error",
+   "unit": "logger.log_error",
+   "source_files": [
+    "corpus/logger/logger.pks",
+    "corpus/logger/logger.pkb"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/logger/logger_prefs.sql",
+    "tests/fixtures/testgen/logger/logger_logs.sql",
+    "tests/fixtures/testgen/logger/logger_context.sql"
+   ],
+   "difficulty": "hard",
+   "reason": "autonomous insert into logger_logs; effect only visible through the table"
+  },
+  {
+   "id": "hr_add_job_history",
+   "unit": "add_job_history",
+   "source_files": [
+    "corpus/oracle-db-sample-schemas/hr_code.sql"
+   ],
+   "ddl_files": [
+    "tests/fixtures/testgen/hr/hr_create.sql"
+   ],
+   "install": [
+    "tests/fixtures/testgen/hr/hr_create.sql",
+    "tests/fixtures/testgen/hr/hr_populate.sql"
+   ],
+   "difficulty": "hard",
+   "reason": "standalone procedure from the Oracle HR sample: inserts into job_history, FK to employees/jobs/departments"
+  },
+  {
+   "id": "hr_secure_dml",
+   "unit": "secure_dml",
+   "source_files": [
+    "corpus/oracle-db-sample-schemas/hr_code.sql"
+   ],
+   "ddl_files": [],
+   "install": [],
+   "difficulty": "hard",
+   "reason": "standalone procedure whose outcome depends on the wall clock (business hours): hard to test deterministically"
+  }
+ ]
+}
