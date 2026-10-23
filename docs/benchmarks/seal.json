@@ -1,0 +1,11 @@
+{
+ "test": "f1bf0b7649d66068e0789310881f086bc41e67ed6a80182d1c2acfc47cdc236e",
+ "dev": "fd95347d40104436dfc1290dfdaea0bf3bf72a75101726865498af795cafdccd",
+ "history": [
+  {
+   "hash": "a0e7290b0f20d138ab056266d5c0eabe421001a46c973ec8b167a3d7b4433285",
+   "commit": "b73e811",
+   "superseded_because": "generator fix: incidental literals in PLL007 snippets were not unique (found on dev); engine never run on test"
+  }
+ ]
+}

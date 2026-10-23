@@ -1,0 +1,58 @@
+{
+  "rule": "PLL002",
+  "split": "dev",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "EXECUTE IMMEDIATE with literal concatenated with a parameter",
+      "code": "procedure @@proc@@(p_val in varchar2) is\n  l_rows number;\nbegin\n  execute immediate 'delete from @@tab@@ where @@col@@ = ' || p_val; -- @expect\n  l_rows := sql%rowcount;\n  if l_rows > 0 then\n    dbms_output.put_line('removed rows: ' || l_rows);\n  end if;\nend @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "variable built by concatenation earlier, then executed",
+      "code": "function @@proc@@(p_table in varchar2) return number is\n  l_sql varchar2(400);\n  l_cnt number;\nbegin\n  l_sql := 'select count(*) from ' || p_table;\n  l_sql := l_sql || ' where @@col@@ is not null';\n  execute immediate l_sql into l_cnt; -- @expect\n  return l_cnt;\nend @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "OPEN cursor FOR a dynamic string concatenated with a parameter, multi-line",
+      "code": "function @@proc@@(p_filter in varchar2) return sys_refcursor is\n  l_cur sys_refcursor;\nbegin\n  open l_cur for -- @expect\n    'select id, @@col@@ '\n    || 'from @@tab@@ '\n    || 'where @@col2@@ = ' || p_filter;\n  return l_cur;\nend @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "function call result (not DBMS_ASSERT) concatenated into the statement",
+      "code": "procedure @@proc@@(p_id in number) is\n  l_rows number;\nbegin\n  execute immediate -- @expect\n    'delete from ' || sys_context('userenv', 'current_schema')\n    || '.@@tab@@ where id = :1'\n    using p_id;\n  l_rows := sql%rowcount;\n  dbms_output.put_line(l_rows);\nend @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "concatenation in the text even though a USING clause binds other values",
+      "code": "procedure @@proc@@(p_cond in varchar2, p_val in number, p_id in number) is\n  l_rows number;\nbegin\n  execute immediate 'update @@tab@@ set @@col@@ = :1 where ' || p_cond -- @expect\n    || ' and id = :2'\n    using p_val, p_id;\n  l_rows := sql%rowcount;\n  dbms_output.put_line(l_rows);\n  commit;\nend @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "literal with bind placeholders and USING",
+      "code": "procedure @@proc@@(p_val in number, p_id in number) is\n  l_rows number;\nbegin\n  execute immediate 'update @@tab@@ set @@col@@ = :1 where id = :2'\n    using p_val, p_id;\n  l_rows := sql%rowcount;\n  dbms_output.put_line(l_rows);\nend @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "concatenation of string literals only",
+      "code": "function @@proc@@ return number is\n  l_cnt number;\nbegin\n  execute immediate 'select count(*) from ' || '@@tab@@'\n    || ' where @@col@@ is null' into l_cnt;\n  dbms_output.put_line(l_cnt);\n  return l_cnt;\n  -- the statement text is built from literals only\nend @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "identifiers wrapped in DBMS_ASSERT calls",
+      "code": "function @@proc@@(p_owner in varchar2, p_table in varchar2) return number is\n  l_cnt number;\nbegin\n  execute immediate 'select count(*) from '\n    || dbms_assert.enquote_name(p_owner) || '.'\n    || dbms_assert.enquote_name(p_table)\n    into l_cnt;\n  return l_cnt;\nend @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "variable only ever assigned plain literals",
+      "code": "procedure @@proc@@(p_full in boolean) is\n  l_sql varchar2(200);\nbegin\n  l_sql := 'truncate table @@tab@@';\n  if not p_full then\n    l_sql := 'delete from @@tab@@ where @@col@@ is null';\n  end if;\n  execute immediate l_sql;\n  dbms_output.put_line('cleanup finished');\nend @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "OPEN cursor FOR a static SELECT",
+      "code": "function @@proc@@(p_val in varchar2) return sys_refcursor is\n  l_cur sys_refcursor;\nbegin\n  open l_cur for\n    select id, @@col@@\n      from @@tab@@\n     where @@col2@@ = p_val;\n  return l_cur;\nend @@proc@@;"
+    }
+  ]
+}

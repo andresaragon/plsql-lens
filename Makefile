@@ -1,4 +1,4 @@
-.PHONY: help demo-f1 demo-f2 demo-f3 testgen-f3 test lint
+.PHONY: help demo-f1 demo-f2 demo-f3 testgen-f3 bench bench-llm test lint
 test:
 	uv run pytest --cov=plsql_lens --cov-fail-under=85
 lint:
@@ -24,3 +24,9 @@ testgen-f3: ## REGENERATE every utPLSQL test with the LLM. COSTS MONEY (~1.4 USD
 
 help: ## List the targets
 	@grep -E '^[a-z0-9-]+:.*##' $(MAKEFILE_LIST) | sed 's/:.*## /\t/'
+
+bench: ## Regenerate the benchmark splits and every non-LLM table (seeded, deterministic); renders the recorded LLM baseline without calling it
+	uv run plsql-lens bench
+
+bench-llm: ## Re-run the LLM-only baseline on the sealed test sample. COSTS MONEY (capped at 2 USD); overwrites docs/benchmarks/llm_baseline/responses.json
+	uv run plsql-lens bench-llm --max-usd 2

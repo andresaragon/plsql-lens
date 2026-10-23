@@ -1,0 +1,58 @@
+{
+  "rule": "PLL001",
+  "split": "dev",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "OTHERS handler that only executes NULL",
+      "code": "procedure @@proc@@(p_id in number) is\n  l_rows number;\nbegin\n  update @@tab@@\n     set @@col@@ = sysdate\n   where id = p_id;\n  l_rows := sql%rowcount;\n  dbms_output.put_line('rows touched: ' || l_rows);\nexception\n  when others then null; -- @expect\nend @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "function whose OTHERS handler only returns a default value",
+      "code": "function @@proc@@(p_key in varchar2) return number is\n  l_total number := 0;\nbegin\n  select count(*)\n    into l_total\n    from @@tab@@\n   where @@col@@ = p_key;\n  return l_total;\nexception\n  when others then -- @expect\n    return 0;\nend @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "OTHERS handler that only assigns a constant to a status variable",
+      "code": "procedure @@proc@@(p_id in number, p_status out varchar2) is\nbegin\n  p_status := 'done';\n  delete from @@tab@@\n   where id = p_id;\nexception\n  when others then -- @expect\n    p_status := 'failed';\nend @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "OTHERS handler that only prints a fixed text; not logging, no error information",
+      "code": "procedure @@proc@@(p_id in number) is\n  l_next number;\nbegin\n  l_next := p_id + 1;\n  @@proc2@@(l_next);\n  dbms_output.put_line('step completed');\nexception\n  when others then -- @expect\n    dbms_output.put_line('step failed');\nend @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "nested block inside a loop whose OTHERS handler is NULL",
+      "code": "procedure @@proc@@(p_ids in dbms_sql.number_table) is\nbegin\n  for i in 1 .. p_ids.count loop\n    begin\n      @@proc2@@(p_ids(i));\n    exception\n      when others then null; -- @expect\n    end;\n  end loop;\nend @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "OTHERS handler re-raises with RAISE",
+      "code": "procedure @@proc@@(p_id in number) is\n  l_stage varchar2(30);\nbegin\n  l_stage := 'load';\n  @@proc2@@(p_id);\n  l_stage := 'post';\n  @@proc2@@(p_id + 1);\nexception\n  when others then\n    rollback;\n    raise;\nend @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "OTHERS handler calls a logging routine (dotted part starts with log) and continues",
+      "code": "procedure @@proc@@(p_id in number) is\n  l_ok boolean := true;\nbegin\n  update @@tab@@\n     set @@col@@ = @@col@@ + 1\n   where id = p_id;\nexception\n  when others then\n    logger.log_error('update failed for ' || p_id);\n    l_ok := false;\nend @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "OTHERS handler stores SQLERRM into an OUT parameter",
+      "code": "procedure @@proc@@(p_id in number, p_err out varchar2) is\nbegin\n  p_err := null;\n  @@proc2@@(p_id);\nexception\n  when others then\n    p_err := sqlerrm;\nend @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "OTHERS handler converts the error with RAISE_APPLICATION_ERROR",
+      "code": "procedure @@proc@@(p_id in number) is\n  l_copy number;\nbegin\n  l_copy := p_id;\n  @@proc2@@(l_copy);\nexception\n  when others then\n    raise_application_error(-20010, 'processing failed for id ' || p_id);\nend @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "only a specific exception is handled with NULL; no OTHERS handler",
+      "code": "procedure @@proc@@(p_id in number, p_name out varchar2) is\nbegin\n  begin\n    select @@col@@\n      into p_name\n      from @@tab@@\n     where id = p_id;\n  exception\n    when no_data_found then null;\n  end;\n  p_name := upper(p_name);\nend @@proc@@;"
+    }
+  ]
+}

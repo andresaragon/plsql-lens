@@ -1,0 +1,244 @@
+{
+ "after": {
+  "background_findings": 0,
+  "cross_rule_findings": 0,
+  "per_rule": {
+   "PLL001": {
+    "f1": null,
+    "f1_ci": null,
+    "fn": 0,
+    "fp": 0,
+    "precision": null,
+    "precision_ci": null,
+    "recall": null,
+    "recall_ci": null,
+    "tp": 0
+   },
+   "PLL002": {
+    "f1": 1.0,
+    "f1_ci": [
+     0.700854948272956,
+     1.0
+    ],
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "precision_ci": [
+     0.700854948272956,
+     1.0
+    ],
+    "recall": 1.0,
+    "recall_ci": [
+     0.700854948272956,
+     1.0
+    ],
+    "tp": 9
+   },
+   "PLL003": {
+    "f1": null,
+    "f1_ci": null,
+    "fn": 0,
+    "fp": 0,
+    "precision": null,
+    "precision_ci": null,
+    "recall": null,
+    "recall_ci": null,
+    "tp": 0
+   },
+   "PLL004": {
+    "f1": null,
+    "f1_ci": null,
+    "fn": 0,
+    "fp": 0,
+    "precision": null,
+    "precision_ci": null,
+    "recall": null,
+    "recall_ci": null,
+    "tp": 0
+   },
+   "PLL005": {
+    "f1": null,
+    "f1_ci": null,
+    "fn": 0,
+    "fp": 0,
+    "precision": null,
+    "precision_ci": null,
+    "recall": null,
+    "recall_ci": null,
+    "tp": 0
+   },
+   "PLL006": {
+    "f1": null,
+    "f1_ci": null,
+    "fn": 0,
+    "fp": 0,
+    "precision": null,
+    "precision_ci": null,
+    "recall": null,
+    "recall_ci": null,
+    "tp": 0
+   },
+   "PLL007": {
+    "f1": 1.0,
+    "f1_ci": [
+     0.9581729327028545,
+     1.0
+    ],
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "precision_ci": [
+     0.9581729327028545,
+     1.0
+    ],
+    "recall": 1.0,
+    "recall_ci": [
+     0.9581729327028545,
+     1.0
+    ],
+    "tp": 88
+   }
+  },
+  "total": {
+   "f1": 1.0,
+   "f1_ci": [
+    0.9619059568959835,
+    1.0
+   ],
+   "fn": 0,
+   "fp": 0,
+   "precision": 1.0,
+   "precision_ci": [
+    0.9619059568959835,
+    1.0
+   ],
+   "recall": 1.0,
+   "recall_ci": [
+    0.9619059568959835,
+    1.0
+   ],
+   "tp": 97
+  }
+ },
+ "before": {
+  "background_findings": 0,
+  "cross_rule_findings": 0,
+  "per_rule": {
+   "PLL001": {
+    "f1": null,
+    "f1_ci": null,
+    "fn": 0,
+    "fp": 0,
+    "precision": null,
+    "precision_ci": null,
+    "recall": null,
+    "recall_ci": null,
+    "tp": 0
+   },
+   "PLL002": {
+    "f1": 1.0,
+    "f1_ci": [
+     0.700854948272956,
+     1.0
+    ],
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "precision_ci": [
+     0.700854948272956,
+     1.0
+    ],
+    "recall": 1.0,
+    "recall_ci": [
+     0.700854948272956,
+     1.0
+    ],
+    "tp": 9
+   },
+   "PLL003": {
+    "f1": null,
+    "f1_ci": null,
+    "fn": 0,
+    "fp": 0,
+    "precision": null,
+    "precision_ci": null,
+    "recall": null,
+    "recall_ci": null,
+    "tp": 0
+   },
+   "PLL004": {
+    "f1": null,
+    "f1_ci": null,
+    "fn": 0,
+    "fp": 0,
+    "precision": null,
+    "precision_ci": null,
+    "recall": null,
+    "recall_ci": null,
+    "tp": 0
+   },
+   "PLL005": {
+    "f1": null,
+    "f1_ci": null,
+    "fn": 0,
+    "fp": 0,
+    "precision": null,
+    "precision_ci": null,
+    "recall": null,
+    "recall_ci": null,
+    "tp": 0
+   },
+   "PLL006": {
+    "f1": null,
+    "f1_ci": null,
+    "fn": 0,
+    "fp": 0,
+    "precision": null,
+    "precision_ci": null,
+    "recall": null,
+    "recall_ci": null,
+    "tp": 0
+   },
+   "PLL007": {
+    "f1": 1.0,
+    "f1_ci": [
+     0.9581729327028545,
+     1.0
+    ],
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "precision_ci": [
+     0.9581729327028545,
+     1.0
+    ],
+    "recall": 1.0,
+    "recall_ci": [
+     0.9581729327028545,
+     1.0
+    ],
+    "tp": 88
+   }
+  },
+  "total": {
+   "f1": 1.0,
+   "f1_ci": [
+    0.9619059568959835,
+    1.0
+   ],
+   "fn": 0,
+   "fp": 0,
+   "precision": 1.0,
+   "precision_ci": [
+    0.9619059568959835,
+    1.0
+   ],
+   "recall": 1.0,
+   "recall_ci": [
+    0.9619059568959835,
+    1.0
+   ],
+   "tp": 97
+  }
+ }
+}

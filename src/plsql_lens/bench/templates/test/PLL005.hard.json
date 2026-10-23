@@ -1,0 +1,58 @@
+{
+  "rule": "PLL005",
+  "split": "test",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "UPDATE with a block comment after the keyword inside a multi-line cursor FOR loop header",
+      "code": "PROCEDURE @@proc@@ (p_run IN NUMBER) IS\n    l_seen PLS_INTEGER := 0;\nBEGIN\n    -- touch every row of the run, one by one\n    FOR rec IN (SELECT id, @@col@@\n                  FROM @@tab@@\n                 WHERE run_id = p_run) LOOP\n        l_seen := l_seen + 1;\n        UPDATE /* touch */ @@tab2@@ -- @expect\n           SET @@col@@ = rec.@@col@@\n         WHERE id = rec.id;\n    END LOOP;\n    @@proc2@@(l_seen);\nEND @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "DELETE inside an inner BEGIN..EXCEPTION block within a labelled cursor loop",
+      "code": "PROCEDURE @@proc@@ IS\n    CURSOR c_src IS\n        SELECT id FROM @@tab@@;\nBEGIN\n    <<rows>>\n    FOR rec IN c_src LOOP\n        BEGIN\n            DELETE FROM @@tab2@@ -- @expect\n             WHERE ref_id = rec.id;\n        EXCEPTION\n            WHEN VALUE_ERROR THEN\n                RAISE;\n        END;\n    END LOOP rows;\nEND @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "INSERT in the ELSIF branch of an IF inside a plain LOOP that contains FETCH",
+      "code": "PROCEDURE @@proc@@ (p_flag IN VARCHAR2) IS\n    CURSOR c_all IS SELECT id, @@col@@ FROM @@tab@@;\n    l_row c_all%ROWTYPE;\nBEGIN\n    OPEN c_all;\n    LOOP\n        FETCH c_all INTO l_row;\n        EXIT WHEN c_all%NOTFOUND;\n        IF p_flag = 'A' THEN\n            @@proc2@@(l_row.id);\n        ELSIF p_flag = 'B' THEN\n            INSERT INTO @@tab2@@ (id) VALUES (l_row.id); -- @expect\n        END IF;\n    END LOOP;\n    CLOSE c_all;\nEND @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "DML placed after the END LOOP of an inner numeric loop but still inside the outer cursor loop",
+      "code": "PROCEDURE @@proc@@ IS\nBEGIN\n    FOR rec IN (SELECT id, qty FROM @@tab@@) LOOP\n        FOR n IN 1 .. rec.qty LOOP\n            @@proc2@@(rec.id, n);\n        END LOOP;\n        UPDATE @@tab@@ SET @@col@@ = SYSDATE WHERE id = rec.id; -- @expect\n    END LOOP;\nEND @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "INSERT in the cursor loop of a local procedure declared inside the procedure under test",
+      "code": "PROCEDURE @@proc@@ (p_run IN NUMBER) IS\n    PROCEDURE copy_rows (p_r IN NUMBER) IS\n    BEGIN\n        FOR rec IN (SELECT id FROM @@tab@@ WHERE run_id = p_r) LOOP\n            INSERT INTO @@tab2@@ (id) VALUES (rec.id); -- @expect\n        END LOOP;\n    END copy_rows;\nBEGIN\n    copy_rows(p_run);\n    @@proc2@@(p_run);\nEND @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "DML words only in a comment, a string argument and a block comment inside a cursor loop",
+      "code": "PROCEDURE @@proc@@ IS\nBEGIN\n    FOR rec IN (SELECT id FROM @@tab@@) LOOP\n        -- UPDATE @@tab2@@ SET x = 1;\n        @@proc2@@(rec.id, 'DELETE FROM t; INSERT INTO t');\n        /* INSERT INTO t VALUES (rec.id); */\n    END LOOP;\nEND @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "DML after the END LOOP of a labelled cursor loop (label repeated on END LOOP)",
+      "code": "PROCEDURE @@proc@@ (p_run IN NUMBER) IS\nBEGIN\n    <<scan>>\n    FOR rec IN (SELECT id FROM @@tab@@ WHERE run_id = p_run) LOOP\n        @@proc2@@(rec.id);\n    END LOOP scan;\n    UPDATE @@tab2@@\n       SET @@col@@ = SYSDATE\n     WHERE run_id = p_run;\n    DELETE FROM @@tab@@ WHERE run_id = p_run;\nEND @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "DML in a REVERSE numeric-range loop that follows a DML-free cursor loop",
+      "code": "PROCEDURE @@proc@@ (p_n IN PLS_INTEGER) IS\nBEGIN\n    FOR rec IN (SELECT id FROM @@tab@@) LOOP\n        @@proc2@@(rec.id);\n    END LOOP;\n    FOR i IN REVERSE 1 .. p_n LOOP\n        INSERT INTO @@tab2@@ (seq) VALUES (i);\n    END LOOP;\n    @@proc2@@(p_n);\nEND @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "DML in a WHILE loop and in a FETCH-less plain LOOP (neither is a cursor loop)",
+      "code": "PROCEDURE @@proc@@ (p_max IN PLS_INTEGER) IS\n    l_i PLS_INTEGER := 1;\nBEGIN\n    WHILE l_i <= p_max LOOP\n        UPDATE @@tab@@\n           SET @@col@@ = l_i\n         WHERE id = l_i;\n        l_i := l_i + 1;\n    END LOOP;\n    LOOP\n        l_i := l_i - 1;\n        DELETE FROM @@tab2@@ WHERE id = l_i;\n        EXIT WHEN l_i <= 0;\n    END LOOP;\nEND @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "plain LOOP with FETCH only in a comment and a string literal (no real FETCH) around an INSERT",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\n    l_msg VARCHAR2(100);\n    l_try PLS_INTEGER := 0;\nBEGIN\n    LOOP\n        -- FETCH c_rows INTO l_row;\n        l_msg := 'FETCH c_rows INTO l_row';\n        l_try := l_try + 1;\n        INSERT INTO @@tab@@ (id, note) VALUES (p_id, l_msg);\n        EXIT WHEN l_try >= 3;\n    END LOOP;\nEND @@proc@@;"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "rule": "PLL001",
+  "split": "dev",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "OTHERS handler with block comments between tokens, a commented-out logging call, and only NULL; keyword text sits in a string and in a multi-line block comment",
+      "code": "procedure @@proc@@(p_id in number) is\n  l_note varchar2(200) := 'never write when others then raise; in prose';\nbegin\n  /* touch the row */ update @@tab@@ set @@col@@ = l_note where id = p_id;\n  @@proc2@@(p_id); /* exception\n  when others then raise; */\nexception\n  when /* any failure */ others /* swallowed */ then -- @expect\n    -- logger.log_error(sqlerrm);\n    null;\nend @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "defect is in a nested local procedure's own handler (only NULL); the outer handler re-raises",
+      "code": "procedure @@proc@@(p_id in number) is\n  procedure flush_row(p_row in number) is\n  begin\n    update @@tab@@\n       set @@col@@ = sysdate\n     where id = p_row;\n  exception\n    when others then -- @expect\n      null;\n  end flush_row;\nbegin\n  flush_row(p_id);\n  @@proc2@@(p_id);\nexception\n  when others then\n    raise;\nend @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "innermost of three nested blocks (label, DECLARE block) has an OTHERS handler that only RETURNs a value",
+      "code": "function @@proc@@(p_id in number) return number is\n  l_res number := 0;\nbegin\n  <<outer>>\n  begin\n    declare\n      l_tmp number;\n    begin\n      begin\n        l_tmp := @@proc2@@(p_id);\n        l_res := l_res + l_tmp;\n      exception\n        when others then -- @expect\n          return -1;\n      end;\n    end;\n  end outer;\n  return l_res;\nend @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "handler placed after a local subprogram; only assigns a CASE expression of constants; a q-quoted string holds 'when others then raise;'",
+      "code": "procedure @@proc@@(p_id in number, p_status out varchar2) is\n  c_hint constant varchar2(60) := q'[when others then raise; -- not here]';\n  procedure step_one(p_n in number) is\n  begin\n    @@proc2@@(p_n);\n  exception\n    when others then\n      raise;\n  end step_one;\nbegin\n  step_one(p_id);\n  p_status := 'ok';\nexception\n  when others then -- @expect\n    p_status := case when p_id > 0 then 'e_pos' else 'e_neg' end;\nend @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "tabs, upper-case keywords, WHEN OTHERS and THEN on separate lines, conditional compilation where neither branch logs or re-raises",
+      "code": "procedure @@proc@@(p_id in number) is\n\tl_ok boolean := true;\nbegin\n\t@@proc2@@(p_id);\nexception\n\tWHEN OTHERS -- @expect\n\tTHEN\n\t\tl_ok := false;\n\t\t$IF $$verbose $THEN\n\t\tdbms_output.put_line('step failed');\n\t\t$ELSE\n\t\tnull;\n\t\t$END\nend @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "'when others then null;' appears only in a string, a block comment and a line comment; the only real handler is TOO_MANY_ROWS",
+      "code": "procedure @@proc@@(p_id in number) is\n  l_txt varchar2(100) := 'when others then null;';\nbegin\n  @@proc2@@(p_id);\n  /* an earlier version had:\n     exception\n       when others then null;\n  */\n  dbms_output.put_line(l_txt);\nexception\n  -- when others then null;   (removed on purpose)\n  when too_many_rows then\n    null;\nend @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "OTHERS handler re-raises with a block comment before the semicolon; local function and labelled nested block precede it",
+      "code": "function @@proc@@(p_id in number) return number is\n  l_n number;\n  function helper(p_x in number) return number is\n  begin\n    return p_x + 1;\n  end helper;\nbegin\n  <<outer>>\n  begin\n    l_n := helper(p_id);\n  exception\n    when no_data_found then\n      l_n := 0;\n  end outer;\n  return l_n;\nexception\n  when others then\n    rollback;\n    raise /* propagate to the caller */ ;\nend @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "OTHERS handler inside a loop calls a routine with a dotted part starting with 'audit'",
+      "code": "procedure @@proc@@(p_ids in dbms_sql.number_table) is\n  l_fail number := 0;\nbegin\n  for i in 1 .. p_ids.count loop\n    continue when p_ids(i) is null;\n    begin\n      @@proc2@@(p_ids(i));\n    exception\n      when others then\n        pkg_util.audit_trail.add(p_ids(i), 'null;');\n        l_fail := l_fail + 1;\n    end;\n  end loop;\n  dbms_output.put_line(l_fail);\nend @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "quoted-identifier variable; OTHERS handler stores DBMS_UTILITY.FORMAT_ERROR_BACKTRACE after a block comment",
+      "code": "procedure @@proc@@(p_id in number, p_trace out varchar2) is\n  \"Last Id\" number := p_id;\nbegin\n  p_trace := null;\n  @@proc2@@(\"Last Id\");\nexception\n  when others then\n    /* keep the backtrace for the caller */\n    p_trace := dbms_utility.format_error_backtrace;\nend @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "nested block has a VALUE_ERROR handler with NULL and an OTHERS handler that re-raises; outer OTHERS handler uses SQLCODE",
+      "code": "procedure @@proc@@(p_id in number, p_code out number) is\nbegin\n  p_code := 0;\n  begin\n    @@proc2@@(p_id);\n  exception\n    when value_error then\n      null;\n    when others then\n      raise;\n  end;\n  @@proc2@@(p_id + 1);\nexception\n  WHEN OTHERS THEN\n    p_code := SQLCODE;\nend @@proc@@;"
+    }
+  ]
+}

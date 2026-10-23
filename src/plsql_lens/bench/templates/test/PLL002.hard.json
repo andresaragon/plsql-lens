@@ -1,0 +1,58 @@
+{
+  "rule": "PLL002",
+  "split": "test",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "comments between EXECUTE and IMMEDIATE and between concatenation operands; operand p_name is a variable",
+      "code": "PROCEDURE @@proc@@ (p_name IN VARCHAR2) IS\n    l_rows PLS_INTEGER;\nBEGIN\n    -- EXECUTE IMMEDIATE 'safe literal only';\n    EXECUTE /* run it */ IMMEDIATE -- @expect\n        'DELETE FROM @@tab@@ WHERE @@col@@ = ''' /* quoted */\n        || p_name -- user supplied\n        || '''';\n    l_rows := SQL%ROWCOUNT;\n    @@proc2@@(l_rows);\nEND @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "variable assigned by concatenation inside an IF in a labelled block, executed later in a separate DECLARE block",
+      "code": "PROCEDURE @@proc@@ (p_kind IN VARCHAR2, p_val IN VARCHAR2) IS\n    l_stmt VARCHAR2(500);\nBEGIN\n    <<build>>\n    BEGIN\n        IF p_kind = 'LIKE' THEN\n            l_stmt := 'DELETE FROM @@tab@@ WHERE @@col@@ LIKE ''%'\n                      || p_val || '%''';\n        ELSE\n            l_stmt := 'DELETE FROM @@tab@@ WHERE 1 = 0';\n        END IF;\n    END build;\n    DECLARE\n        l_cnt NUMBER;\n    BEGIN\n        EXECUTE IMMEDIATE l_stmt; -- @expect\n        l_cnt := SQL%ROWCOUNT;\n        @@proc2@@(l_cnt);\n    END;\nEND @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "concatenation with a parameter inside a local procedure that has its own handler; a literal-only statement follows in the main body",
+      "code": "PROCEDURE @@proc@@ (p_tab IN VARCHAR2) IS\n    PROCEDURE purge (p_name IN VARCHAR2) IS\n    BEGIN\n        EXECUTE IMMEDIATE 'TRUNCATE TABLE ' || p_name; -- @expect\n    EXCEPTION\n        WHEN OTHERS THEN\n            RAISE;\n    END purge;\nBEGIN\n    purge(p_tab);\n    EXECUTE IMMEDIATE 'ANALYZE TABLE @@tab@@ COMPUTE STATISTICS';\nEND @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "statement broken over many lines with the keywords alone on the first line; DBMS_ASSERT on one operand but a raw parameter on another; INTO/USING follow",
+      "code": "FUNCTION @@proc@@ (p_schema IN VARCHAR2, p_tab IN VARCHAR2, p_min IN NUMBER) RETURN NUMBER IS\n    l_cnt NUMBER;\nBEGIN\n    EXECUTE IMMEDIATE -- @expect\n        'SELECT COUNT(*) FROM '\n        || DBMS_ASSERT.SCHEMA_NAME(p_schema)\n        || '.'\n        || p_tab\n        || ' WHERE @@col@@ > :1'\n        INTO l_cnt\n        USING p_min;\n    RETURN l_cnt;\nEND @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "OPEN ... FOR with the query on following lines; quoted identifiers and a semicolon inside the literals; the ORDER BY operand is a parameter",
+      "code": "PROCEDURE @@proc@@ (p_order IN VARCHAR2, p_rc OUT SYS_REFCURSOR) IS\nBEGIN\n    IF p_order IS NULL THEN\n        RAISE_APPLICATION_ERROR(-20011, 'order required');\n    END IF;\n    OPEN p_rc FOR -- @expect\n        'SELECT \"@@col@@\", ''a;b'' AS sep FROM \"@@tab@@\" ORDER BY '\n        || p_order;\nEND @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "'||' and EXECUTE IMMEDIATE only in comments and inside a string literal; the OPEN FOR query is a single literal",
+      "code": "PROCEDURE @@proc@@ (p_rc OUT SYS_REFCURSOR) IS\nBEGIN\n    -- OPEN p_rc FOR 'SELECT ' || p_rc;\n    /* EXECUTE IMMEDIATE 'DROP TABLE x' || p_rc; */\n    IF p_rc%ISOPEN THEN\n        CLOSE p_rc;\n    END IF;\n    OPEN p_rc FOR\n        'SELECT ''a || b'' AS joined, @@col@@ FROM @@tab@@';\nEND @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "variable concatenated with a parameter is only printed; the executed variable gets literals and DBMS_ASSERT operands only",
+      "code": "PROCEDURE @@proc@@ (p_name IN VARCHAR2) IS\n    l_sql   VARCHAR2(500);\n    l_label VARCHAR2(500);\nBEGIN\n    l_label := 'cleaning ' || p_name;\n    DBMS_OUTPUT.PUT_LINE(l_label);\n    l_sql := 'DELETE FROM '\n             || DBMS_ASSERT.SQL_OBJECT_NAME(p_name)\n             || ' WHERE @@col@@ IS NULL';\n    EXECUTE IMMEDIATE l_sql;\nEND @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "concatenation appears only after USING (bind argument) and the word INTO sits inside the SQL string",
+      "code": "PROCEDURE @@proc@@ (p_val IN VARCHAR2, p_id IN NUMBER) IS\n    l_out NUMBER;\nBEGIN\n    BEGIN\n        EXECUTE IMMEDIATE 'INSERT INTO @@tab@@ (@@col@@, id) VALUES (:1, :2)'\n            USING p_val || '_@@str@@', p_id;\n    END;\n    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM @@tab@@ WHERE @@col@@ = :1'\n        INTO l_out\n        USING p_val || '_@@str@@';\n    @@proc2@@(l_out);\nEND @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "SQL text is built in a local function (concatenation hidden in another subprogram); the executed variable is assigned a function call result",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\n    l_sql VARCHAR2(500);\n\n    FUNCTION build_sql (p_n IN NUMBER) RETURN VARCHAR2 IS\n    BEGIN\n        RETURN 'DELETE FROM @@tab@@ WHERE id = ' || TO_CHAR(p_n);\n    END build_sql;\nBEGIN\n    l_sql := build_sql(p_id);\n    EXECUTE IMMEDIATE l_sql;\nEND @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "static OPEN FOR queries in both IF branches; EXECUTE IMMEDIATE concatenates two q-quoted literals only",
+      "code": "PROCEDURE @@proc@@ (p_dept IN NUMBER, p_rc OUT SYS_REFCURSOR) IS\nBEGIN\n    IF p_dept IS NULL THEN\n        OPEN p_rc FOR\n            SELECT @@col@@ FROM @@tab@@;\n    ELSE\n        OPEN p_rc FOR\n            SELECT @@col@@ FROM @@tab@@ WHERE dept_id = p_dept;\n    END IF;\n    EXECUTE IMMEDIATE q'{ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD'}'\n                      || q'{ NLS_SORT = BINARY}';\nEND @@proc@@;"
+    }
+  ]
+}

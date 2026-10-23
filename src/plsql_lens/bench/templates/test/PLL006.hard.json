@@ -1,0 +1,58 @@
+{
+  "rule": "PLL006",
+  "split": "test",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "TO_DATE with nested commas in its single argument, three blocks deep; marker on the TO_DATE line",
+      "code": "FUNCTION @@proc@@ (p_text IN VARCHAR2) RETURN DATE IS\n    l_d DATE;\nBEGIN\n    BEGIN\n        BEGIN\n            l_d := TO_DATE(SUBSTR(p_text, 1, 10)); -- @expect\n        EXCEPTION\n            WHEN VALUE_ERROR THEN\n                l_d := NULL;\n        END;\n    EXCEPTION\n        WHEN NO_DATA_FOUND THEN\n            l_d := NULL;\n    END;\n    RETURN l_d;\nEND @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "single-argument TO_TIMESTAMP on its own line inside a multi-line INSERT",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER, p_stamp IN VARCHAR2) IS\nBEGIN\n    IF p_stamp IS NULL THEN\n        RETURN;\n    END IF;\n    INSERT INTO @@tab@@ (id, @@col@@)\n    VALUES (p_id,\n            TO_TIMESTAMP(p_stamp)); -- @expect\n    @@proc2@@(p_id);\nEND @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "VARCHAR2 parameter compared with a NUMBER local; the comparison operator is on its own line (marker there)",
+      "code": "FUNCTION @@proc@@ (p_code IN VARCHAR2) RETURN BOOLEAN IS\n    l_limit NUMBER := @@num@@;\nBEGIN\n    IF p_code\n       >= l_limit -- @expect\n    THEN\n        RETURN TRUE;\n    END IF;\n    RETURN FALSE;\nEND @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "DATE parameter compared with a numeric literal, deep in an ELSE branch, with a block comment before the operator",
+      "code": "PROCEDURE @@proc@@ (p_when IN DATE, p_flag IN VARCHAR2) IS\nBEGIN\n    IF p_flag = 'Y' THEN\n        NULL;\n    ELSIF p_flag IS NULL THEN\n        @@proc2@@(p_when);\n    ELSE\n        IF p_when /* cutoff */ > @@num@@ THEN -- @expect\n            @@proc2@@(p_when + 1);\n        END IF;\n    END IF;\nEND @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "NUMBER parameter of a local function compared with a text literal; the local function precedes the main body",
+      "code": "PROCEDURE @@proc@@ (p_amount IN NUMBER) IS\n    FUNCTION is_big (p_v IN NUMBER) RETURN BOOLEAN IS\n    BEGIN\n        IF p_v <> '@@str@@' THEN -- @expect\n            RETURN TRUE;\n        END IF;\n        RETURN FALSE;\n    END is_big;\nBEGIN\n    IF is_big(p_amount) THEN\n        @@proc2@@(p_amount);\n    END IF;\nEND @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "TO_DATE with a format mask (nested commas) and with three arguments; 'TO_DATE(p_text)' only in a comment and a string",
+      "code": "FUNCTION @@proc@@ (p_text IN VARCHAR2) RETURN DATE IS\n    l_msg VARCHAR2(100);\n    l_d   DATE;\nBEGIN\n    -- never call TO_DATE(p_text) without a mask\n    l_msg := 'TO_DATE(p_text) is risky';\n    l_d := TO_DATE(SUBSTR(p_text, 1, 10), 'YYYY-MM-DD');\n    IF l_d IS NULL THEN\n        l_d := TO_DATE('2000-01-01', 'YYYY-MM-DD', 'NLS_DATE_LANGUAGE=ENGLISH');\n    END IF;\n    @@proc2@@(l_msg);\n    RETURN l_d;\nEND @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "comparison operators only in comments and strings; '=>' in named-notation calls is not a comparison even between different families",
+      "code": "PROCEDURE @@proc@@ (p_n IN NUMBER, p_s IN VARCHAR2) IS\n    l_note VARCHAR2(100);\nBEGIN\n    -- p_n = 'abc' would be a bad comparison\n    l_note := 'p_n = ''abc'' and p_s > 5';\n    @@proc2@@(p_a => p_s, p_b => p_n);\n    /* IF p_s = p_n THEN */\n    IF p_n > 0 THEN\n        @@proc2@@(p_a => l_note, p_b => 10);\n    END IF;\nEND @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "same-family comparisons: text/text, number/number (PLS_INTEGER local), date/date",
+      "code": "FUNCTION @@proc@@ (p_code IN VARCHAR2, p_n IN NUMBER, p_d IN DATE) RETURN BOOLEAN IS\n    l_cnt  PLS_INTEGER := 0;\n    l_text VARCHAR2(20) := 'abc';\n    l_d    DATE := SYSDATE;\nBEGIN\n    IF p_code = l_text THEN\n        RETURN TRUE;\n    ELSIF p_n >= l_cnt AND p_code <> 'XYZ' THEN\n        RETURN TRUE;\n    ELSIF p_d < l_d THEN\n        RETURN FALSE;\n    END IF;\n    RETURN FALSE;\nEND @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "identifiers merely containing TO_DATE / TO_TIMESTAMP (user function my_to_date, variables l_to_date) are not TO_DATE calls",
+      "code": "FUNCTION @@proc@@ (p_text IN VARCHAR2) RETURN DATE IS\n    l_to_date DATE;\n    l_to_timestamp_text VARCHAR2(30);\nBEGIN\n    l_to_timestamp_text := 'n/a';\n    l_to_date := my_to_date(p_text);\n    IF l_to_date IS NULL THEN\n        l_to_date := Pkg_Dates.Parse_Date(p_text, l_to_timestamp_text);\n    END IF;\n    RETURN l_to_date;\nEND @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "comparisons inside a searched CASE expression, all between operands of the same family",
+      "code": "FUNCTION @@proc@@ (p_n IN NUMBER, p_s IN VARCHAR2) RETURN VARCHAR2 IS\n    l_label VARCHAR2(30);\nBEGIN\n    IF p_s IS NOT NULL THEN\n        l_label := CASE\n                       WHEN p_n = 0 THEN 'zero'\n                       WHEN p_n < 100 THEN 'small'\n                       WHEN p_s = 'big' THEN 'text-big'\n                       ELSE 'other'\n                   END;\n    END IF;\n    RETURN l_label;\nEND @@proc@@;"
+    }
+  ]
+}

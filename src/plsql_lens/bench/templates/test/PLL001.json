@@ -1,0 +1,58 @@
+{
+  "rule": "PLL001",
+  "split": "test",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "OTHERS handler holding only a comment line and NULL",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\n    l_total NUMBER := 0;\nBEGIN\n    SELECT COUNT(*)\n      INTO l_total\n      FROM @@tab@@\n     WHERE @@col@@ = p_id;\n\n    UPDATE @@tab2@@\n       SET @@col2@@ = l_total\n     WHERE @@col@@ = p_id;\nEXCEPTION\n    WHEN OTHERS THEN -- @expect\n        -- nothing sensible can be done here\n        NULL;\nEND @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "OTHERS handler only sets a flag and CONTINUEs the loop",
+      "code": "PROCEDURE @@proc@@ (p_ids IN SYS.ODCINUMBERLIST) IS\n    l_failed BOOLEAN := FALSE;\n    l_ratio  NUMBER;\nBEGIN\n    FOR i IN 1 .. p_ids.COUNT LOOP\n        BEGIN\n            l_ratio := 100 / p_ids(i);\n            @@proc2@@(p_ids(i), l_ratio);\n        EXCEPTION\n            WHEN OTHERS THEN -- @expect\n                l_failed := TRUE;\n                CONTINUE;\n        END;\n    END LOOP;\n    IF l_failed THEN\n        DBMS_OUTPUT.PUT_LINE('some rows were skipped');\n    END IF;\nEND @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "function whose OTHERS handler only returns a sentinel value",
+      "code": "FUNCTION @@proc@@ (p_a IN NUMBER, p_b IN NUMBER) RETURN VARCHAR2 IS\n    l_ratio NUMBER;\nBEGIN\n    l_ratio := p_a / p_b;\n    RETURN CASE\n               WHEN l_ratio > 1 THEN 'Y'\n               ELSE 'N'\n           END;\nEXCEPTION\n    WHEN OTHERS THEN -- @expect\n        RETURN 'N';\nEND @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "OTHERS handler that only does ROLLBACK, no re-raise and no use of the error",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER, p_amount IN NUMBER) IS\nBEGIN\n    INSERT INTO @@tab@@ (@@col@@, @@col2@@)\n    VALUES (p_id, p_amount);\n\n    UPDATE @@tab2@@\n       SET @@col2@@ = @@col2@@ + p_amount\n     WHERE @@col@@ = p_id;\nEXCEPTION\n    WHEN OTHERS THEN -- @expect\n        ROLLBACK;\nEND @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "OTHERS handler runs a status UPDATE without capturing the error",
+      "code": "PROCEDURE @@proc@@ (p_batch_id IN NUMBER) IS\n    l_rows PLS_INTEGER;\nBEGIN\n    DELETE FROM @@tab@@\n     WHERE batch_id = p_batch_id;\n    l_rows := SQL%ROWCOUNT;\n\n    UPDATE @@tab2@@\n       SET status = 'DONE',\n           row_count = l_rows\n     WHERE batch_id = p_batch_id;\nEXCEPTION\n    WHEN OTHERS THEN -- @expect\n        UPDATE @@tab2@@\n           SET status = 'FAILED'\n         WHERE batch_id = p_batch_id;\nEND @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "OTHERS handler calls audit_pkg.write (logging call by prefix)",
+      "code": "PROCEDURE @@proc@@ (p_dept IN NUMBER) IS\n    CURSOR c_emp (p_d NUMBER) IS\n        SELECT @@col@@, @@col2@@\n          FROM @@tab@@\n         WHERE dept_id = p_d;\n    l_row c_emp%ROWTYPE;\nBEGIN\n    OPEN c_emp(p_dept);\n    LOOP\n        FETCH c_emp INTO l_row;\n        EXIT WHEN c_emp%NOTFOUND;\n        @@proc2@@(l_row.@@col@@);\n    END LOOP;\n    CLOSE c_emp;\nEXCEPTION\n    WHEN OTHERS THEN\n        IF c_emp%ISOPEN THEN\n            CLOSE c_emp;\n        END IF;\n        audit_pkg.write('@@str@@', p_dept);\nEND @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "OTHERS handler re-raises a user-defined exception",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\n    my_error EXCEPTION;\n    l_cnt    NUMBER;\nBEGIN\n    SELECT COUNT(*) INTO l_cnt FROM @@tab@@ WHERE @@col@@ = p_id;\n    IF l_cnt = 0 THEN\n        RAISE my_error;\n    END IF;\n    BEGIN\n        UPDATE @@tab@@\n           SET @@col2@@ = SYSDATE\n         WHERE @@col@@ = p_id;\n    EXCEPTION\n        WHEN OTHERS THEN\n            RAISE my_error;\n    END;\nEND @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "ROLLBACK followed by RAISE, plus an inner block that only swallows TOO_MANY_ROWS",
+      "code": "PROCEDURE @@proc@@ (p_key IN VARCHAR2) IS\n    l_id NUMBER;\nBEGIN\n    BEGIN\n        SELECT id\n          INTO l_id\n          FROM @@tab@@\n         WHERE @@col@@ = p_key;\n    EXCEPTION\n        WHEN TOO_MANY_ROWS THEN\n            NULL;\n    END;\n    UPDATE @@tab2@@\n       SET @@col2@@ = SYSDATE\n     WHERE id = l_id;\nEXCEPTION\n    WHEN OTHERS THEN\n        ROLLBACK;\n        RAISE;\nEND @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "OTHERS handler uses DBMS_UTILITY.FORMAT_ERROR_BACKTRACE",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER, p_ok OUT BOOLEAN, p_error OUT VARCHAR2) IS\nBEGIN\n    p_ok := TRUE;\n    @@proc2@@(p_id);\n    UPDATE @@tab@@\n       SET @@col@@ = SYSDATE\n     WHERE id = p_id;\nEXCEPTION\n    WHEN OTHERS THEN\n        p_ok := FALSE;\n        p_error := DBMS_UTILITY.FORMAT_ERROR_BACKTRACE;\nEND @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "OTHERS handler calls trace_pkg.add and returns a default (logging call by prefix)",
+      "code": "FUNCTION @@proc@@ (p_text IN VARCHAR2, p_default IN DATE) RETURN DATE IS\n    l_date DATE;\nBEGIN\n    IF p_text IS NULL THEN\n        RETURN p_default;\n    END IF;\n    l_date := TO_DATE(p_text, 'YYYY-MM-DD');\n    RETURN l_date;\nEXCEPTION\n    WHEN OTHERS THEN\n        trace_pkg.add('unparseable date', p_text);\n        RETURN p_default;\nEND @@proc@@;"
+    }
+  ]
+}

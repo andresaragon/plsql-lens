@@ -1,0 +1,58 @@
+{
+  "rule": "PLL002",
+  "split": "dev",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "q-quoted literal followed by block comment, parameter and a quote-char literal, concatenated over several lines",
+      "code": "function @@proc@@(p_val in varchar2) return number is\n  l_cnt number;\nbegin\n  execute immediate -- @expect\n    q'[select count(*) from @@tab@@ where @@col@@ = ']' /* open quote */\n    || p_val\n    || ''''\n    into l_cnt;\n  return l_cnt;\nend @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "variable concatenated inside a nested DECLARE block, executed later in the outer body after a local procedure",
+      "code": "procedure @@proc@@(p_tab in varchar2) is\n  l_sql varchar2(400);\n  l_rows number;\n  procedure note(p_t in varchar2) is\n  begin\n    dbms_output.put_line(p_t);\n  end note;\nbegin\n  begin\n    declare\n      l_part varchar2(100) := 'where @@col@@ is null';\n    begin\n      l_sql := 'delete from ' || p_tab || ' ' || l_part;\n    end;\n  end;\n  note('built');\n  execute immediate l_sql; -- @expect\n  l_rows := sql%rowcount;\n  note(l_rows);\nend @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "OPEN FOR a variable built under conditional compilation (both branches concatenate a function result) and extended by another concatenation",
+      "code": "function @@proc@@(p_min in number, p_desc in boolean) return sys_refcursor is\n  l_cur sys_refcursor;\n  l_sql varchar2(300);\nbegin\n  $IF $$use_archive $THEN\n  l_sql := 'select id from @@tab@@_arch where qty > ' || to_char(p_min);\n  $ELSE\n  l_sql := 'select id from @@tab@@ where qty > ' || to_char(p_min);\n  $END\n  if p_desc then\n    l_sql := l_sql || ' order by id desc';\n  end if;\n  open l_cur for l_sql; -- @expect\n  return l_cur;\nend @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "dynamic PL/SQL block text with 'end;' inside the literals, concatenated with a parameter, inside a labelled loop, tab indented",
+      "code": "procedure @@proc@@(p_proc in varchar2, p_n in number) is\n  l_i number := 0;\nbegin\n  <<run>>\n  loop\n    l_i := l_i + 1;\n    exit run when l_i > p_n;\n\texecute immediate 'begin ' || p_proc -- @expect\n\t  || '(:1); end;'\n\t  using l_i;\n  end loop run;\nend @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "statement after a nested block with its own exception section; quoted-identifier table name inside the literal, parameter concatenated",
+      "code": "procedure @@proc@@(p_id in number) is\n  l_done boolean := false;\nbegin\n  begin\n    @@proc2@@(p_id);\n  exception\n    when dup_val_on_index then\n      l_done := true;\n    when others then\n      raise;\n  end;\n  if not l_done then\n    execute immediate 'delete from \"Order Line\" where id = ' || p_id; -- @expect\n  end if;\nend @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "'||' appears only inside a q-quoted text and a line comment; the statement text itself has no concatenation operator",
+      "code": "function @@proc@@(p_val in varchar2) return varchar2 is\n  l_v varchar2(100);\nbegin\n  -- l_sql := 'select ' || p_val || ' from dual';\n  execute immediate q'[select 'x' || :1 from dual]' into l_v using p_val;\n  dbms_output.put_line(l_v);\n  return l_v;\nend @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "literals joined with DBMS_ASSERT calls across lines with block and line comments between tokens and tab indentation",
+      "code": "procedure @@proc@@(p_owner in varchar2, p_obj in varchar2, p_id in number) is\nbegin\n\texecute immediate 'delete from ' /* schema first */\n\t  || dbms_assert.schema_name(p_owner) || '.'\n\t  || dbms_assert.sql_object_name(p_obj) -- validated names only\n\t  || ' where id = :1'\n\t  using p_id;\n  dbms_output.put_line(sql%rowcount);\nend @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "the concatenated variable is a different variable from the one that is executed",
+      "code": "function @@proc@@(p_val in varchar2) return number is\n  l_sql varchar2(200);\n  l_other varchar2(200);\n  l_cnt number;\nbegin\n  l_other := 'select ' || p_val || ' from dual';\n  l_sql := 'select count(*) from @@tab@@';\n  dbms_output.put_line(length(l_other));\n  -- execute immediate l_other;\n  execute immediate l_sql into l_cnt;\n  return l_cnt;\nend @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "concatenation occurs only after USING (bind argument), not in the statement text",
+      "code": "procedure @@proc@@(p_prefix in varchar2, p_id in number) is\n  l_rows number;\nbegin\n  execute immediate\n    'update @@tab@@ set @@col@@ = :1 where id = :2'\n    using p_prefix || '-' || to_char(p_id), p_id;\n  l_rows := sql%rowcount;\n  dbms_output.put_line(l_rows);\nend @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "OPEN FOR a static query over a quoted-identifier table inside a labelled block; concatenation only appears in a comment",
+      "code": "function @@proc@@(p_min in number) return sys_refcursor is\n  l_cur sys_refcursor;\nbegin\n  <<outer>>\n  begin\n    /* not built as 'where qty > ' || p_min */\n    open l_cur for\n      select ol.id, ol.qty\n        from \"Order Line\" ol\n       where ol.qty > p_min;\n  end outer;\n  return l_cur;\nend @@proc@@;"
+    }
+  ]
+}

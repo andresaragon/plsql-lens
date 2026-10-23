@@ -1,0 +1,58 @@
+{
+  "rule": "PLL007",
+  "split": "dev",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "numeric magic number in three IFs",
+      "code": "function @@proc@@(p_qty in number) return varchar2 is\nbegin\n  if p_qty > @@num@@ then -- @expect\n    return 'bulk';\n  end if;\n  if p_qty = @@num@@ then -- @expect\n    return 'limit';\n  end if;\n  if p_qty + 5 < @@num@@ then -- @expect\n    return 'small';\n  end if;\n  return 'normal';\nend @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "string literal in three assignments",
+      "code": "procedure @@proc@@(p_kind in number, p_label out varchar2) is\nbegin\n  if p_kind = 2 then\n    p_label := '@@str@@'; -- @expect\n  elsif p_kind = 3 then\n    p_label := '@@str@@'; -- @expect\n  elsif p_kind = 4 then\n    p_label := '@@str@@'; -- @expect\n  else\n    p_label := 'unknown';\n  end if;\nend @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "string literal in the WHERE clause of three SQL statements",
+      "code": "procedure @@proc@@(p_id in number) is\n  l_a number;\n  l_b number;\nbegin\n  select count(*) into l_a\n    from @@tab@@\n   where @@col@@ = '@@str@@'; -- @expect\n  select count(*) into l_b\n    from @@tab2@@\n   where @@col@@ = '@@str@@' -- @expect\n     and id > p_id;\n  update @@tab@@\n     set @@col2@@ = l_a + l_b\n   where @@col@@ = '@@str@@'; -- @expect\nend @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "numeric literal inside a CASE and in two other places",
+      "code": "function @@proc@@(p_a in number) return varchar2 is\n  l_total number;\n  l_label varchar2(10);\nbegin\n  l_total := p_a * @@num@@; -- @expect\n  l_label := case\n               when p_a > @@num@@ then 'big' -- @expect\n               else 'small'\n             end;\n  if l_total > @@num@@ then -- @expect\n    l_label := 'huge';\n  end if;\n  return l_label;\nend @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "string literal repeated as a function argument",
+      "code": "procedure @@proc@@(p_a in varchar2, p_b in varchar2, p_c in varchar2) is\n  l_a varchar2(50);\n  l_b varchar2(50);\n  l_c varchar2(50);\nbegin\n  l_a := nvl(p_a, '@@str@@'); -- @expect\n  l_b := coalesce(p_b, '@@str@@'); -- @expect\n  l_c := replace(p_c, ' ', '@@str@@'); -- @expect\n  dbms_output.put_line(l_a || l_b || l_c);\nend @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "0 and 1 repeated many times",
+      "code": "function @@proc@@(p_a in number, p_b in number) return number is\n  l_r number := 0;\nbegin\n  if p_a > 0 then\n    l_r := l_r + 1;\n  end if;\n  if p_b > 0 then\n    l_r := l_r + 1;\n  end if;\n  if p_a + p_b > 1 then\n    l_r := l_r + 1;\n  end if;\n  return l_r;\nend @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "numeric and string literals that occur only twice",
+      "code": "procedure @@proc@@(p_a in number) is\nbegin\n  if p_a > @@num@@ then\n    dbms_output.put_line('@@str@@');\n  end if;\n  if p_a < @@num@@ then\n    dbms_output.put_line('@@str@@');\n  end if;\nend @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "constant declared once and referenced by name",
+      "code": "function @@proc@@(p_a in number, p_b in number, p_c in number) return number is\n  c_limit constant number := @@num@@;\n  l_n number := 0;\nbegin\n  if p_a > c_limit then\n    l_n := l_n + 1;\n  end if;\n  if p_b > c_limit then\n    l_n := l_n + 1;\n  end if;\n  if p_c > c_limit then\n    l_n := l_n + 1;\n  end if;\n  return l_n;\nend @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "single-character punctuation strings repeated",
+      "code": "function @@proc@@(p_a in varchar2, p_b in varchar2, p_c in varchar2) return varchar2 is\n  l_out varchar2(400);\nbegin\n  l_out := p_a || ',' || p_b;\n  l_out := l_out || ',' || p_c;\n  l_out := l_out || ';' || p_a;\n  l_out := l_out || ';' || p_b;\n  l_out := l_out || '|' || p_c;\n  l_out := l_out || '|' || p_a;\n  return l_out;\nend @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "empty strings repeated",
+      "code": "procedure @@proc@@(p_a in varchar2, p_b in varchar2, p_c in varchar2) is\n  l_a varchar2(50);\n  l_b varchar2(50);\n  l_c varchar2(50);\nbegin\n  l_a := nvl(p_a, '');\n  l_b := nvl(p_b, '');\n  l_c := nvl(p_c, '');\n  dbms_output.put_line(l_a || l_b || l_c);\nend @@proc@@;"
+    }
+  ]
+}

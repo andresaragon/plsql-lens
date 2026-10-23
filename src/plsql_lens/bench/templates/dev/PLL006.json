@@ -1,0 +1,58 @@
+{
+  "rule": "PLL006",
+  "split": "dev",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "TO_DATE with a single argument",
+      "code": "function @@proc@@(p_text in varchar2) return date is\n  l_d date;\nbegin\n  dbms_output.put_line('parsing ' || p_text);\n  l_d := to_date(p_text); -- @expect\n  dbms_output.put_line('parsed');\n  return l_d;\nend @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "TO_TIMESTAMP with a single argument",
+      "code": "function @@proc@@(p_text in varchar2) return timestamp is\n  l_ts timestamp;\nbegin\n  dbms_output.put_line('parsing ' || p_text);\n  l_ts := to_timestamp(p_text); -- @expect\n  dbms_output.put_line('parsed');\n  return l_ts;\nend @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "VARCHAR2 parameter compared with a numeric literal",
+      "code": "function @@proc@@(p_code in varchar2) return boolean is\n  l_hit boolean := false;\nbegin\n  if p_code = @@num@@ then -- @expect\n    l_hit := true;\n  end if;\n  return l_hit;\nend @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "NUMBER local compared with a string literal",
+      "code": "procedure @@proc@@(p_id in number) is\n  l_n number;\nbegin\n  l_n := p_id * 2;\n  if l_n = '@@num@@' then -- @expect\n    dbms_output.put_line('match');\n  end if;\nend @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "DATE local compared with a string literal",
+      "code": "procedure @@proc@@(p_id in number) is\n  l_d date;\nbegin\n  select max(created_on) into l_d from @@tab@@ where id = p_id;\n  if l_d < '01-JAN-20' then -- @expect\n    @@proc2@@(p_id);\n  end if;\nend @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "TO_DATE with a format mask",
+      "code": "function @@proc@@(p_text in varchar2) return date is\n  l_d date;\nbegin\n  dbms_output.put_line('parsing ' || p_text);\n  l_d := to_date(p_text, 'yyyy-mm-dd');\n  dbms_output.put_line('parsed');\n  return l_d;\nend @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "comparisons between operands of the same type family",
+      "code": "procedure @@proc@@(p_a in number, p_name in varchar2) is\n  l_n number := 0;\n  l_s varchar2(20) := '@@str2@@';\n  l_d date := sysdate;\nbegin\n  if l_n < p_a then\n    dbms_output.put_line('below');\n  end if;\n  if p_name = '@@str@@' then\n    dbms_output.put_line('named');\n  end if;\n  if p_a > 10 and l_s <> p_name then\n    dbms_output.put_line('other');\n  end if;\nend @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "anchored %TYPE parameters are not resolved",
+      "code": "procedure @@proc@@(p_id in @@tab@@.id%type, p_name in @@tab@@.@@col@@%type) is\nbegin\n  if p_id = 'none' then\n    dbms_output.put_line('no id');\n  end if;\n  if p_name = 42 then\n    dbms_output.put_line('numeric name');\n  end if;\nend @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "left side of the comparison is an arithmetic expression",
+      "code": "function @@proc@@(p_from in date, p_to in date) return boolean is\n  l_start date := p_from;\n  l_end date := p_to;\nbegin\n  if l_end - l_start < 3 then\n    return true;\n  end if;\n  return false;\nend @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "TO_DATE/TO_TIMESTAMP whose format mask contains a comma",
+      "code": "function @@proc@@(p_text in varchar2) return timestamp is\n  l_d date;\n  l_ts timestamp;\nbegin\n  l_d := to_date(p_text, 'Month dd, yyyy');\n  l_ts := to_timestamp(to_char(l_d, 'dd Mon, yyyy') || ' 10:00', 'dd Mon, yyyy hh24:mi');\n  return l_ts;\nend @@proc@@;"
+    }
+  ]
+}

@@ -42,5 +42,15 @@ Oracle Database Free is pulled from Docker Hub (`gvenzl/oracle-free`) under Orac
 repository does not redistribute it. Passwords come from the environment only (`.env.example`). See
 `docker/README.md` and `docs/reports/phase-3.md`.
 
+## Benchmark
+
+[docs/benchmarks/](docs/benchmarks/) measures the seven review rules on a frozen, seeded `test` split
+(350 seeded defects and 350 hard negatives, 7 rules, 105 files; methodology, matching definition and threats to
+validity are in its README). On `test`, the tuned rules reach precision 1.000 [0.99–1.00] and recall 0.998
+[0.99–1.00] (464 TP / 0 FP / 1 FN); the rules before tuning score the same, and the LLM-only baseline on a
+40-file sample costs 1.13 USD. Read the threats-to-validity section before quoting these: the benchmark checks
+the rules against their own contract, not against defects found in the wild. `make bench` regenerates everything
+without calling an LLM.
+
 Third-party PL/SQL used as test input lives in `corpus/` and is listed in [NOTICE](NOTICE).
 License: MIT.

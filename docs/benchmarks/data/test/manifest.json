@@ -1,0 +1,7372 @@
+{
+ "bases": {
+  "injected/ut_annotation_cache_manager_001.pkb": "corpus/utplsql/core/annotations/ut_annotation_cache_manager.pkb",
+  "injected/ut_annotation_cache_manager_011.pkb": "corpus/utplsql/core/annotations/ut_annotation_cache_manager.pkb",
+  "injected/ut_annotation_cache_manager_021.pkb": "corpus/utplsql/core/annotations/ut_annotation_cache_manager.pkb",
+  "injected/ut_annotation_cache_manager_031.pkb": "corpus/utplsql/core/annotations/ut_annotation_cache_manager.pkb",
+  "injected/ut_ansiconsole_helper_009.pkb": "corpus/utplsql/reporters/ut_ansiconsole_helper.pkb",
+  "injected/ut_ansiconsole_helper_019.pkb": "corpus/utplsql/reporters/ut_ansiconsole_helper.pkb",
+  "injected/ut_ansiconsole_helper_029.pkb": "corpus/utplsql/reporters/ut_ansiconsole_helper.pkb",
+  "injected/ut_coverage_block_003.pkb": "corpus/utplsql/core/coverage/ut_coverage_block.pkb",
+  "injected/ut_coverage_block_013.pkb": "corpus/utplsql/core/coverage/ut_coverage_block.pkb",
+  "injected/ut_coverage_block_023.pkb": "corpus/utplsql/core/coverage/ut_coverage_block.pkb",
+  "injected/ut_coverage_block_033.pkb": "corpus/utplsql/core/coverage/ut_coverage_block.pkb",
+  "injected/ut_coverage_helper_block_004.pkb": "corpus/utplsql/core/coverage/ut_coverage_helper_block.pkb",
+  "injected/ut_coverage_helper_block_014.pkb": "corpus/utplsql/core/coverage/ut_coverage_helper_block.pkb",
+  "injected/ut_coverage_helper_block_024.pkb": "corpus/utplsql/core/coverage/ut_coverage_helper_block.pkb",
+  "injected/ut_coverage_helper_block_034.pkb": "corpus/utplsql/core/coverage/ut_coverage_helper_block.pkb",
+  "injected/ut_coverage_profiler_005.pkb": "corpus/utplsql/core/coverage/ut_coverage_profiler.pkb",
+  "injected/ut_coverage_profiler_015.pkb": "corpus/utplsql/core/coverage/ut_coverage_profiler.pkb",
+  "injected/ut_coverage_profiler_025.pkb": "corpus/utplsql/core/coverage/ut_coverage_profiler.pkb",
+  "injected/ut_coverage_profiler_035.pkb": "corpus/utplsql/core/coverage/ut_coverage_profiler.pkb",
+  "injected/ut_file_mapper_007.pkb": "corpus/utplsql/core/ut_file_mapper.pkb",
+  "injected/ut_file_mapper_017.pkb": "corpus/utplsql/core/ut_file_mapper.pkb",
+  "injected/ut_file_mapper_027.pkb": "corpus/utplsql/core/ut_file_mapper.pkb",
+  "injected/ut_session_context_006.pkb": "corpus/utplsql/core/session_context/ut_session_context.pkb",
+  "injected/ut_session_context_016.pkb": "corpus/utplsql/core/session_context/ut_session_context.pkb",
+  "injected/ut_session_context_026.pkb": "corpus/utplsql/core/session_context/ut_session_context.pkb",
+  "injected/ut_suite_tag_filter_008.pkb": "corpus/utplsql/core/ut_suite_tag_filter.pkb",
+  "injected/ut_suite_tag_filter_018.pkb": "corpus/utplsql/core/ut_suite_tag_filter.pkb",
+  "injected/ut_suite_tag_filter_028.pkb": "corpus/utplsql/core/ut_suite_tag_filter.pkb",
+  "injected/ut_teamcity_reporter_helper_010.pkb": "corpus/utplsql/reporters/ut_teamcity_reporter_helper.pkb",
+  "injected/ut_teamcity_reporter_helper_020.pkb": "corpus/utplsql/reporters/ut_teamcity_reporter_helper.pkb",
+  "injected/ut_teamcity_reporter_helper_030.pkb": "corpus/utplsql/reporters/ut_teamcity_reporter_helper.pkb",
+  "injected/ut_trigger_check_002.pkb": "corpus/utplsql/core/annotations/ut_trigger_check.pkb",
+  "injected/ut_trigger_check_012.pkb": "corpus/utplsql/core/annotations/ut_trigger_check.pkb",
+  "injected/ut_trigger_check_022.pkb": "corpus/utplsql/core/annotations/ut_trigger_check.pkb",
+  "injected/ut_trigger_check_032.pkb": "corpus/utplsql/core/annotations/ut_trigger_check.pkb"
+ },
+ "files": {
+  "injected/ut_annotation_cache_manager_001.pkb": "injected",
+  "injected/ut_annotation_cache_manager_011.pkb": "injected",
+  "injected/ut_annotation_cache_manager_021.pkb": "injected",
+  "injected/ut_annotation_cache_manager_031.pkb": "injected",
+  "injected/ut_ansiconsole_helper_009.pkb": "injected",
+  "injected/ut_ansiconsole_helper_019.pkb": "injected",
+  "injected/ut_ansiconsole_helper_029.pkb": "injected",
+  "injected/ut_coverage_block_003.pkb": "injected",
+  "injected/ut_coverage_block_013.pkb": "injected",
+  "injected/ut_coverage_block_023.pkb": "injected",
+  "injected/ut_coverage_block_033.pkb": "injected",
+  "injected/ut_coverage_helper_block_004.pkb": "injected",
+  "injected/ut_coverage_helper_block_014.pkb": "injected",
+  "injected/ut_coverage_helper_block_024.pkb": "injected",
+  "injected/ut_coverage_helper_block_034.pkb": "injected",
+  "injected/ut_coverage_profiler_005.pkb": "injected",
+  "injected/ut_coverage_profiler_015.pkb": "injected",
+  "injected/ut_coverage_profiler_025.pkb": "injected",
+  "injected/ut_coverage_profiler_035.pkb": "injected",
+  "injected/ut_file_mapper_007.pkb": "injected",
+  "injected/ut_file_mapper_017.pkb": "injected",
+  "injected/ut_file_mapper_027.pkb": "injected",
+  "injected/ut_session_context_006.pkb": "injected",
+  "injected/ut_session_context_016.pkb": "injected",
+  "injected/ut_session_context_026.pkb": "injected",
+  "injected/ut_suite_tag_filter_008.pkb": "injected",
+  "injected/ut_suite_tag_filter_018.pkb": "injected",
+  "injected/ut_suite_tag_filter_028.pkb": "injected",
+  "injected/ut_teamcity_reporter_helper_010.pkb": "injected",
+  "injected/ut_teamcity_reporter_helper_020.pkb": "injected",
+  "injected/ut_teamcity_reporter_helper_030.pkb": "injected",
+  "injected/ut_trigger_check_002.pkb": "injected",
+  "injected/ut_trigger_check_012.pkb": "injected",
+  "injected/ut_trigger_check_022.pkb": "injected",
+  "injected/ut_trigger_check_032.pkb": "injected",
+  "standalone/bench_s0001.pkb": "standalone",
+  "standalone/bench_s0002.pkb": "standalone",
+  "standalone/bench_s0003.pkb": "standalone",
+  "standalone/bench_s0004.pkb": "standalone",
+  "standalone/bench_s0005.pkb": "standalone",
+  "standalone/bench_s0006.pkb": "standalone",
+  "standalone/bench_s0007.pkb": "standalone",
+  "standalone/bench_s0008.pkb": "standalone",
+  "standalone/bench_s0009.pkb": "standalone",
+  "standalone/bench_s0010.pkb": "standalone",
+  "standalone/bench_s0011.pkb": "standalone",
+  "standalone/bench_s0012.pkb": "standalone",
+  "standalone/bench_s0013.pkb": "standalone",
+  "standalone/bench_s0014.pkb": "standalone",
+  "standalone/bench_s0015.pkb": "standalone",
+  "standalone/bench_s0016.pkb": "standalone",
+  "standalone/bench_s0017.pkb": "standalone",
+  "standalone/bench_s0018.pkb": "standalone",
+  "standalone/bench_s0019.pkb": "standalone",
+  "standalone/bench_s0020.pkb": "standalone",
+  "standalone/bench_s0021.pkb": "standalone",
+  "standalone/bench_s0022.pkb": "standalone",
+  "standalone/bench_s0023.pkb": "standalone",
+  "standalone/bench_s0024.pkb": "standalone",
+  "standalone/bench_s0025.pkb": "standalone",
+  "standalone/bench_s0026.pkb": "standalone",
+  "standalone/bench_s0027.pkb": "standalone",
+  "standalone/bench_s0028.pkb": "standalone",
+  "standalone/bench_s0029.pkb": "standalone",
+  "standalone/bench_s0030.pkb": "standalone",
+  "standalone/bench_s0031.pkb": "standalone",
+  "standalone/bench_s0032.pkb": "standalone",
+  "standalone/bench_s0033.pkb": "standalone",
+  "standalone/bench_s0034.pkb": "standalone",
+  "standalone/bench_s0035.pkb": "standalone",
+  "standalone/bench_s0036.pkb": "standalone",
+  "standalone/bench_s0037.pkb": "standalone",
+  "standalone/bench_s0038.pkb": "standalone",
+  "standalone/bench_s0039.pkb": "standalone",
+  "standalone/bench_s0040.pkb": "standalone",
+  "standalone/bench_s0041.pkb": "standalone",
+  "standalone/bench_s0042.pkb": "standalone",
+  "standalone/bench_s0043.pkb": "standalone",
+  "standalone/bench_s0044.pkb": "standalone",
+  "standalone/bench_s0045.pkb": "standalone",
+  "standalone/bench_s0046.pkb": "standalone",
+  "standalone/bench_s0047.pkb": "standalone",
+  "standalone/bench_s0048.pkb": "standalone",
+  "standalone/bench_s0049.pkb": "standalone",
+  "standalone/bench_s0050.pkb": "standalone",
+  "standalone/bench_s0051.pkb": "standalone",
+  "standalone/bench_s0052.pkb": "standalone",
+  "standalone/bench_s0053.pkb": "standalone",
+  "standalone/bench_s0054.pkb": "standalone",
+  "standalone/bench_s0055.pkb": "standalone",
+  "standalone/bench_s0056.pkb": "standalone",
+  "standalone/bench_s0057.pkb": "standalone",
+  "standalone/bench_s0058.pkb": "standalone",
+  "standalone/bench_s0059.pkb": "standalone",
+  "standalone/bench_s0060.pkb": "standalone",
+  "standalone/bench_s0061.pkb": "standalone",
+  "standalone/bench_s0062.pkb": "standalone",
+  "standalone/bench_s0063.pkb": "standalone",
+  "standalone/bench_s0064.pkb": "standalone",
+  "standalone/bench_s0065.pkb": "standalone",
+  "standalone/bench_s0066.pkb": "standalone",
+  "standalone/bench_s0067.pkb": "standalone",
+  "standalone/bench_s0068.pkb": "standalone",
+  "standalone/bench_s0069.pkb": "standalone",
+  "standalone/bench_s0070.pkb": "standalone"
+ },
+ "regions": [
+  {
+   "end": 23,
+   "expected": [
+    19
+   ],
+   "file": "standalone/bench_s0001.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 8,
+   "template": "d3"
+  },
+  {
+   "end": 32,
+   "expected": [],
+   "file": "standalone/bench_s0001.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 25,
+   "template": "n3"
+  },
+  {
+   "end": 45,
+   "expected": [],
+   "file": "standalone/bench_s0001.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 34,
+   "template": "n4"
+  },
+  {
+   "end": 62,
+   "expected": [],
+   "file": "standalone/bench_s0001.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 47,
+   "template": "n2"
+  },
+  {
+   "end": 73,
+   "expected": [
+    67
+   ],
+   "file": "standalone/bench_s0001.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 64,
+   "template": "d4"
+  },
+  {
+   "end": 19,
+   "expected": [],
+   "file": "standalone/bench_s0002.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 8,
+   "template": "n3"
+  },
+  {
+   "end": 30,
+   "expected": [
+    26,
+    27,
+    28
+   ],
+   "file": "standalone/bench_s0002.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 21,
+   "template": "d1"
+  },
+  {
+   "end": 44,
+   "expected": [
+    35
+   ],
+   "file": "standalone/bench_s0002.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 32,
+   "template": "d4"
+  },
+  {
+   "end": 68,
+   "expected": [
+    55
+   ],
+   "file": "standalone/bench_s0002.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 46,
+   "template": "d2"
+  },
+  {
+   "end": 79,
+   "expected": [
+    75
+   ],
+   "file": "standalone/bench_s0002.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 70,
+   "template": "d5"
+  },
+  {
+   "end": 18,
+   "expected": [],
+   "file": "standalone/bench_s0003.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 8,
+   "template": "n2"
+  },
+  {
+   "end": 33,
+   "expected": [],
+   "file": "standalone/bench_s0003.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 20,
+   "template": "n2"
+  },
+  {
+   "end": 52,
+   "expected": [],
+   "file": "standalone/bench_s0003.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 35,
+   "template": "n3"
+  },
+  {
+   "end": 66,
+   "expected": [],
+   "file": "standalone/bench_s0003.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 54,
+   "template": "n1"
+  },
+  {
+   "end": 77,
+   "expected": [
+    73,
+    74,
+    75
+   ],
+   "file": "standalone/bench_s0003.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 68,
+   "template": "d1"
+  },
+  {
+   "end": 22,
+   "expected": [
+    15
+   ],
+   "file": "standalone/bench_s0004.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 8,
+   "template": "d2"
+  },
+  {
+   "end": 36,
+   "expected": [
+    30
+   ],
+   "file": "standalone/bench_s0004.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 24,
+   "template": "d3"
+  },
+  {
+   "end": 53,
+   "expected": [
+    50
+   ],
+   "file": "standalone/bench_s0004.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 38,
+   "template": "d1"
+  },
+  {
+   "end": 68,
+   "expected": [],
+   "file": "standalone/bench_s0004.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 55,
+   "template": "n2"
+  },
+  {
+   "end": 78,
+   "expected": [],
+   "file": "standalone/bench_s0004.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 70,
+   "template": "n5"
+  },
+  {
+   "end": 20,
+   "expected": [],
+   "file": "standalone/bench_s0005.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 8,
+   "template": "n4"
+  },
+  {
+   "end": 32,
+   "expected": [],
+   "file": "standalone/bench_s0005.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 22,
+   "template": "n3"
+  },
+  {
+   "end": 43,
+   "expected": [],
+   "file": "standalone/bench_s0005.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 34,
+   "template": "n1"
+  },
+  {
+   "end": 57,
+   "expected": [],
+   "file": "standalone/bench_s0005.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 45,
+   "template": "n1"
+  },
+  {
+   "end": 72,
+   "expected": [
+    67
+   ],
+   "file": "standalone/bench_s0005.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 59,
+   "template": "d1"
+  },
+  {
+   "end": 22,
+   "expected": [],
+   "file": "standalone/bench_s0006.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 8,
+   "template": "n4"
+  },
+  {
+   "end": 33,
+   "expected": [
+    28,
+    29,
+    30
+   ],
+   "file": "standalone/bench_s0006.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 24,
+   "template": "d4"
+  },
+  {
+   "end": 50,
+   "expected": [
+    46
+   ],
+   "file": "standalone/bench_s0006.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 35,
+   "template": "d3"
+  },
+  {
+   "end": 60,
+   "expected": [],
+   "file": "standalone/bench_s0006.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 52,
+   "template": "n5"
+  },
+  {
+   "end": 76,
+   "expected": [],
+   "file": "standalone/bench_s0006.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 62,
+   "template": "n1"
+  },
+  {
+   "end": 18,
+   "expected": [
+    14
+   ],
+   "file": "standalone/bench_s0007.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 8,
+   "template": "d4"
+  },
+  {
+   "end": 30,
+   "expected": [
+    24
+   ],
+   "file": "standalone/bench_s0007.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 20,
+   "template": "d1"
+  },
+  {
+   "end": 44,
+   "expected": [
+    37,
+    38,
+    42
+   ],
+   "file": "standalone/bench_s0007.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 32,
+   "template": "d4"
+  },
+  {
+   "end": 53,
+   "expected": [
+    49
+   ],
+   "file": "standalone/bench_s0007.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 46,
+   "template": "d4"
+  },
+  {
+   "end": 62,
+   "expected": [],
+   "file": "standalone/bench_s0007.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 55,
+   "template": "n1"
+  },
+  {
+   "end": 18,
+   "expected": [],
+   "file": "standalone/bench_s0008.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 8,
+   "template": "n4"
+  },
+  {
+   "end": 30,
+   "expected": [],
+   "file": "standalone/bench_s0008.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 20,
+   "template": "n2"
+  },
+  {
+   "end": 41,
+   "expected": [],
+   "file": "standalone/bench_s0008.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 32,
+   "template": "n1"
+  },
+  {
+   "end": 54,
+   "expected": [
+    51
+   ],
+   "file": "standalone/bench_s0008.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 43,
+   "template": "d1"
+  },
+  {
+   "end": 64,
+   "expected": [
+    59
+   ],
+   "file": "standalone/bench_s0008.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 56,
+   "template": "d1"
+  },
+  {
+   "end": 17,
+   "expected": [],
+   "file": "standalone/bench_s0009.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 8,
+   "template": "n1"
+  },
+  {
+   "end": 27,
+   "expected": [
+    22
+   ],
+   "file": "standalone/bench_s0009.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 19,
+   "template": "d5"
+  },
+  {
+   "end": 37,
+   "expected": [],
+   "file": "standalone/bench_s0009.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 29,
+   "template": "n1"
+  },
+  {
+   "end": 47,
+   "expected": [
+    42
+   ],
+   "file": "standalone/bench_s0009.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 39,
+   "template": "d1"
+  },
+  {
+   "end": 60,
+   "expected": [],
+   "file": "standalone/bench_s0009.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 49,
+   "template": "n5"
+  },
+  {
+   "end": 17,
+   "expected": [],
+   "file": "standalone/bench_s0010.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 8,
+   "template": "n5"
+  },
+  {
+   "end": 29,
+   "expected": [
+    22,
+    23,
+    25
+   ],
+   "file": "standalone/bench_s0010.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 19,
+   "template": "d3"
+  },
+  {
+   "end": 43,
+   "expected": [
+    40
+   ],
+   "file": "standalone/bench_s0010.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 31,
+   "template": "d3"
+  },
+  {
+   "end": 61,
+   "expected": [
+    57
+   ],
+   "file": "standalone/bench_s0010.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 45,
+   "template": "d5"
+  },
+  {
+   "end": 72,
+   "expected": [],
+   "file": "standalone/bench_s0010.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 63,
+   "template": "n4"
+  },
+  {
+   "end": 19,
+   "expected": [],
+   "file": "standalone/bench_s0011.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 8,
+   "template": "n4"
+  },
+  {
+   "end": 34,
+   "expected": [],
+   "file": "standalone/bench_s0011.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 21,
+   "template": "n2"
+  },
+  {
+   "end": 43,
+   "expected": [],
+   "file": "standalone/bench_s0011.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 36,
+   "template": "n2"
+  },
+  {
+   "end": 54,
+   "expected": [],
+   "file": "standalone/bench_s0011.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 45,
+   "template": "n3"
+  },
+  {
+   "end": 65,
+   "expected": [
+    62
+   ],
+   "file": "standalone/bench_s0011.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 56,
+   "template": "d5"
+  },
+  {
+   "end": 18,
+   "expected": [],
+   "file": "standalone/bench_s0012.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 8,
+   "template": "n5"
+  },
+  {
+   "end": 27,
+   "expected": [
+    24
+   ],
+   "file": "standalone/bench_s0012.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 20,
+   "template": "d3"
+  },
+  {
+   "end": 39,
+   "expected": [
+    35
+   ],
+   "file": "standalone/bench_s0012.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 29,
+   "template": "d2"
+  },
+  {
+   "end": 51,
+   "expected": [],
+   "file": "standalone/bench_s0012.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 41,
+   "template": "n2"
+  },
+  {
+   "end": 68,
+   "expected": [
+    64
+   ],
+   "file": "standalone/bench_s0012.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 53,
+   "template": "d3"
+  },
+  {
+   "end": 21,
+   "expected": [],
+   "file": "standalone/bench_s0013.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 8,
+   "template": "n3"
+  },
+  {
+   "end": 33,
+   "expected": [
+    26,
+    27,
+    29
+   ],
+   "file": "standalone/bench_s0013.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 23,
+   "template": "d3"
+  },
+  {
+   "end": 48,
+   "expected": [],
+   "file": "standalone/bench_s0013.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 35,
+   "template": "n2"
+  },
+  {
+   "end": 61,
+   "expected": [
+    54
+   ],
+   "file": "standalone/bench_s0013.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 50,
+   "template": "d3"
+  },
+  {
+   "end": 72,
+   "expected": [
+    68
+   ],
+   "file": "standalone/bench_s0013.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 63,
+   "template": "d5"
+  },
+  {
+   "end": 23,
+   "expected": [
+    19
+   ],
+   "file": "standalone/bench_s0014.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 8,
+   "template": "d1"
+  },
+  {
+   "end": 37,
+   "expected": [],
+   "file": "standalone/bench_s0014.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 25,
+   "template": "n2"
+  },
+  {
+   "end": 49,
+   "expected": [],
+   "file": "standalone/bench_s0014.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 39,
+   "template": "n2"
+  },
+  {
+   "end": 63,
+   "expected": [],
+   "file": "standalone/bench_s0014.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 51,
+   "template": "n3"
+  },
+  {
+   "end": 76,
+   "expected": [],
+   "file": "standalone/bench_s0014.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 65,
+   "template": "n3"
+  },
+  {
+   "end": 19,
+   "expected": [
+    15
+   ],
+   "file": "standalone/bench_s0015.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 8,
+   "template": "d4"
+  },
+  {
+   "end": 28,
+   "expected": [],
+   "file": "standalone/bench_s0015.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 21,
+   "template": "n2"
+  },
+  {
+   "end": 39,
+   "expected": [
+    38
+   ],
+   "file": "standalone/bench_s0015.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 30,
+   "template": "d4"
+  },
+  {
+   "end": 58,
+   "expected": [],
+   "file": "standalone/bench_s0015.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 41,
+   "template": "n3"
+  },
+  {
+   "end": 71,
+   "expected": [
+    69
+   ],
+   "file": "standalone/bench_s0015.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 60,
+   "template": "d3"
+  },
+  {
+   "end": 19,
+   "expected": [
+    12
+   ],
+   "file": "standalone/bench_s0016.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 8,
+   "template": "d3"
+  },
+  {
+   "end": 33,
+   "expected": [
+    24
+   ],
+   "file": "standalone/bench_s0016.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 21,
+   "template": "d5"
+  },
+  {
+   "end": 46,
+   "expected": [],
+   "file": "standalone/bench_s0016.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 35,
+   "template": "n5"
+  },
+  {
+   "end": 60,
+   "expected": [
+    57
+   ],
+   "file": "standalone/bench_s0016.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 48,
+   "template": "d3"
+  },
+  {
+   "end": 82,
+   "expected": [],
+   "file": "standalone/bench_s0016.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 62,
+   "template": "n1"
+  },
+  {
+   "end": 19,
+   "expected": [],
+   "file": "standalone/bench_s0017.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 8,
+   "template": "n5"
+  },
+  {
+   "end": 29,
+   "expected": [
+    24
+   ],
+   "file": "standalone/bench_s0017.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 21,
+   "template": "d1"
+  },
+  {
+   "end": 40,
+   "expected": [],
+   "file": "standalone/bench_s0017.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 31,
+   "template": "n4"
+  },
+  {
+   "end": 64,
+   "expected": [
+    51
+   ],
+   "file": "standalone/bench_s0017.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 42,
+   "template": "d2"
+  },
+  {
+   "end": 74,
+   "expected": [
+    72
+   ],
+   "file": "standalone/bench_s0017.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 66,
+   "template": "d4"
+  },
+  {
+   "end": 18,
+   "expected": [
+    12
+   ],
+   "file": "standalone/bench_s0018.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 8,
+   "template": "d1"
+  },
+  {
+   "end": 30,
+   "expected": [
+    26
+   ],
+   "file": "standalone/bench_s0018.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 20,
+   "template": "d4"
+  },
+  {
+   "end": 42,
+   "expected": [],
+   "file": "standalone/bench_s0018.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 32,
+   "template": "n5"
+  },
+  {
+   "end": 53,
+   "expected": [],
+   "file": "standalone/bench_s0018.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 44,
+   "template": "n4"
+  },
+  {
+   "end": 64,
+   "expected": [
+    60,
+    61,
+    62
+   ],
+   "file": "standalone/bench_s0018.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 55,
+   "template": "d1"
+  },
+  {
+   "end": 20,
+   "expected": [],
+   "file": "standalone/bench_s0019.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 8,
+   "template": "n3"
+  },
+  {
+   "end": 38,
+   "expected": [
+    34
+   ],
+   "file": "standalone/bench_s0019.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 22,
+   "template": "d5"
+  },
+  {
+   "end": 48,
+   "expected": [],
+   "file": "standalone/bench_s0019.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 40,
+   "template": "n1"
+  },
+  {
+   "end": 61,
+   "expected": [],
+   "file": "standalone/bench_s0019.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 50,
+   "template": "n3"
+  },
+  {
+   "end": 84,
+   "expected": [],
+   "file": "standalone/bench_s0019.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 63,
+   "template": "n2"
+  },
+  {
+   "end": 19,
+   "expected": [
+    17
+   ],
+   "file": "standalone/bench_s0020.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 8,
+   "template": "d3"
+  },
+  {
+   "end": 33,
+   "expected": [
+    29
+   ],
+   "file": "standalone/bench_s0020.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 21,
+   "template": "d4"
+  },
+  {
+   "end": 50,
+   "expected": [
+    46
+   ],
+   "file": "standalone/bench_s0020.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 35,
+   "template": "d3"
+  },
+  {
+   "end": 71,
+   "expected": [
+    67
+   ],
+   "file": "standalone/bench_s0020.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 52,
+   "template": "d2"
+  },
+  {
+   "end": 91,
+   "expected": [],
+   "file": "standalone/bench_s0020.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 73,
+   "template": "n4"
+  },
+  {
+   "end": 15,
+   "expected": [],
+   "file": "standalone/bench_s0021.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 8,
+   "template": "n2"
+  },
+  {
+   "end": 27,
+   "expected": [],
+   "file": "standalone/bench_s0021.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 17,
+   "template": "n2"
+  },
+  {
+   "end": 41,
+   "expected": [
+    38
+   ],
+   "file": "standalone/bench_s0021.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 29,
+   "template": "d3"
+  },
+  {
+   "end": 54,
+   "expected": [
+    52
+   ],
+   "file": "standalone/bench_s0021.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 43,
+   "template": "d4"
+  },
+  {
+   "end": 66,
+   "expected": [
+    60,
+    61,
+    62
+   ],
+   "file": "standalone/bench_s0021.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 56,
+   "template": "d5"
+  },
+  {
+   "end": 20,
+   "expected": [
+    18
+   ],
+   "file": "standalone/bench_s0022.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 8,
+   "template": "d5"
+  },
+  {
+   "end": 38,
+   "expected": [],
+   "file": "standalone/bench_s0022.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 22,
+   "template": "n2"
+  },
+  {
+   "end": 59,
+   "expected": [
+    55
+   ],
+   "file": "standalone/bench_s0022.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 40,
+   "template": "d2"
+  },
+  {
+   "end": 71,
+   "expected": [],
+   "file": "standalone/bench_s0022.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 61,
+   "template": "n3"
+  },
+  {
+   "end": 83,
+   "expected": [],
+   "file": "standalone/bench_s0022.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 73,
+   "template": "n3"
+  },
+  {
+   "end": 15,
+   "expected": [
+    12
+   ],
+   "file": "standalone/bench_s0023.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 8,
+   "template": "d3"
+  },
+  {
+   "end": 26,
+   "expected": [],
+   "file": "standalone/bench_s0023.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 17,
+   "template": "n1"
+  },
+  {
+   "end": 44,
+   "expected": [
+    36,
+    39,
+    41
+   ],
+   "file": "standalone/bench_s0023.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 28,
+   "template": "d5"
+  },
+  {
+   "end": 61,
+   "expected": [
+    57
+   ],
+   "file": "standalone/bench_s0023.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 46,
+   "template": "d3"
+  },
+  {
+   "end": 80,
+   "expected": [
+    72
+   ],
+   "file": "standalone/bench_s0023.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 63,
+   "template": "d2"
+  },
+  {
+   "end": 17,
+   "expected": [],
+   "file": "standalone/bench_s0024.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 8,
+   "template": "n1"
+  },
+  {
+   "end": 28,
+   "expected": [],
+   "file": "standalone/bench_s0024.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 19,
+   "template": "n5"
+  },
+  {
+   "end": 38,
+   "expected": [
+    35
+   ],
+   "file": "standalone/bench_s0024.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 30,
+   "template": "d5"
+  },
+  {
+   "end": 47,
+   "expected": [],
+   "file": "standalone/bench_s0024.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 40,
+   "template": "n3"
+  },
+  {
+   "end": 65,
+   "expected": [],
+   "file": "standalone/bench_s0024.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 49,
+   "template": "n1"
+  },
+  {
+   "end": 21,
+   "expected": [],
+   "file": "standalone/bench_s0025.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 8,
+   "template": "n5"
+  },
+  {
+   "end": 32,
+   "expected": [
+    27,
+    28,
+    29
+   ],
+   "file": "standalone/bench_s0025.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 23,
+   "template": "d4"
+  },
+  {
+   "end": 45,
+   "expected": [],
+   "file": "standalone/bench_s0025.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 34,
+   "template": "n3"
+  },
+  {
+   "end": 60,
+   "expected": [],
+   "file": "standalone/bench_s0025.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 47,
+   "template": "n1"
+  },
+  {
+   "end": 73,
+   "expected": [],
+   "file": "standalone/bench_s0025.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 62,
+   "template": "n3"
+  },
+  {
+   "end": 17,
+   "expected": [
+    16
+   ],
+   "file": "standalone/bench_s0026.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 8,
+   "template": "d4"
+  },
+  {
+   "end": 37,
+   "expected": [
+    35
+   ],
+   "file": "standalone/bench_s0026.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 19,
+   "template": "d3"
+  },
+  {
+   "end": 48,
+   "expected": [],
+   "file": "standalone/bench_s0026.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 39,
+   "template": "n4"
+  },
+  {
+   "end": 62,
+   "expected": [],
+   "file": "standalone/bench_s0026.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 50,
+   "template": "n5"
+  },
+  {
+   "end": 73,
+   "expected": [
+    68,
+    69,
+    70
+   ],
+   "file": "standalone/bench_s0026.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 64,
+   "template": "d4"
+  },
+  {
+   "end": 16,
+   "expected": [
+    14
+   ],
+   "file": "standalone/bench_s0027.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 8,
+   "template": "d4"
+  },
+  {
+   "end": 35,
+   "expected": [],
+   "file": "standalone/bench_s0027.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 18,
+   "template": "n3"
+  },
+  {
+   "end": 48,
+   "expected": [],
+   "file": "standalone/bench_s0027.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 37,
+   "template": "n3"
+  },
+  {
+   "end": 62,
+   "expected": [
+    56
+   ],
+   "file": "standalone/bench_s0027.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 50,
+   "template": "d3"
+  },
+  {
+   "end": 77,
+   "expected": [],
+   "file": "standalone/bench_s0027.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 64,
+   "template": "n3"
+  },
+  {
+   "end": 17,
+   "expected": [],
+   "file": "standalone/bench_s0028.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 8,
+   "template": "n5"
+  },
+  {
+   "end": 33,
+   "expected": [],
+   "file": "standalone/bench_s0028.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 19,
+   "template": "n1"
+  },
+  {
+   "end": 44,
+   "expected": [],
+   "file": "standalone/bench_s0028.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 35,
+   "template": "n3"
+  },
+  {
+   "end": 54,
+   "expected": [
+    49
+   ],
+   "file": "standalone/bench_s0028.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 46,
+   "template": "d1"
+  },
+  {
+   "end": 66,
+   "expected": [
+    63
+   ],
+   "file": "standalone/bench_s0028.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 56,
+   "template": "d1"
+  },
+  {
+   "end": 19,
+   "expected": [],
+   "file": "standalone/bench_s0029.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 8,
+   "template": "n2"
+  },
+  {
+   "end": 32,
+   "expected": [],
+   "file": "standalone/bench_s0029.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 21,
+   "template": "n5"
+  },
+  {
+   "end": 42,
+   "expected": [
+    38,
+    39,
+    40
+   ],
+   "file": "standalone/bench_s0029.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 34,
+   "template": "d1"
+  },
+  {
+   "end": 54,
+   "expected": [],
+   "file": "standalone/bench_s0029.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 44,
+   "template": "n4"
+  },
+  {
+   "end": 66,
+   "expected": [
+    60
+   ],
+   "file": "standalone/bench_s0029.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 56,
+   "template": "d1"
+  },
+  {
+   "end": 21,
+   "expected": [],
+   "file": "standalone/bench_s0030.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 8,
+   "template": "n5"
+  },
+  {
+   "end": 32,
+   "expected": [],
+   "file": "standalone/bench_s0030.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 23,
+   "template": "n5"
+  },
+  {
+   "end": 50,
+   "expected": [
+    42,
+    45,
+    47
+   ],
+   "file": "standalone/bench_s0030.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 34,
+   "template": "d5"
+  },
+  {
+   "end": 65,
+   "expected": [
+    63
+   ],
+   "file": "standalone/bench_s0030.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 52,
+   "template": "d4"
+  },
+  {
+   "end": 74,
+   "expected": [
+    72
+   ],
+   "file": "standalone/bench_s0030.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 67,
+   "template": "d5"
+  },
+  {
+   "end": 20,
+   "expected": [
+    16
+   ],
+   "file": "standalone/bench_s0031.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 8,
+   "template": "d4"
+  },
+  {
+   "end": 33,
+   "expected": [],
+   "file": "standalone/bench_s0031.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 22,
+   "template": "n5"
+  },
+  {
+   "end": 47,
+   "expected": [],
+   "file": "standalone/bench_s0031.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 35,
+   "template": "n2"
+  },
+  {
+   "end": 65,
+   "expected": [],
+   "file": "standalone/bench_s0031.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 49,
+   "template": "n1"
+  },
+  {
+   "end": 75,
+   "expected": [
+    70
+   ],
+   "file": "standalone/bench_s0031.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 67,
+   "template": "d3"
+  },
+  {
+   "end": 28,
+   "expected": [],
+   "file": "standalone/bench_s0032.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 8,
+   "template": "n5"
+  },
+  {
+   "end": 41,
+   "expected": [],
+   "file": "standalone/bench_s0032.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 30,
+   "template": "n5"
+  },
+  {
+   "end": 52,
+   "expected": [
+    50
+   ],
+   "file": "standalone/bench_s0032.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 43,
+   "template": "d2"
+  },
+  {
+   "end": 69,
+   "expected": [
+    59
+   ],
+   "file": "standalone/bench_s0032.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 54,
+   "template": "d1"
+  },
+  {
+   "end": 81,
+   "expected": [],
+   "file": "standalone/bench_s0032.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 71,
+   "template": "n4"
+  },
+  {
+   "end": 18,
+   "expected": [],
+   "file": "standalone/bench_s0033.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 8,
+   "template": "n2"
+  },
+  {
+   "end": 30,
+   "expected": [
+    22,
+    24,
+    26
+   ],
+   "file": "standalone/bench_s0033.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 20,
+   "template": "d2"
+  },
+  {
+   "end": 42,
+   "expected": [
+    36
+   ],
+   "file": "standalone/bench_s0033.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 32,
+   "template": "d4"
+  },
+  {
+   "end": 52,
+   "expected": [
+    49
+   ],
+   "file": "standalone/bench_s0033.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 44,
+   "template": "d5"
+  },
+  {
+   "end": 67,
+   "expected": [
+    62
+   ],
+   "file": "standalone/bench_s0033.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 54,
+   "template": "d1"
+  },
+  {
+   "end": 19,
+   "expected": [
+    13
+   ],
+   "file": "standalone/bench_s0034.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 8,
+   "template": "d5"
+  },
+  {
+   "end": 30,
+   "expected": [],
+   "file": "standalone/bench_s0034.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 21,
+   "template": "n4"
+  },
+  {
+   "end": 44,
+   "expected": [
+    35
+   ],
+   "file": "standalone/bench_s0034.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 32,
+   "template": "d4"
+  },
+  {
+   "end": 56,
+   "expected": [],
+   "file": "standalone/bench_s0034.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 46,
+   "template": "n5"
+  },
+  {
+   "end": 70,
+   "expected": [],
+   "file": "standalone/bench_s0034.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 58,
+   "template": "n5"
+  },
+  {
+   "end": 20,
+   "expected": [
+    13
+   ],
+   "file": "standalone/bench_s0035.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 8,
+   "template": "d5"
+  },
+  {
+   "end": 39,
+   "expected": [],
+   "file": "standalone/bench_s0035.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 22,
+   "template": "n5"
+  },
+  {
+   "end": 57,
+   "expected": [
+    53
+   ],
+   "file": "standalone/bench_s0035.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 41,
+   "template": "d5"
+  },
+  {
+   "end": 72,
+   "expected": [],
+   "file": "standalone/bench_s0035.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 59,
+   "template": "n2"
+  },
+  {
+   "end": 86,
+   "expected": [],
+   "file": "standalone/bench_s0035.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 74,
+   "template": "n5"
+  },
+  {
+   "end": 17,
+   "expected": [],
+   "file": "standalone/bench_s0036.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 8,
+   "template": "n3"
+  },
+  {
+   "end": 38,
+   "expected": [
+    29
+   ],
+   "file": "standalone/bench_s0036.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 19,
+   "template": "d2"
+  },
+  {
+   "end": 52,
+   "expected": [
+    45,
+    46,
+    50
+   ],
+   "file": "standalone/bench_s0036.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 40,
+   "template": "d4"
+  },
+  {
+   "end": 67,
+   "expected": [],
+   "file": "standalone/bench_s0036.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 54,
+   "template": "n3"
+  },
+  {
+   "end": 80,
+   "expected": [],
+   "file": "standalone/bench_s0036.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 69,
+   "template": "n3"
+  },
+  {
+   "end": 27,
+   "expected": [
+    23
+   ],
+   "file": "standalone/bench_s0037.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 8,
+   "template": "d2"
+  },
+  {
+   "end": 48,
+   "expected": [],
+   "file": "standalone/bench_s0037.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 29,
+   "template": "n3"
+  },
+  {
+   "end": 65,
+   "expected": [
+    61
+   ],
+   "file": "standalone/bench_s0037.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 50,
+   "template": "d1"
+  },
+  {
+   "end": 74,
+   "expected": [
+    70
+   ],
+   "file": "standalone/bench_s0037.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 67,
+   "template": "d4"
+  },
+  {
+   "end": 86,
+   "expected": [],
+   "file": "standalone/bench_s0037.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 76,
+   "template": "n2"
+  },
+  {
+   "end": 18,
+   "expected": [],
+   "file": "standalone/bench_s0038.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 8,
+   "template": "n3"
+  },
+  {
+   "end": 40,
+   "expected": [],
+   "file": "standalone/bench_s0038.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 20,
+   "template": "n1"
+  },
+  {
+   "end": 57,
+   "expected": [
+    53
+   ],
+   "file": "standalone/bench_s0038.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 42,
+   "template": "d3"
+  },
+  {
+   "end": 67,
+   "expected": [],
+   "file": "standalone/bench_s0038.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 59,
+   "template": "n1"
+  },
+  {
+   "end": 80,
+   "expected": [
+    74
+   ],
+   "file": "standalone/bench_s0038.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 69,
+   "template": "d5"
+  },
+  {
+   "end": 17,
+   "expected": [],
+   "file": "standalone/bench_s0039.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 8,
+   "template": "n3"
+  },
+  {
+   "end": 31,
+   "expected": [],
+   "file": "standalone/bench_s0039.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 19,
+   "template": "n2"
+  },
+  {
+   "end": 56,
+   "expected": [],
+   "file": "standalone/bench_s0039.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 33,
+   "template": "n1"
+  },
+  {
+   "end": 74,
+   "expected": [
+    70
+   ],
+   "file": "standalone/bench_s0039.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 58,
+   "template": "d5"
+  },
+  {
+   "end": 89,
+   "expected": [],
+   "file": "standalone/bench_s0039.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 76,
+   "template": "n1"
+  },
+  {
+   "end": 18,
+   "expected": [
+    14
+   ],
+   "file": "standalone/bench_s0040.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 8,
+   "template": "d2"
+  },
+  {
+   "end": 32,
+   "expected": [
+    23
+   ],
+   "file": "standalone/bench_s0040.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 20,
+   "template": "d5"
+  },
+  {
+   "end": 41,
+   "expected": [],
+   "file": "standalone/bench_s0040.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 34,
+   "template": "n1"
+  },
+  {
+   "end": 52,
+   "expected": [],
+   "file": "standalone/bench_s0040.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 43,
+   "template": "n4"
+  },
+  {
+   "end": 63,
+   "expected": [
+    58,
+    59,
+    60
+   ],
+   "file": "standalone/bench_s0040.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 54,
+   "template": "d4"
+  },
+  {
+   "end": 18,
+   "expected": [],
+   "file": "standalone/bench_s0041.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 8,
+   "template": "n5"
+  },
+  {
+   "end": 28,
+   "expected": [
+    23
+   ],
+   "file": "standalone/bench_s0041.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 20,
+   "template": "d1"
+  },
+  {
+   "end": 37,
+   "expected": [
+    35
+   ],
+   "file": "standalone/bench_s0041.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 30,
+   "template": "d5"
+  },
+  {
+   "end": 58,
+   "expected": [
+    49
+   ],
+   "file": "standalone/bench_s0041.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 39,
+   "template": "d2"
+  },
+  {
+   "end": 70,
+   "expected": [],
+   "file": "standalone/bench_s0041.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 60,
+   "template": "n2"
+  },
+  {
+   "end": 24,
+   "expected": [],
+   "file": "standalone/bench_s0042.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 8,
+   "template": "n2"
+  },
+  {
+   "end": 36,
+   "expected": [],
+   "file": "standalone/bench_s0042.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 26,
+   "template": "n3"
+  },
+  {
+   "end": 49,
+   "expected": [
+    47
+   ],
+   "file": "standalone/bench_s0042.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 38,
+   "template": "d4"
+  },
+  {
+   "end": 59,
+   "expected": [],
+   "file": "standalone/bench_s0042.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 51,
+   "template": "n5"
+  },
+  {
+   "end": 74,
+   "expected": [
+    69
+   ],
+   "file": "standalone/bench_s0042.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 61,
+   "template": "d3"
+  },
+  {
+   "end": 17,
+   "expected": [
+    16
+   ],
+   "file": "standalone/bench_s0043.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 8,
+   "template": "d4"
+  },
+  {
+   "end": 31,
+   "expected": [],
+   "file": "standalone/bench_s0043.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 19,
+   "template": "n4"
+  },
+  {
+   "end": 42,
+   "expected": [],
+   "file": "standalone/bench_s0043.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 33,
+   "template": "n4"
+  },
+  {
+   "end": 53,
+   "expected": [],
+   "file": "standalone/bench_s0043.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 44,
+   "template": "n1"
+  },
+  {
+   "end": 66,
+   "expected": [
+    60
+   ],
+   "file": "standalone/bench_s0043.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 55,
+   "template": "d5"
+  },
+  {
+   "end": 16,
+   "expected": [
+    11
+   ],
+   "file": "standalone/bench_s0044.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 8,
+   "template": "d1"
+  },
+  {
+   "end": 28,
+   "expected": [],
+   "file": "standalone/bench_s0044.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 18,
+   "template": "n2"
+  },
+  {
+   "end": 38,
+   "expected": [
+    36
+   ],
+   "file": "standalone/bench_s0044.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 30,
+   "template": "d2"
+  },
+  {
+   "end": 51,
+   "expected": [
+    47
+   ],
+   "file": "standalone/bench_s0044.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 40,
+   "template": "d2"
+  },
+  {
+   "end": 65,
+   "expected": [],
+   "file": "standalone/bench_s0044.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 53,
+   "template": "n3"
+  },
+  {
+   "end": 16,
+   "expected": [
+    14
+   ],
+   "file": "standalone/bench_s0045.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 8,
+   "template": "d2"
+  },
+  {
+   "end": 28,
+   "expected": [],
+   "file": "standalone/bench_s0045.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 18,
+   "template": "n3"
+  },
+  {
+   "end": 39,
+   "expected": [],
+   "file": "standalone/bench_s0045.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 30,
+   "template": "n5"
+  },
+  {
+   "end": 49,
+   "expected": [
+    45,
+    46,
+    47
+   ],
+   "file": "standalone/bench_s0045.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 41,
+   "template": "d1"
+  },
+  {
+   "end": 69,
+   "expected": [
+    67
+   ],
+   "file": "standalone/bench_s0045.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 51,
+   "template": "d3"
+  },
+  {
+   "end": 18,
+   "expected": [],
+   "file": "standalone/bench_s0046.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 8,
+   "template": "n4"
+  },
+  {
+   "end": 36,
+   "expected": [],
+   "file": "standalone/bench_s0046.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 20,
+   "template": "n1"
+  },
+  {
+   "end": 49,
+   "expected": [
+    45
+   ],
+   "file": "standalone/bench_s0046.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 38,
+   "template": "d4"
+  },
+  {
+   "end": 65,
+   "expected": [],
+   "file": "standalone/bench_s0046.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 51,
+   "template": "n1"
+  },
+  {
+   "end": 80,
+   "expected": [],
+   "file": "standalone/bench_s0046.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 67,
+   "template": "n3"
+  },
+  {
+   "end": 18,
+   "expected": [],
+   "file": "standalone/bench_s0047.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 8,
+   "template": "n2"
+  },
+  {
+   "end": 30,
+   "expected": [
+    26
+   ],
+   "file": "standalone/bench_s0047.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 20,
+   "template": "d2"
+  },
+  {
+   "end": 43,
+   "expected": [],
+   "file": "standalone/bench_s0047.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 32,
+   "template": "n5"
+  },
+  {
+   "end": 56,
+   "expected": [],
+   "file": "standalone/bench_s0047.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 45,
+   "template": "n3"
+  },
+  {
+   "end": 70,
+   "expected": [
+    66
+   ],
+   "file": "standalone/bench_s0047.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 58,
+   "template": "d4"
+  },
+  {
+   "end": 17,
+   "expected": [],
+   "file": "standalone/bench_s0048.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 8,
+   "template": "n3"
+  },
+  {
+   "end": 33,
+   "expected": [],
+   "file": "standalone/bench_s0048.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 19,
+   "template": "n1"
+  },
+  {
+   "end": 50,
+   "expected": [],
+   "file": "standalone/bench_s0048.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 35,
+   "template": "n4"
+  },
+  {
+   "end": 60,
+   "expected": [
+    55
+   ],
+   "file": "standalone/bench_s0048.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 52,
+   "template": "d5"
+  },
+  {
+   "end": 74,
+   "expected": [
+    67,
+    69,
+    71
+   ],
+   "file": "standalone/bench_s0048.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 62,
+   "template": "d2"
+  },
+  {
+   "end": 30,
+   "expected": [
+    17
+   ],
+   "file": "standalone/bench_s0049.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 8,
+   "template": "d2"
+  },
+  {
+   "end": 48,
+   "expected": [],
+   "file": "standalone/bench_s0049.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 32,
+   "template": "n1"
+  },
+  {
+   "end": 58,
+   "expected": [
+    55
+   ],
+   "file": "standalone/bench_s0049.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 50,
+   "template": "d5"
+  },
+  {
+   "end": 79,
+   "expected": [
+    70
+   ],
+   "file": "standalone/bench_s0049.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 60,
+   "template": "d2"
+  },
+  {
+   "end": 91,
+   "expected": [
+    85
+   ],
+   "file": "standalone/bench_s0049.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 81,
+   "template": "d5"
+  },
+  {
+   "end": 18,
+   "expected": [],
+   "file": "standalone/bench_s0050.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 8,
+   "template": "n2"
+  },
+  {
+   "end": 31,
+   "expected": [],
+   "file": "standalone/bench_s0050.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 20,
+   "template": "n2"
+  },
+  {
+   "end": 42,
+   "expected": [],
+   "file": "standalone/bench_s0050.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 33,
+   "template": "n1"
+  },
+  {
+   "end": 51,
+   "expected": [
+    47
+   ],
+   "file": "standalone/bench_s0050.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 44,
+   "template": "d2"
+  },
+  {
+   "end": 67,
+   "expected": [
+    56,
+    57,
+    58,
+    60,
+    61,
+    64
+   ],
+   "file": "standalone/bench_s0050.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 53,
+   "template": "d3"
+  },
+  {
+   "end": 20,
+   "expected": [
+    14
+   ],
+   "file": "standalone/bench_s0051.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 8,
+   "template": "d3"
+  },
+  {
+   "end": 43,
+   "expected": [],
+   "file": "standalone/bench_s0051.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 22,
+   "template": "n2"
+  },
+  {
+   "end": 60,
+   "expected": [],
+   "file": "standalone/bench_s0051.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 45,
+   "template": "n4"
+  },
+  {
+   "end": 70,
+   "expected": [
+    68
+   ],
+   "file": "standalone/bench_s0051.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 62,
+   "template": "d4"
+  },
+  {
+   "end": 84,
+   "expected": [
+    77,
+    78,
+    82
+   ],
+   "file": "standalone/bench_s0051.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 72,
+   "template": "d4"
+  },
+  {
+   "end": 16,
+   "expected": [
+    11
+   ],
+   "file": "standalone/bench_s0052.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 8,
+   "template": "d1"
+  },
+  {
+   "end": 29,
+   "expected": [],
+   "file": "standalone/bench_s0052.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 18,
+   "template": "n5"
+  },
+  {
+   "end": 44,
+   "expected": [],
+   "file": "standalone/bench_s0052.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 31,
+   "template": "n3"
+  },
+  {
+   "end": 54,
+   "expected": [
+    52
+   ],
+   "file": "standalone/bench_s0052.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 46,
+   "template": "d4"
+  },
+  {
+   "end": 68,
+   "expected": [
+    65
+   ],
+   "file": "standalone/bench_s0052.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 56,
+   "template": "d3"
+  },
+  {
+   "end": 15,
+   "expected": [
+    11
+   ],
+   "file": "standalone/bench_s0053.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 8,
+   "template": "d4"
+  },
+  {
+   "end": 26,
+   "expected": [],
+   "file": "standalone/bench_s0053.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 17,
+   "template": "n5"
+  },
+  {
+   "end": 39,
+   "expected": [],
+   "file": "standalone/bench_s0053.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 28,
+   "template": "n4"
+  },
+  {
+   "end": 53,
+   "expected": [],
+   "file": "standalone/bench_s0053.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 41,
+   "template": "n5"
+  },
+  {
+   "end": 67,
+   "expected": [
+    61
+   ],
+   "file": "standalone/bench_s0053.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 55,
+   "template": "d3"
+  },
+  {
+   "end": 20,
+   "expected": [
+    13
+   ],
+   "file": "standalone/bench_s0054.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 8,
+   "template": "d5"
+  },
+  {
+   "end": 31,
+   "expected": [],
+   "file": "standalone/bench_s0054.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 22,
+   "template": "n3"
+  },
+  {
+   "end": 42,
+   "expected": [
+    37
+   ],
+   "file": "standalone/bench_s0054.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 33,
+   "template": "d2"
+  },
+  {
+   "end": 56,
+   "expected": [],
+   "file": "standalone/bench_s0054.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 44,
+   "template": "n4"
+  },
+  {
+   "end": 76,
+   "expected": [],
+   "file": "standalone/bench_s0054.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 58,
+   "template": "n4"
+  },
+  {
+   "end": 23,
+   "expected": [
+    20
+   ],
+   "file": "standalone/bench_s0055.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 8,
+   "template": "d1"
+  },
+  {
+   "end": 33,
+   "expected": [
+    30
+   ],
+   "file": "standalone/bench_s0055.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 25,
+   "template": "d5"
+  },
+  {
+   "end": 42,
+   "expected": [],
+   "file": "standalone/bench_s0055.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 35,
+   "template": "n1"
+  },
+  {
+   "end": 59,
+   "expected": [
+    56
+   ],
+   "file": "standalone/bench_s0055.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 44,
+   "template": "d1"
+  },
+  {
+   "end": 71,
+   "expected": [],
+   "file": "standalone/bench_s0055.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 61,
+   "template": "n3"
+  },
+  {
+   "end": 18,
+   "expected": [
+    12
+   ],
+   "file": "standalone/bench_s0056.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 8,
+   "template": "d5"
+  },
+  {
+   "end": 28,
+   "expected": [],
+   "file": "standalone/bench_s0056.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 20,
+   "template": "n5"
+  },
+  {
+   "end": 47,
+   "expected": [],
+   "file": "standalone/bench_s0056.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 30,
+   "template": "n5"
+  },
+  {
+   "end": 59,
+   "expected": [
+    55
+   ],
+   "file": "standalone/bench_s0056.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 49,
+   "template": "d4"
+  },
+  {
+   "end": 75,
+   "expected": [
+    64,
+    65,
+    66,
+    68,
+    69,
+    72
+   ],
+   "file": "standalone/bench_s0056.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 61,
+   "template": "d3"
+  },
+  {
+   "end": 20,
+   "expected": [],
+   "file": "standalone/bench_s0057.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 8,
+   "template": "n1"
+  },
+  {
+   "end": 29,
+   "expected": [
+    27
+   ],
+   "file": "standalone/bench_s0057.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 22,
+   "template": "d5"
+  },
+  {
+   "end": 40,
+   "expected": [
+    35
+   ],
+   "file": "standalone/bench_s0057.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 31,
+   "template": "d2"
+  },
+  {
+   "end": 51,
+   "expected": [
+    46
+   ],
+   "file": "standalone/bench_s0057.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 42,
+   "template": "d3"
+  },
+  {
+   "end": 68,
+   "expected": [],
+   "file": "standalone/bench_s0057.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 53,
+   "template": "n2"
+  },
+  {
+   "end": 18,
+   "expected": [
+    12
+   ],
+   "file": "standalone/bench_s0058.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 8,
+   "template": "d1"
+  },
+  {
+   "end": 31,
+   "expected": [],
+   "file": "standalone/bench_s0058.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 20,
+   "template": "n5"
+  },
+  {
+   "end": 45,
+   "expected": [],
+   "file": "standalone/bench_s0058.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 33,
+   "template": "n2"
+  },
+  {
+   "end": 55,
+   "expected": [
+    49
+   ],
+   "file": "standalone/bench_s0058.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 47,
+   "template": "d1"
+  },
+  {
+   "end": 67,
+   "expected": [],
+   "file": "standalone/bench_s0058.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 57,
+   "template": "n4"
+  },
+  {
+   "end": 22,
+   "expected": [],
+   "file": "standalone/bench_s0059.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 8,
+   "template": "n4"
+  },
+  {
+   "end": 33,
+   "expected": [
+    28
+   ],
+   "file": "standalone/bench_s0059.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 24,
+   "template": "d2"
+  },
+  {
+   "end": 54,
+   "expected": [
+    50
+   ],
+   "file": "standalone/bench_s0059.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 35,
+   "template": "d2"
+  },
+  {
+   "end": 68,
+   "expected": [
+    64
+   ],
+   "file": "standalone/bench_s0059.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 56,
+   "template": "d4"
+  },
+  {
+   "end": 81,
+   "expected": [],
+   "file": "standalone/bench_s0059.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 70,
+   "template": "n4"
+  },
+  {
+   "end": 15,
+   "expected": [
+    11
+   ],
+   "file": "standalone/bench_s0060.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 8,
+   "template": "d1"
+  },
+  {
+   "end": 28,
+   "expected": [
+    26
+   ],
+   "file": "standalone/bench_s0060.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 17,
+   "template": "d3"
+  },
+  {
+   "end": 50,
+   "expected": [],
+   "file": "standalone/bench_s0060.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 30,
+   "template": "n1"
+  },
+  {
+   "end": 64,
+   "expected": [],
+   "file": "standalone/bench_s0060.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 52,
+   "template": "n2"
+  },
+  {
+   "end": 75,
+   "expected": [
+    69
+   ],
+   "file": "standalone/bench_s0060.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 66,
+   "template": "d4"
+  },
+  {
+   "end": 18,
+   "expected": [
+    12
+   ],
+   "file": "standalone/bench_s0061.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 8,
+   "template": "d5"
+  },
+  {
+   "end": 28,
+   "expected": [
+    22
+   ],
+   "file": "standalone/bench_s0061.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 20,
+   "template": "d1"
+  },
+  {
+   "end": 40,
+   "expected": [],
+   "file": "standalone/bench_s0061.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 30,
+   "template": "n5"
+  },
+  {
+   "end": 56,
+   "expected": [],
+   "file": "standalone/bench_s0061.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 42,
+   "template": "n4"
+  },
+  {
+   "end": 81,
+   "expected": [],
+   "file": "standalone/bench_s0061.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 58,
+   "template": "n1"
+  },
+  {
+   "end": 19,
+   "expected": [
+    17
+   ],
+   "file": "standalone/bench_s0062.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 8,
+   "template": "d3"
+  },
+  {
+   "end": 28,
+   "expected": [
+    26
+   ],
+   "file": "standalone/bench_s0062.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 21,
+   "template": "d5"
+  },
+  {
+   "end": 45,
+   "expected": [
+    35
+   ],
+   "file": "standalone/bench_s0062.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 30,
+   "template": "d1"
+  },
+  {
+   "end": 56,
+   "expected": [],
+   "file": "standalone/bench_s0062.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 47,
+   "template": "n3"
+  },
+  {
+   "end": 69,
+   "expected": [],
+   "file": "standalone/bench_s0062.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 58,
+   "template": "n3"
+  },
+  {
+   "end": 19,
+   "expected": [],
+   "file": "standalone/bench_s0063.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 8,
+   "template": "n3"
+  },
+  {
+   "end": 30,
+   "expected": [
+    26
+   ],
+   "file": "standalone/bench_s0063.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 21,
+   "template": "d5"
+  },
+  {
+   "end": 42,
+   "expected": [
+    39
+   ],
+   "file": "standalone/bench_s0063.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 32,
+   "template": "d1"
+  },
+  {
+   "end": 55,
+   "expected": [],
+   "file": "standalone/bench_s0063.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 44,
+   "template": "n3"
+  },
+  {
+   "end": 65,
+   "expected": [
+    61,
+    62,
+    63
+   ],
+   "file": "standalone/bench_s0063.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 57,
+   "template": "d1"
+  },
+  {
+   "end": 18,
+   "expected": [],
+   "file": "standalone/bench_s0064.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 8,
+   "template": "n4"
+  },
+  {
+   "end": 30,
+   "expected": [
+    26
+   ],
+   "file": "standalone/bench_s0064.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 20,
+   "template": "d4"
+  },
+  {
+   "end": 44,
+   "expected": [
+    35
+   ],
+   "file": "standalone/bench_s0064.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 32,
+   "template": "d5"
+  },
+  {
+   "end": 55,
+   "expected": [],
+   "file": "standalone/bench_s0064.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 46,
+   "template": "n4"
+  },
+  {
+   "end": 73,
+   "expected": [
+    65,
+    68,
+    70
+   ],
+   "file": "standalone/bench_s0064.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 57,
+   "template": "d5"
+  },
+  {
+   "end": 16,
+   "expected": [
+    14
+   ],
+   "file": "standalone/bench_s0065.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 8,
+   "template": "d2"
+  },
+  {
+   "end": 34,
+   "expected": [
+    30
+   ],
+   "file": "standalone/bench_s0065.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 18,
+   "template": "d5"
+  },
+  {
+   "end": 48,
+   "expected": [
+    44
+   ],
+   "file": "standalone/bench_s0065.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 36,
+   "template": "d4"
+  },
+  {
+   "end": 60,
+   "expected": [
+    52,
+    54,
+    56
+   ],
+   "file": "standalone/bench_s0065.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 50,
+   "template": "d2"
+  },
+  {
+   "end": 71,
+   "expected": [],
+   "file": "standalone/bench_s0065.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 62,
+   "template": "n1"
+  },
+  {
+   "end": 21,
+   "expected": [
+    16
+   ],
+   "file": "standalone/bench_s0066.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 8,
+   "template": "d3"
+  },
+  {
+   "end": 33,
+   "expected": [
+    27
+   ],
+   "file": "standalone/bench_s0066.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 23,
+   "template": "d4"
+  },
+  {
+   "end": 44,
+   "expected": [],
+   "file": "standalone/bench_s0066.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 35,
+   "template": "n3"
+  },
+  {
+   "end": 57,
+   "expected": [],
+   "file": "standalone/bench_s0066.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 46,
+   "template": "n4"
+  },
+  {
+   "end": 74,
+   "expected": [
+    70
+   ],
+   "file": "standalone/bench_s0066.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 59,
+   "template": "d1"
+  },
+  {
+   "end": 19,
+   "expected": [
+    15
+   ],
+   "file": "standalone/bench_s0067.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 8,
+   "template": "d2"
+  },
+  {
+   "end": 34,
+   "expected": [],
+   "file": "standalone/bench_s0067.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 21,
+   "template": "n1"
+  },
+  {
+   "end": 47,
+   "expected": [
+    43
+   ],
+   "file": "standalone/bench_s0067.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 36,
+   "template": "d4"
+  },
+  {
+   "end": 64,
+   "expected": [],
+   "file": "standalone/bench_s0067.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 49,
+   "template": "n4"
+  },
+  {
+   "end": 82,
+   "expected": [
+    78
+   ],
+   "file": "standalone/bench_s0067.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 66,
+   "template": "d5"
+  },
+  {
+   "end": 25,
+   "expected": [],
+   "file": "standalone/bench_s0068.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 8,
+   "template": "n3"
+  },
+  {
+   "end": 39,
+   "expected": [
+    32,
+    34,
+    36
+   ],
+   "file": "standalone/bench_s0068.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 27,
+   "template": "d2"
+  },
+  {
+   "end": 56,
+   "expected": [
+    46
+   ],
+   "file": "standalone/bench_s0068.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 41,
+   "template": "d1"
+  },
+  {
+   "end": 69,
+   "expected": [
+    61
+   ],
+   "file": "standalone/bench_s0068.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 58,
+   "template": "d3"
+  },
+  {
+   "end": 81,
+   "expected": [
+    75
+   ],
+   "file": "standalone/bench_s0068.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 71,
+   "template": "d4"
+  },
+  {
+   "end": 20,
+   "expected": [],
+   "file": "standalone/bench_s0069.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 8,
+   "template": "n3"
+  },
+  {
+   "end": 32,
+   "expected": [],
+   "file": "standalone/bench_s0069.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 22,
+   "template": "n3"
+  },
+  {
+   "end": 44,
+   "expected": [
+    42
+   ],
+   "file": "standalone/bench_s0069.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 34,
+   "template": "d2"
+  },
+  {
+   "end": 58,
+   "expected": [
+    49
+   ],
+   "file": "standalone/bench_s0069.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 46,
+   "template": "d5"
+  },
+  {
+   "end": 79,
+   "expected": [],
+   "file": "standalone/bench_s0069.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 60,
+   "template": "n3"
+  },
+  {
+   "end": 24,
+   "expected": [],
+   "file": "standalone/bench_s0070.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 8,
+   "template": "n1"
+  },
+  {
+   "end": 35,
+   "expected": [],
+   "file": "standalone/bench_s0070.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 26,
+   "template": "n1"
+  },
+  {
+   "end": 45,
+   "expected": [
+    42
+   ],
+   "file": "standalone/bench_s0070.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 37,
+   "template": "d5"
+  },
+  {
+   "end": 63,
+   "expected": [],
+   "file": "standalone/bench_s0070.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 47,
+   "template": "n1"
+  },
+  {
+   "end": 76,
+   "expected": [
+    69
+   ],
+   "file": "standalone/bench_s0070.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 65,
+   "template": "d3"
+  },
+  {
+   "end": 244,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_001.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 226,
+   "template": "n4"
+  },
+  {
+   "end": 256,
+   "expected": [
+    250,
+    251,
+    252
+   ],
+   "file": "injected/ut_annotation_cache_manager_001.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 246,
+   "template": "d5"
+  },
+  {
+   "end": 281,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_001.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 258,
+   "template": "n1"
+  },
+  {
+   "end": 293,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_001.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 283,
+   "template": "n2"
+  },
+  {
+   "end": 308,
+   "expected": [
+    306
+   ],
+   "file": "injected/ut_annotation_cache_manager_001.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 295,
+   "template": "d4"
+  },
+  {
+   "end": 322,
+   "expected": [
+    316
+   ],
+   "file": "injected/ut_annotation_cache_manager_001.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 310,
+   "template": "d3"
+  },
+  {
+   "end": 333,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_001.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 324,
+   "template": "n3"
+  },
+  {
+   "end": 348,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_001.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 335,
+   "template": "n5"
+  },
+  {
+   "end": 362,
+   "expected": [
+    355,
+    356,
+    360
+   ],
+   "file": "injected/ut_annotation_cache_manager_001.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 350,
+   "template": "d4"
+  },
+  {
+   "end": 384,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_001.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 364,
+   "template": "n5"
+  },
+  {
+   "end": 47,
+   "expected": [
+    41
+   ],
+   "file": "injected/ut_trigger_check_002.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 39,
+   "template": "d1"
+  },
+  {
+   "end": 56,
+   "expected": [],
+   "file": "injected/ut_trigger_check_002.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 49,
+   "template": "n2"
+  },
+  {
+   "end": 70,
+   "expected": [
+    68
+   ],
+   "file": "injected/ut_trigger_check_002.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 58,
+   "template": "d5"
+  },
+  {
+   "end": 84,
+   "expected": [],
+   "file": "injected/ut_trigger_check_002.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 72,
+   "template": "n5"
+  },
+  {
+   "end": 95,
+   "expected": [],
+   "file": "injected/ut_trigger_check_002.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 86,
+   "template": "n1"
+  },
+  {
+   "end": 104,
+   "expected": [
+    100
+   ],
+   "file": "injected/ut_trigger_check_002.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 97,
+   "template": "d1"
+  },
+  {
+   "end": 123,
+   "expected": [
+    115
+   ],
+   "file": "injected/ut_trigger_check_002.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 106,
+   "template": "d2"
+  },
+  {
+   "end": 133,
+   "expected": [
+    131
+   ],
+   "file": "injected/ut_trigger_check_002.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 125,
+   "template": "d4"
+  },
+  {
+   "end": 143,
+   "expected": [
+    141
+   ],
+   "file": "injected/ut_trigger_check_002.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 135,
+   "template": "d4"
+  },
+  {
+   "end": 155,
+   "expected": [],
+   "file": "injected/ut_trigger_check_002.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 145,
+   "template": "n2"
+  },
+  {
+   "end": 180,
+   "expected": [],
+   "file": "injected/ut_coverage_block_003.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 160,
+   "template": "n1"
+  },
+  {
+   "end": 194,
+   "expected": [],
+   "file": "injected/ut_coverage_block_003.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 182,
+   "template": "n1"
+  },
+  {
+   "end": 206,
+   "expected": [],
+   "file": "injected/ut_coverage_block_003.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 196,
+   "template": "n2"
+  },
+  {
+   "end": 217,
+   "expected": [
+    213,
+    214,
+    215
+   ],
+   "file": "injected/ut_coverage_block_003.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 208,
+   "template": "d1"
+  },
+  {
+   "end": 230,
+   "expected": [],
+   "file": "injected/ut_coverage_block_003.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 219,
+   "template": "n4"
+  },
+  {
+   "end": 241,
+   "expected": [],
+   "file": "injected/ut_coverage_block_003.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 232,
+   "template": "n3"
+  },
+  {
+   "end": 252,
+   "expected": [
+    247
+   ],
+   "file": "injected/ut_coverage_block_003.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 243,
+   "template": "d3"
+  },
+  {
+   "end": 267,
+   "expected": [],
+   "file": "injected/ut_coverage_block_003.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 254,
+   "template": "n1"
+  },
+  {
+   "end": 278,
+   "expected": [
+    272
+   ],
+   "file": "injected/ut_coverage_block_003.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 269,
+   "template": "d4"
+  },
+  {
+   "end": 299,
+   "expected": [],
+   "file": "injected/ut_coverage_block_003.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 280,
+   "template": "n3"
+  },
+  {
+   "end": 119,
+   "expected": [
+    114,
+    115,
+    116
+   ],
+   "file": "injected/ut_coverage_helper_block_004.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 110,
+   "template": "d4"
+  },
+  {
+   "end": 130,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_004.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 121,
+   "template": "n5"
+  },
+  {
+   "end": 139,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_004.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 132,
+   "template": "n2"
+  },
+  {
+   "end": 152,
+   "expected": [
+    149
+   ],
+   "file": "injected/ut_coverage_helper_block_004.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 141,
+   "template": "d1"
+  },
+  {
+   "end": 161,
+   "expected": [
+    157
+   ],
+   "file": "injected/ut_coverage_helper_block_004.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 154,
+   "template": "d2"
+  },
+  {
+   "end": 172,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_004.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 163,
+   "template": "n4"
+  },
+  {
+   "end": 181,
+   "expected": [
+    177
+   ],
+   "file": "injected/ut_coverage_helper_block_004.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 174,
+   "template": "d4"
+  },
+  {
+   "end": 192,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_004.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 183,
+   "template": "n1"
+  },
+  {
+   "end": 207,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_004.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 194,
+   "template": "n1"
+  },
+  {
+   "end": 218,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_004.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 209,
+   "template": "n1"
+  },
+  {
+   "end": 103,
+   "expected": [
+    99
+   ],
+   "file": "injected/ut_coverage_profiler_005.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 96,
+   "template": "d1"
+  },
+  {
+   "end": 117,
+   "expected": [
+    110,
+    111,
+    115
+   ],
+   "file": "injected/ut_coverage_profiler_005.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 105,
+   "template": "d4"
+  },
+  {
+   "end": 129,
+   "expected": [
+    127
+   ],
+   "file": "injected/ut_coverage_profiler_005.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 119,
+   "template": "d2"
+  },
+  {
+   "end": 146,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_005.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 131,
+   "template": "n2"
+  },
+  {
+   "end": 164,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_005.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 148,
+   "template": "n1"
+  },
+  {
+   "end": 177,
+   "expected": [
+    173
+   ],
+   "file": "injected/ut_coverage_profiler_005.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 166,
+   "template": "d4"
+  },
+  {
+   "end": 190,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_005.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 179,
+   "template": "n4"
+  },
+  {
+   "end": 204,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_005.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 192,
+   "template": "n1"
+  },
+  {
+   "end": 219,
+   "expected": [
+    214
+   ],
+   "file": "injected/ut_coverage_profiler_005.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 206,
+   "template": "d3"
+  },
+  {
+   "end": 231,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_005.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 221,
+   "template": "n4"
+  },
+  {
+   "end": 56,
+   "expected": [
+    54
+   ],
+   "file": "injected/ut_session_context_006.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 48,
+   "template": "d4"
+  },
+  {
+   "end": 65,
+   "expected": [
+    61
+   ],
+   "file": "injected/ut_session_context_006.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 58,
+   "template": "d2"
+  },
+  {
+   "end": 77,
+   "expected": [
+    71
+   ],
+   "file": "injected/ut_session_context_006.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 67,
+   "template": "d4"
+  },
+  {
+   "end": 87,
+   "expected": [],
+   "file": "injected/ut_session_context_006.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 79,
+   "template": "n1"
+  },
+  {
+   "end": 98,
+   "expected": [],
+   "file": "injected/ut_session_context_006.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 89,
+   "template": "n1"
+  },
+  {
+   "end": 120,
+   "expected": [],
+   "file": "injected/ut_session_context_006.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 100,
+   "template": "n5"
+  },
+  {
+   "end": 129,
+   "expected": [
+    125
+   ],
+   "file": "injected/ut_session_context_006.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 122,
+   "template": "d2"
+  },
+  {
+   "end": 147,
+   "expected": [
+    143
+   ],
+   "file": "injected/ut_session_context_006.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 131,
+   "template": "d5"
+  },
+  {
+   "end": 160,
+   "expected": [
+    152
+   ],
+   "file": "injected/ut_session_context_006.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 149,
+   "template": "d3"
+  },
+  {
+   "end": 179,
+   "expected": [],
+   "file": "injected/ut_session_context_006.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 162,
+   "template": "n5"
+  },
+  {
+   "end": 141,
+   "expected": [],
+   "file": "injected/ut_file_mapper_007.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 122,
+   "template": "n3"
+  },
+  {
+   "end": 153,
+   "expected": [],
+   "file": "injected/ut_file_mapper_007.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 143,
+   "template": "n4"
+  },
+  {
+   "end": 168,
+   "expected": [
+    166
+   ],
+   "file": "injected/ut_file_mapper_007.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 155,
+   "template": "d4"
+  },
+  {
+   "end": 178,
+   "expected": [
+    173
+   ],
+   "file": "injected/ut_file_mapper_007.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 170,
+   "template": "d5"
+  },
+  {
+   "end": 199,
+   "expected": [
+    190
+   ],
+   "file": "injected/ut_file_mapper_007.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 180,
+   "template": "d2"
+  },
+  {
+   "end": 212,
+   "expected": [],
+   "file": "injected/ut_file_mapper_007.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 201,
+   "template": "n4"
+  },
+  {
+   "end": 225,
+   "expected": [
+    223
+   ],
+   "file": "injected/ut_file_mapper_007.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 214,
+   "template": "d4"
+  },
+  {
+   "end": 239,
+   "expected": [
+    230
+   ],
+   "file": "injected/ut_file_mapper_007.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 227,
+   "template": "d5"
+  },
+  {
+   "end": 252,
+   "expected": [
+    248
+   ],
+   "file": "injected/ut_file_mapper_007.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 241,
+   "template": "d4"
+  },
+  {
+   "end": 265,
+   "expected": [],
+   "file": "injected/ut_file_mapper_007.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 254,
+   "template": "n5"
+  },
+  {
+   "end": 306,
+   "expected": [],
+   "file": "injected/ut_suite_tag_filter_008.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 290,
+   "template": "n1"
+  },
+  {
+   "end": 316,
+   "expected": [
+    312,
+    313,
+    314
+   ],
+   "file": "injected/ut_suite_tag_filter_008.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 308,
+   "template": "d1"
+  },
+  {
+   "end": 328,
+   "expected": [
+    325
+   ],
+   "file": "injected/ut_suite_tag_filter_008.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 318,
+   "template": "d1"
+  },
+  {
+   "end": 339,
+   "expected": [],
+   "file": "injected/ut_suite_tag_filter_008.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 330,
+   "template": "n1"
+  },
+  {
+   "end": 360,
+   "expected": [
+    351
+   ],
+   "file": "injected/ut_suite_tag_filter_008.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 341,
+   "template": "d2"
+  },
+  {
+   "end": 371,
+   "expected": [],
+   "file": "injected/ut_suite_tag_filter_008.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 362,
+   "template": "n4"
+  },
+  {
+   "end": 383,
+   "expected": [],
+   "file": "injected/ut_suite_tag_filter_008.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 373,
+   "template": "n2"
+  },
+  {
+   "end": 400,
+   "expected": [
+    396
+   ],
+   "file": "injected/ut_suite_tag_filter_008.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 385,
+   "template": "d3"
+  },
+  {
+   "end": 409,
+   "expected": [
+    405
+   ],
+   "file": "injected/ut_suite_tag_filter_008.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 402,
+   "template": "d1"
+  },
+  {
+   "end": 420,
+   "expected": [],
+   "file": "injected/ut_suite_tag_filter_008.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 411,
+   "template": "n3"
+  },
+  {
+   "end": 72,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_009.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 60,
+   "template": "n3"
+  },
+  {
+   "end": 85,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_009.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 74,
+   "template": "n5"
+  },
+  {
+   "end": 105,
+   "expected": [
+    103
+   ],
+   "file": "injected/ut_ansiconsole_helper_009.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 87,
+   "template": "d3"
+  },
+  {
+   "end": 124,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_009.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 107,
+   "template": "n3"
+  },
+  {
+   "end": 136,
+   "expected": [
+    130
+   ],
+   "file": "injected/ut_ansiconsole_helper_009.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 126,
+   "template": "d1"
+  },
+  {
+   "end": 150,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_009.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 138,
+   "template": "n2"
+  },
+  {
+   "end": 167,
+   "expected": [
+    164
+   ],
+   "file": "injected/ut_ansiconsole_helper_009.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 152,
+   "template": "d1"
+  },
+  {
+   "end": 182,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_009.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 169,
+   "template": "n2"
+  },
+  {
+   "end": 195,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_009.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 184,
+   "template": "n5"
+  },
+  {
+   "end": 208,
+   "expected": [
+    205
+   ],
+   "file": "injected/ut_ansiconsole_helper_009.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 197,
+   "template": "d1"
+  },
+  {
+   "end": 140,
+   "expected": [
+    133
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_010.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 126,
+   "template": "d2"
+  },
+  {
+   "end": 154,
+   "expected": [],
+   "file": "injected/ut_teamcity_reporter_helper_010.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 142,
+   "template": "n4"
+  },
+  {
+   "end": 165,
+   "expected": [],
+   "file": "injected/ut_teamcity_reporter_helper_010.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 156,
+   "template": "n5"
+  },
+  {
+   "end": 182,
+   "expected": [
+    178
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_010.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 167,
+   "template": "d3"
+  },
+  {
+   "end": 195,
+   "expected": [],
+   "file": "injected/ut_teamcity_reporter_helper_010.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 184,
+   "template": "n4"
+  },
+  {
+   "end": 207,
+   "expected": [
+    201,
+    202,
+    203
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_010.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 197,
+   "template": "d5"
+  },
+  {
+   "end": 222,
+   "expected": [
+    220
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_010.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 209,
+   "template": "d4"
+  },
+  {
+   "end": 232,
+   "expected": [
+    230
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_010.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 224,
+   "template": "d2"
+  },
+  {
+   "end": 246,
+   "expected": [],
+   "file": "injected/ut_teamcity_reporter_helper_010.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 234,
+   "template": "n1"
+  },
+  {
+   "end": 264,
+   "expected": [
+    260
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_010.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 248,
+   "template": "d5"
+  },
+  {
+   "end": 235,
+   "expected": [
+    233
+   ],
+   "file": "injected/ut_annotation_cache_manager_011.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 226,
+   "template": "d2"
+  },
+  {
+   "end": 246,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_011.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 237,
+   "template": "n1"
+  },
+  {
+   "end": 263,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_011.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 248,
+   "template": "n2"
+  },
+  {
+   "end": 277,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_011.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 265,
+   "template": "n2"
+  },
+  {
+   "end": 289,
+   "expected": [
+    281,
+    283,
+    285
+   ],
+   "file": "injected/ut_annotation_cache_manager_011.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 279,
+   "template": "d2"
+  },
+  {
+   "end": 305,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_011.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 291,
+   "template": "n4"
+  },
+  {
+   "end": 318,
+   "expected": [
+    310
+   ],
+   "file": "injected/ut_annotation_cache_manager_011.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 307,
+   "template": "d3"
+  },
+  {
+   "end": 332,
+   "expected": [
+    325,
+    327,
+    329
+   ],
+   "file": "injected/ut_annotation_cache_manager_011.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 320,
+   "template": "d2"
+  },
+  {
+   "end": 356,
+   "expected": [
+    343
+   ],
+   "file": "injected/ut_annotation_cache_manager_011.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 334,
+   "template": "d2"
+  },
+  {
+   "end": 365,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_011.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 358,
+   "template": "n2"
+  },
+  {
+   "end": 52,
+   "expected": [],
+   "file": "injected/ut_trigger_check_012.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 39,
+   "template": "n5"
+  },
+  {
+   "end": 64,
+   "expected": [
+    60
+   ],
+   "file": "injected/ut_trigger_check_012.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 54,
+   "template": "d2"
+  },
+  {
+   "end": 78,
+   "expected": [
+    69
+   ],
+   "file": "injected/ut_trigger_check_012.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 66,
+   "template": "d4"
+  },
+  {
+   "end": 88,
+   "expected": [
+    86
+   ],
+   "file": "injected/ut_trigger_check_012.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 80,
+   "template": "d4"
+  },
+  {
+   "end": 101,
+   "expected": [],
+   "file": "injected/ut_trigger_check_012.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 90,
+   "template": "n4"
+  },
+  {
+   "end": 113,
+   "expected": [],
+   "file": "injected/ut_trigger_check_012.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 103,
+   "template": "n2"
+  },
+  {
+   "end": 125,
+   "expected": [],
+   "file": "injected/ut_trigger_check_012.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 115,
+   "template": "n5"
+  },
+  {
+   "end": 136,
+   "expected": [],
+   "file": "injected/ut_trigger_check_012.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 127,
+   "template": "n4"
+  },
+  {
+   "end": 154,
+   "expected": [],
+   "file": "injected/ut_trigger_check_012.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 138,
+   "template": "n2"
+  },
+  {
+   "end": 171,
+   "expected": [
+    168
+   ],
+   "file": "injected/ut_trigger_check_012.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 156,
+   "template": "d1"
+  },
+  {
+   "end": 172,
+   "expected": [],
+   "file": "injected/ut_coverage_block_013.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 160,
+   "template": "n4"
+  },
+  {
+   "end": 190,
+   "expected": [
+    182,
+    185,
+    187
+   ],
+   "file": "injected/ut_coverage_block_013.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 174,
+   "template": "d5"
+  },
+  {
+   "end": 199,
+   "expected": [
+    196
+   ],
+   "file": "injected/ut_coverage_block_013.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 192,
+   "template": "d3"
+  },
+  {
+   "end": 213,
+   "expected": [],
+   "file": "injected/ut_coverage_block_013.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 201,
+   "template": "n2"
+  },
+  {
+   "end": 226,
+   "expected": [],
+   "file": "injected/ut_coverage_block_013.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 215,
+   "template": "n3"
+  },
+  {
+   "end": 236,
+   "expected": [
+    231
+   ],
+   "file": "injected/ut_coverage_block_013.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 228,
+   "template": "d1"
+  },
+  {
+   "end": 247,
+   "expected": [],
+   "file": "injected/ut_coverage_block_013.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 238,
+   "template": "n4"
+  },
+  {
+   "end": 257,
+   "expected": [],
+   "file": "injected/ut_coverage_block_013.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 249,
+   "template": "n1"
+  },
+  {
+   "end": 270,
+   "expected": [
+    264
+   ],
+   "file": "injected/ut_coverage_block_013.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 259,
+   "template": "d5"
+  },
+  {
+   "end": 283,
+   "expected": [],
+   "file": "injected/ut_coverage_block_013.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 272,
+   "template": "n4"
+  },
+  {
+   "end": 117,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_014.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 110,
+   "template": "n1"
+  },
+  {
+   "end": 127,
+   "expected": [
+    122
+   ],
+   "file": "injected/ut_coverage_helper_block_014.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 119,
+   "template": "d5"
+  },
+  {
+   "end": 139,
+   "expected": [
+    132,
+    133,
+    135
+   ],
+   "file": "injected/ut_coverage_helper_block_014.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 129,
+   "template": "d3"
+  },
+  {
+   "end": 161,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_014.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 141,
+   "template": "n1"
+  },
+  {
+   "end": 179,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_014.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 163,
+   "template": "n1"
+  },
+  {
+   "end": 192,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_014.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 181,
+   "template": "n4"
+  },
+  {
+   "end": 204,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_014.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 194,
+   "template": "n5"
+  },
+  {
+   "end": 216,
+   "expected": [
+    208,
+    210,
+    212
+   ],
+   "file": "injected/ut_coverage_helper_block_014.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 206,
+   "template": "d2"
+  },
+  {
+   "end": 233,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_014.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 218,
+   "template": "n4"
+  },
+  {
+   "end": 242,
+   "expected": [
+    239
+   ],
+   "file": "injected/ut_coverage_helper_block_014.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 235,
+   "template": "d3"
+  },
+  {
+   "end": 104,
+   "expected": [
+    102
+   ],
+   "file": "injected/ut_coverage_profiler_015.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 96,
+   "template": "d4"
+  },
+  {
+   "end": 114,
+   "expected": [
+    109
+   ],
+   "file": "injected/ut_coverage_profiler_015.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 106,
+   "template": "d3"
+  },
+  {
+   "end": 129,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_015.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 116,
+   "template": "n2"
+  },
+  {
+   "end": 143,
+   "expected": [
+    141
+   ],
+   "file": "injected/ut_coverage_profiler_015.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 131,
+   "template": "d5"
+  },
+  {
+   "end": 159,
+   "expected": [
+    148,
+    149,
+    150,
+    152,
+    153,
+    156
+   ],
+   "file": "injected/ut_coverage_profiler_015.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 145,
+   "template": "d3"
+  },
+  {
+   "end": 170,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_015.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 161,
+   "template": "n4"
+  },
+  {
+   "end": 183,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_015.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 172,
+   "template": "n3"
+  },
+  {
+   "end": 196,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_015.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 185,
+   "template": "n5"
+  },
+  {
+   "end": 207,
+   "expected": [
+    205
+   ],
+   "file": "injected/ut_coverage_profiler_015.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 198,
+   "template": "d2"
+  },
+  {
+   "end": 219,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_015.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 209,
+   "template": "n5"
+  },
+  {
+   "end": 58,
+   "expected": [],
+   "file": "injected/ut_session_context_016.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 48,
+   "template": "n4"
+  },
+  {
+   "end": 69,
+   "expected": [],
+   "file": "injected/ut_session_context_016.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 60,
+   "template": "n1"
+  },
+  {
+   "end": 81,
+   "expected": [
+    79
+   ],
+   "file": "injected/ut_session_context_016.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 71,
+   "template": "d2"
+  },
+  {
+   "end": 93,
+   "expected": [
+    87
+   ],
+   "file": "injected/ut_session_context_016.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 83,
+   "template": "d5"
+  },
+  {
+   "end": 105,
+   "expected": [
+    99
+   ],
+   "file": "injected/ut_session_context_016.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 95,
+   "template": "d1"
+  },
+  {
+   "end": 126,
+   "expected": [
+    122
+   ],
+   "file": "injected/ut_session_context_016.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 107,
+   "template": "d2"
+  },
+  {
+   "end": 135,
+   "expected": [
+    131
+   ],
+   "file": "injected/ut_session_context_016.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 128,
+   "template": "d1"
+  },
+  {
+   "end": 155,
+   "expected": [
+    153
+   ],
+   "file": "injected/ut_session_context_016.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 137,
+   "template": "d3"
+  },
+  {
+   "end": 175,
+   "expected": [],
+   "file": "injected/ut_session_context_016.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 157,
+   "template": "n4"
+  },
+  {
+   "end": 189,
+   "expected": [],
+   "file": "injected/ut_session_context_016.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 177,
+   "template": "n5"
+  },
+  {
+   "end": 130,
+   "expected": [],
+   "file": "injected/ut_file_mapper_017.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 122,
+   "template": "n5"
+  },
+  {
+   "end": 152,
+   "expected": [],
+   "file": "injected/ut_file_mapper_017.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 132,
+   "template": "n5"
+  },
+  {
+   "end": 167,
+   "expected": [
+    162
+   ],
+   "file": "injected/ut_file_mapper_017.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 154,
+   "template": "d3"
+  },
+  {
+   "end": 178,
+   "expected": [
+    173
+   ],
+   "file": "injected/ut_file_mapper_017.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 169,
+   "template": "d2"
+  },
+  {
+   "end": 188,
+   "expected": [
+    183
+   ],
+   "file": "injected/ut_file_mapper_017.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 180,
+   "template": "d3"
+  },
+  {
+   "end": 201,
+   "expected": [],
+   "file": "injected/ut_file_mapper_017.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 190,
+   "template": "n2"
+  },
+  {
+   "end": 218,
+   "expected": [],
+   "file": "injected/ut_file_mapper_017.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 203,
+   "template": "n4"
+  },
+  {
+   "end": 232,
+   "expected": [],
+   "file": "injected/ut_file_mapper_017.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 220,
+   "template": "n5"
+  },
+  {
+   "end": 243,
+   "expected": [],
+   "file": "injected/ut_file_mapper_017.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 234,
+   "template": "n1"
+  },
+  {
+   "end": 254,
+   "expected": [
+    252
+   ],
+   "file": "injected/ut_file_mapper_017.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 245,
+   "template": "d2"
+  },
+  {
+   "end": 307,
+   "expected": [
+    299
+   ],
+   "file": "injected/ut_suite_tag_filter_018.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 290,
+   "template": "d2"
+  },
+  {
+   "end": 327,
+   "expected": [],
+   "file": "injected/ut_suite_tag_filter_018.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 309,
+   "template": "n4"
+  },
+  {
+   "end": 339,
+   "expected": [
+    331,
+    333,
+    335
+   ],
+   "file": "injected/ut_suite_tag_filter_018.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 329,
+   "template": "d2"
+  },
+  {
+   "end": 356,
+   "expected": [
+    352
+   ],
+   "file": "injected/ut_suite_tag_filter_018.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 341,
+   "template": "d3"
+  },
+  {
+   "end": 371,
+   "expected": [],
+   "file": "injected/ut_suite_tag_filter_018.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 358,
+   "template": "n2"
+  },
+  {
+   "end": 383,
+   "expected": [],
+   "file": "injected/ut_suite_tag_filter_018.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 373,
+   "template": "n2"
+  },
+  {
+   "end": 392,
+   "expected": [],
+   "file": "injected/ut_suite_tag_filter_018.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 385,
+   "template": "n2"
+  },
+  {
+   "end": 402,
+   "expected": [
+    397
+   ],
+   "file": "injected/ut_suite_tag_filter_018.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 394,
+   "template": "d1"
+  },
+  {
+   "end": 414,
+   "expected": [],
+   "file": "injected/ut_suite_tag_filter_018.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 404,
+   "template": "n2"
+  },
+  {
+   "end": 428,
+   "expected": [],
+   "file": "injected/ut_suite_tag_filter_018.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 416,
+   "template": "n5"
+  },
+  {
+   "end": 69,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_019.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 60,
+   "template": "n5"
+  },
+  {
+   "end": 82,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_019.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 71,
+   "template": "n5"
+  },
+  {
+   "end": 97,
+   "expected": [
+    95
+   ],
+   "file": "injected/ut_ansiconsole_helper_019.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 84,
+   "template": "d4"
+  },
+  {
+   "end": 110,
+   "expected": [
+    104
+   ],
+   "file": "injected/ut_ansiconsole_helper_019.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 99,
+   "template": "d5"
+  },
+  {
+   "end": 125,
+   "expected": [
+    120
+   ],
+   "file": "injected/ut_ansiconsole_helper_019.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 112,
+   "template": "d1"
+  },
+  {
+   "end": 134,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_019.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 127,
+   "template": "n2"
+  },
+  {
+   "end": 143,
+   "expected": [
+    140
+   ],
+   "file": "injected/ut_ansiconsole_helper_019.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 136,
+   "template": "d3"
+  },
+  {
+   "end": 165,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_019.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 145,
+   "template": "n5"
+  },
+  {
+   "end": 181,
+   "expected": [
+    170,
+    171,
+    172,
+    174,
+    175,
+    178
+   ],
+   "file": "injected/ut_ansiconsole_helper_019.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 167,
+   "template": "d3"
+  },
+  {
+   "end": 193,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_019.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 183,
+   "template": "n5"
+  },
+  {
+   "end": 137,
+   "expected": [
+    129
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_020.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 126,
+   "template": "d3"
+  },
+  {
+   "end": 160,
+   "expected": [],
+   "file": "injected/ut_teamcity_reporter_helper_020.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 139,
+   "template": "n2"
+  },
+  {
+   "end": 174,
+   "expected": [
+    172
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_020.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 162,
+   "template": "d5"
+  },
+  {
+   "end": 193,
+   "expected": [
+    185
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_020.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 176,
+   "template": "d2"
+  },
+  {
+   "end": 205,
+   "expected": [],
+   "file": "injected/ut_teamcity_reporter_helper_020.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 195,
+   "template": "n4"
+  },
+  {
+   "end": 218,
+   "expected": [],
+   "file": "injected/ut_teamcity_reporter_helper_020.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 207,
+   "template": "n5"
+  },
+  {
+   "end": 241,
+   "expected": [],
+   "file": "injected/ut_teamcity_reporter_helper_020.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 220,
+   "template": "n2"
+  },
+  {
+   "end": 253,
+   "expected": [
+    250
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_020.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 243,
+   "template": "d1"
+  },
+  {
+   "end": 268,
+   "expected": [],
+   "file": "injected/ut_teamcity_reporter_helper_020.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 255,
+   "template": "n3"
+  },
+  {
+   "end": 279,
+   "expected": [],
+   "file": "injected/ut_teamcity_reporter_helper_020.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 270,
+   "template": "n4"
+  },
+  {
+   "end": 236,
+   "expected": [
+    229,
+    230,
+    232
+   ],
+   "file": "injected/ut_annotation_cache_manager_021.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 226,
+   "template": "d3"
+  },
+  {
+   "end": 247,
+   "expected": [
+    244
+   ],
+   "file": "injected/ut_annotation_cache_manager_021.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 238,
+   "template": "d5"
+  },
+  {
+   "end": 259,
+   "expected": [
+    255
+   ],
+   "file": "injected/ut_annotation_cache_manager_021.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 249,
+   "template": "d2"
+  },
+  {
+   "end": 268,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_021.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 261,
+   "template": "n3"
+  },
+  {
+   "end": 279,
+   "expected": [
+    275
+   ],
+   "file": "injected/ut_annotation_cache_manager_021.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 270,
+   "template": "d5"
+  },
+  {
+   "end": 293,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_021.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 281,
+   "template": "n1"
+  },
+  {
+   "end": 311,
+   "expected": [
+    307
+   ],
+   "file": "injected/ut_annotation_cache_manager_021.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 295,
+   "template": "d5"
+  },
+  {
+   "end": 323,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_021.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 313,
+   "template": "n2"
+  },
+  {
+   "end": 336,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_021.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 325,
+   "template": "n5"
+  },
+  {
+   "end": 348,
+   "expected": [
+    342
+   ],
+   "file": "injected/ut_annotation_cache_manager_021.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 338,
+   "template": "d5"
+  },
+  {
+   "end": 48,
+   "expected": [],
+   "file": "injected/ut_trigger_check_022.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 39,
+   "template": "n4"
+  },
+  {
+   "end": 59,
+   "expected": [
+    58
+   ],
+   "file": "injected/ut_trigger_check_022.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 50,
+   "template": "d4"
+  },
+  {
+   "end": 72,
+   "expected": [],
+   "file": "injected/ut_trigger_check_022.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 61,
+   "template": "n3"
+  },
+  {
+   "end": 86,
+   "expected": [
+    77
+   ],
+   "file": "injected/ut_trigger_check_022.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 74,
+   "template": "d4"
+  },
+  {
+   "end": 95,
+   "expected": [],
+   "file": "injected/ut_trigger_check_022.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 88,
+   "template": "n1"
+  },
+  {
+   "end": 108,
+   "expected": [
+    105
+   ],
+   "file": "injected/ut_trigger_check_022.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 97,
+   "template": "d1"
+  },
+  {
+   "end": 129,
+   "expected": [],
+   "file": "injected/ut_trigger_check_022.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 110,
+   "template": "n3"
+  },
+  {
+   "end": 140,
+   "expected": [],
+   "file": "injected/ut_trigger_check_022.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 131,
+   "template": "n4"
+  },
+  {
+   "end": 151,
+   "expected": [],
+   "file": "injected/ut_trigger_check_022.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 142,
+   "template": "n3"
+  },
+  {
+   "end": 161,
+   "expected": [
+    159
+   ],
+   "file": "injected/ut_trigger_check_022.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 153,
+   "template": "d4"
+  },
+  {
+   "end": 174,
+   "expected": [],
+   "file": "injected/ut_coverage_block_023.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 160,
+   "template": "n4"
+  },
+  {
+   "end": 184,
+   "expected": [
+    179
+   ],
+   "file": "injected/ut_coverage_block_023.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 176,
+   "template": "d3"
+  },
+  {
+   "end": 199,
+   "expected": [],
+   "file": "injected/ut_coverage_block_023.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 186,
+   "template": "n5"
+  },
+  {
+   "end": 212,
+   "expected": [],
+   "file": "injected/ut_coverage_block_023.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 201,
+   "template": "n5"
+  },
+  {
+   "end": 225,
+   "expected": [],
+   "file": "injected/ut_coverage_block_023.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 214,
+   "template": "n5"
+  },
+  {
+   "end": 238,
+   "expected": [],
+   "file": "injected/ut_coverage_block_023.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 227,
+   "template": "n4"
+  },
+  {
+   "end": 251,
+   "expected": [
+    249
+   ],
+   "file": "injected/ut_coverage_block_023.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 240,
+   "template": "d4"
+  },
+  {
+   "end": 263,
+   "expected": [
+    257,
+    258,
+    259
+   ],
+   "file": "injected/ut_coverage_block_023.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 253,
+   "template": "d5"
+  },
+  {
+   "end": 276,
+   "expected": [
+    269
+   ],
+   "file": "injected/ut_coverage_block_023.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 265,
+   "template": "d3"
+  },
+  {
+   "end": 291,
+   "expected": [
+    286
+   ],
+   "file": "injected/ut_coverage_block_023.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 278,
+   "template": "d1"
+  },
+  {
+   "end": 124,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_024.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 110,
+   "template": "n1"
+  },
+  {
+   "end": 135,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_024.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 126,
+   "template": "n3"
+  },
+  {
+   "end": 148,
+   "expected": [
+    140
+   ],
+   "file": "injected/ut_coverage_helper_block_024.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 137,
+   "template": "d3"
+  },
+  {
+   "end": 159,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_024.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 150,
+   "template": "n5"
+  },
+  {
+   "end": 171,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_024.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 161,
+   "template": "n3"
+  },
+  {
+   "end": 185,
+   "expected": [
+    183
+   ],
+   "file": "injected/ut_coverage_helper_block_024.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 173,
+   "template": "d5"
+  },
+  {
+   "end": 199,
+   "expected": [
+    192,
+    194,
+    196
+   ],
+   "file": "injected/ut_coverage_helper_block_024.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 187,
+   "template": "d2"
+  },
+  {
+   "end": 214,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_024.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 201,
+   "template": "n3"
+  },
+  {
+   "end": 231,
+   "expected": [
+    221
+   ],
+   "file": "injected/ut_coverage_helper_block_024.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 216,
+   "template": "d1"
+  },
+  {
+   "end": 246,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_024.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 233,
+   "template": "n3"
+  },
+  {
+   "end": 106,
+   "expected": [
+    104
+   ],
+   "file": "injected/ut_coverage_profiler_025.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 96,
+   "template": "d2"
+  },
+  {
+   "end": 124,
+   "expected": [
+    120
+   ],
+   "file": "injected/ut_coverage_profiler_025.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 108,
+   "template": "d5"
+  },
+  {
+   "end": 138,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_025.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 126,
+   "template": "n2"
+  },
+  {
+   "end": 149,
+   "expected": [
+    145,
+    146,
+    147
+   ],
+   "file": "injected/ut_coverage_profiler_025.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 140,
+   "template": "d1"
+  },
+  {
+   "end": 174,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_025.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 151,
+   "template": "n1"
+  },
+  {
+   "end": 185,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_025.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 176,
+   "template": "n4"
+  },
+  {
+   "end": 197,
+   "expected": [
+    191
+   ],
+   "file": "injected/ut_coverage_profiler_025.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 187,
+   "template": "d4"
+  },
+  {
+   "end": 214,
+   "expected": [
+    204
+   ],
+   "file": "injected/ut_coverage_profiler_025.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 199,
+   "template": "d1"
+  },
+  {
+   "end": 229,
+   "expected": [
+    224
+   ],
+   "file": "injected/ut_coverage_profiler_025.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 216,
+   "template": "d1"
+  },
+  {
+   "end": 241,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_025.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 231,
+   "template": "n4"
+  },
+  {
+   "end": 69,
+   "expected": [],
+   "file": "injected/ut_session_context_026.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 48,
+   "template": "n2"
+  },
+  {
+   "end": 79,
+   "expected": [
+    73
+   ],
+   "file": "injected/ut_session_context_026.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 71,
+   "template": "d1"
+  },
+  {
+   "end": 91,
+   "expected": [],
+   "file": "injected/ut_session_context_026.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 81,
+   "template": "n3"
+  },
+  {
+   "end": 102,
+   "expected": [
+    96
+   ],
+   "file": "injected/ut_session_context_026.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 93,
+   "template": "d4"
+  },
+  {
+   "end": 111,
+   "expected": [],
+   "file": "injected/ut_session_context_026.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 104,
+   "template": "n2"
+  },
+  {
+   "end": 124,
+   "expected": [
+    120
+   ],
+   "file": "injected/ut_session_context_026.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 113,
+   "template": "d2"
+  },
+  {
+   "end": 135,
+   "expected": [
+    133
+   ],
+   "file": "injected/ut_session_context_026.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 126,
+   "template": "d2"
+  },
+  {
+   "end": 149,
+   "expected": [
+    142
+   ],
+   "file": "injected/ut_session_context_026.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 137,
+   "template": "d5"
+  },
+  {
+   "end": 165,
+   "expected": [
+    158
+   ],
+   "file": "injected/ut_session_context_026.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 151,
+   "template": "d2"
+  },
+  {
+   "end": 179,
+   "expected": [
+    172,
+    174,
+    176
+   ],
+   "file": "injected/ut_session_context_026.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 167,
+   "template": "d2"
+  },
+  {
+   "end": 135,
+   "expected": [],
+   "file": "injected/ut_file_mapper_027.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 122,
+   "template": "n2"
+  },
+  {
+   "end": 150,
+   "expected": [],
+   "file": "injected/ut_file_mapper_027.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 137,
+   "template": "n3"
+  },
+  {
+   "end": 161,
+   "expected": [
+    158
+   ],
+   "file": "injected/ut_file_mapper_027.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 152,
+   "template": "d5"
+  },
+  {
+   "end": 180,
+   "expected": [],
+   "file": "injected/ut_file_mapper_027.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 163,
+   "template": "n5"
+  },
+  {
+   "end": 191,
+   "expected": [
+    186
+   ],
+   "file": "injected/ut_file_mapper_027.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 182,
+   "template": "d2"
+  },
+  {
+   "end": 208,
+   "expected": [
+    204
+   ],
+   "file": "injected/ut_file_mapper_027.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 193,
+   "template": "d1"
+  },
+  {
+   "end": 217,
+   "expected": [],
+   "file": "injected/ut_file_mapper_027.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 210,
+   "template": "n3"
+  },
+  {
+   "end": 230,
+   "expected": [],
+   "file": "injected/ut_file_mapper_027.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 219,
+   "template": "n3"
+  },
+  {
+   "end": 242,
+   "expected": [],
+   "file": "injected/ut_file_mapper_027.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 232,
+   "template": "n4"
+  },
+  {
+   "end": 256,
+   "expected": [],
+   "file": "injected/ut_file_mapper_027.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 244,
+   "template": "n5"
+  },
+  {
+   "end": 300,
+   "expected": [
+    296
+   ],
+   "file": "injected/ut_suite_tag_filter_028.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 290,
+   "template": "d4"
+  },
+  {
+   "end": 317,
+   "expected": [
+    313
+   ],
+   "file": "injected/ut_suite_tag_filter_028.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 302,
+   "template": "d1"
+  },
+  {
+   "end": 328,
+   "expected": [],
+   "file": "injected/ut_suite_tag_filter_028.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 319,
+   "template": "n1"
+  },
+  {
+   "end": 344,
+   "expected": [
+    337
+   ],
+   "file": "injected/ut_suite_tag_filter_028.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 330,
+   "template": "d2"
+  },
+  {
+   "end": 357,
+   "expected": [],
+   "file": "injected/ut_suite_tag_filter_028.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 346,
+   "template": "n5"
+  },
+  {
+   "end": 368,
+   "expected": [],
+   "file": "injected/ut_suite_tag_filter_028.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 359,
+   "template": "n1"
+  },
+  {
+   "end": 379,
+   "expected": [
+    376
+   ],
+   "file": "injected/ut_suite_tag_filter_028.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 370,
+   "template": "d5"
+  },
+  {
+   "end": 392,
+   "expected": [],
+   "file": "injected/ut_suite_tag_filter_028.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 381,
+   "template": "n2"
+  },
+  {
+   "end": 403,
+   "expected": [
+    397
+   ],
+   "file": "injected/ut_suite_tag_filter_028.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 394,
+   "template": "d4"
+  },
+  {
+   "end": 419,
+   "expected": [
+    408,
+    409,
+    410,
+    412,
+    413,
+    416
+   ],
+   "file": "injected/ut_suite_tag_filter_028.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 405,
+   "template": "d3"
+  },
+  {
+   "end": 67,
+   "expected": [
+    65
+   ],
+   "file": "injected/ut_ansiconsole_helper_029.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 60,
+   "template": "d5"
+  },
+  {
+   "end": 78,
+   "expected": [
+    77
+   ],
+   "file": "injected/ut_ansiconsole_helper_029.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 69,
+   "template": "d4"
+  },
+  {
+   "end": 90,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_029.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 80,
+   "template": "n2"
+  },
+  {
+   "end": 100,
+   "expected": [
+    95
+   ],
+   "file": "injected/ut_ansiconsole_helper_029.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 92,
+   "template": "d5"
+  },
+  {
+   "end": 112,
+   "expected": [
+    109
+   ],
+   "file": "injected/ut_ansiconsole_helper_029.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 102,
+   "template": "d1"
+  },
+  {
+   "end": 127,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_029.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 114,
+   "template": "n2"
+  },
+  {
+   "end": 146,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_029.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 129,
+   "template": "n5"
+  },
+  {
+   "end": 157,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_029.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 148,
+   "template": "n4"
+  },
+  {
+   "end": 168,
+   "expected": [
+    163
+   ],
+   "file": "injected/ut_ansiconsole_helper_029.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 159,
+   "template": "d3"
+  },
+  {
+   "end": 181,
+   "expected": [],
+   "file": "injected/ut_ansiconsole_helper_029.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 170,
+   "template": "n5"
+  },
+  {
+   "end": 136,
+   "expected": [
+    130
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_030.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 126,
+   "template": "d1"
+  },
+  {
+   "end": 150,
+   "expected": [
+    143
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_030.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 138,
+   "template": "d5"
+  },
+  {
+   "end": 169,
+   "expected": [
+    161
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_030.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 152,
+   "template": "d2"
+  },
+  {
+   "end": 180,
+   "expected": [],
+   "file": "injected/ut_teamcity_reporter_helper_030.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 171,
+   "template": "n1"
+  },
+  {
+   "end": 194,
+   "expected": [
+    191
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_030.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 182,
+   "template": "d3"
+  },
+  {
+   "end": 204,
+   "expected": [
+    199
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_030.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 196,
+   "template": "d3"
+  },
+  {
+   "end": 219,
+   "expected": [],
+   "file": "injected/ut_teamcity_reporter_helper_030.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 206,
+   "template": "n3"
+  },
+  {
+   "end": 237,
+   "expected": [],
+   "file": "injected/ut_teamcity_reporter_helper_030.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 221,
+   "template": "n1"
+  },
+  {
+   "end": 253,
+   "expected": [
+    246
+   ],
+   "file": "injected/ut_teamcity_reporter_helper_030.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 239,
+   "template": "d2"
+  },
+  {
+   "end": 265,
+   "expected": [],
+   "file": "injected/ut_teamcity_reporter_helper_030.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 255,
+   "template": "n4"
+  },
+  {
+   "end": 244,
+   "expected": [
+    242
+   ],
+   "file": "injected/ut_annotation_cache_manager_031.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 226,
+   "template": "d3"
+  },
+  {
+   "end": 254,
+   "expected": [
+    248
+   ],
+   "file": "injected/ut_annotation_cache_manager_031.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 246,
+   "template": "d1"
+  },
+  {
+   "end": 264,
+   "expected": [
+    259
+   ],
+   "file": "injected/ut_annotation_cache_manager_031.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 256,
+   "template": "d1"
+  },
+  {
+   "end": 278,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_031.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 266,
+   "template": "n1"
+  },
+  {
+   "end": 296,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_031.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 280,
+   "template": "n2"
+  },
+  {
+   "end": 309,
+   "expected": [
+    305
+   ],
+   "file": "injected/ut_annotation_cache_manager_031.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 298,
+   "template": "d2"
+  },
+  {
+   "end": 321,
+   "expected": [
+    314,
+    315,
+    317
+   ],
+   "file": "injected/ut_annotation_cache_manager_031.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 311,
+   "template": "d3"
+  },
+  {
+   "end": 332,
+   "expected": [
+    327
+   ],
+   "file": "injected/ut_annotation_cache_manager_031.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 323,
+   "template": "d3"
+  },
+  {
+   "end": 343,
+   "expected": [],
+   "file": "injected/ut_annotation_cache_manager_031.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 334,
+   "template": "n4"
+  },
+  {
+   "end": 361,
+   "expected": [
+    353,
+    356,
+    358
+   ],
+   "file": "injected/ut_annotation_cache_manager_031.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 345,
+   "template": "d5"
+  },
+  {
+   "end": 50,
+   "expected": [
+    47
+   ],
+   "file": "injected/ut_trigger_check_032.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 39,
+   "template": "d1"
+  },
+  {
+   "end": 63,
+   "expected": [],
+   "file": "injected/ut_trigger_check_032.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 52,
+   "template": "n4"
+  },
+  {
+   "end": 77,
+   "expected": [
+    70
+   ],
+   "file": "injected/ut_trigger_check_032.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 65,
+   "template": "d5"
+  },
+  {
+   "end": 88,
+   "expected": [
+    85
+   ],
+   "file": "injected/ut_trigger_check_032.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 79,
+   "template": "d5"
+  },
+  {
+   "end": 99,
+   "expected": [],
+   "file": "injected/ut_trigger_check_032.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 90,
+   "template": "n3"
+  },
+  {
+   "end": 111,
+   "expected": [],
+   "file": "injected/ut_trigger_check_032.pkb",
+   "kind": "negative",
+   "rule": "PLL006",
+   "start": 101,
+   "template": "n4"
+  },
+  {
+   "end": 120,
+   "expected": [
+    116
+   ],
+   "file": "injected/ut_trigger_check_032.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 113,
+   "template": "d4"
+  },
+  {
+   "end": 137,
+   "expected": [
+    133
+   ],
+   "file": "injected/ut_trigger_check_032.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 122,
+   "template": "d3"
+  },
+  {
+   "end": 146,
+   "expected": [],
+   "file": "injected/ut_trigger_check_032.pkb",
+   "kind": "negative",
+   "rule": "PLL005",
+   "start": 139,
+   "template": "n2"
+  },
+  {
+   "end": 156,
+   "expected": [
+    154
+   ],
+   "file": "injected/ut_trigger_check_032.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 148,
+   "template": "d2"
+  },
+  {
+   "end": 169,
+   "expected": [],
+   "file": "injected/ut_coverage_block_033.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 160,
+   "template": "n4"
+  },
+  {
+   "end": 193,
+   "expected": [
+    180
+   ],
+   "file": "injected/ut_coverage_block_033.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 171,
+   "template": "d2"
+  },
+  {
+   "end": 206,
+   "expected": [
+    202
+   ],
+   "file": "injected/ut_coverage_block_033.pkb",
+   "kind": "defect",
+   "rule": "PLL005",
+   "start": 195,
+   "template": "d2"
+  },
+  {
+   "end": 219,
+   "expected": [],
+   "file": "injected/ut_coverage_block_033.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 208,
+   "template": "n4"
+  },
+  {
+   "end": 232,
+   "expected": [
+    230
+   ],
+   "file": "injected/ut_coverage_block_033.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 221,
+   "template": "d3"
+  },
+  {
+   "end": 249,
+   "expected": [],
+   "file": "injected/ut_coverage_block_033.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 234,
+   "template": "n2"
+  },
+  {
+   "end": 262,
+   "expected": [
+    255
+   ],
+   "file": "injected/ut_coverage_block_033.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 251,
+   "template": "d3"
+  },
+  {
+   "end": 272,
+   "expected": [
+    268,
+    269,
+    270
+   ],
+   "file": "injected/ut_coverage_block_033.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 264,
+   "template": "d1"
+  },
+  {
+   "end": 283,
+   "expected": [
+    278
+   ],
+   "file": "injected/ut_coverage_block_033.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 274,
+   "template": "d3"
+  },
+  {
+   "end": 294,
+   "expected": [
+    290
+   ],
+   "file": "injected/ut_coverage_block_033.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 285,
+   "template": "d5"
+  },
+  {
+   "end": 122,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_034.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 110,
+   "template": "n1"
+  },
+  {
+   "end": 137,
+   "expected": [
+    132
+   ],
+   "file": "injected/ut_coverage_helper_block_034.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 124,
+   "template": "d3"
+  },
+  {
+   "end": 150,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_034.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 139,
+   "template": "n2"
+  },
+  {
+   "end": 162,
+   "expected": [
+    156
+   ],
+   "file": "injected/ut_coverage_helper_block_034.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 152,
+   "template": "d1"
+  },
+  {
+   "end": 176,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_034.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 164,
+   "template": "n2"
+  },
+  {
+   "end": 194,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_034.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 178,
+   "template": "n2"
+  },
+  {
+   "end": 206,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_034.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 196,
+   "template": "n5"
+  },
+  {
+   "end": 218,
+   "expected": [
+    216
+   ],
+   "file": "injected/ut_coverage_helper_block_034.pkb",
+   "kind": "defect",
+   "rule": "PLL003",
+   "start": 208,
+   "template": "d2"
+  },
+  {
+   "end": 227,
+   "expected": [],
+   "file": "injected/ut_coverage_helper_block_034.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 220,
+   "template": "n3"
+  },
+  {
+   "end": 236,
+   "expected": [
+    232
+   ],
+   "file": "injected/ut_coverage_helper_block_034.pkb",
+   "kind": "defect",
+   "rule": "PLL006",
+   "start": 229,
+   "template": "d2"
+  },
+  {
+   "end": 106,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_035.pkb",
+   "kind": "negative",
+   "rule": "PLL002",
+   "start": 96,
+   "template": "n4"
+  },
+  {
+   "end": 120,
+   "expected": [
+    111
+   ],
+   "file": "injected/ut_coverage_profiler_035.pkb",
+   "kind": "defect",
+   "rule": "PLL002",
+   "start": 108,
+   "template": "d4"
+  },
+  {
+   "end": 132,
+   "expected": [
+    126
+   ],
+   "file": "injected/ut_coverage_profiler_035.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 122,
+   "template": "d1"
+  },
+  {
+   "end": 145,
+   "expected": [
+    143
+   ],
+   "file": "injected/ut_coverage_profiler_035.pkb",
+   "kind": "defect",
+   "rule": "PLL001",
+   "start": 134,
+   "template": "d4"
+  },
+  {
+   "end": 159,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_035.pkb",
+   "kind": "negative",
+   "rule": "PLL007",
+   "start": 147,
+   "template": "n1"
+  },
+  {
+   "end": 184,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_035.pkb",
+   "kind": "negative",
+   "rule": "PLL004",
+   "start": 161,
+   "template": "n1"
+  },
+  {
+   "end": 195,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_035.pkb",
+   "kind": "negative",
+   "rule": "PLL003",
+   "start": 186,
+   "template": "n3"
+  },
+  {
+   "end": 209,
+   "expected": [],
+   "file": "injected/ut_coverage_profiler_035.pkb",
+   "kind": "negative",
+   "rule": "PLL001",
+   "start": 197,
+   "template": "n5"
+  },
+  {
+   "end": 221,
+   "expected": [
+    215
+   ],
+   "file": "injected/ut_coverage_profiler_035.pkb",
+   "kind": "defect",
+   "rule": "PLL004",
+   "start": 211,
+   "template": "d1"
+  },
+  {
+   "end": 233,
+   "expected": [
+    227,
+    228,
+    229
+   ],
+   "file": "injected/ut_coverage_profiler_035.pkb",
+   "kind": "defect",
+   "rule": "PLL007",
+   "start": 223,
+   "template": "d5"
+  }
+ ],
+ "seed": 2002,
+ "sha256": {
+  "injected/ut_annotation_cache_manager_001.pkb": "5f4cb1ad05161fa1a699060d3564ca5b735d9d3b2c1da29588111cbb38fcfa33",
+  "injected/ut_annotation_cache_manager_011.pkb": "1ea974bb548a54314e6866ca37990ce71455c3e0ce7b742692869df5dda52eb7",
+  "injected/ut_annotation_cache_manager_021.pkb": "4eb7be47abe7dc0bda38e192aec88fa1876609e882cc06bd6425cce5994b790f",
+  "injected/ut_annotation_cache_manager_031.pkb": "96aa4ab2419d2ae1159b95fded9ba2b67d965d55b6bd0f6dc2125f69f7ed5e68",
+  "injected/ut_ansiconsole_helper_009.pkb": "b722ab7a697e08aa3e60217137720583ac84dd9830d5b79459641417f3861b99",
+  "injected/ut_ansiconsole_helper_019.pkb": "7dcbaa38f3a538e58431af4aad2b5a79cc9b47083a7120e0b2cb9abcd968476c",
+  "injected/ut_ansiconsole_helper_029.pkb": "acb0e8fab2d117ff1b235cb7868507bb35028aa57af73974f7c99312da437904",
+  "injected/ut_coverage_block_003.pkb": "2bee4ccc43a0457eda3341d28983dc02b4fc7702fec0021309dfcf195fe53ab6",
+  "injected/ut_coverage_block_013.pkb": "b6720b22d0cdb9a032e538a2295843b7fb18171fa33d59983c7b5e45063223bd",
+  "injected/ut_coverage_block_023.pkb": "c17320d68f13a97bee024aba389dcf76ec3105d204ddb1cecd8f8c9089a7b256",
+  "injected/ut_coverage_block_033.pkb": "7428d93cb38ed91c0b91df58e419248922f99fb5356999f0aa1d29cddb694f18",
+  "injected/ut_coverage_helper_block_004.pkb": "f35fe1c5119591f277de629acba98464af0cced5ac200cf1b7ec0109421bdfd5",
+  "injected/ut_coverage_helper_block_014.pkb": "77744218c9f5b090b682b94f94a8d8a34d89e5153c54f686718b5084c04b7ac4",
+  "injected/ut_coverage_helper_block_024.pkb": "f27d808d2ac620637632c0485d01fe74531634ddcec78ece45d112026d7e8fe2",
+  "injected/ut_coverage_helper_block_034.pkb": "79aea53a53fadb2d17d5dd409faec055bb0a2e3b83518af924993b50feb8da8a",
+  "injected/ut_coverage_profiler_005.pkb": "08679c842f5d6a3856e84b4ba3868c0de2f4267ada42124cc503e409ba297784",
+  "injected/ut_coverage_profiler_015.pkb": "6f19557a1978678523aaaae9e790a5d1e80de30fc8d280877e8ad7ae190bbe13",
+  "injected/ut_coverage_profiler_025.pkb": "806d07f08ba652db4b3508f0d757e83bc424480c54585b09d9251993df58324e",
+  "injected/ut_coverage_profiler_035.pkb": "b65a794933d0ad39b0094d582fafea0f66aacf43aac85688703612365da63c95",
+  "injected/ut_file_mapper_007.pkb": "c2dd1a899dfd4a2b15090c14259536f5ef7b1e9dabe955aa73849d78ec8aeb0b",
+  "injected/ut_file_mapper_017.pkb": "f2870a5b11590d0c619b33b5aba2b914238471e160a9c87013de1133dafa25c0",
+  "injected/ut_file_mapper_027.pkb": "1ca1b1298bd9e229697f2ef29a6f8e6ec26ac064097d62021df3f9d306898beb",
+  "injected/ut_session_context_006.pkb": "c9a6901a9455f54c8c1b859c54860dcdb153e38085bac1657b710c11520744b6",
+  "injected/ut_session_context_016.pkb": "ddd403daf1ec24d45dfffe7e2c951088977c811e94fac67cbac64c22eeeff179",
+  "injected/ut_session_context_026.pkb": "c0374a66c9325e6b0965fd83279a36c287fa8acc30f510d2fa1e3980b132ee63",
+  "injected/ut_suite_tag_filter_008.pkb": "3d9cfe4cf2e3884516f959cb4661962db2860080746a426e611ddef660267235",
+  "injected/ut_suite_tag_filter_018.pkb": "d951b91254725730bcdd8e1cb3713e4235471b373c3f9a2fd701b5ada091e541",
+  "injected/ut_suite_tag_filter_028.pkb": "d21944bb7d2b3aa1023eb6039d45bbaf991b139c17819c649b061fa7b897416c",
+  "injected/ut_teamcity_reporter_helper_010.pkb": "1beca0271f4716fb8340c1aaa6a34f992c0a92d091edd4da28f82b5b2e62f223",
+  "injected/ut_teamcity_reporter_helper_020.pkb": "a1d388bbbd8b9e87f84ec7c1d0b01a301477f800c2c2c219a200144dd282af8c",
+  "injected/ut_teamcity_reporter_helper_030.pkb": "07d2add99a92cbb7bcda177571339150ae5842c0e42b5611cf63df21949f2178",
+  "injected/ut_trigger_check_002.pkb": "e0039c2abacdc7ae053631b32351d3d33bff21245817dd9aa0f6e071cc2ac123",
+  "injected/ut_trigger_check_012.pkb": "4cc495c28fc8bfe6c8e2fd203f502156087995996fd89d4fa534bb906701811d",
+  "injected/ut_trigger_check_022.pkb": "dff2eee21b7062997eaa89ae7e855763568bec1789e64c27534ad6997597d757",
+  "injected/ut_trigger_check_032.pkb": "19f20aba52f974561f5b10a8c61c3e98b4899340a223f7faf8086bcd09d88f4f",
+  "standalone/bench_s0001.pkb": "b1fb955676adb798f89b0e67bd393a402c9b530ec09c2abfb58a6601f6f54c9b",
+  "standalone/bench_s0002.pkb": "4761247e697e56f8f08995e06910e9eaf11e1c827e9ad6935dc89e9e5c37380a",
+  "standalone/bench_s0003.pkb": "8ffc6311018124423c3c606480b35f5d52ff8cf23574e94580ec908931ee8759",
+  "standalone/bench_s0004.pkb": "b7e57fe8d8d0d8998543ea0a3f06b226d1ecb46dfdcf5f6bc52a94cec2d04001",
+  "standalone/bench_s0005.pkb": "0e476f1c434afe0b8f42381915d6b46815794ef6b3b0eaa31df7d41a8b73f9ad",
+  "standalone/bench_s0006.pkb": "667d91916e8f6d38fe4f35b24ea64c76dde7cf30679d052c1e5982a37f1782a2",
+  "standalone/bench_s0007.pkb": "8a6a1662ef5b5708ff079a4cfef069799d47de17aeb4cbb0ee94dcb75a4daa71",
+  "standalone/bench_s0008.pkb": "d75e7a938eef1d7606d8328d984666d9e7d6b59fe722bdc8faf54e559f300b86",
+  "standalone/bench_s0009.pkb": "83cca7541fe6cfc26d87365547913fc201e708798e7356c6a908fa26c6befaeb",
+  "standalone/bench_s0010.pkb": "1b43e2c4a008df1d8d0e72ffa4e5d690fc017b171a51f1db836fab6ea697f338",
+  "standalone/bench_s0011.pkb": "d4d4337df568a9fbdb1e6aaf6f26a7c485accce04d313beaff1b007dac153b2e",
+  "standalone/bench_s0012.pkb": "a030ed0bc74fbb11b172f610d4eb329d7114d13f1d9ffa21ab942b8d7ad6be39",
+  "standalone/bench_s0013.pkb": "71269c5caf5608b48db0c3bd02510c86883d9fcc8e10f2332f203a0f0b509d56",
+  "standalone/bench_s0014.pkb": "242ac8b2b2a309834bd7566daade17dbf36fb8db0eb96c52042e68801d6be311",
+  "standalone/bench_s0015.pkb": "c47b00c32057b3619c6c7c3707b2ab7d1e86a30ca46a832f9180ded3539d74a6",
+  "standalone/bench_s0016.pkb": "f5381763410f60876d1290f5bffe82a0b9d5a77ec81dc38a3e612a58c238ce2c",
+  "standalone/bench_s0017.pkb": "7410f83e8f27750a7c88e2824cde6bd6a6ed5e25cdb60096cc54fe82bb0872ca",
+  "standalone/bench_s0018.pkb": "687c5a044b11feeb561b07fd70d67738d726996d8162f5076cdf26ffac62995f",
+  "standalone/bench_s0019.pkb": "33c6766e8e8d35ec6209a6a25fe0a5b61518d5873b96de289c47175ba078e313",
+  "standalone/bench_s0020.pkb": "d82075ac2dd984b47c92748bf57d51878fc38a47932e9dcb81288d86c2c791cd",
+  "standalone/bench_s0021.pkb": "005cb14549d0c3f4c1ca6605209ed4f064682036d550c6d09d9fcbc4fbacd506",
+  "standalone/bench_s0022.pkb": "1157ea284ce5e6f621d606765f68c0513050400c3880dae0f7ab7f2175de67f2",
+  "standalone/bench_s0023.pkb": "a001a6128287b5a4c2ef24e022e67f3df7893a071407356661b48025b39e2921",
+  "standalone/bench_s0024.pkb": "ff66471c3f2f39db4160748375e919bf67a53dd29ed0f92166bb7a870732a5d5",
+  "standalone/bench_s0025.pkb": "bbd29e73cba3c869da0ecf5ebaa7f59c9185985954c1f1dd8f9e144e40414bbb",
+  "standalone/bench_s0026.pkb": "f7f89b1870a76ea5160c2fce143405206076988c33b4fdf05992c163480eb1a3",
+  "standalone/bench_s0027.pkb": "4e2b78db1bef0d495505198260889458dfc2b076ef7ba5923685b25b9e742ded",
+  "standalone/bench_s0028.pkb": "6aaf94babd8a9578e227f1c8f1f750394a92555b45a96533707bd2def185dd21",
+  "standalone/bench_s0029.pkb": "f1cf4561c87ed59e9d56fafede6a083462a09e15a1cfc9089fc72d2e365eb486",
+  "standalone/bench_s0030.pkb": "abf82e24332ed097a57de046eb14f46fc26d78c65d668a740fe6169e7aeef419",
+  "standalone/bench_s0031.pkb": "2a8b38659025efed5307eda7ad129802bc78a5b094a0da7ee4fd7a56e59a0761",
+  "standalone/bench_s0032.pkb": "3343ad8f8aa5e96763b72edbd4a13376274bf5e0b998b5ea85c4184c5aace7ff",
+  "standalone/bench_s0033.pkb": "c422c9503a776a071c5e4b6677bcc414b097c2db5ee4c30dbcd53a422fa5a586",
+  "standalone/bench_s0034.pkb": "5b570a9c203e006ddd6426f70661ea0482c23204965f3f1d08b6659e4f57a2a4",
+  "standalone/bench_s0035.pkb": "b91635d4cd07bdcef9be6a563f1862f8178800bf04e23003ac427ebc7a6bdd63",
+  "standalone/bench_s0036.pkb": "ed74769ea605721ecc4f2a5d9c08f5c87749e4ef79726e821b3de7d35a96f818",
+  "standalone/bench_s0037.pkb": "f16454f2a09c63910c273602caade0e956c68b60a831cd62898985ea7198c131",
+  "standalone/bench_s0038.pkb": "02b7e6ad5523fd21095f61e242787934ce943913ad87ac61ddfd135d32d08c6e",
+  "standalone/bench_s0039.pkb": "a025ce9752c7474c11eeb49dadf93f413375d95dc41a12b0d6aa1040202b73ed",
+  "standalone/bench_s0040.pkb": "ba3667ef5c6527c0a816fee3c0b6bf9baa11296cfee4265554ee262375dc0538",
+  "standalone/bench_s0041.pkb": "5ee5826cc765860c62393e7cdae9df8dcb38882c3ab5f980b7f23c2bcd543eff",
+  "standalone/bench_s0042.pkb": "2dd1a80e2917c3ee76b09f5c68b81ff9e81d6e831b1c03070acd55b435b5f870",
+  "standalone/bench_s0043.pkb": "cba8213d779b5799ca1169b236cad27184c069a5718d7bef6e6261e9bbdc5f06",
+  "standalone/bench_s0044.pkb": "87ab1a36299194e7ca6c61f99a0a8d82241722b8ce00707c12860e16769e2530",
+  "standalone/bench_s0045.pkb": "ebe2614aa8aa2461e7c513b91e0711598899035e6a480a6199be5eeda91c045e",
+  "standalone/bench_s0046.pkb": "d65e9bbccafae667db18bec3ac28d3ef8b25336d24efd9498a8f4fd5a554631b",
+  "standalone/bench_s0047.pkb": "e64d4d29c5ce32ac44650b7b03587607b75754a96fc32aba66389b9ec842710f",
+  "standalone/bench_s0048.pkb": "0ec058b1d529bdb44b79b1955a243fe7b5dce7fe7e281fd91a3742e79b5c8703",
+  "standalone/bench_s0049.pkb": "160a88fbf22e80a41040e179703d510987bedebe6de8ecff074fac79bf2fd1c9",
+  "standalone/bench_s0050.pkb": "d4b1ed8caef058deff8dbc18725b550d32ecd3e321377b60d7ed6ca2c170d6a3",
+  "standalone/bench_s0051.pkb": "2a42704b2ce16761b8a116ddfd13c7df554ab5b413780240139c431b596b8c77",
+  "standalone/bench_s0052.pkb": "7136b06f10f01e9a8647aa340138e13a8e8fed0e47ac630b95861e7a0e5d8ce6",
+  "standalone/bench_s0053.pkb": "64310079b23bf5f37061f363d12541358141171ff93c76a36b2dd01413c8e95c",
+  "standalone/bench_s0054.pkb": "478a48cea3930e428cffd463a36a71530045044257cc20de3017e18300a8d83e",
+  "standalone/bench_s0055.pkb": "5bbb571f1c7a5dd73592708c665cb835c5eece781c44cb700468a9716435717f",
+  "standalone/bench_s0056.pkb": "93c9fb7bd35d04f58afb8718919c91bf4c9cc4d8bcfbfae80a5b93db99d34cee",
+  "standalone/bench_s0057.pkb": "eb5b4437af8f028fe0bcfb978af92c87710ccabb78cb5a9c4015cb496645da71",
+  "standalone/bench_s0058.pkb": "f0b85630b9ca7034eb31280fac117ef505122b29012a3694b88530834d8c226b",
+  "standalone/bench_s0059.pkb": "1605888ff2a75415951408b3b581fda3f7d7398e4b1972cf7b76a366723747dc",
+  "standalone/bench_s0060.pkb": "4962ef9ec4a2903a65fd00b52cfed09e7dd09f9288eca13f63585079ad14c168",
+  "standalone/bench_s0061.pkb": "bd7db7a594d404ca43613d7b6a2fbf82c94b21baf6ca174923c18e89fc453762",
+  "standalone/bench_s0062.pkb": "29f4bdbca4606679b6ebe9658e5e79c21c8ddf8fd6fb1cad2bec1dbc3612adb8",
+  "standalone/bench_s0063.pkb": "fe5ecec626544cf014473e2f8d04c8152281117e959b36e4b929bdbb43ea948d",
+  "standalone/bench_s0064.pkb": "eb329f84c3823e759d4d82231969a6205d02036324435704408422e113dc0726",
+  "standalone/bench_s0065.pkb": "34cff0dc44ddd883771e80b1fb6cec028dee7f1d4ad7bbb074769b7d52765631",
+  "standalone/bench_s0066.pkb": "2afb0ca024b2b0d524d03c8bb2a16c891821f3ae52f1cad089f8240ca01d953e",
+  "standalone/bench_s0067.pkb": "5dc7481fd99b4b504d73df28a117aadf261739f3f2419475085d3a6d9e8d6d1f",
+  "standalone/bench_s0068.pkb": "2db9e7d13befa278aeb224a0304202623b7ee730284f7ddf157763e4af9553b0",
+  "standalone/bench_s0069.pkb": "ed97dd97f3a8cf5ea69015cb8b3652d0122c1d4e6d4f1816b873a9e1e063e1b1",
+  "standalone/bench_s0070.pkb": "a9bf2e5082d8d29306172ff18e1a211c63dae5a6e29d50ef9061d33aaa97d729"
+ },
+ "split": "test"
+}

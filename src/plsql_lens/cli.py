@@ -335,3 +335,99 @@ def testgen_suite(
         f"units {t_['units']}: compiled {t_['compiled']}, ran {t_['ran']}, tests {t_['tests']}, "
         f"passed {t_['passed']}, failed {t_['failed']}, errored {t_['errored']}"
     )
+
+
+# ---- bench ---------------------------------------------------------------------------------
+
+DEFAULT_BENCH_DIR = Path("docs/benchmarks")
+
+
+class BenchSplit(StrEnum):
+    dev = "dev"
+    test = "test"
+    both = "both"
+
+
+@app.command()
+def bench(
+    seed: Annotated[
+        int | None, typer.Option(help="Override the split seed (breaks the seal).")
+    ] = None,
+    split: Annotated[BenchSplit, typer.Option(help="dev | test | both")] = BenchSplit.both,
+    output: Annotated[Path, typer.Option("-o", "--output", help="Benchmark directory.")] = (
+        DEFAULT_BENCH_DIR
+    ),
+) -> None:
+    """Regenerate the splits, run before/after rules, score, and write results.md (no LLM calls)."""
+    from .bench.config import repo_root
+    from .bench.report import render_results
+    from .bench.run import run_actionable, run_extras, run_llm_scoring, run_split
+
+    root = repo_root()
+    names = ["dev", "test"] if split is BenchSplit.both else [split.value]
+    for name in names:
+        raw = run_split(root, output, name, seed)
+        t = raw["after"]["total"]
+        typer.echo(
+            f"{name}: manifest {raw['manifest_sha256'][:12]}  "
+            f"after TP/FP/FN = {t['tp']}/{t['fp']}/{t['fn']}"
+        )
+    run_extras(root, output)
+    run_actionable(output)
+    run_llm_scoring(output)
+    (output / "results.md").write_text(render_results(output))
+    typer.echo(f"wrote {output / 'results.md'}")
+
+
+@app.command(name="bench-llm")
+def bench_llm(
+    output: Annotated[Path, typer.Option("-o", "--output", help="Benchmark directory.")] = (
+        DEFAULT_BENCH_DIR
+    ),
+    files: Annotated[int, typer.Option(help="Sample size from the test split.")] = 40,
+    model: Annotated[
+        str, typer.Option(help="Model for the LLM-only baseline.")
+    ] = "claude-sonnet-5-5",
+    max_usd: Annotated[float, typer.Option(help="Abort when the running cost exceeds this.")] = 2.0,
+) -> None:
+    """Run the LLM-only baseline on a seeded sample of the test split. COSTS MONEY (capped)."""
+    from .bench.config import LLM_SAMPLE_SEED, repo_root
+    from .bench.llm_baseline import build_prompt, select_sample
+    from .bench.model import Manifest
+
+    root = repo_root()
+    data = output / "data" / "test"
+    manifest = Manifest.load(data / "manifest.json")
+    sample = select_sample(manifest, files, LLM_SAMPLE_SEED)
+    provider = make_provider("claude-cli", model=model)
+    responses: dict[str, dict[str, object]] = {}
+    spent = 0.0
+    for f in sample:
+        prompt = build_prompt(root, f, (data / f).read_text())
+        try:
+            r = provider.complete(prompt)
+        except LLMError as e:
+            responses[f] = {
+                "error": str(e),
+                "input_tokens": 0,
+                "output_tokens": 0,
+                "cost_usd": 0.0,
+            }
+            continue
+        spent += r.cost_usd or 0.0
+        responses[f] = {
+            "text": r.text, "input_tokens": r.input_tokens,
+            "output_tokens": r.output_tokens, "cost_usd": r.cost_usd,
+        }  # fmt: skip
+        typer.echo(f"{f}: {r.cost_usd:.4f} USD (total {spent:.3f})", err=True)
+        if spent > max_usd:
+            typer.echo(
+                f"stopping: cost cap {max_usd} USD reached after {len(responses)} files",
+                err=True,
+            )
+            break
+    (output / "llm_baseline").mkdir(parents=True, exist_ok=True)
+    (output / "llm_baseline" / "responses.json").write_text(
+        json.dumps({"model": model, "responses": responses}, indent=1, sort_keys=True) + "\n"
+    )
+    typer.echo(f"recorded {len(responses)} responses, {spent:.4f} USD")

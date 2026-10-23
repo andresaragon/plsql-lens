@@ -1,0 +1,58 @@
+{
+  "rule": "PLL002",
+  "split": "test",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "multi-line concatenation with CHR(10) and variables inside EXECUTE IMMEDIATE",
+      "code": "PROCEDURE @@proc@@ (p_name IN VARCHAR2, p_limit IN NUMBER) IS\nBEGIN\n    EXECUTE IMMEDIATE 'UPDATE @@tab@@ ' || CHR(10) || -- @expect\n                      '   SET @@col@@ = ' || p_limit || CHR(10) ||\n                      ' WHERE @@col2@@ = ''' || p_name || '''';\n    IF SQL%ROWCOUNT = 0 THEN\n        RAISE_APPLICATION_ERROR(-20001, 'nothing updated');\n    END IF;\nEND @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "variable built up in a loop with l_sql := l_sql || ... then executed",
+      "code": "PROCEDURE @@proc@@ (p_cols IN SYS.ODCIVARCHAR2LIST) IS\n    l_sql VARCHAR2(4000) := 'DELETE FROM @@tab@@ WHERE ROWNUM > 0';\nBEGIN\n    FOR i IN 1 .. p_cols.COUNT LOOP\n        l_sql := l_sql || ' AND ' || p_cols(i) || ' IS NULL';\n    END LOOP;\n    EXECUTE IMMEDIATE l_sql; -- @expect\n    DBMS_OUTPUT.PUT_LINE(SQL%ROWCOUNT);\nEND @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "EXECUTE IMMEDIATE ... INTO with a concatenated table name",
+      "code": "FUNCTION @@proc@@ (p_table IN VARCHAR2, p_min IN NUMBER) RETURN NUMBER IS\n    l_cnt NUMBER;\nBEGIN\n    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM ' || p_table -- @expect\n                      || ' WHERE @@col@@ > :min_val'\n        INTO l_cnt\n        USING p_min;\n    RETURN l_cnt;\nEND @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "OPEN cursor FOR a variable built by concatenating a parameter",
+      "code": "PROCEDURE @@proc@@ (p_filter IN VARCHAR2, p_rc OUT SYS_REFCURSOR) IS\n    l_sql VARCHAR2(2000);\nBEGIN\n    IF p_filter IS NULL THEN\n        RAISE_APPLICATION_ERROR(-20002, 'filter required');\n    END IF;\n    l_sql := 'SELECT @@col@@, @@col2@@ FROM @@tab@@ '\n          || 'WHERE @@col@@ LIKE ''' || p_filter || '%''';\n    OPEN p_rc FOR l_sql; -- @expect\nEND @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "concatenation with TO_CHAR(var) operands",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\n    l_days PLS_INTEGER := 30;\nBEGIN\n    EXECUTE IMMEDIATE 'DELETE FROM @@tab@@ WHERE @@col@@ < SYSDATE - ' -- @expect\n                      || TO_CHAR(l_days)\n                      || ' AND id = '\n                      || TO_CHAR(p_id);\n    DBMS_OUTPUT.PUT_LINE(SQL%ROWCOUNT || ' rows removed');\nEND @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "operands wrapped in sys.dbms_assert / dbms_assert calls",
+      "code": "FUNCTION @@proc@@ (p_owner IN VARCHAR2, p_table IN VARCHAR2) RETURN NUMBER IS\n    l_cnt NUMBER;\nBEGIN\n    EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM '\n                      || sys.dbms_assert.schema_name(p_owner)\n                      || '.'\n                      || dbms_assert.simple_sql_name(p_table)\n        INTO l_cnt;\n    RETURN l_cnt;\nEND @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "q-quoted literals only, one executed directly and one via a variable",
+      "code": "PROCEDURE @@proc@@ (p_rc OUT SYS_REFCURSOR) IS\n    l_sql VARCHAR2(500);\nBEGIN\n    EXECUTE IMMEDIATE q'[\n        UPDATE @@tab@@\n           SET @@col@@ = 'ACTIVE'\n         WHERE @@col2@@ IS NULL\n    ]';\n    l_sql := q'[SELECT @@col@@ FROM @@tab@@ WHERE @@col@@ = 'ACTIVE']';\n    OPEN p_rc FOR l_sql;\nEND @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "dynamic SQL passing values only through USING and RETURNING INTO binds",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER, p_val IN NUMBER, p_new OUT NUMBER) IS\n    l_max NUMBER;\nBEGIN\n    EXECUTE IMMEDIATE 'UPDATE @@tab@@ SET @@col@@ = :b1 WHERE id = :b2 RETURNING @@col2@@'\n        USING p_val, p_id\n        RETURNING INTO p_new;\n\n    EXECUTE IMMEDIATE 'SELECT MAX(@@col2@@) FROM @@tab@@ WHERE id = :b1'\n        INTO l_max\n        USING p_id;\n    DBMS_OUTPUT.PUT_LINE(l_max);\nEND @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "variable assigned only plain literals in IF branches, then executed",
+      "code": "PROCEDURE @@proc@@ (p_mode IN VARCHAR2) IS\n    l_sql VARCHAR2(200);\nBEGIN\n    IF p_mode = 'FULL' THEN\n        l_sql := 'TRUNCATE TABLE @@tab@@';\n    ELSIF p_mode = 'PARTIAL' THEN\n        l_sql := 'DELETE FROM @@tab@@ WHERE @@col@@ < SYSDATE - 7';\n    ELSE\n        l_sql := 'DELETE FROM @@tab@@ WHERE 1 = 0';\n    END IF;\n    EXECUTE IMMEDIATE l_sql;\nEND @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "fully literal DDL string split with || between two literals",
+      "code": "PROCEDURE @@proc@@ IS\nBEGIN\n    EXECUTE IMMEDIATE 'CREATE INDEX @@tab@@_ix ON @@tab@@ (@@col@@, @@col2@@) '\n                      || 'TABLESPACE users PARALLEL 4';\nEXCEPTION\n    WHEN OTHERS THEN\n        IF SQLCODE != -955 THEN\n            RAISE;\n        END IF;\nEND @@proc@@;"
+    }
+  ]
+}

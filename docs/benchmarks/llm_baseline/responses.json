@@ -1,0 +1,245 @@
+{
+ "model": "claude-sonnet-5-5",
+ "responses": {
+  "injected/ut_annotation_cache_manager_001.pkb": {
+   "cost_usd": 0.053586,
+   "input_tokens": 9495,
+   "output_tokens": 1561,
+   "text": "[{\"rule\":\"PLL007\",\"line\":60},{\"rule\":\"PLL007\",\"line\":81},{\"rule\":\"PLL007\",\"line\":90},{\"rule\":\"PLL007\",\"line\":98},{\"rule\":\"PLL007\",\"line\":105},{\"rule\":\"PLL002\",\"line\":213},{\"rule\":\"PLL002\",\"line\":216},{\"rule\":\"PLL002\",\"line\":219},{\"rule\":\"PLL007\",\"line\":250},{\"rule\":\"PLL007\",\"line\":251},{\"rule\":\"PLL007\",\"line\":252},{\"rule\":\"PLL001\",\"line\":306},{\"rule\":\"PLL004\",\"line\":316},{\"rule\":\"PLL007\",\"line\":355},{\"rule\":\"PLL007\",\"line\":356},{\"rule\":\"PLL007\",\"line\":360}]"
+  },
+  "injected/ut_annotation_cache_manager_011.pkb": {
+   "cost_usd": 0.051452000000000005,
+   "input_tokens": 9364,
+   "output_tokens": 1400,
+   "text": "[{\"rule\":\"PLL007\",\"line\":60},{\"rule\":\"PLL007\",\"line\":81},{\"rule\":\"PLL007\",\"line\":90},{\"rule\":\"PLL007\",\"line\":98},{\"rule\":\"PLL007\",\"line\":105},{\"rule\":\"PLL002\",\"line\":213},{\"rule\":\"PLL002\",\"line\":216},{\"rule\":\"PLL002\",\"line\":219},{\"rule\":\"PLL006\",\"line\":233},{\"rule\":\"PLL007\",\"line\":281},{\"rule\":\"PLL007\",\"line\":283},{\"rule\":\"PLL007\",\"line\":285},{\"rule\":\"PLL002\",\"line\":310},{\"rule\":\"PLL007\",\"line\":325},{\"rule\":\"PLL007\",\"line\":327},{\"rule\":\"PLL007\",\"line\":329},{\"rule\":\"PLL001\",\"line\":343}]"
+  },
+  "injected/ut_annotation_cache_manager_021.pkb": {
+   "cost_usd": 0.048182,
+   "input_tokens": 9064,
+   "output_tokens": 1193,
+   "text": "[{\"rule\":\"PLL002\",\"line\":213},{\"rule\":\"PLL002\",\"line\":216},{\"rule\":\"PLL002\",\"line\":219},{\"rule\":\"PLL007\",\"line\":229},{\"rule\":\"PLL007\",\"line\":230},{\"rule\":\"PLL007\",\"line\":232},{\"rule\":\"PLL004\",\"line\":244},{\"rule\":\"PLL003\",\"line\":255},{\"rule\":\"PLL006\",\"line\":275},{\"rule\":\"PLL001\",\"line\":307},{\"rule\":\"PLL005\",\"line\":342}]"
+  },
+  "injected/ut_annotation_cache_manager_031.pkb": {
+   "cost_usd": 0.0184363,
+   "input_tokens": 9225,
+   "output_tokens": 1751,
+   "text": "[{\"rule\":\"PLL007\",\"line\":60},{\"rule\":\"PLL007\",\"line\":81},{\"rule\":\"PLL007\",\"line\":90},{\"rule\":\"PLL007\",\"line\":98},{\"rule\":\"PLL007\",\"line\":105},{\"rule\":\"PLL002\",\"line\":213},{\"rule\":\"PLL002\",\"line\":216},{\"rule\":\"PLL002\",\"line\":219},{\"rule\":\"PLL001\",\"line\":242},{\"rule\":\"PLL002\",\"line\":248},{\"rule\":\"PLL006\",\"line\":259},{\"rule\":\"PLL005\",\"line\":305},{\"rule\":\"PLL007\",\"line\":314},{\"rule\":\"PLL007\",\"line\":315},{\"rule\":\"PLL007\",\"line\":317},{\"rule\":\"PLL006\",\"line\":327},{\"rule\":\"PLL007\",\"line\":353},{\"rule\":\"PLL007\",\"line\":356},{\"rule\":\"PLL007\",\"line\":358}]"
+  },
+  "injected/ut_ansiconsole_helper_009.pkb": {
+   "cost_usd": 0.033778,
+   "input_tokens": 6293,
+   "output_tokens": 861,
+   "text": "[{\"rule\":\"PLL001\",\"line\":103},{\"rule\":\"PLL002\",\"line\":130},{\"rule\":\"PLL001\",\"line\":164},{\"rule\":\"PLL003\",\"line\":205}]"
+  },
+  "injected/ut_ansiconsole_helper_029.pkb": {
+   "cost_usd": 0.031938,
+   "input_tokens": 6118,
+   "output_tokens": 747,
+   "text": "[{\"rule\":\"PLL005\",\"line\":65},{\"rule\":\"PLL002\",\"line\":77},{\"rule\":\"PLL002\",\"line\":95},{\"rule\":\"PLL003\",\"line\":109},{\"rule\":\"PLL006\",\"line\":163}]"
+  },
+  "injected/ut_coverage_block_023.pkb": {
+   "cost_usd": 0.041986,
+   "input_tokens": 8495,
+   "output_tokens": 801,
+   "text": "[{\"rule\":\"PLL002\",\"line\":179},{\"rule\":\"PLL001\",\"line\":249},{\"rule\":\"PLL007\",\"line\":257},{\"rule\":\"PLL007\",\"line\":258},{\"rule\":\"PLL007\",\"line\":259},{\"rule\":\"PLL004\",\"line\":269},{\"rule\":\"PLL005\",\"line\":286}]"
+  },
+  "injected/ut_coverage_helper_block_014.pkb": {
+   "cost_usd": 0.039062,
+   "input_tokens": 7189,
+   "output_tokens": 1031,
+   "text": "[{\"rule\":\"PLL002\",\"line\":56},{\"rule\":\"PLL002\",\"line\":122},{\"rule\":\"PLL007\",\"line\":132},{\"rule\":\"PLL007\",\"line\":133},{\"rule\":\"PLL007\",\"line\":135},{\"rule\":\"PLL007\",\"line\":208},{\"rule\":\"PLL007\",\"line\":210},{\"rule\":\"PLL007\",\"line\":212},{\"rule\":\"PLL006\",\"line\":239}]"
+  },
+  "injected/ut_coverage_profiler_005.pkb": {
+   "cost_usd": 0.036576,
+   "input_tokens": 7230,
+   "output_tokens": 766,
+   "text": "[{\"rule\":\"PLL005\",\"line\":99},{\"rule\":\"PLL007\",\"line\":110},{\"rule\":\"PLL007\",\"line\":111},{\"rule\":\"PLL007\",\"line\":115},{\"rule\":\"PLL003\",\"line\":127},{\"rule\":\"PLL006\",\"line\":173},{\"rule\":\"PLL003\",\"line\":214}]"
+  },
+  "injected/ut_coverage_profiler_015.pkb": {
+   "cost_usd": 0.03535,
+   "input_tokens": 6981,
+   "output_tokens": 743,
+   "text": "[{\"rule\":\"PLL003\",\"line\":102},{\"rule\":\"PLL002\",\"line\":109},{\"rule\":\"PLL004\",\"line\":141},{\"rule\":\"PLL007\",\"line\":148},{\"rule\":\"PLL007\",\"line\":149},{\"rule\":\"PLL007\",\"line\":150},{\"rule\":\"PLL007\",\"line\":152},{\"rule\":\"PLL007\",\"line\":153},{\"rule\":\"PLL007\",\"line\":156},{\"rule\":\"PLL006\",\"line\":205}]"
+  },
+  "injected/ut_coverage_profiler_025.pkb": {
+   "cost_usd": 0.008732,
+   "input_tokens": 7182,
+   "output_tokens": 801,
+   "text": "[\n{\"rule\":\"PLL003\",\"line\":104},\n{\"rule\":\"PLL001\",\"line\":120},\n{\"rule\":\"PLL007\",\"line\":145},\n{\"rule\":\"PLL007\",\"line\":146},\n{\"rule\":\"PLL007\",\"line\":147},\n{\"rule\":\"PLL004\",\"line\":191},\n{\"rule\":\"PLL006\",\"line\":204},\n{\"rule\":\"PLL005\",\"line\":224}\n]"
+  },
+  "injected/ut_coverage_profiler_035.pkb": {
+   "cost_usd": 0.034988,
+   "input_tokens": 7093,
+   "output_tokens": 662,
+   "text": "[{\"rule\":\"PLL002\",\"line\":111},{\"rule\":\"PLL004\",\"line\":126},{\"rule\":\"PLL001\",\"line\":143},{\"rule\":\"PLL004\",\"line\":215},{\"rule\":\"PLL007\",\"line\":227},{\"rule\":\"PLL007\",\"line\":228},{\"rule\":\"PLL007\",\"line\":229}]"
+  },
+  "injected/ut_file_mapper_007.pkb": {
+   "cost_usd": 0.041120000000000004,
+   "input_tokens": 7566,
+   "output_tokens": 1086,
+   "text": "[{\"rule\":\"PLL007\",\"line\":95},{\"rule\":\"PLL007\",\"line\":104},{\"rule\":\"PLL007\",\"line\":110},{\"rule\":\"PLL001\",\"line\":166},{\"rule\":\"PLL002\",\"line\":173},{\"rule\":\"PLL004\",\"line\":190},{\"rule\":\"PLL001\",\"line\":223},{\"rule\":\"PLL006\",\"line\":230},{\"rule\":\"PLL006\",\"line\":248}]"
+  },
+  "injected/ut_file_mapper_017.pkb": {
+   "cost_usd": 0.040778,
+   "input_tokens": 7563,
+   "output_tokens": 1053,
+   "text": "[{\"rule\":\"PLL007\",\"line\":95},{\"rule\":\"PLL007\",\"line\":104},{\"rule\":\"PLL007\",\"line\":110},{\"rule\":\"PLL003\",\"line\":162},{\"rule\":\"PLL004\",\"line\":173},{\"rule\":\"PLL002\",\"line\":183},{\"rule\":\"PLL006\",\"line\":252}]"
+  },
+  "injected/ut_session_context_006.pkb": {
+   "cost_usd": 0.030646,
+   "input_tokens": 5780,
+   "output_tokens": 753,
+   "text": "```json\n[{\"rule\":\"PLL005\",\"line\":54},{\"rule\":\"PLL006\",\"line\":61},{\"rule\":\"PLL004\",\"line\":71},{\"rule\":\"PLL006\",\"line\":125},{\"rule\":\"PLL001\",\"line\":143},{\"rule\":\"PLL002\",\"line\":152}]\n```"
+  },
+  "injected/ut_session_context_016.pkb": {
+   "cost_usd": 0.032934,
+   "input_tokens": 6097,
+   "output_tokens": 855,
+   "text": "[{\"rule\":\"PLL003\",\"line\":79},{\"rule\":\"PLL005\",\"line\":87},{\"rule\":\"PLL002\",\"line\":99},{\"rule\":\"PLL002\",\"line\":122},{\"rule\":\"PLL005\",\"line\":131},{\"rule\":\"PLL001\",\"line\":153}]"
+  },
+  "injected/ut_suite_tag_filter_008.pkb": {
+   "cost_usd": 0.056917999999999996,
+   "input_tokens": 10548,
+   "output_tokens": 1473,
+   "text": "```json\n[{\"rule\":\"PLL002\",\"line\":263},{\"rule\":\"PLL003\",\"line\":325},{\"rule\":\"PLL004\",\"line\":351},{\"rule\":\"PLL005\",\"line\":396},{\"rule\":\"PLL005\",\"line\":405},{\"rule\":\"PLL007\",\"line\":76},{\"rule\":\"PLL007\",\"line\":76},{\"rule\":\"PLL007\",\"line\":78},{\"rule\":\"PLL007\",\"line\":80},{\"rule\":\"PLL007\",\"line\":312},{\"rule\":\"PLL007\",\"line\":313},{\"rule\":\"PLL007\",\"line\":314}]\n```"
+  },
+  "injected/ut_teamcity_reporter_helper_020.pkb": {
+   "cost_usd": 0.048152,
+   "input_tokens": 7699,
+   "output_tokens": 1736,
+   "text": "[{\"rule\":\"PLL007\",\"line\":55},{\"rule\":\"PLL007\",\"line\":56},{\"rule\":\"PLL007\",\"line\":62},{\"rule\":\"PLL007\",\"line\":63},{\"rule\":\"PLL007\",\"line\":70},{\"rule\":\"PLL007\",\"line\":77},{\"rule\":\"PLL007\",\"line\":84},{\"rule\":\"PLL007\",\"line\":86},{\"rule\":\"PLL007\",\"line\":93},{\"rule\":\"PLL007\",\"line\":97},{\"rule\":\"PLL007\",\"line\":103},{\"rule\":\"PLL007\",\"line\":106},{\"rule\":\"PLL007\",\"line\":119},{\"rule\":\"PLL007\",\"line\":121},{\"rule\":\"PLL002\",\"line\":129},{\"rule\":\"PLL004\",\"line\":172},{\"rule\":\"PLL001\",\"line\":185},{\"rule\":\"PLL003\",\"line\":250}]"
+  },
+  "injected/ut_trigger_check_002.pkb": {
+   "cost_usd": 0.030840000000000003,
+   "input_tokens": 5821,
+   "output_tokens": 756,
+   "text": "[{\"rule\":\"PLL002\",\"line\":25},{\"rule\":\"PLL002\",\"line\":41},{\"rule\":\"PLL004\",\"line\":68},{\"rule\":\"PLL005\",\"line\":100},{\"rule\":\"PLL001\",\"line\":115},{\"rule\":\"PLL005\",\"line\":131},{\"rule\":\"PLL003\",\"line\":141}]"
+  },
+  "injected/ut_trigger_check_022.pkb": {
+   "cost_usd": 0.030336,
+   "input_tokens": 5805,
+   "output_tokens": 712,
+   "text": "[{\"rule\":\"PLL002\",\"line\":25},{\"rule\":\"PLL002\",\"line\":58},{\"rule\":\"PLL002\",\"line\":77},{\"rule\":\"PLL003\",\"line\":105},{\"rule\":\"PLL003\",\"line\":159}]"
+  },
+  "standalone/bench_s0001.pkb": {
+   "cost_usd": 0.020418,
+   "input_tokens": 4143,
+   "output_tokens": 385,
+   "text": "[{\"rule\": \"PLL003\", \"line\": 19}, {\"rule\": \"PLL004\", \"line\": 67}]"
+  },
+  "standalone/bench_s0004.pkb": {
+   "cost_usd": 0.019666000000000003,
+   "input_tokens": 4140,
+   "output_tokens": 311,
+   "text": "[{\"rule\":\"PLL005\",\"line\":15},{\"rule\":\"PLL004\",\"line\":30},{\"rule\":\"PLL001\",\"line\":50}]"
+  },
+  "standalone/bench_s0007.pkb": {
+   "cost_usd": 0.020448,
+   "input_tokens": 4003,
+   "output_tokens": 444,
+   "text": "[{\"rule\":\"PLL005\",\"line\":14},{\"rule\":\"PLL004\",\"line\":24},{\"rule\":\"PLL007\",\"line\":37},{\"rule\":\"PLL007\",\"line\":38},{\"rule\":\"PLL007\",\"line\":42},{\"rule\":\"PLL006\",\"line\":49}]"
+  },
+  "standalone/bench_s0008.pkb": {
+   "cost_usd": 0.02077,
+   "input_tokens": 4056,
+   "output_tokens": 455,
+   "text": "[{\"rule\":\"PLL003\",\"line\":51},{\"rule\":\"PLL006\",\"line\":59}]"
+  },
+  "standalone/bench_s0009.pkb": {
+   "cost_usd": 0.019166,
+   "input_tokens": 4005,
+   "output_tokens": 315,
+   "text": "[{\"rule\":\"PLL002\",\"line\":22},{\"rule\":\"PLL006\",\"line\":42}]"
+  },
+  "standalone/bench_s0010.pkb": {
+   "cost_usd": 0.021099999999999997,
+   "input_tokens": 4136,
+   "output_tokens": 456,
+   "text": "[{\"rule\":\"PLL007\",\"line\":22},{\"rule\":\"PLL007\",\"line\":23},{\"rule\":\"PLL007\",\"line\":25},{\"rule\":\"PLL005\",\"line\":40},{\"rule\":\"PLL001\",\"line\":57}]"
+  },
+  "standalone/bench_s0016.pkb": {
+   "cost_usd": 0.0217,
+   "input_tokens": 4361,
+   "output_tokens": 426,
+   "text": "[{\"rule\":\"PLL004\",\"line\":12},{\"rule\":\"PLL006\",\"line\":24},{\"rule\":\"PLL005\",\"line\":57}]"
+  },
+  "standalone/bench_s0032.pkb": {
+   "cost_usd": 0.0031330000000000004,
+   "input_tokens": 4292,
+   "output_tokens": 270,
+   "text": "[{\"rule\":\"PLL006\",\"line\":50},{\"rule\":\"PLL006\",\"line\":59}]"
+  },
+  "standalone/bench_s0035.pkb": {
+   "cost_usd": 0.02153,
+   "input_tokens": 4296,
+   "output_tokens": 435,
+   "text": "[{\"rule\":\"PLL003\",\"line\":13},{\"rule\":\"PLL001\",\"line\":53}]"
+  },
+  "standalone/bench_s0044.pkb": {
+   "cost_usd": 0.02132,
+   "input_tokens": 4231,
+   "output_tokens": 440,
+   "text": "[{\"rule\":\"PLL004\",\"line\":11},{\"rule\":\"PLL002\",\"line\":36},{\"rule\":\"PLL005\",\"line\":47}]"
+  },
+  "standalone/bench_s0045.pkb": {
+   "cost_usd": 0.021682,
+   "input_tokens": 4249,
+   "output_tokens": 469,
+   "text": "[{\"rule\":\"PLL002\",\"line\":14},{\"rule\":\"PLL007\",\"line\":45},{\"rule\":\"PLL007\",\"line\":46},{\"rule\":\"PLL007\",\"line\":47},{\"rule\":\"PLL001\",\"line\":67}]"
+  },
+  "standalone/bench_s0046.pkb": {
+   "cost_usd": 0.021862,
+   "input_tokens": 4384,
+   "output_tokens": 433,
+   "text": "[{\"rule\": \"PLL006\", \"line\": 45}]"
+  },
+  "standalone/bench_s0049.pkb": {
+   "cost_usd": 0.02251,
+   "input_tokens": 4511,
+   "output_tokens": 447,
+   "text": "[{\"rule\":\"PLL001\",\"line\":17},{\"rule\":\"PLL002\",\"line\":55},{\"rule\":\"PLL004\",\"line\":70},{\"rule\":\"PLL005\",\"line\":85}]"
+  },
+  "standalone/bench_s0052.pkb": {
+   "cost_usd": 0.02131,
+   "input_tokens": 4216,
+   "output_tokens": 445,
+   "text": "[{\"rule\":\"PLL004\",\"line\":11},{\"rule\":\"PLL005\",\"line\":52},{\"rule\":\"PLL005\",\"line\":65}]"
+  },
+  "standalone/bench_s0060.pkb": {
+   "cost_usd": 0.003457,
+   "input_tokens": 4232,
+   "output_tokens": 303,
+   "text": "[{\"rule\":\"PLL005\",\"line\":11},{\"rule\":\"PLL001\",\"line\":26},{\"rule\":\"PLL004\",\"line\":69}]"
+  },
+  "standalone/bench_s0062.pkb": {
+   "cost_usd": 0.0207,
+   "input_tokens": 4111,
+   "output_tokens": 426,
+   "text": "[{\"rule\":\"PLL001\",\"line\":17},{\"rule\":\"PLL005\",\"line\":26},{\"rule\":\"PLL006\",\"line\":35}]"
+  },
+  "standalone/bench_s0063.pkb": {
+   "cost_usd": 0.020578,
+   "input_tokens": 4153,
+   "output_tokens": 397,
+   "text": "[{\"rule\":\"PLL006\",\"line\":26},{\"rule\":\"PLL003\",\"line\":39},{\"rule\":\"PLL007\",\"line\":61},{\"rule\":\"PLL007\",\"line\":62},{\"rule\":\"PLL007\",\"line\":63}]"
+  },
+  "standalone/bench_s0064.pkb": {
+   "cost_usd": 0.020791999999999998,
+   "input_tokens": 4124,
+   "output_tokens": 430,
+   "text": "[{\"rule\":\"PLL005\",\"line\":26},{\"rule\":\"PLL006\",\"line\":35},{\"rule\":\"PLL007\",\"line\":65},{\"rule\":\"PLL007\",\"line\":68},{\"rule\":\"PLL007\",\"line\":70}]"
+  },
+  "standalone/bench_s0066.pkb": {
+   "cost_usd": 0.02068,
+   "input_tokens": 4191,
+   "output_tokens": 392,
+   "text": "[{\"rule\":\"PLL003\",\"line\":16},{\"rule\":\"PLL004\",\"line\":27},{\"rule\":\"PLL001\",\"line\":70}]"
+  },
+  "standalone/bench_s0068.pkb": {
+   "cost_usd": 0.020989999999999998,
+   "input_tokens": 4216,
+   "output_tokens": 413,
+   "text": "[{\"rule\":\"PLL007\",\"line\":32},{\"rule\":\"PLL007\",\"line\":34},{\"rule\":\"PLL007\",\"line\":36},{\"rule\":\"PLL006\",\"line\":46},{\"rule\":\"PLL002\",\"line\":61},{\"rule\":\"PLL004\",\"line\":75}]"
+  }
+ }
+}

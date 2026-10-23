@@ -1,0 +1,58 @@
+{
+  "rule": "PLL007",
+  "split": "test",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "', ' (two characters, so not the excluded single-character case) joined three times on separate lines",
+      "code": "FUNCTION @@proc@@ (p_a IN VARCHAR2, p_b IN VARCHAR2, p_c IN VARCHAR2, p_d IN VARCHAR2) RETURN VARCHAR2 IS\n    l_out VARCHAR2(400);\nBEGIN\n    l_out := p_a;\n    l_out := l_out || ', ' || p_b; -- @expect\n    l_out := l_out || ', ' || p_c; -- @expect\n    l_out := l_out || ', ' || p_d; -- @expect\n    RETURN l_out;\nEND @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "string literal containing a keyword and a semicolon repeated in IF/ELSIF/ELSE inside a labelled block",
+      "code": "PROCEDURE @@proc@@ (p_kind IN VARCHAR2, p_out OUT VARCHAR2) IS\nBEGIN\n    <<pick>>\n    BEGIN\n        IF p_kind IS NULL THEN\n            p_out := 'end;@@str@@'; -- @expect\n        ELSIF LENGTH(p_kind) > 3 THEN\n            p_out := 'end;@@str@@'; -- @expect\n        ELSE\n            p_out := 'end;@@str@@'; -- @expect\n        END IF;\n    END pick;\nEND @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "same number in a loop range written without spaces (1..N), as a MOD argument and in an IF",
+      "code": "FUNCTION @@proc@@ (p_n IN NUMBER) RETURN NUMBER IS\n    l_acc NUMBER := 0;\nBEGIN\n    FOR i IN 1..@@num@@ LOOP -- @expect\n        l_acc := l_acc + MOD(i, @@num@@); -- @expect\n    END LOOP;\n    IF p_n > @@num@@ THEN -- @expect\n        l_acc := l_acc / 2;\n    END IF;\n    RETURN l_acc;\nEND @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "single alphanumeric literal 'Y' three times inside CASE expressions of one RETURN statement (not the excluded non-alphanumeric case)",
+      "code": "FUNCTION @@proc@@ (p_a IN VARCHAR2, p_b IN VARCHAR2, p_c IN VARCHAR2) RETURN NUMBER IS\n    l_total NUMBER;\nBEGIN\n    -- count how many flags are set\n    l_total := CASE WHEN p_a = 'Y' THEN 1 ELSE 0 END -- @expect\n             + CASE WHEN p_b = 'Y' THEN 1 ELSE 0 END -- @expect\n             + CASE WHEN p_c = 'Y' THEN 1 ELSE 0 END; -- @expect\n    @@proc2@@(l_total);\n    RETURN l_total;\nEND @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "number repeated after a nested procedure, inside a nested block's body and its exception handler, and once more after the block",
+      "code": "PROCEDURE @@proc@@ (p_val IN NUMBER, p_out OUT NUMBER) IS\n    PROCEDURE helper IS\n    BEGIN\n        NULL;\n    END helper;\nBEGIN\n    helper;\n    BEGIN\n        p_out := p_val * @@num@@; -- @expect\n    EXCEPTION\n        WHEN VALUE_ERROR THEN\n            p_out := @@num@@; -- @expect\n    END;\n    IF p_out > @@num@@ THEN -- @expect\n        p_out := 0;\n    END IF;\nEND @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "excluded literals repeated: single non-alphanumeric strings (';' '%' ' '), the empty string, 0 and 1",
+      "code": "FUNCTION @@proc@@ (p_a IN VARCHAR2, p_b IN VARCHAR2, p_c IN VARCHAR2) RETURN VARCHAR2 IS\n    l_out VARCHAR2(400);\nBEGIN\n    l_out := p_a || ';' || p_b || ';' || p_c || ';';\n    l_out := l_out || '%' || '%' || ' ' || ' ' || ' ';\n    IF l_out = '' OR l_out IS NULL THEN\n        l_out := '';\n    END IF;\n    RETURN SUBSTR(l_out, 1, 0 + 1) || '' || TO_CHAR(0 + 1);\nEND @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "each literal exactly twice in code; further occurrences only in a comment and inside different, longer string literals",
+      "code": "PROCEDURE @@proc@@ (p_n IN NUMBER, p_out OUT VARCHAR2) IS\nBEGIN\n    -- the limit @@num@@ is documented as @@num@@ elsewhere\n    IF p_n > @@num@@ THEN\n        p_out := '@@str@@';\n    ELSIF p_n < @@num@@ THEN\n        p_out := '@@str@@';\n    ELSE\n        p_out := 'prefix_@@str@@';\n    END IF;\n    /* @@num@@ */\n    p_out := p_out || ' (@@num@@)';\nEND @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "number NNNN twice and the string 'NNNN' twice: numeric and string literals are different literals",
+      "code": "PROCEDURE @@proc@@ (p_n IN NUMBER, p_s IN VARCHAR2, p_out OUT NUMBER) IS\nBEGIN\n    p_out := p_n + @@num@@;\n    IF p_s = '@@num@@' THEN\n        p_out := p_out * @@num@@;\n    ELSIF p_s = '@@num@@' THEN\n        p_out := 0;\n    END IF;\n    @@proc2@@(p_out);\nEND @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "a literal appears twice in executable code and twice more only inside comments (comments are not code)",
+      "code": "FUNCTION @@proc@@ (p_state IN VARCHAR2) RETURN NUMBER IS\nBEGIN\n    -- state '@@str@@' is the terminal one; '@@str@@' is never reused below\n    IF p_state = '@@str@@' THEN\n        RETURN 2;\n    ELSIF p_state = '@@str@@' THEN /* '@@str@@' again in a block comment */\n        RETURN 3;\n    END IF;\n    RETURN 0;\nEND @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "quoted identifier \"STATUS\" used three times is an identifier, not a string literal",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER, p_val IN NUMBER) IS\n    l_rows PLS_INTEGER;\nBEGIN\n    UPDATE @@tab@@ SET \"STATUS\" = p_val WHERE id = p_id;\n    l_rows := SQL%ROWCOUNT;\n    UPDATE @@tab2@@ SET \"STATUS\" = p_val WHERE id = p_id;\n    l_rows := l_rows + SQL%ROWCOUNT;\n    DELETE FROM @@tab@@ WHERE \"STATUS\" IS NULL;\n    @@proc2@@(l_rows);\nEND @@proc@@;"
+    }
+  ]
+}

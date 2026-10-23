@@ -1,0 +1,104 @@
+{
+ "added": [],
+ "after_counts": {
+  "PLL001": 6,
+  "PLL002": 27,
+  "PLL003": 1,
+  "PLL004": 9,
+  "PLL005": 0,
+  "PLL006": 13,
+  "PLL007": 413
+ },
+ "before_counts": {
+  "PLL001": 6,
+  "PLL002": 27,
+  "PLL003": 1,
+  "PLL004": 12,
+  "PLL005": 0,
+  "PLL006": 19,
+  "PLL007": 420
+ },
+ "files": 259,
+ "removed": [
+  [
+   "corpus/logger/logger.pkb",
+   "PLL006",
+   553
+  ],
+  [
+   "corpus/logger/logger.pkb",
+   "PLL006",
+   555
+  ],
+  [
+   "corpus/logger/logger.pkb",
+   "PLL006",
+   557
+  ],
+  [
+   "corpus/logger/logger.pkb",
+   "PLL006",
+   559
+  ],
+  [
+   "corpus/logger/logger.pkb",
+   "PLL006",
+   561
+  ],
+  [
+   "corpus/logger/logger.pkb",
+   "PLL006",
+   563
+  ],
+  [
+   "corpus/oracle-db-sample-schemas/coe_v3.sql",
+   "PLL004",
+   160
+  ],
+  [
+   "corpus/utplsql/core/ut_expectation_processor.pkb",
+   "PLL007",
+   129
+  ],
+  [
+   "corpus/utplsql/core/ut_expectation_processor.pkb",
+   "PLL007",
+   130
+  ],
+  [
+   "corpus/utplsql/core/ut_expectation_processor.pkb",
+   "PLL007",
+   145
+  ],
+  [
+   "corpus/utplsql/core/ut_suite_tag_filter.pkb",
+   "PLL004",
+   61
+  ],
+  [
+   "corpus/utplsql/core/ut_suite_tag_filter.pkb",
+   "PLL004",
+   67
+  ],
+  [
+   "corpus/utplsql/core/ut_utils.pkb",
+   "PLL007",
+   690
+  ],
+  [
+   "corpus/utplsql/core/ut_utils.pkb",
+   "PLL007",
+   716
+  ],
+  [
+   "corpus/utplsql/core/ut_utils.pkb",
+   "PLL007",
+   749
+  ],
+  [
+   "corpus/utplsql/core/ut_utils.pkb",
+   "PLL007",
+   817
+  ]
+ ]
+}

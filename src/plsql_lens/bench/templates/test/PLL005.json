@@ -1,0 +1,58 @@
+{
+  "rule": "PLL005",
+  "split": "test",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "single-row INSERT in a cursor FOR loop over an inline query",
+      "code": "PROCEDURE @@proc@@ (p_run_id IN NUMBER) IS\nBEGIN\n    FOR rec IN (SELECT id, @@col@@ FROM @@tab@@ WHERE run_id = p_run_id) LOOP\n        INSERT INTO @@tab2@@ (id, @@col@@, loaded_at) -- @expect\n        VALUES (rec.id, rec.@@col@@, SYSDATE);\n    END LOOP;\n    DBMS_OUTPUT.PUT_LINE('loaded run ' || p_run_id);\nEND @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "UPDATE in a loop over a parameterised cursor",
+      "code": "PROCEDURE @@proc@@ (p_dept IN NUMBER, p_pct IN NUMBER) IS\n    CURSOR c_rows (p_d NUMBER) IS\n        SELECT id, @@col@@\n          FROM @@tab@@\n         WHERE dept_id = p_d;\nBEGIN\n    FOR rec IN c_rows(p_dept) LOOP\n        UPDATE @@tab@@ -- @expect\n           SET @@col@@ = rec.@@col@@ * p_pct\n         WHERE id = rec.id;\n    END LOOP;\nEND @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "DELETE in a plain LOOP that contains an explicit FETCH (EXIT WHEN c%NOTFOUND)",
+      "code": "PROCEDURE @@proc@@ IS\n    CURSOR c_old IS\n        SELECT id FROM @@tab@@ WHERE @@col@@ IS NULL;\n    l_row c_old%ROWTYPE;\nBEGIN\n    OPEN c_old;\n    LOOP\n        FETCH c_old INTO l_row;\n        EXIT WHEN c_old%NOTFOUND;\n        DELETE FROM @@tab2@@ WHERE ref_id = l_row.id; -- @expect\n    END LOOP;\n    CLOSE c_old;\nEND @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "cursor outer loop with a numeric inner loop holding the DML",
+      "code": "PROCEDURE @@proc@@ IS\n    CURSOR c_src IS\n        SELECT id, qty FROM @@tab@@;\nBEGIN\n    FOR rec IN c_src LOOP\n        FOR n IN 1 .. rec.qty LOOP\n            INSERT INTO @@tab2@@ (src_id, seq) -- @expect\n            VALUES (rec.id, n);\n        END LOOP;\n    END LOOP;\nEND @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "UPDATE ... WHERE CURRENT OF inside a cursor loop",
+      "code": "PROCEDURE @@proc@@ (p_factor IN NUMBER) IS\n    CURSOR c_lock IS\n        SELECT @@col@@ FROM @@tab@@ WHERE @@col2@@ IS NOT NULL FOR UPDATE;\nBEGIN\n    FOR rec IN c_lock LOOP\n        UPDATE @@tab@@ SET @@col@@ = rec.@@col@@ * p_factor WHERE CURRENT OF c_lock; -- @expect\n    END LOOP;\nEND @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "DELETE under FORALL ... SAVE EXCEPTIONS",
+      "code": "PROCEDURE @@proc@@ (p_ids IN SYS.ODCINUMBERLIST) IS\n    l_errors PLS_INTEGER;\nBEGIN\n    FORALL i IN 1 .. p_ids.COUNT SAVE EXCEPTIONS\n        DELETE FROM @@tab@@\n         WHERE id = p_ids(i);\nEXCEPTION\n    WHEN OTHERS THEN\n        IF SQLCODE = -24381 THEN\n            l_errors := SQL%BULK_EXCEPTIONS.COUNT;\n            FOR j IN 1 .. l_errors LOOP\n                DBMS_OUTPUT.PUT_LINE(SQL%BULK_EXCEPTIONS(j).ERROR_CODE);\n            END LOOP;\n        ELSE\n            RAISE;\n        END IF;\nEND @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "DML in a numeric-range FOR loop",
+      "code": "PROCEDURE @@proc@@ (p_n IN PLS_INTEGER) IS\nBEGIN\n    FOR i IN 1 .. p_n LOOP\n        INSERT INTO @@tab@@ (seq, created_at)\n        VALUES (i, SYSDATE);\n    END LOOP;\n    DBMS_OUTPUT.PUT_LINE('inserted ' || p_n);\nEND @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "BULK COLLECT followed by a single FORALL",
+      "code": "PROCEDURE @@proc@@ (p_run_id IN NUMBER) IS\n    TYPE t_ids IS TABLE OF NUMBER INDEX BY PLS_INTEGER;\n    l_ids t_ids;\nBEGIN\n    SELECT id\n      BULK COLLECT INTO l_ids\n      FROM @@tab@@\n     WHERE run_id = p_run_id;\n\n    FORALL i IN 1 .. l_ids.COUNT\n        UPDATE @@tab2@@\n           SET @@col@@ = SYSDATE\n         WHERE id = l_ids(i);\nEND @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "cursor loops that only call a procedure or print, no DML",
+      "code": "PROCEDURE @@proc@@ (p_dept IN NUMBER) IS\n    CURSOR c_emp (p_d NUMBER) IS\n        SELECT id, @@col@@ FROM @@tab@@ WHERE dept_id = p_d;\nBEGIN\n    FOR rec IN c_emp(p_dept) LOOP\n        @@proc2@@(rec.id, rec.@@col@@);\n    END LOOP;\n    FOR rec IN (SELECT id FROM @@tab2@@) LOOP\n        DBMS_OUTPUT.PUT_LINE(rec.id);\n    END LOOP;\nEND @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "DML in a plain LOOP with no FETCH that exits after one iteration",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\n    l_attempts PLS_INTEGER := 0;\nBEGIN\n    LOOP\n        l_attempts := l_attempts + 1;\n        UPDATE @@tab@@\n           SET @@col@@ = l_attempts\n         WHERE id = p_id;\n        EXIT;\n    END LOOP;\nEND @@proc@@;"
+    }
+  ]
+}

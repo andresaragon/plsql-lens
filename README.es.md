@@ -42,5 +42,15 @@ Oracle Database Free se descarga de Docker Hub (`gvenzl/oracle-free`) bajo los t
 este repositorio no lo redistribuye. Las contraseñas salen solo del entorno (`.env.example`). Ver
 `docker/README.md` y `docs/reports/phase-3.md`.
 
+## Benchmark
+
+[docs/benchmarks/](docs/benchmarks/) mide las siete reglas de revisión sobre un split `test` congelado y con
+semilla (350 defectos sembrados y 350 negativos difíciles, 7 reglas, 105 archivos; la metodología, la definición
+de coincidencia y las amenazas a la validez están en su README). En `test`, las reglas ajustadas alcanzan
+precisión 1,000 [0,99–1,00] y exhaustividad 0,998 [0,99–1,00] (464 TP / 0 FP / 1 FN); las reglas antes del ajuste
+puntúan igual, y la línea base solo-LLM sobre una muestra de 40 archivos cuesta 1,13 USD. Lee la sección de amenazas
+a la validez antes de citar estos números: el benchmark comprueba las reglas contra su propio contrato, no contra
+defectos reales. `make bench` regenera todo sin llamar a un LLM.
+
 El PL/SQL de terceros usado como entrada de pruebas está en `corpus/` y listado en [NOTICE](NOTICE).
 Licencia: MIT.

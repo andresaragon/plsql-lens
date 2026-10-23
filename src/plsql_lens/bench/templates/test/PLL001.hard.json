@@ -1,0 +1,58 @@
+{
+  "rule": "PLL001",
+  "split": "test",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "block comment between WHEN and OTHERS; comments inside the handler mention RAISE and log_pkg.write(SQLERRM) but the only statement is NULL",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\n    l_total NUMBER;\nBEGIN\n    -- on failure we used to: RAISE; or call log_pkg.write(SQLERRM);\n    UPDATE @@tab@@\n       SET @@col@@ = SYSDATE\n     WHERE id = p_id;\n    l_total := SQL%ROWCOUNT;\n    @@proc2@@(l_total);\nEXCEPTION\n    /* handler for everything else */\n    WHEN /* any error */ OTHERS THEN -- @expect\n        -- RAISE;\n        /* log_pkg.write(SQLERRM); */\n        NULL;\nEND @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "innermost of three nested labelled blocks swallows with a counter; the outer handler is NO_DATA_FOUND (not OTHERS) and the outermost OTHERS re-raises",
+      "code": "PROCEDURE @@proc@@ (p_ids IN SYS.ODCINUMBERLIST) IS\n    l_skipped PLS_INTEGER := 0;\nBEGIN\n    <<outer>>\n    FOR i IN 1 .. p_ids.COUNT LOOP\n        BEGIN\n            BEGIN\n                @@proc2@@(p_ids(i));\n            EXCEPTION\n                WHEN OTHERS THEN -- @expect\n                    l_skipped := l_skipped + 1;\n            END;\n            @@proc2@@(p_ids(i) + 1);\n        EXCEPTION\n            WHEN NO_DATA_FOUND THEN\n                NULL;\n        END;\n    END LOOP outer;\n    DBMS_OUTPUT.PUT_LINE('skipped ' || l_skipped);\nEXCEPTION\n    WHEN OTHERS THEN\n        RAISE;\nEND @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "construct placed after a nested subprogram that has its own (logging) OTHERS handler; the main handler only returns a sentinel",
+      "code": "FUNCTION @@proc@@ (p_text IN VARCHAR2) RETURN NUMBER IS\n    l_result NUMBER;\n\n    PROCEDURE note (p_msg IN VARCHAR2) IS\n    BEGIN\n        DBMS_OUTPUT.PUT_LINE(p_msg);\n    EXCEPTION\n        WHEN OTHERS THEN\n            log_pkg.write(p_msg, SQLCODE);\n    END note;\nBEGIN\n    note('start');\n    l_result := TO_NUMBER(p_text);\n    note('converted');\n    RETURN l_result;\nEXCEPTION\n    WHEN OTHERS THEN -- @expect\n        RETURN -1;\nEND @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "q-quoted string holding a fake 'EXCEPTION WHEN OTHERS THEN NULL; END;' earlier; the real OTHERS handler only does ROLLBACK",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\n    l_template VARCHAR2(200);\nBEGIN\n    l_template := q'[BEGIN do_it; EXCEPTION WHEN OTHERS THEN NULL; END;]';\n    @@proc2@@(l_template, p_id);\n    UPDATE @@tab@@\n       SET @@col@@ = 'DONE'\n     WHERE id = p_id;\nEXCEPTION\n    WHEN NO_DATA_FOUND THEN\n        @@proc2@@('no data', p_id);\n    WHEN OTHERS THEN -- @expect\n        ROLLBACK;\nEND @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "odd whitespace and line break in WHEN OTHERS; the only call is app_log.write whose dotted parts (app_log, write) do not start with log/audit/trace",
+      "code": "FUNCTION @@proc@@ (p_val IN NUMBER) RETURN NUMBER IS\n    l_out NUMBER;\nBEGIN\n    BEGIN\n        l_out := 100 / p_val;\n    EXCEPTION\n        WHEN ZERO_DIVIDE THEN\n            app_log.write('division by zero');\n            RAISE;\n    END;\n    RETURN l_out;\nEXCEPTION\n    WHEN   OTHERS -- @expect\n        THEN\n        app_log.write('failed');\n        RETURN NULL;\nEND @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "'WHEN OTHERS THEN NULL;' only inside a q-quoted string, a line comment and a block comment; real handlers are specific exceptions",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\n    l_text VARCHAR2(200) := q'[EXCEPTION WHEN OTHERS THEN NULL;]';\nBEGIN\n    -- WHEN OTHERS THEN NULL;\n    /* EXCEPTION\n           WHEN OTHERS THEN NULL;  */\n    UPDATE @@tab@@\n       SET @@col@@ = l_text\n     WHERE id = p_id;\nEXCEPTION\n    WHEN DUP_VAL_ON_INDEX THEN\n        NULL;\n    WHEN NO_DATA_FOUND THEN\n        RETURN;\nEND @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "three nested labelled blocks incl. a DECLARE; inner OTHERS raises RAISE_APPLICATION_ERROR, outer OTHERS uses SQLERRM and re-raises",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\n    l_msg VARCHAR2(400);\nBEGIN\n    <<outer>>\n    BEGIN\n        <<middle>>\n        DECLARE\n            l_n NUMBER;\n        BEGIN\n            l_n := p_id * 2;\n            @@proc2@@(l_n);\n        EXCEPTION\n            WHEN OTHERS THEN\n                RAISE_APPLICATION_ERROR(-20100, 'inner failure', TRUE);\n        END middle;\n    EXCEPTION\n        WHEN OTHERS THEN\n            l_msg := SQLERRM;\n            @@proc2@@(l_msg);\n            RAISE;\n    END outer;\nEND @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "local function whose OTHERS handler re-raises; main OTHERS handler calls a mixed-case dotted logging call (LOG_ERROR) before returning",
+      "code": "FUNCTION @@proc@@ (p_code IN VARCHAR2) RETURN NUMBER IS\n    l_val NUMBER;\n\n    FUNCTION to_num (p_in IN VARCHAR2) RETURN NUMBER IS\n    BEGIN\n        RETURN TO_NUMBER(p_in);\n    EXCEPTION\n        WHEN OTHERS THEN\n            RAISE;\n    END to_num;\nBEGIN\n    l_val := to_num(p_code);\n    RETURN l_val;\nEXCEPTION\n    WHEN OTHERS THEN\n        Pkg_Util.LOG_ERROR('conversion failed', p_code);\n        RETURN NULL;\nEND @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "conditional compilation inside body and handler; the handler still ends with RAISE",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\nBEGIN\n    $IF $$debug_mode $THEN\n        DBMS_OUTPUT.PUT_LINE('start ' || p_id);\n    $END\n    @@proc2@@(p_id);\nEXCEPTION\n    WHEN OTHERS THEN\n        $IF $$debug_mode $THEN\n            DBMS_OUTPUT.PUT_LINE('failed');\n        $END\n        RAISE;\nEND @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "OTHERS handler uses DBMS_UTILITY.FORMAT_ERROR_STACK written across two lines inside a CASE expression",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER, p_status OUT VARCHAR2) IS\nBEGIN\n    @@proc2@@(p_id);\n    p_status := 'OK';\nEXCEPTION\n    WHEN NO_DATA_FOUND THEN\n        p_status := 'MISSING';\n    WHEN OTHERS THEN\n        p_status := CASE\n                        WHEN p_id > 0 THEN DBMS_UTILITY.\n                            FORMAT_ERROR_STACK\n                        ELSE 'unknown'\n                    END;\nEND @@proc@@;"
+    }
+  ]
+}

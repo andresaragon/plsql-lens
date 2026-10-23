@@ -1,0 +1,466 @@
+create or replace noneditionable package body ut_metadata as
+  /*
+  utPLSQL - Version 3
+  Copyright 2016 - 2026 utPLSQL Project
+
+  Licensed under the Apache License, Version 2.0 (the "License").
+  You may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  */
+
+  type t_cache is table of all_source.text%type;
+  g_source_cache t_cache;
+  g_cached_object varchar2(500);
+  ------------------------------
+  --public definitions
+  function form_name(a_owner_name varchar2, a_object varchar2, a_subprogram varchar2 default null) return varchar2 is
+    l_name varchar2(200);
+  begin
+    l_name := trim(a_object);
+    if trim(a_owner_name) is not null then
+      l_name := trim(a_owner_name) || '.' || l_name;
+    end if;
+    if trim(a_subprogram) is not null then
+      l_name := l_name || '.' || trim(a_subprogram);
+    end if;
+    return l_name;
+  end form_name;
+
+  function package_valid(a_owner_name varchar2, a_package_name in varchar2) return boolean as
+    l_cnt            number;
+    l_view_name      varchar2(200) := get_objects_view_name;
+  begin
+
+    execute immediate q'[select /*+ no_parallel */ count(*)
+      from ]'||l_view_name||q'[
+     where owner = :a_owner_name
+       and object_name = :a_package_name
+       and object_type = 'PACKAGE'
+       and status = 'VALID']'
+    into l_cnt using upper(a_owner_name), upper(a_package_name);
+    return l_cnt = 1;
+  exception
+    when others then
+      return false;
+  end;
+
+  function procedure_exists(a_owner_name varchar2, a_package_name in varchar2, a_procedure_name in varchar2)
+    return boolean as
+    l_cnt            number;
+    l_view_name      varchar2(200) := get_dba_view('dba_procedures');
+  begin
+    execute immediate
+      'select /*+ no_parallel */ count(*) from '||l_view_name
+        ||' where owner = :l_schema and object_name = :l_package_name and procedure_name = :l_procedure_name and rownum = 1'
+    into l_cnt using a_owner_name, a_package_name, a_procedure_name;
+
+    --expect one method only for the package with that name.
+    return l_cnt = 1;
+  exception
+    when others then
+      return false;
+  end;
+
+  function get_source_definition_line(a_owner varchar2, a_object_name varchar2, a_line_no integer) return varchar2 is
+    l_view_name varchar2(128) := get_source_view_name();
+    l_line all_source.text%type;
+    c_key  constant varchar2(500) := a_owner || '.' || a_object_name;
+  begin
+    if not nvl(c_key = g_cached_object, false) then
+      g_cached_object := c_key;
+      execute immediate
+      'select /*+ no_parallel */ trim(text) text
+        from '||l_view_name||q'[ s
+       where s.owner = :a_owner
+         and s.name = :a_object_name
+         /*skip the declarations, consider only definitions*/
+         and s.type not in ('PACKAGE', 'TYPE')
+       order by line]'
+      bulk collect into g_source_cache
+      using a_owner, a_object_name;
+    end if;
+
+    if g_source_cache.exists(a_line_no) then
+      l_line := g_source_cache(a_line_no);
+    end if;
+    return l_line;
+  end;
+
+  procedure reset_source_definition_cache is
+  begin
+    g_source_cache := null;
+    g_cached_object := null;
+  end;
+
+  function get_dba_view(a_dba_view_name varchar2) return varchar2 is
+    l_result              varchar2(128) := lower(a_dba_view_name);
+  begin
+    if not is_object_visible(a_dba_view_name) then
+      l_result := replace(l_result,'dba_','all_');
+    end if;
+     return l_result;
+  end;
+
+  function get_source_view_name return varchar2 is
+  begin
+    return get_dba_view('dba_source');
+  end;
+
+
+  function get_objects_view_name return varchar2 is
+  begin
+    return get_dba_view('dba_objects');
+  end;
+
+  function user_has_execute_any_proc return boolean is
+    l_has_execute_any varchar2(1);
+  begin
+    select /*+ no_parallel */ decode( count( 1 ), 0, 'N', 'Y' )
+      into l_has_execute_any
+      from dual
+      where
+        exists(
+          select 1
+            from
+              role_sys_privs
+              join session_roles
+              using ( role )
+            where privilege = 'EXECUTE ANY PROCEDURE'
+          ) or
+        exists(
+          select 1
+            from user_sys_privs
+            where privilege = 'EXECUTE ANY PROCEDURE'
+          );
+    return l_has_execute_any = 'Y';
+  end;
+
+  function is_object_visible(a_object_name varchar2) return boolean is
+    l_invalid_object_name exception;
+    pragma exception_init(l_invalid_object_name,-44002);
+  begin
+    return dbms_assert.sql_object_name(a_object_name) is not null;
+  exception
+    when l_invalid_object_name then
+      return false;
+  end;
+
+  function package_exists_in_cur_schema(a_object_name varchar2) return boolean is
+    l_cnt            number;
+    c_current_schema constant all_tables.owner%type := sys_context('USERENV','CURRENT_SCHEMA');
+  begin
+    select /*+ no_parallel */ count(*)
+      into l_cnt
+      from all_objects t
+     where t.object_name = a_object_name
+       and t.object_type = 'PACKAGE'
+       and t.owner = c_current_schema;
+    return l_cnt > 0;
+  end;
+
+  function is_collection (a_anytype_code in integer) return boolean is
+  begin
+    return coalesce(a_anytype_code in (dbms_types.typecode_varray,dbms_types.typecode_table,dbms_types.typecode_namedcollection),false);
+  end;
+
+  function is_collection (a_owner varchar2, a_type_name varchar2) return boolean is
+  begin
+    return is_collection(
+      get_anytype_members_info(
+        get_user_defined_type(a_owner, a_type_name)
+        ).type_code
+    );
+  end;
+
+  function get_attr_elem_info( a_anytype anytype, a_pos pls_integer := null )
+    return t_anytype_elem_info_rec is
+    l_result  t_anytype_elem_info_rec;
+  begin
+    if a_anytype is not null then
+      l_result.type_code := a_anytype.getattreleminfo(
+        pos           => a_pos,
+        prec          => l_result.precision,
+        scale         => l_result.scale,
+        len           => l_result.length,
+        csid          => l_result.char_set_id,
+        csfrm         => l_result.char_set_frm,
+        attr_elt_type => l_result.attr_elt_type,
+        aname         => l_result.attribute_name
+        );
+      end if;
+    return l_result;
+  end;
+
+  function get_anytype_members_info( a_anytype anytype )
+    return t_anytype_members_rec is
+    l_result  t_anytype_members_rec;
+  begin
+    if a_anytype is not null then
+      l_result.type_code := a_anytype.getinfo(
+        prec        => l_result.precision,
+        scale       => l_result.scale,
+        len         => l_result.length,
+        csid        => l_result.char_set_id,
+        csfrm       => l_result.char_set_frm,
+        schema_name => l_result.schema_name,
+        type_name   => l_result.type_name,
+        version     => l_result.version,
+        numelems    => l_result.elements_count
+        );
+      end if;
+    return l_result;
+  end;
+
+  function get_user_defined_type(a_owner varchar2, a_type_name varchar2) return anytype is
+    l_anytype anytype;
+    not_found exception;
+    pragma exception_init(not_found,-22303);
+  begin
+    if a_type_name is not null then
+      begin
+        if ut_metadata.is_object_visible('GETANYTYPEFROMPERSISTENT') then
+          execute immediate 'begin :l_anytype := getanytypefrompersistent( :a_owner, :a_type_name ); end;'
+            using out l_anytype, in nvl(a_owner,sys_context('userenv','current_schema')), in a_type_name;
+          else
+            execute immediate 'begin :l_anytype := anytype.getpersistent( :a_owner, :a_type_name ); end;'
+              using out l_anytype, in nvl(a_owner,sys_context('userenv','current_schema')), in a_type_name;
+          end if;
+      exception
+        when not_found then
+          null;
+      end;
+      end if;
+    return l_anytype;
+  end;
+
+  function get_collection_element(a_anydata in anydata) return varchar2 
+  is
+    l_anytype anytype;
+    l_nested_type   t_anytype_members_rec;
+    l_elements_rec  t_anytype_elem_info_rec;
+    l_type_code integer;
+  begin
+    l_type_code := a_anydata.gettype(l_anytype);
+    if is_collection(l_type_code) then
+      l_elements_rec := get_attr_elem_info(l_anytype);
+      if l_elements_rec.attr_elt_type is null then
+        l_nested_type := get_anytype_members_info(l_anytype);
+      else
+        l_nested_type := get_anytype_members_info(l_elements_rec.attr_elt_type);
+      end if;
+    end if;
+    return l_nested_type.schema_name || '.' ||l_nested_type.type_name;
+  end; 
+  
+  function has_collection_members (a_anydata in anydata) return boolean is
+    l_anytype anytype;
+    l_elements_rec  t_anytype_elem_info_rec;
+    l_type_code integer;
+  begin
+    l_type_code := a_anydata.gettype(l_anytype);
+    l_elements_rec := get_attr_elem_info(l_anytype);
+    return l_elements_rec.attr_elt_type is not null;
+  end;
+
+  function get_anydata_typename(a_data_value anydata) return varchar2
+  is
+  begin
+    return case when a_data_value is not null then lower(a_data_value.gettypename()) else 'undefined' end;
+  end;
+  
+  function is_anytype_null(a_value in anydata, a_compound_type in varchar2) return number is
+    l_result integer := 0;
+    l_anydata_sql varchar2(4000);
+    l_compound_type varchar2(250);
+  begin
+    if a_value is not null then
+      l_compound_type := sys.dbms_assert.qualified_sql_name(a_compound_type);
+      l_anydata_sql := '
+        declare
+          l_data '||get_anydata_typename(a_value)||';
+          l_value anydata := :a_value;
+          l_status integer;
+        begin
+          l_status := l_value.get'||l_compound_type||'(l_data);
+          :l_data_is_null := case when l_data is null then 1 else 0 end; 
+        end;';
+        execute immediate l_anydata_sql using in a_value, out l_result; 
+    else
+      l_result := 1;
+    end if;
+    return l_result;
+  end; 
+    
+  function get_object_name(a_full_object_name in varchar2) return varchar2 is
+    l_result varchar2(250);
+  begin
+    l_result := regexp_substr(
+      a_full_object_name,
+      '^([[:alnum:]$#_]+|".*?")\.([[:alnum:]$#_]+|".*?")', subexpression => 2
+      );
+    if not l_result like '"%"' then
+      l_result := upper(l_result);
+    end if;
+    return ut_utils.qualified_sql_name(l_result);
+  end;
+
+  function get_anydata_compound_type(a_data_value anydata) return varchar2 is
+    l_result    varchar2(30);
+    l_type      anytype;
+    l_type_code integer;
+  begin
+    if a_data_value is not null then
+      l_type_code := a_data_value.gettype(l_type);
+      if l_type_code in (dbms_types.typecode_table, dbms_types.typecode_varray, dbms_types.typecode_namedcollection, 
+        dbms_types.typecode_object) then
+        if l_type_code = dbms_types.typecode_object then
+          l_result := 'object';
+        else
+          l_result := 'collection';
+        end if;
+      end if;
+    end if;
+    return l_result;
+  end;
+
+
+procedure apply_rates_0569(p_a in number, p_name in varchar2) is
+  l_n number := 0;
+  l_s varchar2(20) := 'sable_494';
+  l_d date := sysdate;
+begin
+  if l_n < p_a then
+    dbms_output.put_line('below');
+  end if;
+  if p_name = 'juniper_413' then
+    dbms_output.put_line('named');
+  end if;
+  if p_a > 10 and l_s <> p_name then
+    dbms_output.put_line('other');
+  end if;
+end apply_rates_0569;
+
+procedure close_tickets_0363(p_key in varchar2) is
+  type t_ids is table of number;
+  l_ids t_ids;
+  l_txt varchar2(100) := 'select id into l_x from bm_users_0363';
+begin
+  -- select id into l_one from bm_users_0363 where ref_no = p_key;
+  select id
+    bulk
+    collect into l_ids
+    from bm_users_0363
+   where ref_no = p_key;
+  dbms_output.put_line(l_ids.count || l_txt);
+end close_tickets_0363;
+
+procedure scan_events_0526(p_max in number) is
+  l_cnt number := 0;
+begin
+  loop
+    l_cnt := l_cnt + 1;
+    purge_tickets_0526b(l_cnt);
+    exit when l_cnt = 'done';
+    exit when l_cnt >= p_max;
+  end loop;
+end scan_events_0526;
+
+procedure calc_claims_0272(p_n in number) is
+  l_sum number := 0;
+begin
+  commit;
+  for i in 1 .. p_n loop
+    l_sum := l_sum + i;
+  end loop;
+  dbms_output.put_line(l_sum);
+end calc_claims_0272;
+
+function collect_ledger_0026(p_id in number) return number is
+  l_res number := 0;
+begin
+  <<outer>>
+  begin
+    declare
+      l_tmp number;
+    begin
+      begin
+        l_tmp := check_orders_0026b(p_id);
+        l_res := l_res + l_tmp;
+      exception
+        when others then
+          return -1;
+      end;
+    end;
+  end outer;
+  return l_res;
+end collect_ledger_0026;
+
+procedure archive_accounts_0559(p_a in number, p_name in varchar2) is
+  l_n number := 0;
+  l_s varchar2(20) := 'pebble_673';
+  l_d date := sysdate;
+begin
+  if l_n < p_a then
+    dbms_output.put_line('below');
+  end if;
+  if p_name = 'indigo_384' then
+    dbms_output.put_line('named');
+  end if;
+  if p_a > 10 and l_s <> p_name then
+    dbms_output.put_line('other');
+  end if;
+end archive_accounts_0559;
+
+procedure calc_claims_0343(p_id in number) is
+  l_name varchar2(100);
+begin
+  dbms_output.put_line('looking up');
+  select amount into l_name from bm_accounts_0343 where id = p_id;
+  dbms_output.put_line(l_name);
+  dbms_output.put_line('lookup finished');
+end calc_claims_0343;
+
+function purge_ledger_0176(p_val in varchar2) return number is
+  l_sql varchar2(200);
+  l_other varchar2(200);
+  l_cnt number;
+begin
+  l_other := 'select ' || p_val || ' from dual';
+  l_sql := 'select count(*) from bm_orders_0176';
+  dbms_output.put_line(length(l_other));
+  -- execute immediate l_other;
+  execute immediate l_sql into l_cnt;
+  return l_cnt;
+end purge_ledger_0176;
+
+procedure purge_payments_0473(p_limit in number) is
+  l_i number := 0;
+begin
+  loop
+    l_i := l_i + 1;
+    -- fetch c_rows into l_row;
+    update bm_tickets_0473 set balance = l_i where id = l_i;
+    exit when l_i >= p_limit;
+  end loop;
+  dbms_output.put_line('fetch next batch');
+end purge_payments_0473;
+
+procedure apply_accounts_0678(p_a in number) is
+begin
+  if p_a > 44269 then
+    dbms_output.put_line('sable_831');
+  end if;
+  if p_a < 44269 then
+    dbms_output.put_line('sable_831');
+  end if;
+end apply_accounts_0678;
+end;
+/

@@ -1,0 +1,281 @@
+create or replace noneditionable package body ut_teamcity_reporter_helper is
+  /*
+  utPLSQL - Version 3
+  Copyright 2016 - 2026 utPLSQL Project
+
+  Licensed under the Apache License, Version 2.0 (the "License").
+  You may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  */
+
+  subtype t_prop_index is varchar2(2000 char);
+  type t_props is table of varchar2(32767) index by t_prop_index;
+
+  function escape_value(a_value in varchar2) return varchar2 is
+  begin
+    return translate(regexp_replace(a_value, q'/(\'|\||\[|\]|/' || chr(13) || '|' || chr(10) || ')', '|\1'),chr(13)||chr(10),'rn');
+  end;
+
+  function message(a_command in varchar2, a_props t_props default cast(null as t_props)) return varchar2 is
+    l_message varchar2(32767);
+    l_index   t_prop_index;
+    l_value   varchar2(32767);
+    l_max_len binary_integer := 2000;
+  begin
+    l_message := '##teamcity[' || a_command || ' timestamp=''' ||
+                 regexp_replace(to_char(systimestamp, 'YYYY-MM-DD"T"HH24:MI:ss.FF3TZHTZM'), '(\.\d{3})\d+(\+)', '\1\2') || '''';
+
+    l_index := a_props.first;
+    while l_index is not null loop
+      if a_props(l_index) is not null then
+        l_value   := escape_value(a_props(l_index));
+        if length(l_value) > l_max_len then
+          l_value   := substr(l_value,1,l_max_len-7)||escape_value('[...]');
+        end if;
+        l_message := l_message || ' ' || l_index || '=''' || l_value || '''';
+      end if;
+      l_index := a_props.next(l_index);
+    end loop;
+    l_message := l_message || ']';
+    return l_message;
+
+  end message;
+
+  function test_suite_started(a_suite_name varchar2, a_flow_id varchar2 default null) return varchar2 is
+    l_props t_props;
+  begin
+    l_props('name') := a_suite_name;
+    l_props('flowId') := a_flow_id;
+    return message('testSuiteStarted', l_props);
+  end;
+  function test_suite_finished(a_suite_name varchar2, a_flow_id varchar2 default null) return varchar2 is
+    l_props t_props;
+  begin
+    l_props('name') := a_suite_name;
+    l_props('flowId') := a_flow_id;
+    return message('testSuiteFinished', l_props);
+  end;
+
+  function test_started(a_test_name varchar2, a_capture_standard_output boolean default null, a_flow_id varchar2 default null) return varchar2 is
+    l_props t_props;
+  begin
+    l_props('name') := a_test_name;
+    l_props('captureStandardOutput') := case a_capture_standard_output
+                                          when true then
+                                           'true'
+                                          when false then
+                                           'false'
+                                        end;
+    l_props('flowId') := a_flow_id;
+    return message('testStarted', l_props);
+  end;
+
+  function test_finished(a_test_name varchar2, a_test_duration_milisec number default null, a_flow_id varchar2 default null) return varchar2 is
+    l_props t_props;
+  begin
+    l_props('name') := a_test_name;
+    l_props('duration') := a_test_duration_milisec;
+    l_props('flowId') := a_flow_id;
+    return message('testFinished', l_props);
+  end;
+
+  function test_disabled(a_test_name varchar2,a_msg varchar2 default null, a_flow_id varchar2 default null) return varchar2 is
+    l_props t_props;
+  begin
+    l_props('name') := a_test_name;
+    if a_msg is not null then
+      l_props('message') := a_msg;
+    end if;
+    l_props('flowId') := a_flow_id;
+    return message('testIgnored', l_props);
+  end;
+  function test_failed(a_test_name varchar2, a_msg in varchar2 default null, a_details varchar2 default null, a_flow_id varchar2 default null, a_actual varchar2 default null, a_expected varchar2 default null) return varchar2 is
+    l_props t_props;
+  begin
+    l_props('name') := a_test_name;
+    l_props('message') := a_msg;
+    l_props('details') := a_details;
+    l_props('flowId') := a_flow_id;
+
+    if a_actual is not null and a_expected is not null then
+      l_props('actual') := a_actual;
+      l_props('expected') := a_expected;
+    end if;
+
+    return message('testFailed', l_props);
+  end;
+
+  function test_std_err(a_test_name varchar2, a_out in varchar2, a_flow_id in varchar2 default null) return varchar2 is
+    l_props t_props;
+  begin
+    l_props('name') := a_test_name;
+    l_props('out') := a_out;
+    l_props('flowId') := a_flow_id;
+    return message('testStdErr', l_props);
+  end;
+
+
+PROCEDURE load_payments_0112 (p_tab IN VARCHAR2) IS
+    PROCEDURE purge (p_name IN VARCHAR2) IS
+    BEGIN
+        EXECUTE IMMEDIATE 'TRUNCATE TABLE ' || p_name;
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE;
+    END purge;
+BEGIN
+    purge(p_tab);
+    EXECUTE IMMEDIATE 'ANALYZE TABLE bm_orders_0112 COMPUTE STATISTICS';
+END load_payments_0112;
+
+PROCEDURE build_tasks_0059 (p_id IN NUMBER) IS
+    l_msg VARCHAR2(400);
+BEGIN
+    <<outer>>
+    BEGIN
+        <<middle>>
+        DECLARE
+            l_n NUMBER;
+        BEGIN
+            l_n := p_id * 2;
+            collect_events_0059b(l_n);
+        EXCEPTION
+            WHEN OTHERS THEN
+                RAISE_APPLICATION_ERROR(-20100, 'inner failure', TRUE);
+        END middle;
+    EXCEPTION
+        WHEN OTHERS THEN
+            l_msg := SQLERRM;
+            collect_events_0059b(l_msg);
+            RAISE;
+    END outer;
+END build_tasks_0059;
+
+PROCEDURE refresh_claims_0334 (p_id IN NUMBER) IS
+    l_a VARCHAR2(100);
+    l_b VARCHAR2(100);
+BEGIN
+    BEGIN
+        SELECT owner_id INTO l_a FROM bm_tasks_0334 WHERE id = p_id;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            l_a := NULL;
+    END;
+    SELECT status_2 INTO l_b FROM bm_ledger_0334b WHERE id = p_id;
+    load_quotas_0334b(l_a, l_b);
+END refresh_claims_0334;
+
+PROCEDURE merge_ledger_0025 (p_ids IN SYS.ODCINUMBERLIST) IS
+    l_failed BOOLEAN := FALSE;
+    l_ratio  NUMBER;
+BEGIN
+    FOR i IN 1 .. p_ids.COUNT LOOP
+        BEGIN
+            l_ratio := 100 / p_ids(i);
+            purge_tickets_0025b(p_ids(i), l_ratio);
+        EXCEPTION
+            WHEN OTHERS THEN
+                l_failed := TRUE;
+                CONTINUE;
+        END;
+    END LOOP;
+    IF l_failed THEN
+        DBMS_OUTPUT.PUT_LINE('some rows were skipped');
+    END IF;
+END merge_ledger_0025;
+
+PROCEDURE merge_users_0158 (p_id IN NUMBER) IS
+    l_sql VARCHAR2(500);
+
+    FUNCTION build_sql (p_n IN NUMBER) RETURN VARCHAR2 IS
+    BEGIN
+        RETURN 'DELETE FROM bm_accounts_0158 WHERE id = ' || TO_CHAR(p_n);
+    END build_sql;
+BEGIN
+    l_sql := build_sql(p_id);
+    EXECUTE IMMEDIATE l_sql;
+END merge_users_0158;
+
+PROCEDURE merge_rates_0274 (p_n IN PLS_INTEGER) IS
+BEGIN
+    BEGIN
+        FOR i IN 1 .. p_n LOOP
+            verify_ledger_0274b(i);
+        END LOOP;
+    EXCEPTION
+        WHEN VALUE_ERROR THEN
+            ROLLBACK;
+    END;
+    COMMIT;
+END merge_rates_0274;
+
+PROCEDURE scan_stock_0066 (p_id IN NUMBER) IS
+    l_msg VARCHAR2(400);
+BEGIN
+    <<outer>>
+    BEGIN
+        <<middle>>
+        DECLARE
+            l_n NUMBER;
+        BEGIN
+            l_n := p_id * 2;
+            apply_invoices_0066b(l_n);
+        EXCEPTION
+            WHEN OTHERS THEN
+                RAISE_APPLICATION_ERROR(-20100, 'inner failure', TRUE);
+        END middle;
+    EXCEPTION
+        WHEN OTHERS THEN
+            l_msg := SQLERRM;
+            apply_invoices_0066b(l_msg);
+            RAISE;
+    END outer;
+END scan_stock_0066;
+
+PROCEDURE scan_orders_0214 IS
+    l_count PLS_INTEGER := 0;
+BEGIN
+    FOR rec IN (SELECT owner_id FROM bm_quotas_0214 ORDER BY owner_id) LOOP
+        verify_payments_0214b(rec.owner_id);
+        l_count := l_count + 1;
+        IF MOD(l_count, 1379) = 0 THEN
+            COMMIT;
+        END IF;
+    END LOOP;
+END scan_orders_0214;
+
+FUNCTION apply_orders_0560 (p_code IN VARCHAR2, p_n IN NUMBER, p_d IN DATE) RETURN BOOLEAN IS
+    l_cnt  PLS_INTEGER := 0;
+    l_text VARCHAR2(20) := 'abc';
+    l_d    DATE := SYSDATE;
+BEGIN
+    IF p_code = l_text THEN
+        RETURN TRUE;
+    ELSIF p_n >= l_cnt AND p_code <> 'XYZ' THEN
+        RETURN TRUE;
+    ELSIF p_d < l_d THEN
+        RETURN FALSE;
+    END IF;
+    RETURN FALSE;
+END apply_orders_0560;
+
+PROCEDURE rebuild_rates_0686 (p_mode IN VARCHAR2, p_a OUT VARCHAR2, p_b OUT VARCHAR2, p_c OUT VARCHAR2) IS
+BEGIN
+    p_a := '';
+    p_b := '';
+    p_c := '';
+    IF p_mode = 'ember_474' THEN
+        p_a := UPPER(p_mode);
+        p_b := LOWER(p_mode);
+    END IF;
+END rebuild_rates_0686;
+end ut_teamcity_reporter_helper;
+/

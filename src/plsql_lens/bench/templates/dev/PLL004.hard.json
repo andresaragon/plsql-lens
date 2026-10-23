@@ -1,0 +1,58 @@
+{
+  "rule": "PLL004",
+  "split": "dev",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "first SELECT INTO is protected by its own nested block; the second one after that block is not covered",
+      "code": "procedure @@proc@@(p_id in number) is\n  l_a varchar2(50);\n  l_b varchar2(50);\nbegin\n  begin\n    select @@col@@ into l_a from @@tab@@ where id = p_id;\n  exception\n    when no_data_found then\n      l_a := null;\n  end;\n  select @@col2@@ into l_b -- @expect\n    from @@tab@@\n   where id = p_id;\n  dbms_output.put_line(l_a || l_b);\nend @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "SELECT INTO deep in loop/CASE/IF, block comments between keywords, handler covers only DUP_VAL_ON_INDEX",
+      "code": "procedure @@proc@@(p_ids in dbms_sql.number_table, p_kind in number) is\n  l_v varchar2(50);\nbegin\n  for i in 1 .. p_ids.count loop\n    case p_kind\n      when 3 then\n        if p_ids(i) > 0 then\n          select /* pick */ @@col@@ -- @expect\n            /* target */ into l_v\n            from @@tab@@\n           where id = p_ids(i);\n          dbms_output.put_line(l_v);\n        end if;\n      else\n        null;\n    end case;\n  end loop;\nexception\n  when dup_val_on_index then\n    null;\nend @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "aggregate select list WITH GROUP BY is not exempt; quoted-identifier table",
+      "code": "function @@proc@@(p_status in varchar2) return number is\n  l_sum number;\nbegin\n  select sum(qty) into l_sum -- @expect\n    from \"Order Line\" ol\n   where ol.status = p_status\n   group by ol.order_id;\n  return l_sum;\nend @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "'from dual' and 'count(*)' only appear inside a string literal and a comment; the query reads a real table",
+      "code": "function @@proc@@(p_id in number) return varchar2 is\n  l_v varchar2(100);\nbegin\n  -- not a DUAL query, and no aggregate: 'from dual' is only text\n  select 'count(*) from dual: ' || @@col@@ into l_v -- @expect\n    from @@tab@@\n   where id = p_id;\n  return l_v;\nend @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "SELECT INTO inside $IF branch of a function declared after an exempt local function (FROM DUAL); handler covers only VALUE_ERROR",
+      "code": "function @@proc@@(p_id in number) return number is\n  function helper(p_x in number) return number is\n    l_one number;\n  begin\n    select 7 into l_one from dual;\n    return p_x + l_one;\n  end helper;\n  l_val number;\nbegin\n  $IF $$use_view $THEN\n  select qty into l_val -- @expect\n    from \"Order Line\" where id = p_id;\n  $ELSE\n  l_val := p_id;\n  $END\n  return helper(l_val);\nexception\n  when value_error then\n    return 0;\nend @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "NO_DATA_FOUND handler in the outermost of three enclosing blocks (label, DECLARE block)",
+      "code": "function @@proc@@(p_id in number) return varchar2 is\n  l_v varchar2(100);\nbegin\n  <<outer>>\n  begin\n    declare\n      l_w varchar2(100);\n    begin\n      begin\n        select @@col@@ into l_w from @@tab@@ where id = p_id;\n        l_v := l_w;\n      end;\n    end;\n  exception\n    when no_data_found then\n      l_v := null;\n  end outer;\n  return l_v;\nend @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "BULK COLLECT INTO split over lines; 'select ... into' only in a comment and a string",
+      "code": "procedure @@proc@@(p_key in varchar2) is\n  type t_ids is table of number;\n  l_ids t_ids;\n  l_txt varchar2(100) := 'select id into l_x from @@tab@@';\nbegin\n  -- select id into l_one from @@tab@@ where @@col@@ = p_key;\n  select id\n    bulk\n    collect into l_ids\n    from @@tab@@\n   where @@col@@ = p_key;\n  dbms_output.put_line(l_ids.count || l_txt);\nend @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "aggregate-only select list in upper case; 'group by' appears only in a block comment",
+      "code": "function @@proc@@(p_status in varchar2) return number is\n  l_c number;\n  l_s number;\nbegin\n  SELECT COUNT(*), SUM(ol.qty)\n    INTO l_c, l_s\n    FROM \"Order Line\" ol\n   WHERE ol.status = p_status; /* not grouped: group by ol.order_id */\n  return l_c + nvl(l_s, 0);\nend @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "SELECT ... FROM DUAL with FROM and DUAL on separate lines, tab indented, upper case",
+      "code": "function @@proc@@ return number is\n  l_next number;\nbegin\n\tSELECT @@tab@@_seq.NEXTVAL\n\t  INTO l_next\n\t  FROM\n\t  DUAL;\n  return l_next;\nend @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "handler for NO_DATA_FOUND OR TOO_MANY_ROWS in the block around a SELECT INTO inside a loop",
+      "code": "procedure @@proc@@(p_keys in dbms_sql.number_table) is\n  l_n varchar2(50);\nbegin\n  for i in 1 .. p_keys.count loop\n    begin\n      select @@col@@ into l_n from @@tab@@ where id = p_keys(i);\n      dbms_output.put_line(l_n);\n    exception\n      when no_data_found or too_many_rows then\n        continue;\n    end;\n  end loop;\nend @@proc@@;"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "rule": "PLL007",
+  "split": "dev",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "same number three times in different statement forms: IF with block comment, CASE expression inside a nested DECLARE block, IF after the labelled block",
+      "code": "function @@proc@@(p_qty in number, p_cap in number) return varchar2 is\n  l_label varchar2(20) := 'normal';\nbegin\n  <<outer>>\n  begin\n    if p_qty > /* hard limit */ @@num@@ then -- @expect\n      return 'over';\n    end if;\n    declare\n      l_k number := p_cap;\n    begin\n      l_label := case when l_k >= @@num@@ then 'cap' else l_label end; -- @expect\n    end;\n  end outer;\n  if p_qty - p_cap = @@num@@ then -- @expect\n    l_label := 'exact';\n  end if;\n  return l_label;\nend @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "same string with a doubled quote three times in CASE branches",
+      "code": "procedure @@proc@@(p_kind in number, p_msg out varchar2) is\nbegin\n  case p_kind\n    when 3 then\n      p_msg := 'it''s @@str@@'; -- @expect\n    when 4 then\n      p_msg := 'it''s @@str@@'; -- @expect\n    when 5 then\n      p_msg := 'it''s @@str@@' || p_kind; -- @expect\n    else\n      p_msg := null;\n  end case;\nend @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "same number as FOR upper bound, EXIT WHEN operand and CASE WHEN selector, tab indented",
+      "code": "procedure @@proc@@(p_n in number) is\n  l_acc number := 0;\nbegin\n\tfor i in 1 .. @@num@@ loop -- @expect\n\t\tl_acc := l_acc + i;\n\t\texit when l_acc > @@num@@; -- @expect\n\tend loop;\n  l_acc := case p_n when @@num@@ then 1 else 0 end; -- @expect\n  dbms_output.put_line(l_acc);\nend @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "same string in an UPDATE, a CASE expression and a call argument; a fourth mention only in a comment is not an occurrence",
+      "code": "procedure @@proc@@(p_id in number) is\n  l_n number := 0;\nbegin\n  -- the status '@@str@@' is set by the batch job\n  update @@tab@@ set @@col@@ = '@@str@@' where id = p_id; -- @expect\n  dbms_output.put_line(case when sql%rowcount > 0 then '@@str@@' else 'none' end); -- @expect\n  @@proc2@@(p_id, '@@str@@'); -- @expect\n  l_n := sql%rowcount;\nend @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "a number and a string each repeated three times, interleaved, with a continuation line",
+      "code": "function @@proc@@(p_a in number, p_b in number, p_s in varchar2) return varchar2 is\n  l_r varchar2(100);\nbegin\n  l_r := p_s ||\n         '@@str@@'; -- @expect\n  if p_a > @@num@@ then -- @expect\n    l_r := l_r || '@@str@@'; -- @expect\n  elsif p_b > @@num@@ then -- @expect\n    l_r := nvl(l_r, '@@str@@'); -- @expect\n  elsif p_a + p_b < @@num@@ then -- @expect\n    l_r := null;\n  end if;\n  return l_r;\nend @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "number occurs only twice in code; its other mentions are in a comment, a trailing comment and a longer string literal",
+      "code": "function @@proc@@(p_qty in number) return varchar2 is\nbegin\n  /* threshold @@num@@ comes from the contract */\n  if p_qty > @@num@@ then -- above @@num@@\n    return 'limit @@num@@ exceeded';\n  end if;\n  if p_qty = @@num@@ then\n    return 'at limit';\n  end if;\n  return 'ok';\nend @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "three literals that differ only by case, plus 0, 1, empty string and single punctuation strings repeated",
+      "code": "procedure @@proc@@(p_a in varchar2, p_out out varchar2) is\nbegin\n  p_out := '';\n  if p_a = 'Open_@@str@@' then\n    p_out := p_out || ',' || 'o';\n  elsif p_a = 'open_@@str@@' then\n    p_out := p_out || ',' || 'p';\n  elsif p_a = 'OPEN_@@str@@' then\n    p_out := p_out || ',' || 'q';\n  end if;\n  if length(p_out) > 1 then\n    p_out := substr(p_out, 1, length(p_out) - 1);\n  end if;\nend @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "two numbers and two strings, each used exactly twice (num/str and num2/str2 are different literals)",
+      "code": "function @@proc@@(p_a in number, p_s in varchar2) return number is\n  l_n number := 0;\nbegin\n  if p_a > @@num@@ then l_n := l_n + 1; end if;\n  if p_a < @@num2@@ then l_n := l_n + 1; end if;\n  if p_s = '@@str@@' then l_n := l_n + 1; end if;\n  if p_s = '@@str2@@' then l_n := l_n + 1; end if;\n  if p_a = @@num@@ then l_n := l_n + 1; end if;\n  if p_a <> @@num2@@ then l_n := l_n + 1; end if;\n  if p_s <> '@@str@@' then l_n := l_n + 1; end if;\n  if p_s <> '@@str2@@' then l_n := l_n + 1; end if;\n  return l_n;\nend @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "the number appears three or more times only in comments (line and block, mid-statement); once in code",
+      "code": "function @@proc@@(p_a in number) return number is\n  l_r number := 0;\nbegin\n  l_r := p_a * /* @@num@@ */ 1;\n  -- legacy: p_a > @@num@@ or p_a < @@num@@\n  /* @@num@@ appears in the spec only */\n  if l_r > @@num@@ then\n    l_r := 0;\n  end if;\n  return l_r;\nend @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "a number repeated three times only inside quoted identifiers, which are not literals",
+      "code": "procedure @@proc@@ is\n  l_seen number := 0;\nbegin\n  for r in (select ol.\"Qty @@num@@\" as a, ol.\"Amt @@num@@\" as b, ol.\"Tax @@num@@\" as c\n              from \"Order Line\" ol) loop\n    l_seen := l_seen + r.a + r.b + r.c;\n  end loop;\n  dbms_output.put_line(l_seen);\nend @@proc@@;"
+    }
+  ]
+}

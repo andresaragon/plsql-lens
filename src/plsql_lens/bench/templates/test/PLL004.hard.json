@@ -1,0 +1,58 @@
+{
+  "rule": "PLL004",
+  "split": "test",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "SELECT with a comment after the keyword, a CASE expression in the select list, and 'FROM DUAL' only inside a comment and a string; the real source is a table",
+      "code": "FUNCTION @@proc@@ (p_id IN NUMBER) RETURN VARCHAR2 IS\n    l_label VARCHAR2(30);\nBEGIN\n    SELECT /* FROM DUAL */ CASE WHEN @@col@@ > 0 THEN 'POS' ELSE 'FROM DUAL' END -- @expect\n      INTO l_label\n      FROM @@tab@@\n     WHERE id = p_id;\n    RETURN l_label;\nEND @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "SELECT INTO after a sibling block with its own NO_DATA_FOUND handler, inside a loop; the only enclosing handler is ZERO_DIVIDE",
+      "code": "PROCEDURE @@proc@@ (p_ids IN SYS.ODCINUMBERLIST) IS\n    l_val NUMBER;\nBEGIN\n    FOR i IN 1 .. p_ids.COUNT LOOP\n        BEGIN\n            @@proc2@@(p_ids(i));\n        EXCEPTION\n            WHEN NO_DATA_FOUND THEN\n                NULL;\n        END;\n        SELECT @@col@@ -- @expect\n          INTO l_val\n          FROM @@tab@@\n         WHERE id = p_ids(i);\n        l_val := 100 / l_val;\n    END LOOP;\nEXCEPTION\n    WHEN ZERO_DIVIDE THEN\n        l_val := 0;\nEND @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "SELECT INTO inside a local function with no handler anywhere",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\n    l_name VARCHAR2(100);\n\n    FUNCTION lookup (p_key IN NUMBER) RETURN VARCHAR2 IS\n        l_v VARCHAR2(100);\n    BEGIN\n        SELECT @@col@@ INTO l_v FROM @@tab@@ WHERE id = p_key; -- @expect\n        RETURN l_v;\n    END lookup;\nBEGIN\n    l_name := lookup(p_id);\n    @@proc2@@(l_name);\nEND @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "aggregate-only select list BUT with GROUP BY, so not exempt",
+      "code": "FUNCTION @@proc@@ (p_dept IN NUMBER) RETURN NUMBER IS\n    l_max NUMBER;\nBEGIN\n    -- one group at most, yet the rule still applies\n    SELECT MAX(@@col@@) -- @expect\n      INTO l_max\n      FROM @@tab@@\n     WHERE dept_id = p_dept\n     GROUP BY dept_id;\n    RETURN l_max;\nEND @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "SELECT INTO in the ELSE branch of an $IF/$ELSE conditional-compilation directive, no handler",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\n    l_v NUMBER;\nBEGIN\n    $IF $$use_cache $THEN\n        l_v := 0;\n    $ELSE\n        SELECT @@col@@ INTO l_v FROM @@tab@@ WHERE id = p_id; -- @expect\n    $END\n    @@proc2@@(l_v);\nEND @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "SELECT INTO in the innermost of three labelled nested blocks; the outermost block handles TOO_MANY_ROWS",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\n    l_v NUMBER;\nBEGIN\n    <<lvl1>>\n    BEGIN\n        <<lvl2>>\n        BEGIN\n            <<lvl3>>\n            DECLARE\n                l_w NUMBER;\n            BEGIN\n                SELECT @@col@@ INTO l_w FROM @@tab@@ WHERE id = p_id;\n                l_v := l_w;\n            END lvl3;\n        EXCEPTION\n            WHEN ZERO_DIVIDE THEN\n                l_v := 0;\n        END lvl2;\n    EXCEPTION\n        WHEN TOO_MANY_ROWS THEN\n            l_v := -1;\n    END lvl1;\n    @@proc2@@(l_v);\nEND @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "aggregate-only list with comments between items, and FROM DUAL split across two lines",
+      "code": "PROCEDURE @@proc@@ (p_dept IN NUMBER, p_cnt OUT NUMBER, p_hi OUT NUMBER) IS\n    l_now DATE;\nBEGIN\n    SELECT COUNT(*), -- how many\n           MAX(@@col@@) -- highest\n      INTO p_cnt, p_hi\n      FROM @@tab@@\n     WHERE dept_id = p_dept;\n    SELECT SYSDATE\n      INTO l_now\n      FROM\n           DUAL;\n    @@proc2@@(l_now);\nEND @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "SELECT ... INTO only in a q-quoted string and a comment; real statements are BULK COLLECT INTO and INSERT INTO ... SELECT (no SELECT INTO)",
+      "code": "PROCEDURE @@proc@@ (p_run IN NUMBER) IS\n    l_text VARCHAR2(200) := q'[SELECT x INTO y FROM z WHERE 1 = 0]';\n    l_ids  SYS.ODCINUMBERLIST;\nBEGIN\n    -- SELECT id INTO l_x FROM @@tab@@;\n    SELECT id\n      BULK COLLECT INTO l_ids\n      FROM @@tab@@\n     WHERE run_id = p_run;\n    INSERT INTO @@tab2@@ (id)\n    SELECT id FROM @@tab@@ WHERE run_id = p_run;\n    @@proc2@@(l_text);\nEND @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "handler lists ZERO_DIVIDE OR TOO_MANY_ROWS over two lines in the enclosing block; SELECT sits after a nested procedure",
+      "code": "FUNCTION @@proc@@ (p_code IN VARCHAR2) RETURN NUMBER IS\n    l_id NUMBER;\n\n    PROCEDURE noop IS\n    BEGIN\n        NULL;\n    END noop;\nBEGIN\n    noop;\n    SELECT id\n      INTO l_id\n      FROM @@tab@@\n     WHERE code = p_code;\n    RETURN l_id;\nEXCEPTION\n    WHEN ZERO_DIVIDE\n      OR TOO_MANY_ROWS THEN\n        RETURN NULL;\nEND @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "SELECT INTO inside a CASE branch inside a loop; the enclosing block has WHEN OTHERS THEN RAISE (OTHERS counts as handling for this rule)",
+      "code": "FUNCTION @@proc@@ (p_ids IN SYS.ODCINUMBERLIST) RETURN NUMBER IS\n    l_sum NUMBER := 0;\n    l_v   NUMBER;\nBEGIN\n    FOR i IN 1 .. p_ids.COUNT LOOP\n        CASE\n            WHEN p_ids(i) > 0 THEN\n                SELECT @@col@@ INTO l_v FROM @@tab@@ WHERE id = p_ids(i);\n                l_sum := l_sum + l_v;\n            ELSE\n                NULL;\n        END CASE;\n    END LOOP;\n    RETURN l_sum;\nEXCEPTION\n    WHEN OTHERS THEN\n        RAISE;\nEND @@proc@@;"
+    }
+  ]
+}

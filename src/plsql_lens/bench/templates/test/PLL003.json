@@ -1,0 +1,58 @@
+{
+  "rule": "PLL003",
+  "split": "test",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "COMMIT every Nth iteration inside a cursor FOR loop",
+      "code": "PROCEDURE @@proc@@ IS\n    l_count PLS_INTEGER := 0;\nBEGIN\n    FOR rec IN (SELECT @@col@@ FROM @@tab@@ ORDER BY @@col@@) LOOP\n        @@proc2@@(rec.@@col@@);\n        l_count := l_count + 1;\n        IF MOD(l_count, @@num@@) = 0 THEN\n            COMMIT; -- @expect\n        END IF;\n    END LOOP;\nEND @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "COMMIT in the inner loop of two nested loops",
+      "code": "PROCEDURE @@proc@@ (p_outer IN PLS_INTEGER, p_inner IN PLS_INTEGER) IS\nBEGIN\n    FOR i IN 1 .. p_outer LOOP\n        @@proc2@@(i, 0);\n        FOR j IN 1 .. p_inner LOOP\n            @@proc2@@(i, j);\n            COMMIT; -- @expect\n        END LOOP;\n    END LOOP;\n    DBMS_OUTPUT.PUT_LINE('batches done');\nEND @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "ROLLBACK in the exception handler of a block inside a loop",
+      "code": "PROCEDURE @@proc@@ (p_ids IN SYS.ODCINUMBERLIST) IS\n    l_failed PLS_INTEGER := 0;\nBEGIN\n    FOR i IN 1 .. p_ids.COUNT LOOP\n        BEGIN\n            @@proc2@@(p_ids(i));\n        EXCEPTION\n            WHEN VALUE_ERROR THEN\n                ROLLBACK; -- @expect\n                l_failed := l_failed + 1;\n        END;\n    END LOOP;\n    DBMS_OUTPUT.PUT_LINE('failed: ' || l_failed);\nEND @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "COMMIT WORK inside a WHILE loop",
+      "code": "PROCEDURE @@proc@@ (p_limit IN NUMBER) IS\n    l_n NUMBER := 0;\nBEGIN\n    WHILE l_n < p_limit LOOP\n        @@proc2@@(l_n);\n        l_n := l_n + 1;\n        COMMIT WORK; -- @expect\n    END LOOP;\nEND @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "COMMIT inside a CASE branch inside a loop",
+      "code": "PROCEDURE @@proc@@ (p_n IN PLS_INTEGER) IS\nBEGIN\n    FOR i IN 1 .. p_n LOOP\n        CASE MOD(i, 3)\n            WHEN 0 THEN\n                COMMIT; -- @expect\n            WHEN 1 THEN\n                @@proc2@@(i);\n            ELSE\n                NULL;\n        END CASE;\n    END LOOP;\nEND @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "COMMIT right after the END LOOP of nested loops",
+      "code": "PROCEDURE @@proc@@ (p_groups IN PLS_INTEGER) IS\nBEGIN\n    FOR g IN 1 .. p_groups LOOP\n        FOR rec IN (SELECT @@col@@ FROM @@tab@@ WHERE grp = g) LOOP\n            @@proc2@@(rec.@@col@@);\n        END LOOP;\n    END LOOP;\n    COMMIT;\nEND @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "ROLLBACK TO SAVEPOINT inside a loop handler",
+      "code": "PROCEDURE @@proc@@ (p_ids IN SYS.ODCINUMBERLIST) IS\nBEGIN\n    FOR i IN 1 .. p_ids.COUNT LOOP\n        SAVEPOINT sp_row;\n        BEGIN\n            @@proc2@@(p_ids(i));\n        EXCEPTION\n            WHEN DUP_VAL_ON_INDEX THEN\n                ROLLBACK TO SAVEPOINT sp_row;\n        END;\n    END LOOP;\n    COMMIT;\nEND @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "the string 'COMMIT' passed to a log call inside a loop",
+      "code": "PROCEDURE @@proc@@ (p_steps IN PLS_INTEGER) IS\n    l_total PLS_INTEGER := 0;\nBEGIN\n    FOR i IN 1 .. p_steps LOOP\n        log_pkg.info('COMMIT');\n        @@proc2@@(i);\n        l_total := l_total + i;\n    END LOOP;\n    log_pkg.info('total=' || l_total);\nEND @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "loop without transaction control, COMMIT is the next statement after it",
+      "code": "PROCEDURE @@proc@@ (p_ids IN SYS.ODCINUMBERLIST) IS\n    l_i PLS_INTEGER := 1;\nBEGIN\n    WHILE l_i <= p_ids.COUNT LOOP\n        @@proc2@@(p_ids(l_i));\n        l_i := l_i + 1;\n    END LOOP;\n    COMMIT;\n    @@proc2@@(0);\nEND @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "COMMIT/ROLLBACK in IF branches, no enclosing loop",
+      "code": "PROCEDURE @@proc@@ (p_mode IN VARCHAR2) IS\n    l_done BOOLEAN;\nBEGIN\n    FOR i IN 1 .. 3 LOOP\n        @@proc2@@(p_mode, l_done);\n    END LOOP;\n    IF l_done THEN\n        COMMIT;\n    ELSE\n        ROLLBACK;\n    END IF;\nEND @@proc@@;"
+    }
+  ]
+}

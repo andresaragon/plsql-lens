@@ -1,0 +1,58 @@
+{
+  "rule": "PLL005",
+  "split": "dev",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "DML inside a CASE branch inside an IF inside a FOR-query loop; the query holds a q-quoted literal with 'loop; end loop;'",
+      "code": "procedure @@proc@@(p_mode in number) is\n  l_seen number := 0;\nbegin\n  for r in (select id, @@col@@ from @@tab@@\n             where @@col2@@ <> q'[loop; end loop;]') loop\n    l_seen := l_seen + 1;\n    if r.id > 0 then\n      case p_mode\n        when 3 then\n          delete from @@tab2@@ -- @expect\n           where parent_id = r.id;\n        else\n          null;\n      end case;\n    end if;\n  end loop;\n  dbms_output.put_line(l_seen);\nend @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "INSERT in a nested block (with its own handler) inside a plain LOOP that contains a FETCH",
+      "code": "procedure @@proc@@ is\n  cursor c_src is select id, @@col@@ from @@tab@@;\n  l_id number;\n  l_val varchar2(50);\nbegin\n  open c_src;\n  loop\n    fetch c_src into l_id, l_val;\n    exit when c_src%notfound;\n    begin\n      insert into @@tab2@@ (id, @@col@@) -- @expect\n      values (l_id, l_val);\n    exception\n      when dup_val_on_index then\n        null;\n    end;\n  end loop;\n  close c_src;\nend @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "UPDATE after an inner numeric-range loop has closed, still inside the cursor loop (END LOOP matching)",
+      "code": "procedure @@proc@@ is\n  l_sum number;\nbegin\n  for r in (select id, @@col@@ as qty from @@tab@@) loop\n    l_sum := 0;\n    for i in 1 .. 4 loop\n      l_sum := l_sum + i;\n    end loop;\n    update @@tab2@@ -- @expect\n       set @@col2@@ = l_sum\n     where id = r.id;\n  end loop;\nend @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "UPDATE in a loop over a named cursor declared in a labelled DECLARE block; block comment after UPDATE",
+      "code": "procedure @@proc@@(p_days in number) is\nbegin\n  <<main>>\n  declare\n    cursor c_stale is\n      select id from @@tab@@ where age_days > p_days;\n  begin\n    for r in c_stale loop\n      update /* mark */ @@tab@@ -- @expect\n         set @@col@@ = null\n       where id = r.id;\n    end loop;\n  end main;\nend @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "INSERT ... SELECT in the ELSE branch of a cursor loop that follows a local function (whose own numeric loop with DML is not flagged)",
+      "code": "procedure @@proc@@(p_n in number) is\n  function twice(p_x in number) return number is\n  begin\n    for i in 1 .. p_x loop\n      update @@tab2@@ set @@col@@ = i where id = i;\n    end loop;\n    return p_x * 2;\n  end twice;\nbegin\n  for r in (select id from @@tab@@) loop\n    if twice(r.id) > p_n then\n      null;\n    else\n      insert into @@tab2@@ (id) -- @expect\n      select r.id from dual;\n    end if;\n  end loop;\nend @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "DML follows the cursor loop's END LOOP; loop body has CASE and IF; a comment contains a fake loop with UPDATE",
+      "code": "procedure @@proc@@ is\n  l_tot number := 0;\nbegin\n  -- for r in (select 1 from dual) loop update @@tab@@ set x = 1; end loop;\n  for r in (select id, @@col@@ as qty from @@tab@@) loop\n    case\n      when r.qty > 3 then l_tot := l_tot + r.qty;\n      else l_tot := l_tot - 1;\n    end case;\n    if l_tot < 0 then\n      l_tot := 0;\n    end if;\n  end loop;\n  update @@tab2@@ set @@col2@@ = l_tot;\nend @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "cursor loop whose body only mentions DML in a string literal and in a q-quoted string",
+      "code": "procedure @@proc@@ is\n  l_msg varchar2(200);\nbegin\n  for r in (select id, @@col@@ from @@tab@@) loop\n    l_msg := 'would update @@tab2@@ for ' || r.id;\n    dbms_output.put_line(l_msg);\n    dbms_output.put_line(q'[delete from @@tab2@@; insert into x;]');\n  end loop;\nend @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "numeric-range FOR loop with REVERSE and collection bounds (not a cursor loop) containing DML",
+      "code": "procedure @@proc@@(p_ids in dbms_sql.number_table) is\n  l_cnt number := 0;\nbegin\n  for i in reverse p_ids.first .. p_ids.last loop\n    delete from @@tab@@ where id = p_ids(i);\n    l_cnt := l_cnt + sql%rowcount;\n  end loop;\n  dbms_output.put_line(l_cnt);\nend @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "plain LOOP without any FETCH (the word fetch is only in a comment and a string) containing DML",
+      "code": "procedure @@proc@@(p_limit in number) is\n  l_i number := 0;\nbegin\n  loop\n    l_i := l_i + 1;\n    -- fetch c_rows into l_row;\n    update @@tab@@ set @@col@@ = l_i where id = l_i;\n    exit when l_i >= p_limit;\n  end loop;\n  dbms_output.put_line('fetch next batch');\nend @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "DML only in the handler of the block around the cursor loop and after it, never inside the loop",
+      "code": "procedure @@proc@@ is\n  l_n number := 0;\nbegin\n  begin\n    for r in (select id from @@tab@@) loop\n      l_n := l_n + r.id;\n    end loop;\n  exception\n    when dup_val_on_index then\n      update @@tab2@@ set @@col@@ = l_n;\n  end;\n  insert into @@tab2@@ (id) values (l_n);\nend @@proc@@;"
+    }
+  ]
+}

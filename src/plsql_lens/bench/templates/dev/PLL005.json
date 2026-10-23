@@ -1,0 +1,58 @@
+{
+  "rule": "PLL005",
+  "split": "dev",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "UPDATE inside FOR r IN (SELECT ...) loop",
+      "code": "procedure @@proc@@ is\n  l_n number := 0;\nbegin\n  for r in (select id, @@col@@ from @@tab@@) loop\n    update @@tab2@@ -- @expect\n       set @@col@@ = r.@@col@@\n     where id = r.id;\n    l_n := l_n + 1;\n  end loop;\n  dbms_output.put_line(l_n);\nend @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "INSERT inside FOR r IN cursor_name loop",
+      "code": "procedure @@proc@@ is\n  cursor c_open is\n    select id from @@tab@@ where @@col@@ is null;\nbegin\n  for r in c_open loop\n    insert into @@tab2@@ (id) values (r.id); -- @expect\n  end loop;\n  dbms_output.put_line('copied');\nend @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "plain LOOP with FETCH, UPDATE inside an IF",
+      "code": "procedure @@proc@@(p_min in number) is\n  cursor c_rows is select id, @@col@@ from @@tab@@;\n  l_id number;\n  l_val number;\nbegin\n  open c_rows;\n  loop\n    fetch c_rows into l_id, l_val;\n    exit when c_rows%notfound;\n    if l_val > p_min then\n      update @@tab2@@ set @@col2@@ = l_val where id = l_id; -- @expect\n    end if;\n  end loop;\n  close c_rows;\nend @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "DELETE inside a parameterised cursor FOR loop",
+      "code": "procedure @@proc@@(p_days in number) is\n  cursor c_old(p_age number) is\n    select id from @@tab@@ where age_days > p_age;\nbegin\n  for r in c_old(p_days) loop\n    delete from @@tab2@@ -- @expect\n     where parent_id = r.id;\n  end loop;\nend @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "MERGE inside a cursor FOR loop",
+      "code": "procedure @@proc@@ is\nbegin\n  for r in (select id, @@col@@ from @@tab@@) loop\n    merge into @@tab2@@ t -- @expect\n    using (select r.id as id from dual) s\n       on (t.id = s.id)\n     when matched then\n       update set t.@@col@@ = r.@@col@@\n     when not matched then\n       insert (id) values (s.id);\n  end loop;\nend @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "DML under FORALL",
+      "code": "procedure @@proc@@ is\n  type t_ids is table of number index by pls_integer;\n  l_ids t_ids;\nbegin\n  select id bulk collect into l_ids from @@tab@@ where @@col@@ is null;\n  forall i in 1 .. l_ids.count\n    delete from @@tab2@@ where parent_id = l_ids(i);\nend @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "numeric-range loop with DML",
+      "code": "procedure @@proc@@(p_n in number) is\nbegin\n  for i in 1 .. p_n loop\n    update @@tab@@\n       set @@col@@ = i\n     where id = i;\n  end loop;\nend @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "DML after the cursor loop has ended",
+      "code": "procedure @@proc@@ is\n  l_total number := 0;\nbegin\n  for r in (select id, @@col@@ from @@tab@@) loop\n    l_total := l_total + r.@@col@@;\n  end loop;\n  update @@tab2@@ set @@col2@@ = l_total;\nend @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "cursor loop that only reads and prints",
+      "code": "procedure @@proc@@ is\n  cursor c_all is select id, @@col@@ from @@tab@@;\n  l_seen number := 0;\nbegin\n  for r in c_all loop\n    dbms_output.put_line(r.id || ' ' || r.@@col@@);\n    l_seen := l_seen + 1;\n  end loop;\n  dbms_output.put_line('rows seen: ' || l_seen);\nend @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "a single set-based UPDATE",
+      "code": "procedure @@proc@@ is\nbegin\n  update @@tab@@ t\n     set t.@@col@@ = (select max(s.@@col@@)\n                        from @@tab2@@ s\n                       where s.id = t.id)\n   where t.@@col2@@ is null;\n  dbms_output.put_line(sql%rowcount);\nend @@proc@@;"
+    }
+  ]
+}

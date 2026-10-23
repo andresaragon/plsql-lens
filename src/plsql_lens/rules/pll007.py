@@ -12,6 +12,14 @@ from .util import iter_bodies
 MIN_REPEATS = 3
 
 
+def _string_value(text: str) -> str:
+    """Value of a string literal: ``''`` is one quote, ``q'[...]'`` has no delimiters."""
+    body = text[text.index("'") + 1 : -1]
+    if text[:1] in "qQ" or text[:2].lower() == "nq":
+        return body[1:-1]
+    return body.replace("''", "'")
+
+
 def _is_candidate(t: Token) -> bool:
     if t.kind == NUMBER:
         try:
@@ -19,7 +27,7 @@ def _is_candidate(t: Token) -> bool:
         except ValueError:
             return False
     if t.kind == STRING:
-        inner = t.text[t.text.index("'") + 1 : -1] if "'" in t.text else ""
+        inner = _string_value(t.text)
         return not (inner == "" or (len(inner) == 1 and not inner.isalnum()))
     return False
 

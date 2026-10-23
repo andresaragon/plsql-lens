@@ -1,0 +1,58 @@
+{
+  "rule": "PLL003",
+  "split": "dev",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "COMMIT in a numeric FOR loop",
+      "code": "procedure @@proc@@(p_n in number) is\n  l_done number := 0;\nbegin\n  for i in 1 .. p_n loop\n    insert into @@tab@@ (id, @@col@@)\n    values (i, sysdate);\n    commit; -- @expect\n    l_done := l_done + 1;\n  end loop;\nend @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "ROLLBACK in a WHILE loop under an IF",
+      "code": "procedure @@proc@@(p_max in number) is\n  l_i number := 0;\n  l_failed boolean;\nbegin\n  while l_i < p_max loop\n    l_failed := @@proc2@@(l_i);\n    if l_failed then\n      rollback; -- @expect\n    end if;\n    l_i := l_i + 1;\n  end loop;\nend @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "COMMIT in a plain LOOP nested in an IF, with EXIT WHEN",
+      "code": "procedure @@proc@@(p_flush in boolean, p_max in number) is\n  l_n number := 0;\nbegin\n  if p_flush then\n    loop\n      l_n := l_n + 1;\n      @@proc2@@(l_n);\n      commit; -- @expect\n      exit when l_n >= p_max;\n    end loop;\n  end if;\nend @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "COMMIT inside a specific exception handler located in a loop",
+      "code": "procedure @@proc@@(p_n in number) is\n  l_skipped number := 0;\nbegin\n  for i in 1 .. p_n loop\n    begin\n      @@proc2@@(i);\n    exception\n      when dup_val_on_index then\n        commit; -- @expect\n        l_skipped := l_skipped + 1;\n    end;\n  end loop;\n  dbms_output.put_line(l_skipped);\nend @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "COMMIT inside a nested BEGIN..END block within a loop",
+      "code": "procedure @@proc@@(p_n in number) is\nbegin\n  for i in 1 .. p_n loop\n    declare\n      l_val number;\n    begin\n      l_val := i * 2;\n      @@proc2@@(l_val);\n      commit; -- @expect\n    end;\n  end loop;\nend @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "COMMIT after the loop",
+      "code": "procedure @@proc@@(p_n in number) is\nbegin\n  for i in 1 .. p_n loop\n    insert into @@tab@@ (id, @@col@@)\n    values (i, sysdate);\n  end loop;\n  commit;\nend @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "ROLLBACK TO SAVEPOINT inside a loop",
+      "code": "procedure @@proc@@(p_n in number) is\nbegin\n  for i in 1 .. p_n loop\n    savepoint sp_row;\n    begin\n      @@proc2@@(i);\n    exception\n      when dup_val_on_index then\n        rollback to savepoint sp_row;\n    end;\n  end loop;\nend @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "COMMIT before the loop, none inside",
+      "code": "procedure @@proc@@(p_n in number) is\n  l_sum number := 0;\nbegin\n  commit;\n  for i in 1 .. p_n loop\n    l_sum := l_sum + i;\n  end loop;\n  dbms_output.put_line(l_sum);\nend @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "the word commit appears only in a string literal and in a comment inside the loop",
+      "code": "procedure @@proc@@(p_n in number) is\n  l_msg varchar2(100);\nbegin\n  for i in 1 .. p_n loop\n    -- we do not commit here, the caller commits at the end\n    l_msg := 'COMMIT postponed for ' || i;\n    dbms_output.put_line(l_msg);\n  end loop;\nend @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "loop without transaction control followed by ROLLBACK",
+      "code": "procedure @@proc@@(p_limit in number) is\n  l_i number := 0;\nbegin\n  while l_i < p_limit loop\n    @@proc2@@(l_i);\n    l_i := l_i + 1;\n  end loop;\n  rollback;\nend @@proc@@;"
+    }
+  ]
+}

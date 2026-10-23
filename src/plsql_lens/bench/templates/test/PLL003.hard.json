@@ -1,0 +1,58 @@
+{
+  "rule": "PLL003",
+  "split": "test",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "COMMIT after the inner labelled loop's END LOOP but still inside the outer labelled loop; a final COMMIT after the outer loop is fine",
+      "code": "PROCEDURE @@proc@@ (p_groups IN PLS_INTEGER) IS\nBEGIN\n    <<outer>>\n    FOR g IN 1 .. p_groups LOOP\n        <<inner>>\n        FOR rec IN (SELECT @@col@@ FROM @@tab@@ WHERE grp = g) LOOP\n            @@proc2@@(rec.@@col@@);\n        END LOOP inner;\n        COMMIT; -- @expect\n    END LOOP outer;\n    COMMIT;\nEND @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "comments and a string containing 'END LOOP;' precede a COMMIT written after a block comment on the same line",
+      "code": "PROCEDURE @@proc@@ (p_n IN PLS_INTEGER) IS\n    l_i PLS_INTEGER := 0;\nBEGIN\n    WHILE l_i < p_n LOOP\n        l_i := l_i + 1;\n        @@proc2@@(l_i);\n        -- END LOOP; (the loop continues below)\n        DBMS_OUTPUT.PUT_LINE('END LOOP;');\n        /* END LOOP; */ COMMIT; -- @expect\n    END LOOP;\nEND @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "ROLLBACK in an ELSIF branch after a nested IF ... END IF, with CONTINUE WHEN and EXIT WHEN in the loop",
+      "code": "PROCEDURE @@proc@@ (p_ids IN SYS.ODCINUMBERLIST) IS\n    l_ok BOOLEAN;\nBEGIN\n    FOR i IN 1 .. p_ids.COUNT LOOP\n        CONTINUE WHEN p_ids(i) IS NULL;\n        @@proc2@@(p_ids(i), l_ok);\n        IF l_ok THEN\n            IF p_ids(i) > @@num@@ THEN\n                NULL;\n            END IF;\n        ELSIF p_ids(i) < 0 THEN\n            ROLLBACK; -- @expect\n        END IF;\n        EXIT WHEN i >= @@num2@@;\n    END LOOP;\nEND @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "COMMIT WORK split over two lines (marker on the COMMIT line), in a loop that follows a nested subprogram whose own COMMIT is outside any loop",
+      "code": "PROCEDURE @@proc@@ (p_n IN PLS_INTEGER) IS\n    PROCEDURE flush_all IS\n    BEGIN\n        COMMIT;\n    END flush_all;\nBEGIN\n    FOR i IN 1 .. p_n LOOP\n        @@proc2@@(i);\n        COMMIT -- @expect\n            WORK;\n    END LOOP;\n    flush_all;\nEND @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "COMMIT in an $IF branch inside the loop (both conditional-compilation branches are analysed)",
+      "code": "PROCEDURE @@proc@@ (p_n IN PLS_INTEGER) IS\nBEGIN\n    FOR i IN 1 .. p_n LOOP\n        @@proc2@@(i);\n        $IF $$autocommit $THEN\n            COMMIT; -- @expect\n        $ELSE\n            NULL;\n        $END\n    END LOOP;\n    @@proc2@@(0);\nEND @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "COMMIT/ROLLBACK only in comments, a string and an identifier containing 'commit' inside the loop; a quoted identifier \"COMMIT\" is a column; the real COMMIT follows the loop",
+      "code": "PROCEDURE @@proc@@ (p_n IN PLS_INTEGER) IS\n    l_commit_count PLS_INTEGER := 0;\n    l_msg VARCHAR2(100);\nBEGIN\n    FOR i IN 1 .. p_n LOOP\n        -- do not COMMIT; here, the caller does\n        l_msg := 'commit; rollback;';\n        l_commit_count := l_commit_count + 1;\n        /* ROLLBACK; */\n        UPDATE @@tab@@ SET \"COMMIT\" = l_commit_count WHERE id = i;\n        @@proc2@@(i, l_msg);\n    END LOOP;\n    COMMIT;\nEND @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "COMMIT inside an IF before the loop and after it; the loop body holds a CASE statement and EXIT WHEN",
+      "code": "PROCEDURE @@proc@@ (p_mode IN VARCHAR2, p_n IN PLS_INTEGER) IS\nBEGIN\n    IF p_mode = 'PRE' THEN\n        COMMIT;\n    END IF;\n    FOR i IN 1 .. p_n LOOP\n        CASE\n            WHEN MOD(i, 2) = 0 THEN\n                @@proc2@@(i);\n            ELSE\n                NULL;\n        END CASE;\n        EXIT WHEN i > @@num@@;\n    END LOOP;\n    COMMIT;\nEND @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "loop only calls a nested procedure that commits; the COMMIT is not lexically inside any loop",
+      "code": "PROCEDURE @@proc@@ (p_n IN PLS_INTEGER) IS\n    PROCEDURE save_it IS\n    BEGIN\n        COMMIT;\n    END save_it;\nBEGIN\n    FOR i IN 1 .. p_n LOOP\n        @@proc2@@(i);\n        save_it;\n    END LOOP;\nEND @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "ROLLBACK TO written over two lines and with/without SAVEPOINT keyword inside a loop handler; plain ROLLBACK only after the loop",
+      "code": "PROCEDURE @@proc@@ (p_ids IN SYS.ODCINUMBERLIST) IS\nBEGIN\n    FOR i IN 1 .. p_ids.COUNT LOOP\n        SAVEPOINT sp_item;\n        BEGIN\n            @@proc2@@(p_ids(i));\n        EXCEPTION\n            WHEN VALUE_ERROR THEN\n                ROLLBACK\n                    TO sp_item;\n            WHEN DUP_VAL_ON_INDEX THEN\n                ROLLBACK TO SAVEPOINT sp_item;\n        END;\n    END LOOP;\n    ROLLBACK;\nEND @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "ROLLBACK in the handler of a block that ENCLOSES the loop (handler is outside the loop); COMMIT follows that block",
+      "code": "PROCEDURE @@proc@@ (p_n IN PLS_INTEGER) IS\nBEGIN\n    BEGIN\n        FOR i IN 1 .. p_n LOOP\n            @@proc2@@(i);\n        END LOOP;\n    EXCEPTION\n        WHEN VALUE_ERROR THEN\n            ROLLBACK;\n    END;\n    COMMIT;\nEND @@proc@@;"
+    }
+  ]
+}

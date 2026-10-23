@@ -1,0 +1,58 @@
+{
+  "rule": "PLL006",
+  "split": "dev",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "TO_DATE with one argument whose own call contains commas (nested SUBSTR)",
+      "code": "function @@proc@@(p_text in varchar2) return date is\n  l_d date;\nbegin\n  -- a mask would be: to_date(p_text, 'yyyy-mm-dd')\n  l_d := to_date(substr(p_text, 1, 10)); -- @expect\n  dbms_output.put_line('parsed');\n  return l_d;\nend @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "TO_TIMESTAMP with one argument inside a CASE expression; a string literal mentions a two-argument form",
+      "code": "function @@proc@@(p_text in varchar2, p_flag in boolean) return timestamp is\n  l_ts timestamp;\nbegin\n  dbms_output.put_line('parsing');\n  l_ts := case when p_flag then to_timestamp(p_text) else systimestamp end; -- @expect\n  dbms_output.put_line('mask example: to_timestamp(x, fmt)');\n  return l_ts;\nend @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "number local compared with a string literal in EXIT WHEN inside a loop",
+      "code": "procedure @@proc@@(p_max in number) is\n  l_cnt number := 0;\nbegin\n  loop\n    l_cnt := l_cnt + 1;\n    @@proc2@@(l_cnt);\n    exit when l_cnt = 'done'; -- @expect\n    exit when l_cnt >= p_max;\n  end loop;\nend @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "DATE parameter compared with a numeric literal inside a CASE expression",
+      "code": "function @@proc@@(p_d in date) return varchar2 is\n  l_r varchar2(10);\nbegin\n  l_r := case\n           when p_d > @@num@@ then 'late' -- @expect\n           else 'ok'\n         end;\n  return l_r;\nend @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "VARCHAR2 local compared (<>) with a numeric literal in an ELSIF after a local function",
+      "code": "procedure @@proc@@(p_id in number) is\n  l_code varchar2(10) := 'a';\n  function known(p_x in number) return boolean is\n  begin\n    return p_x > 3;\n  end known;\nbegin\n  if known(p_id) then\n    null;\n  elsif l_code <> @@num@@ then -- @expect\n    @@proc2@@(p_id);\n  end if;\nend @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "TO_DATE with two arguments where the mask is a function call; the one-argument form is only in a string and a comment",
+      "code": "function @@proc@@(p_text in varchar2, p_fmt in varchar2) return date is\n  l_d date;\n  l_note varchar2(100) := 'use to_date(p_text) only with a mask';\nbegin\n  -- l_d := to_date(p_text);  (old version, no mask)\n  l_d := to_date(p_text, nvl(p_fmt, 'dd/mm/yyyy'));\n  dbms_output.put_line(l_note);\n  return l_d;\nend @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "comparison-looking text only inside a string literal and a comment; real comparisons are same-family",
+      "code": "procedure @@proc@@(p_qty in number, p_name in varchar2) is\n  l_sql varchar2(200);\nbegin\n  l_sql := 'qty = ''abc'' and name = 5';\n  -- if p_qty = 'abc' then (never)\n  if p_name = '@@str@@' then\n    l_sql := l_sql || ' (named)';\n  end if;\n  if p_qty >= 8 then\n    dbms_output.put_line(l_sql);\n  end if;\nend @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "anchored %TYPE local is unknown; a function-call operand is not a simple operand",
+      "code": "procedure @@proc@@(p_name in varchar2) is\n  l_id \"Order Line\".id%type;\nbegin\n  l_id := 5;\n  if l_id = 'abc' then\n    null;\n  end if;\n  if upper(p_name) = 6 then\n    null;\n  end if;\nend @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "same-family comparisons only: BOOLEAN with TRUE, number with number, text with text, date with date",
+      "code": "function @@proc@@(p_a in number, p_b in varchar2, p_d in date) return boolean is\n  l_ok boolean := false;\n  l_n number := p_a;\n  l_s varchar2(20) := p_b;\n  l_d date := sysdate;\nbegin\n  if l_ok = true then\n    return true;\n  end if;\n  while l_n < p_a loop\n    l_n := l_n + 1;\n  end loop;\n  return l_s <> p_b or p_d > l_d;\nend @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "cursor-loop record fields are not parameters or simple locals, so they are not resolved",
+      "code": "procedure @@proc@@ is\n  l_seen number := 0;\nbegin\n  for r in (select id, @@col@@ as qty from @@tab@@) loop\n    if r.qty = 'abc' then\n      l_seen := l_seen + 1;\n    elsif r.id = 'none' then\n      l_seen := l_seen - 1;\n    end if;\n  end loop;\n  dbms_output.put_line(l_seen);\nend @@proc@@;"
+    }
+  ]
+}

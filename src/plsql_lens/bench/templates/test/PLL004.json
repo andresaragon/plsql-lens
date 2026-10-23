@@ -1,0 +1,58 @@
+{
+  "rule": "PLL004",
+  "split": "test",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "SELECT INTO inside a loop body with no handler",
+      "code": "PROCEDURE @@proc@@ (p_ids IN SYS.ODCINUMBERLIST) IS\n    l_name VARCHAR2(100);\nBEGIN\n    FOR i IN 1 .. p_ids.COUNT LOOP\n        SELECT @@col@@ -- @expect\n          INTO l_name\n          FROM @@tab@@\n         WHERE id = p_ids(i);\n        DBMS_OUTPUT.PUT_LINE(l_name);\n    END LOOP;\nEND @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "single-line SELECT INTO inside an IF branch",
+      "code": "FUNCTION @@proc@@ (p_id IN NUMBER, p_use_alt IN BOOLEAN) RETURN VARCHAR2 IS\n    l_val VARCHAR2(100);\nBEGIN\n    IF p_use_alt THEN\n        SELECT @@col2@@ INTO l_val FROM @@tab2@@ WHERE id = p_id; -- @expect\n    ELSE\n        l_val := 'n/a';\n    END IF;\n    RETURN l_val;\nEND @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "only handler is DUP_VAL_ON_INDEX, which does not cover SELECT INTO",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER, p_label IN VARCHAR2) IS\n    l_owner VARCHAR2(100);\nBEGIN\n    INSERT INTO @@tab@@ (id, label) VALUES (p_id, p_label);\n    SELECT @@col@@ INTO l_owner -- @expect\n      FROM @@tab2@@\n     WHERE id = p_id;\n    @@proc2@@(l_owner);\nEXCEPTION\n    WHEN DUP_VAL_ON_INDEX THEN\n        UPDATE @@tab@@ SET label = p_label WHERE id = p_id;\nEND @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "SELECT INTO over a join of two tables in a function",
+      "code": "FUNCTION @@proc@@ (p_key IN VARCHAR2) RETURN NUMBER IS\n    l_amount NUMBER;\nBEGIN\n    SELECT o.amount -- @expect\n      INTO l_amount\n      FROM @@tab@@ o\n      JOIN @@tab2@@ c ON c.id = o.@@col@@\n     WHERE c.code = p_key;\n    RETURN l_amount;\nEND @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "second SELECT INTO after a sibling block that has its own handler",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\n    l_a VARCHAR2(100);\n    l_b VARCHAR2(100);\nBEGIN\n    BEGIN\n        SELECT @@col@@ INTO l_a FROM @@tab@@ WHERE id = p_id;\n    EXCEPTION\n        WHEN NO_DATA_FOUND THEN\n            l_a := NULL;\n    END;\n    SELECT @@col2@@ INTO l_b FROM @@tab2@@ WHERE id = p_id; -- @expect\n    @@proc2@@(l_a, l_b);\nEND @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "NO_DATA_FOUND handled in the OUTER block, SELECT in a nested block",
+      "code": "PROCEDURE @@proc@@ (p_id IN NUMBER) IS\n    l_name VARCHAR2(100);\nBEGIN\n    DECLARE\n        l_inner VARCHAR2(100);\n    BEGIN\n        SELECT @@col@@\n          INTO l_inner\n          FROM @@tab@@\n         WHERE id = p_id;\n        l_name := UPPER(l_inner);\n    END;\n    @@proc2@@(l_name);\nEXCEPTION\n    WHEN NO_DATA_FOUND THEN\n        @@proc2@@('unknown');\nEND @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "aggregate-only select list with SUM and AVG",
+      "code": "PROCEDURE @@proc@@ (p_dept IN NUMBER, p_total OUT NUMBER, p_avg OUT NUMBER) IS\n    l_cnt NUMBER;\nBEGIN\n    SELECT COUNT(*) INTO l_cnt FROM @@tab@@ WHERE dept_id = p_dept;\n    SELECT SUM(@@col@@), AVG(@@col@@)\n      INTO p_total, p_avg\n      FROM @@tab@@\n     WHERE dept_id = p_dept;\n    IF l_cnt = 0 THEN\n        p_total := 0;\n    END IF;\nEND @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "SELECT sysdate INTO ... FROM dual",
+      "code": "FUNCTION @@proc@@ (p_days IN NUMBER) RETURN DATE IS\n    l_now DATE;\nBEGIN\n    select sysdate\n      into l_now\n      from dual;\n    RETURN l_now + p_days;\nEND @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "handler for NO_DATA_FOUND OR TOO_MANY_ROWS",
+      "code": "FUNCTION @@proc@@ (p_code IN VARCHAR2) RETURN NUMBER IS\n    l_id NUMBER;\nBEGIN\n    SELECT id\n      INTO l_id\n      FROM @@tab@@\n     WHERE code = p_code;\n    RETURN l_id;\nEXCEPTION\n    WHEN NO_DATA_FOUND OR TOO_MANY_ROWS THEN\n        RETURN NULL;\nEND @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "BULK COLLECT INTO instead of single-row INTO",
+      "code": "PROCEDURE @@proc@@ (p_run_id IN NUMBER) IS\n    l_ids SYS.ODCINUMBERLIST;\nBEGIN\n    SELECT id\n      BULK COLLECT INTO l_ids\n      FROM @@tab@@\n     WHERE run_id = p_run_id;\n    FOR i IN 1 .. l_ids.COUNT LOOP\n        @@proc2@@(l_ids(i));\n    END LOOP;\nEND @@proc@@;"
+    }
+  ]
+}

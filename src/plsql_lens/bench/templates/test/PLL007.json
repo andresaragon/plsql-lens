@@ -1,0 +1,58 @@
+{
+  "rule": "PLL007",
+  "split": "test",
+  "defects": [
+    {
+      "id": "d1",
+      "note": "same number in arithmetic on three separate statements",
+      "code": "FUNCTION @@proc@@ (p_base IN NUMBER) RETURN NUMBER IS\n    l_a NUMBER;\n    l_b NUMBER;\n    l_c NUMBER;\nBEGIN\n    l_a := p_base * @@num@@; -- @expect\n    l_b := l_a + @@num@@; -- @expect\n    l_c := l_b / @@num@@; -- @expect\n    RETURN l_c;\nEND @@proc@@;"
+    },
+    {
+      "id": "d2",
+      "note": "same string compared in IF / ELSIF / ELSIF",
+      "code": "FUNCTION @@proc@@ (p_status IN VARCHAR2, p_type IN VARCHAR2, p_kind IN VARCHAR2) RETURN NUMBER IS\nBEGIN\n    IF p_status = '@@str@@' THEN -- @expect\n        RETURN 1;\n    ELSIF p_type = '@@str@@' THEN -- @expect\n        RETURN 2;\n    ELSIF p_kind = '@@str@@' THEN -- @expect\n        RETURN 3;\n    END IF;\n    RETURN 0;\nEND @@proc@@;"
+    },
+    {
+      "id": "d3",
+      "note": "a number and a string each repeated three times (six findings)",
+      "code": "PROCEDURE @@proc@@ (p_qty IN NUMBER, p_msg OUT VARCHAR2) IS\n    l_fee NUMBER;\nBEGIN\n    IF p_qty > @@num@@ THEN -- @expect\n        l_fee := p_qty - @@num@@; -- @expect\n        p_msg := '@@str@@'; -- @expect\n    ELSIF p_qty > 0 THEN\n        l_fee := p_qty * @@num@@; -- @expect\n        p_msg := '@@str@@' || TO_CHAR(l_fee); -- @expect\n    ELSE\n        l_fee := 0;\n        DBMS_OUTPUT.PUT_LINE('@@str@@'); -- @expect\n    END IF;\n    @@proc2@@(l_fee);\nEND @@proc@@;"
+    },
+    {
+      "id": "d4",
+      "note": "number repeated inside a loop body and after the loop",
+      "code": "FUNCTION @@proc@@ (p_vals IN SYS.ODCINUMBERLIST) RETURN NUMBER IS\n    l_sum  NUMBER := 0;\n    l_rest NUMBER;\nBEGIN\n    FOR i IN 1 .. p_vals.COUNT LOOP\n        l_sum := l_sum + p_vals(i) * @@num@@; -- @expect\n        IF l_sum > @@num@@ THEN -- @expect\n            EXIT;\n        END IF;\n    END LOOP;\n    l_rest := MOD(l_sum, @@num@@); -- @expect\n    RETURN l_rest;\nEND @@proc@@;"
+    },
+    {
+      "id": "d5",
+      "note": "decimal literal repeated three times",
+      "code": "FUNCTION @@proc@@ (p_r IN NUMBER) RETURN NUMBER IS\n    l_area NUMBER;\n    l_circ NUMBER;\nBEGIN\n    l_area := @@num@@.25 * p_r * p_r; -- @expect\n    l_circ := 2 * @@num@@.25 * p_r; -- @expect\n    IF l_area > @@num@@.25 THEN -- @expect\n        RETURN l_area;\n    END IF;\n    RETURN l_circ;\nEND @@proc@@;"
+    }
+  ],
+  "negatives": [
+    {
+      "id": "n1",
+      "note": "three different literals, each appearing exactly twice",
+      "code": "PROCEDURE @@proc@@ (p_qty IN NUMBER, p_msg OUT VARCHAR2) IS\n    l_fee NUMBER;\nBEGIN\n    l_fee := p_qty * @@num@@;\n    l_fee := l_fee + @@num2@@;\n    IF l_fee > @@num@@ THEN\n        p_msg := '@@str@@';\n    ELSIF l_fee < @@num2@@ THEN\n        p_msg := 'ok';\n    ELSE\n        p_msg := '@@str@@';\n    END IF;\nEND @@proc@@;"
+    },
+    {
+      "id": "n2",
+      "note": "magic values declared as constants and referenced by name",
+      "code": "PROCEDURE @@proc@@ (p_qty IN NUMBER, p_msg OUT VARCHAR2) IS\n    c_rate CONSTANT NUMBER := @@num@@;\n    c_tag  CONSTANT VARCHAR2(30) := '@@str@@';\n    l_fee  NUMBER;\nBEGIN\n    l_fee := p_qty * c_rate;\n    IF l_fee > c_rate THEN\n        p_msg := c_tag;\n    ELSIF l_fee < c_rate THEN\n        p_msg := c_tag || ':low';\n    ELSE\n        p_msg := c_tag || ':even';\n    END IF;\nEND @@proc@@;"
+    },
+    {
+      "id": "n3",
+      "note": "single space literal repeated",
+      "code": "FUNCTION @@proc@@ (p_first IN VARCHAR2, p_mid IN VARCHAR2, p_last IN VARCHAR2) RETURN VARCHAR2 IS\n    l_name VARCHAR2(200);\nBEGIN\n    l_name := p_first;\n    IF p_mid IS NOT NULL THEN\n        l_name := l_name || ' ' || p_mid;\n    END IF;\n    l_name := l_name || ' ' || p_last;\n    l_name := l_name || ' ' || TO_CHAR(SYSDATE, 'YYYY');\n    RETURN l_name;\nEND @@proc@@;"
+    },
+    {
+      "id": "n4",
+      "note": "empty string literal repeated",
+      "code": "PROCEDURE @@proc@@ (p_mode IN VARCHAR2, p_a OUT VARCHAR2, p_b OUT VARCHAR2, p_c OUT VARCHAR2) IS\nBEGIN\n    p_a := '';\n    p_b := '';\n    p_c := '';\n    IF p_mode = '@@str@@' THEN\n        p_a := UPPER(p_mode);\n        p_b := LOWER(p_mode);\n    END IF;\nEND @@proc@@;"
+    },
+    {
+      "id": "n5",
+      "note": "numbers 0 and 1 repeated many times",
+      "code": "FUNCTION @@proc@@ (p_n IN NUMBER) RETURN NUMBER IS\n    l_acc NUMBER;\n    l_cnt NUMBER;\nBEGIN\n    l_acc := 1;\n    l_cnt := 0;\n    IF p_n = 0 THEN\n        RETURN 1;\n    END IF;\n    WHILE l_cnt < p_n LOOP\n        l_acc := l_acc * 1 + l_cnt;\n        l_cnt := l_cnt + 1;\n    END LOOP;\n    IF l_acc < 0 THEN\n        RETURN 0;\n    END IF;\n    IF l_acc > 1 THEN\n        RETURN l_acc - 1;\n    END IF;\n    RETURN 1;\nEND @@proc@@;"
+    }
+  ]
+}

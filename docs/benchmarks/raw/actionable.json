@@ -1,0 +1,41 @@
+{
+ "note": "Labeled by the working session (a Sonnet subagent following docs/benchmarks/actionable/RUBRIC.md, spot-checked by the lead), not by the code's maintainers. Sample: seed 4004, at most 15 findings per rule, current rules, real corpus.",
+ "per_rule": {
+  "PLL001": {
+   "actionable": 0,
+   "contract_holds": 6,
+   "sampled": 6,
+   "total_findings": 6
+  },
+  "PLL002": {
+   "actionable": 3,
+   "contract_holds": 15,
+   "sampled": 15,
+   "total_findings": 27
+  },
+  "PLL003": {
+   "actionable": 0,
+   "contract_holds": 1,
+   "sampled": 1,
+   "total_findings": 1
+  },
+  "PLL004": {
+   "actionable": 0,
+   "contract_holds": 9,
+   "sampled": 9,
+   "total_findings": 9
+  },
+  "PLL006": {
+   "actionable": 0,
+   "contract_holds": 13,
+   "sampled": 13,
+   "total_findings": 13
+  },
+  "PLL007": {
+   "actionable": 0,
+   "contract_holds": 14,
+   "sampled": 15,
+   "total_findings": 354
+  }
+ }
+}

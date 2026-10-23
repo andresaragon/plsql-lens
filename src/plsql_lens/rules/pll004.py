@@ -3,36 +3,67 @@
 from __future__ import annotations
 
 from ..parser import FileIR, Stmt
-from ..parser.lexer import IDENT, OP
+from ..parser.lexer import IDENT, OP, Token
 from .model import Finding, Location, Rule
 from .util import iter_bodies
 
 _HANDLED = frozenset(["no_data_found", "too_many_rows", "others"])
-_AGG = frozenset(["count", "sum", "avg", "min", "max"])
+_AGG = frozenset(["count", "sum", "avg", "min", "max", "listagg"])
 
 
 def _always_one_row(s: Stmt) -> bool:
+    """Queries that return exactly one row: ``FROM dual``, or an aggregate in the select list
+    (at any expression depth, not in a scalar subquery, not analytic) with no GROUP BY/HAVING."""
     words = [t.text for t in s.tokens if t.kind == IDENT]
     toks = s.tokens
     if any(a == "from" and b == "dual" for a, b in zip(words, words[1:], strict=False)):
         return True
-    if "group" in words:
+    if "having" in words or any(
+        a == "group" and b == "by" for a, b in zip(words, words[1:], strict=False)
+    ):
         return False
     into = next((i for i, t in enumerate(toks) if t.kind == IDENT and t.text == "into"), 0)
     depth = 0
+    subquery_depths: list[int] = []
     for i, t in enumerate(toks[:into]):
         if t.kind == OP and t.text == "(":
             depth += 1
+            if i + 1 < len(toks) and toks[i + 1].text == "select":
+                subquery_depths.append(depth)
         elif t.kind == OP and t.text == ")":
+            if subquery_depths and subquery_depths[-1] == depth:
+                subquery_depths.pop()
             depth -= 1
         elif (
-            depth == 0
-            and t.kind == IDENT
+            t.kind == IDENT
             and t.text in _AGG
+            and not subquery_depths
             and i + 1 < len(toks)
             and toks[i + 1].text == "("
+            and not _is_analytic(toks, i + 1)
         ):
             return True
+    return False
+
+
+def _is_analytic(toks: tuple[Token, ...], open_idx: int) -> bool:
+    """True when the call opened at ``open_idx`` is followed by ``OVER`` (per-row, not one row)."""
+    depth = 0
+    for j in range(open_idx, len(toks)):
+        if toks[j].kind == OP and toks[j].text == "(":
+            depth += 1
+        elif toks[j].kind == OP and toks[j].text == ")":
+            depth -= 1
+            if depth == 0:
+                nxt = toks[j + 1] if j + 1 < len(toks) else None
+                if (
+                    nxt is not None and nxt.text == "within"
+                ):  # LISTAGG(...) WITHIN GROUP (...) [OVER]
+                    k = j + 2
+                    while k < len(toks) and toks[k].text != ")":
+                        k += 1
+                    nxt = toks[k + 1] if k + 1 < len(toks) else None
+                return nxt is not None and nxt.text == "over"
     return False
 
 

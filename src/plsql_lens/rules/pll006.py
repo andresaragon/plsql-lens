@@ -18,6 +18,7 @@ _NUMBER = (
     "binary_double",
 )  # fmt: skip
 _DATE = ("date", "timestamp")
+_ARITH = ("+", "-", "*", "/", "||")  # an operand next to these is part of an expression
 _TO_DATE = frozenset(["to_date", "to_timestamp", "to_timestamp_tz"])
 
 
@@ -88,9 +89,9 @@ def check(ir: FileIR) -> list[Finding]:
                 if op.kind != OP or op.text not in _COMPARE:
                     continue
                 left, right = toks[i - 1], toks[i + 1]
-                if i >= 2 and toks[i - 2].text in (".", ")"):
+                if i >= 2 and toks[i - 2].text in (".", ")", *_ARITH):
                     continue
-                if i + 2 < len(toks) and toks[i + 2].text in (".", "(", "%", "||"):
+                if i + 2 < len(toks) and toks[i + 2].text in (".", "(", "%", *_ARITH):
                     continue
                 fl = _operand_family(left, body.local_types)
                 fr = _operand_family(right, body.local_types)

@@ -37,3 +37,11 @@ and test data. Nothing from any employer or client is included.
    License: MIT (tests/vendor/LICENSE.sarif-sdk)
    Copied:  src/Sarif/Schemata/sarif-2.1.0.json  ->  tests/vendor/sarif-2.1.0.json
    Used by tests/unit/test_sarif_schema.py to validate `plsql-lens review --format sarif`.
+
+5. Benchmark items derived from utPLSQL (F4)
+   Files:   docs/benchmarks/data/{dev,test}/injected/*.pkb
+   Origin:  copies of corpus/utplsql/** package bodies (see item 1: URL, commit and license
+            Apache-2.0; license text in docs/benchmarks/data/LICENSE.utplsql) with generated
+            snippets inserted before the closing END. The copied portions keep their original license;
+            the inserted snippets are original to this repository (MIT). The exact base file of each
+            item is listed in the "bases" field of the split's manifest.json.

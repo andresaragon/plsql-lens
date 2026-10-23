@@ -1,0 +1,263 @@
+{
+ "seed": 4004,
+ "totals": {
+  "PLL001": 6,
+  "PLL002": 27,
+  "PLL003": 1,
+  "PLL004": 9,
+  "PLL005": 0,
+  "PLL006": 13,
+  "PLL007": 354
+ },
+ "sample": {
+  "PLL001": [
+   {
+    "file": "corpus/logger/logger.pkb",
+    "line": 108
+   },
+   {
+    "file": "corpus/utplsql/core/annotations/ut_trigger_annotation_parsing.trg",
+    "line": 32
+   },
+   {
+    "file": "corpus/utplsql/core/types/ut_executable_test.tpb",
+    "line": 66
+   },
+   {
+    "file": "corpus/utplsql/core/types/ut_executable_test.tpb",
+    "line": 91
+   },
+   {
+    "file": "corpus/utplsql/core/ut_metadata.pkb",
+    "line": 51
+   },
+   {
+    "file": "corpus/utplsql/core/ut_metadata.pkb",
+    "line": 68
+   }
+  ],
+  "PLL002": [
+   {
+    "file": "corpus/logger/logger.pkb",
+    "line": 769
+   },
+   {
+    "file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql",
+    "line": 575
+   },
+   {
+    "file": "corpus/utplsql/api/ut.pkb",
+    "line": 821
+   },
+   {
+    "file": "corpus/utplsql/core/annotations/ut_annotation_cache_manager.pkb",
+    "line": 213
+   },
+   {
+    "file": "corpus/utplsql/core/annotations/ut_trigger_check.pkb",
+    "line": 25
+   },
+   {
+    "file": "corpus/utplsql/core/types/ut_executable_test.tpb",
+    "line": 62
+   },
+   {
+    "file": "corpus/utplsql/core/types/ut_suite_item.tpb",
+    "line": 58
+   },
+   {
+    "file": "corpus/utplsql/core/ut_expectation_processor.pkb",
+    "line": 145
+   },
+   {
+    "file": "corpus/utplsql/core/ut_metadata.pkb",
+    "line": 42
+   },
+   {
+    "file": "corpus/utplsql/core/ut_metadata.pkb",
+    "line": 60
+   },
+   {
+    "file": "corpus/utplsql/core/ut_metadata.pkb",
+    "line": 79
+   },
+   {
+    "file": "corpus/utplsql/core/ut_metadata.pkb",
+    "line": 295
+   },
+   {
+    "file": "corpus/utplsql/core/ut_suite_tag_filter.pkb",
+    "line": 263
+   },
+   {
+    "file": "corpus/utplsql/expectations/data_values/ut_compound_data_helper.pkb",
+    "line": 81
+   },
+   {
+    "file": "corpus/utplsql/expectations/matchers/ut_be_within_helper.pkb",
+    "line": 49
+   }
+  ],
+  "PLL003": [
+   {
+    "file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql",
+    "line": 595
+   }
+  ],
+  "PLL004": [
+   {
+    "file": "corpus/logger/logger.pkb",
+    "line": 788
+   },
+   {
+    "file": "corpus/logger/logger.pkb",
+    "line": 2257
+   },
+   {
+    "file": "corpus/logger/logger_configure.plb",
+    "line": 48
+   },
+   {
+    "file": "corpus/logger/logger_configure.plb",
+    "line": 100
+   },
+   {
+    "file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql",
+    "line": 510
+   },
+   {
+    "file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql",
+    "line": 655
+   },
+   {
+    "file": "corpus/utplsql/api/ut.pkb",
+    "line": 810
+   },
+   {
+    "file": "corpus/utplsql/expectations/data_values/ut_cursor_details.tpb",
+    "line": 248
+   },
+   {
+    "file": "corpus/utplsql/expectations/data_values/ut_cursor_details.tpb",
+    "line": 260
+   }
+  ],
+  "PLL005": [],
+  "PLL006": [
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 1087
+   },
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 1088
+   },
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 1091
+   },
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 1092
+   },
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 1095
+   },
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 1096
+   },
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 1099
+   },
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 1100
+   },
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 1101
+   },
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 1119
+   },
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 1120
+   },
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 1123
+   },
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 1124
+   }
+  ],
+  "PLL007": [
+   {
+    "file": "corpus/logger/logger.pkb",
+    "line": 136
+   },
+   {
+    "file": "corpus/logger/logger_configure.plb",
+    "line": 58
+   },
+   {
+    "file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql",
+    "line": 119
+   },
+   {
+    "file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql",
+    "line": 155
+   },
+   {
+    "file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql",
+    "line": 696
+   },
+   {
+    "file": "corpus/utplsql/core/types/ut_executable.tpb",
+    "line": 132
+   },
+   {
+    "file": "corpus/utplsql/core/types/ut_executable.tpb",
+    "line": 138
+   },
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 690
+   },
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 729
+   },
+   {
+    "file": "corpus/utplsql/core/ut_utils.pkb",
+    "line": 751
+   },
+   {
+    "file": "corpus/utplsql/expectations/data_values/ut_compound_data_helper.pkb",
+    "line": 834
+   },
+   {
+    "file": "corpus/utplsql/expectations/data_values/ut_compound_data_helper.pkb",
+    "line": 835
+   },
+   {
+    "file": "corpus/utplsql/expectations/data_values/ut_data_value_refcursor.tpb",
+    "line": 287
+   },
+   {
+    "file": "corpus/utplsql/expectations/data_values/ut_json_tree_details.tpb",
+    "line": 182
+   },
+   {
+    "file": "corpus/utplsql/reporters/ut_tfs_junit_reporter.tpb",
+    "line": 57
+   }
+  ]
+ }
+}

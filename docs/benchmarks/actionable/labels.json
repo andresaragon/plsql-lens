@@ -1,0 +1,476 @@
+{
+  "labels": [
+    {
+      "rule": "PLL001",
+      "file": "corpus/logger/logger.pkb",
+      "line": 108,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "is_number probe idiom: to_number failure intentionally mapped to FALSE; deliberate and harmless."
+    },
+    {
+      "rule": "PLL001",
+      "file": "corpus/utplsql/core/annotations/ut_trigger_annotation_parsing.trg",
+      "line": 32,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Database DDL trigger deliberately swallows all errors so framework bookkeeping never blocks user DDL; deliberate design."
+    },
+    {
+      "rule": "PLL001",
+      "file": "corpus/utplsql/core/types/ut_executable_test.tpb",
+      "line": 66,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Probe: failure to evaluate exception expression means 'not this candidate', returns null for coalesce fallback; deliberate."
+    },
+    {
+      "rule": "PLL001",
+      "file": "corpus/utplsql/core/types/ut_executable_test.tpb",
+      "line": 91,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Probe: invalid exception name makes the dynamic block fail, returning null to try next qualification; deliberate idiom."
+    },
+    {
+      "rule": "PLL001",
+      "file": "corpus/utplsql/core/ut_metadata.pkb",
+      "line": 51,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Existence/validity probe returning FALSE on any failure (e.g. missing view); deliberate boolean probe, caller treats FALSE as not valid."
+    },
+    {
+      "rule": "PLL001",
+      "file": "corpus/utplsql/core/ut_metadata.pkb",
+      "line": 68,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Existence probe: any error maps to FALSE meaning procedure not found; deliberate and harmless."
+    },
+    {
+      "rule": "PLL002",
+      "file": "corpus/logger/logger.pkb",
+      "line": 769,
+      "actionable": true,
+      "contract_holds": true,
+      "reason": "Plugin function name read from configuration preference is concatenated into executed block; no DBMS_ASSERT validation of the name."
+    },
+    {
+      "rule": "PLL002",
+      "file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql",
+      "line": 575,
+      "actionable": true,
+      "contract_holds": true,
+      "reason": "DDL built from directory path taken from input XML file list, concatenated unvalidated and unescaped into CREATE DIRECTORY."
+    },
+    {
+      "rule": "PLL002",
+      "file": "corpus/utplsql/core/ut_metadata.pkb",
+      "line": 42,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Concatenated view name comes from get_dba_view, program-chosen all_/dba_ view; values passed as binds. Harmless."
+    },
+    {
+      "rule": "PLL002",
+      "file": "corpus/utplsql/core/ut_metadata.pkb",
+      "line": 60,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "View name is produced by program (dba_/all_ procedures view); user values bound. Harmless."
+    },
+    {
+      "rule": "PLL002",
+      "file": "corpus/utplsql/core/ut_metadata.pkb",
+      "line": 79,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "View name program-derived from get_source_view_name; owner and name are bound. Harmless."
+    },
+    {
+      "rule": "PLL002",
+      "file": "corpus/utplsql/core/ut_metadata.pkb",
+      "line": 295,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Type name derived from the ANYDATA type and compound type validated with DBMS_ASSERT.qualified_sql_name; fragments program-produced."
+    },
+    {
+      "rule": "PLL002",
+      "file": "corpus/utplsql/api/ut.pkb",
+      "line": 821,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Saved NLS_DATE_FORMAT read from nls_session_parameters and restored; value is session-produced, not input."
+    },
+    {
+      "rule": "PLL002",
+      "file": "corpus/utplsql/core/annotations/ut_annotation_cache_manager.pkb",
+      "line": 213,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Filter built only from internal literals chosen by branches; user values passed as binds. Program-produced fragment."
+    },
+    {
+      "rule": "PLL002",
+      "file": "corpus/utplsql/core/annotations/ut_trigger_check.pkb",
+      "line": 25,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Concatenates framework owner name and a constant object name; program-produced, no external input."
+    },
+    {
+      "rule": "PLL002",
+      "file": "corpus/utplsql/core/types/ut_executable_test.tpb",
+      "line": 62,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Deliberately evaluates a test annotation expression to resolve an exception number; test code already executed by framework; by design."
+    },
+    {
+      "rule": "PLL002",
+      "file": "corpus/utplsql/core/types/ut_suite_item.tpb",
+      "line": 58,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Savepoint name generated by ut_utils.gen_savepoint_name, program-produced; rollback counterpart uses DBMS_ASSERT."
+    },
+    {
+      "rule": "PLL002",
+      "file": "corpus/utplsql/core/ut_expectation_processor.pkb",
+      "line": 145,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Restores NLS parameters previously read from the session itself; values program-produced, not external input."
+    },
+    {
+      "rule": "PLL002",
+      "file": "corpus/utplsql/core/ut_suite_tag_filter.pkb",
+      "line": 263,
+      "actionable": true,
+      "contract_holds": true,
+      "reason": "User-supplied tag text embedded in quoted SQL literals without escaping quotes or binds; injectable or breakable via a quote in a tag."
+    },
+    {
+      "rule": "PLL002",
+      "file": "corpus/utplsql/expectations/data_values/ut_compound_data_helper.pkb",
+      "line": 81,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Only operands are literals and a boolean-driven CASE of literals; no external input reaches the SQL text."
+    },
+    {
+      "rule": "PLL002",
+      "file": "corpus/utplsql/expectations/matchers/ut_be_within_helper.pkb",
+      "line": 49,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Type names pass DBMS_ASSERT.simple_sql_name and formula is built from internal literals; program-produced, adequately guarded."
+    },
+    {
+      "rule": "PLL003",
+      "file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql",
+      "line": 595,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Deliberate batch commit every BATCH_SIZE files, counter reset afterwards; not per-row commit."
+    },
+    {
+      "rule": "PLL004",
+      "file": "corpus/logger/logger.pkb",
+      "line": 788,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Lookup of just-logged row by id inside error handler of a re-raising block; row exists, not a realistic NDF source."
+    },
+    {
+      "rule": "PLL004",
+      "file": "corpus/logger/logger.pkb",
+      "line": 2257,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Reads seeded LOGGER_LEVEL preference row from logger_prefs; always present once installed, status display procedure."
+    },
+    {
+      "rule": "PLL004",
+      "file": "corpus/logger/logger_configure.plb",
+      "line": 48,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Install script reads data_length of LOGGER_LOGS.TEXT, a column guaranteed to exist by the installation."
+    },
+    {
+      "rule": "PLL004",
+      "file": "corpus/logger/logger_configure.plb",
+      "line": 100,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Reads seeded LOGGER_DEBUG preference row; install script guarantees it exists, failure would be an install defect."
+    },
+    {
+      "rule": "PLL004",
+      "file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql",
+      "line": 510,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Required directory lookup; missing directory propagating NO_DATA_FOUND to the caller is acceptable in this installer helper."
+    },
+    {
+      "rule": "PLL004",
+      "file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql",
+      "line": 655,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Required system-generated table lookup; sibling optional lookups handle NDF while this one deliberately propagates."
+    },
+    {
+      "rule": "PLL004",
+      "file": "corpus/utplsql/api/ut.pkb",
+      "line": 810,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "nls_session_parameters always holds exactly one NLS_DATE_FORMAT row per session; cannot return zero or many."
+    },
+    {
+      "rule": "PLL004",
+      "file": "corpus/utplsql/expectations/data_values/ut_cursor_details.tpb",
+      "line": 248,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Aggregate over columns; sole caller guards with count > 0 before calling, so the HAVING zero-row case is avoided."
+    },
+    {
+      "rule": "PLL004",
+      "file": "corpus/utplsql/expectations/data_values/ut_cursor_details.tpb",
+      "line": 260,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Guarded by count > 0; level-1 entry is the single root for anydata, so zero/many rows are not realistic."
+    },
+    {
+      "rule": "PLL006",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 1087,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "l_day = 1: varchar2 local compared to number, but it holds an EXTRACT result so it is always numeric; harmless round trip."
+    },
+    {
+      "rule": "PLL006",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 1088,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "l_day > 1: varchar2 local compared to number, but it holds an EXTRACT result so it is always numeric; harmless round trip."
+    },
+    {
+      "rule": "PLL006",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 1091,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "l_hour = 1: varchar2 local compared to number, but it holds an EXTRACT result so it is always numeric; harmless round trip."
+    },
+    {
+      "rule": "PLL006",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 1092,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "l_hour > 1: varchar2 local compared to number, but it holds an EXTRACT result so it is always numeric; harmless round trip."
+    },
+    {
+      "rule": "PLL006",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 1095,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "l_minute = 1: varchar2 local compared to number, but it holds an EXTRACT result so it is always numeric; harmless round trip."
+    },
+    {
+      "rule": "PLL006",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 1096,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "l_minute > 1: varchar2 local compared to number, but it holds an EXTRACT result so it is always numeric; harmless round trip."
+    },
+    {
+      "rule": "PLL006",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 1099,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "l_second > 1: varchar2 local compared to number, but it holds an EXTRACT result so it is always numeric; harmless round trip."
+    },
+    {
+      "rule": "PLL006",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 1100,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "l_second = 1: varchar2 local compared to number, but it holds an EXTRACT result so it is always numeric; harmless round trip."
+    },
+    {
+      "rule": "PLL006",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 1101,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "l_second > 0: varchar2 local compared to number, but it holds an EXTRACT result so it is always numeric; harmless round trip."
+    },
+    {
+      "rule": "PLL006",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 1119,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "l_year = 1: varchar2 local compared to number, but it holds an EXTRACT result so it is always numeric; harmless round trip."
+    },
+    {
+      "rule": "PLL006",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 1120,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "l_year > 1: varchar2 local compared to number, but it holds an EXTRACT result so it is always numeric; harmless round trip."
+    },
+    {
+      "rule": "PLL006",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 1123,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "l_month > 1: varchar2 local compared to number, but it holds an EXTRACT result so it is always numeric; harmless round trip."
+    },
+    {
+      "rule": "PLL006",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 1124,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "l_month = 1: varchar2 local compared to number, but it holds an EXTRACT result so it is always numeric; harmless round trip."
+    },
+    {
+      "rule": "PLL007",
+      "file": "corpus/logger/logger.pkb",
+      "line": 136,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "-20000 is the generic application error code, used three times in a large body; a constant adds little value."
+    },
+    {
+      "rule": "PLL007",
+      "file": "corpus/logger/logger_configure.plb",
+      "line": 58,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "'FALSE' is a compile-flag keyword value repeated in a configuration procedure; keyword repetition, not a magic value."
+    },
+    {
+      "rule": "PLL007",
+      "file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql",
+      "line": 119,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "'FALSE' boolean keyword text in small conversion functions; keyword repetition, a constant would not help."
+    },
+    {
+      "rule": "PLL007",
+      "file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql",
+      "line": 155,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Raw '01'/'00' boolean encodings in tiny paired conversion functions; deliberate and clear in context."
+    },
+    {
+      "rule": "PLL007",
+      "file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql",
+      "line": 696,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "SQL text fragment '\" RENAME TO \"' repeated in generated DDL statements; fragment repetition, not actionable."
+    },
+    {
+      "rule": "PLL007",
+      "file": "corpus/utplsql/core/types/ut_executable.tpb",
+      "line": 132,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "chr(10) newline separator repeated while assembling generated block text; separator, not a magic number."
+    },
+    {
+      "rule": "PLL007",
+      "file": "corpus/utplsql/core/types/ut_executable.tpb",
+      "line": 138,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "chr(10) newline separator repeated in generated block text; separator, not a magic number."
+    },
+    {
+      "rule": "PLL007",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 690,
+      "actionable": false,
+      "contract_holds": false,
+      "reason": "Literal '''' has value of a single quote character, a single non-alphanumeric character, which the contract exempts; false positive."
+    },
+    {
+      "rule": "PLL007",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 729,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Offset 2 equals the length of the '*/' delimiter in a tokenizer; a named constant would not clarify."
+    },
+    {
+      "rule": "PLL007",
+      "file": "corpus/utplsql/core/ut_utils.pkb",
+      "line": 751,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "Literal 2 is quote-pair length and substr offset in a tokenizer; deliberate small offsets, no constant needed."
+    },
+    {
+      "rule": "PLL007",
+      "file": "corpus/utplsql/expectations/data_values/ut_compound_data_helper.pkb",
+      "line": 834,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "SQL type name in lookup map and SQL builders; domain keyword repeated, constant adds little."
+    },
+    {
+      "rule": "PLL007",
+      "file": "corpus/utplsql/expectations/data_values/ut_compound_data_helper.pkb",
+      "line": 835,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "SQL type name in lookup map and SQL builders; domain keyword repeated, constant adds little."
+    },
+    {
+      "rule": "PLL007",
+      "file": "corpus/utplsql/expectations/data_values/ut_data_value_refcursor.tpb",
+      "line": 287,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "chr(10) newline separator repeated in message building; separator, not a magic number."
+    },
+    {
+      "rule": "PLL007",
+      "file": "corpus/utplsql/expectations/data_values/ut_json_tree_details.tpb",
+      "line": 182,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "'array' JSON type tag keyword repeated in case labels and calls within one unit; keyword repetition, not actionable."
+    },
+    {
+      "rule": "PLL007",
+      "file": "corpus/utplsql/reporters/ut_tfs_junit_reporter.tpb",
+      "line": 57,
+      "actionable": false,
+      "contract_holds": true,
+      "reason": "'\" ' is an XML attribute separator fragment in generated report text; separator repetition."
+    }
+  ]
+}
