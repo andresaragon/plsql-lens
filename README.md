@@ -52,5 +52,10 @@ validity are in its README). On `test`, the tuned rules reach precision 1.000 [0
 the rules against their own contract, not against defects found in the wild. `make bench` regenerates everything
 without calling an LLM.
 
+The external-author split ([docs/benchmarks/external/](docs/benchmarks/external/), F4b) is a cross-author check with 40
+cases written by another LLM (Gemini), not by a human: the frozen rules and an LLM-only baseline both score 64 TP / 2 FP / 0 FN (strict; adjudicated
+provisionally 65 / 1 / 0), and 0 of 9 real-world (`beyond`) defects outside the contract. Same caveats apply.
+
+
 Third-party PL/SQL used as test input lives in `corpus/` and is listed in [NOTICE](NOTICE).
 License: MIT.

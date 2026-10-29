@@ -52,5 +52,11 @@ puntúan igual, y la línea base solo-LLM sobre una muestra de 40 archivos cuest
 a la validez antes de citar estos números: el benchmark comprueba las reglas contra su propio contrato, no contra
 defectos reales. `make bench` regenera todo sin llamar a un LLM.
 
+El split de autor externo ([docs/benchmarks/external/](docs/benchmarks/external/), F4b) es una comprobación
+cruzada con 40 casos escritos por otro LLM (Gemini), no por una persona: las reglas congeladas y una línea base solo-LLM puntúan igual, 64 TP / 2 FP / 0 FN (estricto;
+adjudicado de forma provisional 65 / 1 / 0), y 0 de 9 defectos reales fuera del contrato (`beyond`). Valen las mismas
+salvedades.
+
+
 El PL/SQL de terceros usado como entrada de pruebas está en `corpus/` y listado en [NOTICE](NOTICE).
 Licencia: MIT.

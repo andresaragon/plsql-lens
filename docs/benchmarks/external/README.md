@@ -25,3 +25,30 @@ This benchmark split breaks the ceiling effect seen in the seeded test split, wh
 - **What this means:** the final markers are a Gemini-authored split whose ground truth was revised by a Claude model reading the same contract the rules implement. That gives consistency but it is **not independent of Claude's reading of the contract**, and the LLM-only baseline is also a Claude model. Treat this split as a cross-author check, not as a human gold standard.
 - **Known limits:** 35 of the 40 cases are short (21–35 lines) and follow a textbook "defect + simple negative" shape; only `e036`–`e040` are long. Scores on this split are likely to be high. There are only 9 `beyond` markers, so the "real-world recall" figure will rest on a small sample. The cases were not compiled and no senior PL/SQL developer has reviewed them.
 - **Next (F4b):** convert the cases (strip the markers, write a manifest), seal them with a commit, run the frozen rules and the LLM-only baseline, and adjudicate every finding on an unmarked line, one by one, publishing the reasons. Rules are never tuned on this split.
+
+## Evaluation (F4b) — what was run, in what order
+Results: [results.md](results.md) · raw: [raw/engine.json](raw/engine.json), [llm_baseline/responses.json](llm_baseline/responses.json) ·
+adjudication: [adjudication/](adjudication/). Reproduce with `plsql-lens bench-external convert|run|llm|report`.
+
+1. **Reference rules frozen** (`frozen.json`, commit `6c2982c`; parser + rules + `docs/rules.md` hashed and checked by a unit test).
+2. **Converter and evaluator** written and tested on synthetic data only (`tests/fixtures/external_synthetic/`).
+3. **Seal commit** `d2755f2`: 40 cases converted (64 `expect`, 60 `clean`, 9 `beyond` markers; markers and the descriptive
+   header stripped, line numbers kept), manifest SHA-256 `5f1e1eeef047026120541f8973d6fc02e31a84e4e0a9772f1c4fca12d167f11f`
+   in `../seal.json`. Neither the engine nor the LLM had seen the files.
+4. **Engine run once** (`bench-external run` refuses a second run without `--force`).
+5. **LLM-only baseline** (`claude-sonnet-5-5`, `claude-cli`, lean flags, contract of `docs/rules.md`, no engine): 40 files, 0.596 USD.
+6. **Two tables.** *Strict*: any finding on an unmarked line is a false positive (the author's rule). *Adjudicated*: each
+   unmarked finding and each unreported `expect` was read in the original case against the contract and decided one by one
+   (`adjudication/*.json`, with reasons). The adjudicated table is **provisional (Claude), pending the repository owner's
+   review**; the strict table is never altered by it.
+
+### Reading the numbers
+* Strict, rules and LLM alike: 64 TP / 2 FP / 0 FN. Adjudicated (provisional): 65 / 1 / 0.
+* The two findings on unmarked lines: `e023:17` PLL004 — a real contract defect the author did not mark (adjudicated TP);
+  `e037:43` PLL002 — concatenation guarded by `DBMS_ASSERT` through a variable, safe code that the contract's
+  "direct `DBMS_ASSERT` call" exemption does not recognise (stays a false positive; also the one `clean` trap that fired).
+* `beyond` (real defects outside the contract): 0 of 9 for both. Expected: the rules implement the contract, and the LLM was
+  given the contract too. This is the figure to look at to see what the deterministic rules cannot do.
+* Limits: 40 short cases (35 of 40 are 21–35 lines), single non-human author reviewed by Claude, ground truth not independent of
+  Claude's reading of the contract, no senior reviewer yet. Near-perfect scores say the split is easy for a contract-literal
+  checker, not that the rules are good on production code. The human-written split (`../human/`) is still pending.

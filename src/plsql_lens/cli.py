@@ -431,3 +431,56 @@ def bench_llm(
         json.dumps({"model": model, "responses": responses}, indent=1, sort_keys=True) + "\n"
     )
     typer.echo(f"recorded {len(responses)} responses, {spent:.4f} USD")
+
+
+# ---- external split (F4b) --------------------------------------------------------------------
+
+ext = typer.Typer(help="Evaluation on the external-author split (docs/benchmarks/external).")
+app.add_typer(ext, name="bench-external")
+
+
+@ext.command("convert")
+def ext_convert(
+    seal: Annotated[bool, typer.Option(help="Record the manifest hash in seal.json.")] = False,
+) -> None:
+    """Strip markers/headers into docs/benchmarks/external/data and verify (or record) the seal."""
+    from .bench.config import repo_root
+    from .bench.external_run import do_convert
+
+    typer.echo(do_convert(repo_root(), seal))
+
+
+@ext.command("run")
+def ext_run(
+    force: Annotated[bool, typer.Option(help="Allow a second run (breaks 'once').")] = False,
+) -> None:
+    """Run the frozen engine ONCE over the converted cases."""
+    from .bench.config import repo_root
+    from .bench.external_run import do_run
+
+    res = do_run(repo_root(), force)
+    typer.echo(f"{len(res['findings'])} unique findings recorded")
+
+
+@ext.command("llm")
+def ext_llm(
+    model: Annotated[str, typer.Option()] = "claude-sonnet-5-5",
+    max_usd: Annotated[float, typer.Option(help="Cost cap.")] = 2.0,
+) -> None:
+    """LLM-only baseline on the converted cases. COSTS MONEY (capped)."""
+    from .bench.config import repo_root
+    from .bench.external_run import do_llm
+
+    rec = do_llm(repo_root(), make_provider("claude-cli", model=model), model, max_usd)
+    cost = sum(r.get("cost_usd") or 0.0 for r in rec["responses"].values())
+    typer.echo(f"{len(rec['responses'])} responses, {cost:.4f} USD")
+
+
+@ext.command("report")
+def ext_report() -> None:
+    """Render docs/benchmarks/external/results.md (strict + adjudicated)."""
+    from .bench.config import repo_root
+    from .bench.external_run import do_report
+
+    do_report(repo_root())
+    typer.echo("wrote docs/benchmarks/external/results.md")

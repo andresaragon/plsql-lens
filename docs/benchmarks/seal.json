@@ -7,5 +7,6 @@
    "commit": "b73e811",
    "superseded_because": "generator fix: incidental literals in PLL007 snippets were not unique (found on dev); engine never run on test"
   }
- ]
+ ],
+ "external": "5f1e1eeef047026120541f8973d6fc02e31a84e4e0a9772f1c4fca12d167f11f"
 }

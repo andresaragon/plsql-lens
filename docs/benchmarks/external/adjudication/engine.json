@@ -1,0 +1,14 @@
+{
+ "status": "PROVISIONAL (Claude) — pending the repository owner's review",
+ "method": "Every finding of the frozen rules on an unmarked line (and every expect marker without a finding) was read in its original case file against docs/rules.md and decided one by one. Rules were not changed.",
+ "decisions": [
+  {
+   "file": "e023.pkb", "rule": "PLL004", "line": 17, "kind": "unmarked_finding", "verdict": "real_defect",
+   "reason": "A SELECT ... INTO (with a CASE expression, not an aggregate and not FROM dual) in a procedure with no handler for NO_DATA_FOUND/TOO_MANY_ROWS/OTHERS: the contract in docs/rules.md holds. The author marked only PLL007 on this line; the PLL004 marker was missed."
+  },
+  {
+   "file": "e037.pkb", "rule": "PLL002", "line": 43, "kind": "unmarked_finding", "verdict": "false_positive",
+   "reason": "l_sql is built by concatenating l_safe_table, which was assigned from DBMS_ASSERT.SQL_OBJECT_NAME one statement earlier; the author's clean marker is right about the code being safe. The rule flags it because the contract only exempts DBMS_ASSERT calls written inside the concatenation (documented limit: a guard through a variable is not recognised). Contract-consistent, but a false positive for a reviewer."
+  }
+ ]
+}

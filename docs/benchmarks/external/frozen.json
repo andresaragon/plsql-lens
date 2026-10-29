@@ -1,0 +1,25 @@
+{
+ "engine_sha256": "114ad81d3b5ee6e2296c536ba80924cb8fa67ad2bd01ceaa6ef756dcd53032bf",
+ "files": {
+  "docs/rules.md": "ee676f02b8c196f69e63a91406f2c34939cc29981437dec5ee1b388f0604970e",
+  "src/plsql_lens/parser/__init__.py": "5d8e16d507e6d661541a99ddf0da3a4fd763e15c818eddd19ce380b4726a8df4",
+  "src/plsql_lens/parser/ir.py": "ec05073d5fea66ed8ac7e8d8581311f8f51b5494870108a800c0cbe66bc61f91",
+  "src/plsql_lens/parser/lexer.py": "d1c0449be0a07cae3eb9011b0752fb878f34aeecb1cd892998a0008496560149",
+  "src/plsql_lens/parser/statements.py": "4bc24b3e5691c39a8f79b1929c1cb89da2b2a6f84b87200fccb6342898922eaf",
+  "src/plsql_lens/parser/structure.py": "529e9c2d753fc790298278e5bc5e1f0db0d084be54271f7dc9ee800387242ed3",
+  "src/plsql_lens/rules/__init__.py": "299f2eadcfa3a699931921dff69a936e9449357ee16f0af276f2389fff1729bf",
+  "src/plsql_lens/rules/model.py": "3b5e3d5a05e87f5a807a7759f8c56e802a329e98dfb67593697ef9ef2fb78916",
+  "src/plsql_lens/rules/output.py": "7f4e7bfd08ea94103d2e3f661e6d763218abb956b944b44389cc59f6a6c701e5",
+  "src/plsql_lens/rules/pll001.py": "523cc4487f751261aa940b976f7b8dd95dcef03757535bbb9bd41f8a4dd1694a",
+  "src/plsql_lens/rules/pll002.py": "1f1198e734b060300117f6b020dceec48fc71261a044cd72d1a659532fe07048",
+  "src/plsql_lens/rules/pll003.py": "94777f4b169f60d87c1a092a0ea1428101fd9416ac788b459b2a02dd2e838e07",
+  "src/plsql_lens/rules/pll004.py": "fcec226cacdbcd32cde4cc648a2292dae4886bdc3cce87bed9c0176788dabae5",
+  "src/plsql_lens/rules/pll005.py": "d1d567a24117079409aa37c0755d403b2f7f6b4c1e7b16b677f920efafa630e3",
+  "src/plsql_lens/rules/pll006.py": "b20377e4b83da4739cd805404cb3553daa17d59c3f859040fb56b2981a9bc0f1",
+  "src/plsql_lens/rules/pll007.py": "926b322edb1452cd686696f55d0e12dec0a82bee44dbb54fa594c921b4d8e776",
+  "src/plsql_lens/rules/suppress.py": "7adbc24f97f27e24a1a538230c744263ddede599ba1473b9bb7eeaed71b603ec",
+  "src/plsql_lens/rules/util.py": "807c2b32d6b3460dff13aab51643e1166f06aa86288e77706a0986a208633f3b"
+ },
+ "frozen_at_commit": "6c2982ca2e506cb30852f9710d45f1b72fd60931",
+ "note": "Reference rules for the external-split evaluation (F4b). The engine files below must not change while that evaluation exists; the hash is checked by tests/unit/test_external_frozen.py."
+}
