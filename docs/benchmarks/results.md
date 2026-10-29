@@ -141,3 +141,13 @@ Model `claude-sonnet-5-5`, 40 files sampled from `test` by seed, no access to th
 | PLL005 | 1.000 [0.86–1.00] | 1.000 [0.86–1.00] | 1.000 [0.86–1.00] | 0.958 [0.80–0.99] |
 | PLL006 | 1.000 [0.87–1.00] | 1.000 [0.87–1.00] | 1.000 [0.87–1.00] | 1.000 [0.87–1.00] |
 | PLL007 | 1.000 [0.94–1.00] | 1.000 [0.94–1.00] | 1.000 [0.94–1.00] | 1.000 [0.94–1.00] |
+
+## External-author split (F4b)
+
+Cross-author check on 40 cases written by Gemini whose markers Claude revised, sealed before any run: **not a human gold standard**, and 40 short cases give wide intervals. Rules were never tuned on it. Per-rule tables, the adjudication and its limits: [external/results.md](external/results.md).
+
+| Method | Strict TP/FP/FN | Precision | Recall | Adjudicated TP/FP/FN (provisional) |
+|---|---|---|---|---|
+| Rules (before, 67afb85) | 64/3/0 | 0.955 [0.88–0.98] | 1.000 [0.94–1.00] | 65/2/0 |
+| Rules (frozen) | 64/2/0 | 0.970 [0.90–0.99] | 1.000 [0.94–1.00] | 65/1/0 |
+| LLM only | 64/2/0 | 0.970 [0.90–0.99] | 1.000 [0.94–1.00] | 65/1/0 |

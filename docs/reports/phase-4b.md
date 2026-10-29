@@ -51,3 +51,21 @@ uv run plsql-lens bench-external report      # re-renders results.md from the re
 LLM baseline **0.596 USD** (measured by the CLI). Session meter (`get_session`): 25.86 USD when I closed F4, 32.54 USD now
 → **≈ 6.7 USD for this phase** by meter difference (it includes the baseline; not split further; an estimate — your credit
 balance is the reference). No reserve used.
+
+## Addendum — "before" rules run (follow-up PR `feat/f4b-before-rules`, 2026-10-28)
+The requested order included running the engine with F4's "before" rules as well; the first delivery ran only the frozen rules (the prompt
+file was not reachable from the cloud session, see the header). This follow-up adds `bench-external run-before` (F4's `BEFORE_SHA`
+`67afb85` exported with `git archive`, run once on the sealed cases, no LLM, no cost), the section "Rules (before, 67afb85)" in
+`docs/benchmarks/external/results.md`, and a compact table in the generated `docs/benchmarks/results.md`.
+
+| | Strict TP/FP/FN | Adjudicated (provisional) |
+|---|---|---|
+| Rules, before (`67afb85`) | 64 / 3 / 0 | 65 / 2 / 0 |
+| Rules, frozen (`6c2982c`) | 64 / 2 / 0 | 65 / 1 / 0 |
+| LLM only | 64 / 2 / 0 | 65 / 1 / 0 |
+
+The only finding that differs is `e012:22` PLL004 (`nvl(max(price), 0)`, a `clean` trap): the contract exempts aggregates inside expressions,
+the "before" rule only looked for them at expression depth 0, and F4's tuning on `dev` removed that condition. One case, not a statistic.
+Adjudication of the "before" run is provisional (Claude) and in `docs/benchmarks/external/adjudication/before.json`. No rule, marker, seal
+or case file changed.
+

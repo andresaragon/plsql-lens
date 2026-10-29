@@ -8,7 +8,8 @@ from pathlib import Path
 from typing import Any
 
 from ..llm import LLMError, LLMProvider
-from .engine import run_engine
+from .config import BEFORE_SHA
+from .engine import run_before, run_engine
 from .external import (
     ExternalManifest,
     apply_adjudication,
@@ -68,6 +69,35 @@ def do_run(root: Path, force: bool = False) -> dict[str, Any]:
     return res
 
 
+def do_run_before(
+    root: Path,
+    force: bool = False,
+    sha: str = BEFORE_SHA,
+    repo: Path | None = None,
+    runner: Any = run_before,
+) -> dict[str, Any]:
+    """Run the "before" rules (``sha``, F4's BEFORE_SHA) ONCE over the sealed, converted cases.
+
+    The "before" rules are an immutable git commit, so the frozen-file check of the "after" rules does not
+    apply; the seal of the split is still verified. Nothing is tuned: this only measures what F4's tuning on
+    ``dev`` did on a split it never saw.
+    """
+    out = root / BASE / "raw" / "engine_before.json"
+    if out.exists() and not force:
+        raise ExternalError(f"{out} exists: the 'before' rules are executed once on this split")
+    do_convert(root)  # re-verifies the seal
+    m = ExternalManifest.load(root / BASE / "data" / "manifest.json")
+    findings = runner(sha, repo or root, root / BASE / "data", [c.file for c in m.cases])
+    res = {
+        "before_sha": sha,
+        "manifest_sha256": manifest_hash(m),
+        "findings": sorted({(f.file, f.rule, f.line) for f in findings}),
+    }
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(res, indent=1, sort_keys=True) + "\n")
+    return res
+
+
 def do_llm(root: Path, provider: LLMProvider, model: str, max_usd: float) -> dict[str, Any]:
     do_convert(root)
     m = ExternalManifest.load(root / BASE / "data" / "manifest.json")
@@ -118,6 +148,25 @@ def do_report(root: Path) -> str:
             "Rules (frozen)", es, apply_adjudication(es, _decisions(root, "engine")), prov
         )
     )
+    before_path = root / BASE / "raw" / "engine_before.json"
+    if before_path.exists():
+        bef = json.loads(before_path.read_text())
+        bs = evaluate(m, [Found(*f) for f in bef["findings"]])
+        after_set = {tuple(f) for f in eng["findings"]}
+        before_set = {tuple(f) for f in bef["findings"]}
+        sections.append(
+            f'Before rules: `src/plsql_lens/` at commit `{bef["before_sha"]}` (F4\'s "before", prior to the tuning '
+            f"on `dev`), run once on the same sealed cases. Findings only in before: {len(before_set - after_set)}; "
+            f"only in after: {len(after_set - before_set)}. Not tuned on this split either.\n"
+        )
+        sections.append(
+            render_tables(
+                f"Rules (before, {bef['before_sha'][:7]})",
+                bs,
+                apply_adjudication(bs, _decisions(root, "before")),
+                (root / BASE / "adjudication" / "before.json").exists(),
+            )  # fmt: skip
+        )
     llm_path = root / BASE / "llm_baseline" / "responses.json"
     if llm_path.exists():
         rec = json.loads(llm_path.read_text())

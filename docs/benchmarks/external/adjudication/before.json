@@ -1,0 +1,30 @@
+{
+ "status": "PROVISIONAL (Claude) — pending the repository owner's review",
+ "method": "Every finding of the \"before\" rules on an unmarked line was read in its original case file against docs/rules.md and decided one by one. The two findings shared with the frozen (\"after\") rules repeat the decisions in adjudication/engine.json; e012.pkb:22 is the only one that differs. Rules were not changed.",
+ "decisions": [
+  {
+   "file": "e012.pkb",
+   "rule": "PLL004",
+   "line": 22,
+   "kind": "unmarked_finding",
+   "verdict": "false_positive",
+   "reason": "`select nvl(max(price), 0) into p_max from seats ...` is an aggregate-only select list (MAX inside NVL): docs/rules.md exempts it explicitly (\"including inside expressions such as NVL(MAX(x), 0) + 1\"), so the author's `clean: PLL004` marker is right and there is no defect. The \"before\" rules flag it because they only looked for an aggregate at expression depth 0 (src/plsql_lens/rules/pll004.py at 67afb85); the \"after\" rules, tuned on `dev` only, accept aggregates at any depth, which is why this is the only finding that differs between the two runs."
+  },
+  {
+   "file": "e023.pkb",
+   "rule": "PLL004",
+   "line": 17,
+   "kind": "unmarked_finding",
+   "verdict": "real_defect",
+   "reason": "A SELECT ... INTO (with a CASE expression, not an aggregate and not FROM dual) in a procedure with no handler for NO_DATA_FOUND/TOO_MANY_ROWS/OTHERS: the contract in docs/rules.md holds. The author marked only PLL007 on this line; the PLL004 marker was missed."
+  },
+  {
+   "file": "e037.pkb",
+   "rule": "PLL002",
+   "line": 43,
+   "kind": "unmarked_finding",
+   "verdict": "false_positive",
+   "reason": "l_sql is built by concatenating l_safe_table, which was assigned from DBMS_ASSERT.SQL_OBJECT_NAME one statement earlier; the author's clean marker is right about the code being safe. The rule flags it because the contract only exempts DBMS_ASSERT calls written inside the concatenation (documented limit: a guard through a variable is not recognised). Contract-consistent, but a false positive for a reviewer."
+  }
+ ]
+}

@@ -24,4 +24,33 @@ Este split de benchmark rompe el efecto techo observado en el split sembrado ori
 - **El revisor corrigió siete marcadores** tras las entregas del autor, siempre contra el texto del contrato: `e018` y `e022` (`beyond` → `expect`: la exención de agregados de PLL004 no aplica con `GROUP BY`/`HAVING`; un parámetro `DATE` comparado con un literal de texto lo cubre PLL006(b)), `e026` (se quitó un `beyond` sobre código correcto), `e037` (un `SELECT … INTO` envuelto por `WHEN OTHERS` cuenta como manejado para PLL004 → `clean`; el handler `OTHERS` que solo asigna una variable recibió `expect: PLL001`) y `e038` (faltaba `expect: PLL005` por el DML en un bucle con `FETCH` y `expect: PLL001` por un handler `OTHERS` que solo hace `rollback to` un savepoint).
 - **Qué significa:** los marcadores finales son de un split escrito por Gemini cuya verdad base revisó un modelo Claude leyendo el mismo contrato que implementan las reglas. Da consistencia, pero **no es independiente de la lectura que hace Claude del contrato**, y la línea base solo-LLM también es un modelo Claude. Este split es una comprobación con otro autor, no un estándar de oro humano.
 - **Límites conocidos:** 35 de los 40 casos son cortos (21–35 líneas) y siguen la forma de manual «defecto + negativo sencillo»; solo `e036`–`e040` son largos. Es probable que las notas en este split sean altas. Hay solo 9 marcadores `beyond`, así que el «recall en el mundo real» se apoyará en una muestra pequeña. Los casos no se compilaron y ninguna persona senior de PL/SQL los ha revisado.
-- **Siguiente (F4b):** convertir los casos (quitar los marcadores, escribir un manifiesto), sellarlos con un commit, correr las reglas congeladas y la línea base solo-LLM, y adjudicar uno por uno cada hallazgo en línea sin marcar, publicando los motivos. Las reglas nunca se ajustan con este split.
+- **Hecho (F4b):** la evaluación se ejecutó y se publicó; ver «Evaluación (F4b)» abajo.
+
+## Evaluación (F4b) — qué se ejecutó y en qué orden
+Resultados: [results.md](results.md) · crudos: [raw/engine.json](raw/engine.json), [raw/engine_before.json](raw/engine_before.json),
+[llm_baseline/responses.json](llm_baseline/responses.json) · adjudicación: [adjudication/](adjudication/).
+Se reproduce con `plsql-lens bench-external convert|run|run-before|llm|report`.
+
+1. **Reglas de referencia congeladas** (`frozen.json`, commit `6c2982c`; parser, reglas y `docs/rules.md` con hash y una prueba unitaria).
+2. **Conversor y evaluador**, escritos y probados solo con datos sintéticos.
+3. **Commit-sello** `d2755f2`: 40 casos (64 `expect`, 60 `clean`, 9 `beyond`; marcadores y cabecera descriptiva fuera, mismas líneas),
+   SHA-256 del manifiesto `5f1e1eeef047026120541f8973d6fc02e31a84e4e0a9772f1c4fca12d167f11f` en `../seal.json`.
+4. **Motor congelado, una sola vez** (`bench-external run` rechaza una segunda ejecución sin `--force`).
+5. **Reglas «before», una sola vez** (`bench-external run-before`): el `BEFORE_SHA` de F4 (`67afb85`, exportado de git) sobre los mismos
+   casos sellados, con la misma regla de «una vez». Sin LLM y sin costo; solo mide qué hizo el ajuste de F4 sobre `dev` en un split que nunca vio.
+6. **Línea base solo-LLM** (`claude-sonnet-5-5`, contrato de `docs/rules.md`, sin motor): 40 archivos, 0,596 USD.
+7. **Dos tablas.** *Estricta*: todo hallazgo en una línea sin marcador es falso positivo. *Adjudicada*: cada hallazgo sin marcar se leyó en el caso original
+   contra el contrato y se decidió uno por uno (`adjudication/*.json`, con motivos); es **provisional (Claude), pendiente de revisión del propietario**.
+
+| Método | Estricto TP/FP/FN | Adjudicado (provisional) |
+|---|---|---|
+| Reglas «before» (`67afb85`) | 64 / 3 / 0 | 65 / 2 / 0 |
+| Reglas congeladas (`6c2982c`) | 64 / 2 / 0 | 65 / 1 / 0 |
+| Solo LLM | 64 / 2 / 0 | 65 / 1 / 0 |
+
+* La única diferencia entre «before» y las congeladas es `e012:22` PLL004 (`select nvl(max(price), 0) into …`, una trampa `clean`): el contrato exime
+  los agregados dentro de expresiones y el código «before» solo los buscaba a profundidad 0; el ajuste de F4 sobre `dev` lo corrigió. Un caso ilustra, no es estadística.
+* `beyond` (defectos reales fuera del contrato): 0 de 9 para los tres. Es esperable: las reglas implementan el contrato y al LLM también se le dio.
+* Límites: 40 casos cortos, un autor no humano revisado por Claude, verdad base no independiente de la lectura de Claude del contrato, sin revisor senior.
+  Notas casi perfectas indican que el split es fácil para un verificador literal del contrato, no que las reglas sean buenas en código de producción.
+  El split escrito por una persona (`../human/`) sigue pendiente.

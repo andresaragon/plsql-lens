@@ -27,8 +27,9 @@ This benchmark split breaks the ceiling effect seen in the seeded test split, wh
 - **Next (F4b):** convert the cases (strip the markers, write a manifest), seal them with a commit, run the frozen rules and the LLM-only baseline, and adjudicate every finding on an unmarked line, one by one, publishing the reasons. Rules are never tuned on this split.
 
 ## Evaluation (F4b) — what was run, in what order
-Results: [results.md](results.md) · raw: [raw/engine.json](raw/engine.json), [llm_baseline/responses.json](llm_baseline/responses.json) ·
-adjudication: [adjudication/](adjudication/). Reproduce with `plsql-lens bench-external convert|run|llm|report`.
+Results: [results.md](results.md) · raw: [raw/engine.json](raw/engine.json), [raw/engine_before.json](raw/engine_before.json),
+[llm_baseline/responses.json](llm_baseline/responses.json) · adjudication: [adjudication/](adjudication/).
+Reproduce with `plsql-lens bench-external convert|run|run-before|llm|report`.
 
 1. **Reference rules frozen** (`frozen.json`, commit `6c2982c`; parser + rules + `docs/rules.md` hashed and checked by a unit test).
 2. **Converter and evaluator** written and tested on synthetic data only (`tests/fixtures/external_synthetic/`).
@@ -36,6 +37,8 @@ adjudication: [adjudication/](adjudication/). Reproduce with `plsql-lens bench-e
    header stripped, line numbers kept), manifest SHA-256 `5f1e1eeef047026120541f8973d6fc02e31a84e4e0a9772f1c4fca12d167f11f`
    in `../seal.json`. Neither the engine nor the LLM had seen the files.
 4. **Engine run once** (`bench-external run` refuses a second run without `--force`).
+   **"Before" rules run once** (follow-up PR, `bench-external run-before`): F4's `BEFORE_SHA` (`67afb85`, exported from git) over the same
+   sealed cases, with the same once-only rule. No LLM, no cost. It only measures what F4's tuning on `dev` did on a split it never saw.
 5. **LLM-only baseline** (`claude-sonnet-5-5`, `claude-cli`, lean flags, contract of `docs/rules.md`, no engine): 40 files, 0.596 USD.
 6. **Two tables.** *Strict*: any finding on an unmarked line is a false positive (the author's rule). *Adjudicated*: each
    unmarked finding and each unreported `expect` was read in the original case against the contract and decided one by one
@@ -47,6 +50,9 @@ adjudication: [adjudication/](adjudication/). Reproduce with `plsql-lens bench-e
 * The two findings on unmarked lines: `e023:17` PLL004 — a real contract defect the author did not mark (adjudicated TP);
   `e037:43` PLL002 — concatenation guarded by `DBMS_ASSERT` through a variable, safe code that the contract's
   "direct `DBMS_ASSERT` call" exemption does not recognise (stays a false positive; also the one `clean` trap that fired).
+* "Before" rules (`67afb85`): strict 64 TP / 3 FP / 0 FN; adjudicated (provisional) 65 / 2 / 0. The only finding that differs from the
+  frozen rules is `e012:22` PLL004 (`select nvl(max(price), 0) into …`, a `clean` trap): the contract exempts aggregates inside expressions and
+  the "before" code looked for them only at depth 0, which F4's tuning on `dev` fixed. One case is an illustration, not a statistic.
 * `beyond` (real defects outside the contract): 0 of 9 for both. Expected: the rules implement the contract, and the LLM was
   given the contract too. This is the figure to look at to see what the deterministic rules cannot do.
 * Limits: 40 short cases (35 of 40 are 21–35 lines), single non-human author reviewed by Claude, ground truth not independent of

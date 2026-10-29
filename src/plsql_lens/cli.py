@@ -462,6 +462,19 @@ def ext_run(
     typer.echo(f"{len(res['findings'])} unique findings recorded")
 
 
+@ext.command("run-before")
+def ext_run_before(
+    force: Annotated[bool, typer.Option(help="Allow a second run (breaks 'once').")] = False,
+) -> None:
+    """Run F4's "before" rules (BEFORE_SHA, from git) ONCE over the converted cases. No LLM."""
+    from .bench.config import repo_root
+    from .bench.external_run import do_run_before
+
+    res = do_run_before(repo_root(), force)
+    sha = res["before_sha"][:7]
+    typer.echo(f"{len(res['findings'])} unique findings recorded (before rules @ {sha})")
+
+
 @ext.command("llm")
 def ext_llm(
     model: Annotated[str, typer.Option()] = "claude-sonnet-5-5",

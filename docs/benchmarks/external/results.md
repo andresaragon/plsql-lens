@@ -32,6 +32,38 @@ Frozen reference rules: commit `6c2982ca2e506cb30852f9710d45f1b72fd60931`. Manif
 
 **Real-world (`beyond`) recall**: 0 of 9 markers reported (reported apart, not in the tables above).
 
+Before rules: `src/plsql_lens/` at commit `67afb855ea1f3d54199356f65a0cdf6e8944e868` (F4's "before", prior to the tuning on `dev`), run once on the same sealed cases. Findings only in before: 1; only in after: 0. Not tuned on this split either.
+
+### Rules (before, 67afb85)
+
+**Strict** (every finding on an unmarked line is a false positive)
+
+| Rule | TP | FP | FN | Precision | Recall | F1 | FP in a `clean` trap |
+|---|---|---|---|---|---|---|---|
+| PLL001 | 10 | 0 | 0 | 1.000 [0.72–1.00] | 1.000 [0.72–1.00] | 1.000 [0.72–1.00] | 0 |
+| PLL002 | 8 | 1 | 0 | 0.889 [0.57–0.98] | 1.000 [0.68–1.00] | 0.941 [0.61–0.99] | 1 |
+| PLL003 | 8 | 0 | 0 | 1.000 [0.68–1.00] | 1.000 [0.68–1.00] | 1.000 [0.68–1.00] | 0 |
+| PLL004 | 8 | 2 | 0 | 0.800 [0.49–0.94] | 1.000 [0.68–1.00] | 0.889 [0.57–0.98] | 1 |
+| PLL005 | 9 | 0 | 0 | 1.000 [0.70–1.00] | 1.000 [0.70–1.00] | 1.000 [0.70–1.00] | 0 |
+| PLL006 | 9 | 0 | 0 | 1.000 [0.70–1.00] | 1.000 [0.70–1.00] | 1.000 [0.70–1.00] | 0 |
+| PLL007 | 12 | 0 | 0 | 1.000 [0.76–1.00] | 1.000 [0.76–1.00] | 1.000 [0.76–1.00] | 0 |
+| **all** | 64 | 3 | 0 | 0.955 [0.88–0.98] | 1.000 [0.94–1.00] | 0.977 [0.91–0.99] | 2 |
+
+**Adjudicated** — *provisional (Claude), pending your review*
+
+| Rule | TP | FP | FN | Precision | Recall | F1 |
+|---|---|---|---|---|---|---|
+| PLL001 | 10 | 0 | 0 | 1.000 [0.72–1.00] | 1.000 [0.72–1.00] | 1.000 [0.72–1.00] |
+| PLL002 | 8 | 1 | 0 | 0.889 [0.57–0.98] | 1.000 [0.68–1.00] | 0.941 [0.61–0.99] |
+| PLL003 | 8 | 0 | 0 | 1.000 [0.68–1.00] | 1.000 [0.68–1.00] | 1.000 [0.68–1.00] |
+| PLL004 | 9 | 1 | 0 | 0.900 [0.60–0.98] | 1.000 [0.70–1.00] | 0.947 [0.64–0.99] |
+| PLL005 | 9 | 0 | 0 | 1.000 [0.70–1.00] | 1.000 [0.70–1.00] | 1.000 [0.70–1.00] |
+| PLL006 | 9 | 0 | 0 | 1.000 [0.70–1.00] | 1.000 [0.70–1.00] | 1.000 [0.70–1.00] |
+| PLL007 | 12 | 0 | 0 | 1.000 [0.76–1.00] | 1.000 [0.76–1.00] | 1.000 [0.76–1.00] |
+| **all** | 65 | 2 | 0 | 0.970 [0.90–0.99] | 1.000 [0.94–1.00] | 0.985 [0.92–1.00] |
+
+**Real-world (`beyond`) recall**: 0 of 9 markers reported (reported apart, not in the tables above).
+
 LLM-only baseline: `claude-sonnet-5-5`, 40 files, cost 0.5960 USD.
 
 ### LLM only

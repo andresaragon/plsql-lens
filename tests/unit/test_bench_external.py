@@ -191,3 +191,127 @@ def test_llm_baseline_is_recorded_and_scored(tmp_path: Path) -> None:
     )
     assert rec["responses"]["s001.pkb"]["cost_usd"] == 0.01
     assert "LLM only" in do_report(root)
+
+
+# ---- "before" rules on the sealed split (F4b follow-up) -------------------------------------------------
+# The prompt for F4b asked for the engine to be run with the "before" rules too (F4's BEFORE_SHA); the first
+# delivery ran only the frozen ("after") rules. The run uses ``engine.run_before`` and is also recorded once.
+
+
+def fake_before(found: list[tuple[str, str, int]]):  # type: ignore[no-untyped-def]
+    calls: list[tuple[str, object, list[str]]] = []
+
+    def runner(sha, repo, root, files=()):  # type: ignore[no-untyped-def]
+        calls.append((sha, repo, list(files)))
+        return [Found(*f) for f in found]
+
+    runner.calls = calls  # type: ignore[attr-defined]
+    return runner
+
+
+def test_before_run_is_recorded_once_with_the_before_sha_and_the_seal(tmp_path: Path) -> None:
+    from plsql_lens.bench.config import BEFORE_SHA
+    from plsql_lens.bench.external_run import ExternalError, do_convert, do_run_before
+
+    root = make_root(tmp_path)
+    digest = do_convert(root, seal=True)
+    runner = fake_before([("s001.pkb", "PLL003", 10)])
+    res = do_run_before(root, runner=runner)
+    assert res["before_sha"] == BEFORE_SHA and res["manifest_sha256"] == digest
+    assert res["findings"] == [("s001.pkb", "PLL003", 10)]
+    sha, _repo, files = runner.calls[0]  # type: ignore[attr-defined]
+    assert sha == BEFORE_SHA and files == ["s001.pkb"]
+    saved = json.loads((root / "docs/benchmarks/external/raw/engine_before.json").read_text())
+    assert saved["before_sha"] == BEFORE_SHA and saved["findings"] == [["s001.pkb", "PLL003", 10]]
+    with pytest.raises(ExternalError, match="once"):
+        do_run_before(root, runner=runner)
+    do_run_before(root, force=True, runner=runner)  # explicit override only
+
+
+def test_before_run_refuses_an_unsealed_or_changed_split(tmp_path: Path) -> None:
+    from plsql_lens.bench.external_run import ExternalError, do_convert, do_run_before
+
+    root = make_root(tmp_path)
+    with pytest.raises(ExternalError):  # nothing sealed yet
+        do_run_before(root, runner=fake_before([]))
+    do_convert(root, seal=True)
+    case = root / "docs/benchmarks/external/cases/s001.pkb"
+    case.write_text(case.read_text() + "\n-- changed after the seal\n")
+    with pytest.raises(ExternalError):
+        do_run_before(root, runner=fake_before([]))
+
+
+def test_before_run_does_not_need_the_after_rules_to_be_frozen(tmp_path: Path) -> None:
+    """The "before" rules are an immutable git commit: the frozen-file check of the "after" rules is not its business."""
+    from plsql_lens.bench.external_run import do_convert, do_run_before
+
+    root = make_root(tmp_path)
+    do_convert(root, seal=True)
+    (root / "docs/rules.md").write_text("changed contract")  # would make do_run (after) refuse
+    do_run_before(root, runner=fake_before([]))
+
+
+def test_report_adds_the_before_rules_with_their_own_tables_and_a_delta(tmp_path: Path) -> None:
+    from plsql_lens.bench.external_run import do_convert, do_report, do_run, do_run_before
+
+    root = make_root(tmp_path)
+    do_convert(root, seal=True)
+    after = do_run(root)
+    before_findings = [(f, r, line) for f, r, line in after["findings"]][:1] + [
+        ("s001.pkb", "PLL001", 3)
+    ]
+    do_run_before(root, runner=fake_before(before_findings))
+    text = do_report(root)
+    assert "Rules (frozen)" in text and "Rules (before" in text
+    assert "Strict" in text.split("Rules (before", 1)[1]
+    assert re.search(r"only in before: \d+", text) and re.search(r"only in after: \d+", text)
+
+
+def test_report_without_a_before_run_is_unchanged(tmp_path: Path) -> None:
+    from plsql_lens.bench.external_run import do_convert, do_report, do_run
+
+    root = make_root(tmp_path)
+    do_convert(root, seal=True)
+    do_run(root)
+    assert "Rules (before" not in do_report(root)
+
+
+def test_before_adjudication_is_labeled_provisional_when_present(tmp_path: Path) -> None:
+    from plsql_lens.bench.external_run import do_convert, do_report, do_run, do_run_before
+
+    root = make_root(tmp_path)
+    do_convert(root, seal=True)
+    do_run(root)
+    do_run_before(root, runner=fake_before([("s001.pkb", "PLL001", 3)]))
+    adj = root / "docs/benchmarks/external/adjudication"
+    adj.mkdir()
+    (adj / "before.json").write_text(json.dumps({"status": "PROVISIONAL", "decisions": []}))
+    sec = do_report(root).split("Rules (before", 1)[1]
+    assert "provisional" in sec.lower()
+
+
+# ---- the generated docs/benchmarks/results.md mentions the external split (F4b follow-up) ----------------
+
+
+def test_global_results_lists_the_external_methods_when_their_raw_data_exists(
+    tmp_path: Path,
+) -> None:
+    from plsql_lens.bench.external_run import do_convert, do_run, do_run_before
+    from plsql_lens.bench.report import render_results
+
+    root = make_root(tmp_path)
+    do_convert(root, seal=True)
+    do_run(root)
+    do_run_before(root, runner=fake_before([("s001.pkb", "PLL001", 3)]))
+    text = render_results(root / "docs" / "benchmarks")
+    assert "## External-author split (F4b)" in text
+    assert "external/results.md" in text and "not a human gold standard" in text.lower()
+    assert "Rules (before" in text and "Rules (frozen)" in text
+
+
+def test_global_results_without_external_data_has_no_external_section(tmp_path: Path) -> None:
+    from plsql_lens.bench.report import render_results
+
+    bench = tmp_path / "benchmarks"
+    bench.mkdir()
+    assert "External-author split" not in render_results(bench)

@@ -60,6 +60,55 @@ def split_section(raw: dict[str, Any], title: str) -> list[str]:
     return lines
 
 
+def _external_section(out: Path) -> list[str]:
+    """Compact comparison on the external-author split (F4b); empty unless its raw engine run exists."""
+    ext = out / "external"
+    manifest, engine = ext / "data" / "manifest.json", ext / "raw" / "engine.json"
+    if not (manifest.exists() and engine.exists()):
+        return []
+    from .external import ExternalManifest, apply_adjudication, evaluate
+    from .llm_baseline import findings_from_recording
+    from .model import Found
+    from .stats import prf
+
+    m = ExternalManifest.load(manifest)
+    runs: list[tuple[str, list[Found], str]] = []
+    before = ext / "raw" / "engine_before.json"
+    if before.exists():
+        raw = json.loads(before.read_text())
+        runs.append(
+            (
+                f"Rules (before, {raw['before_sha'][:7]})",
+                [Found(*f) for f in raw["findings"]],
+                "before",
+            )
+        )
+    raw = json.loads(engine.read_text())
+    runs.append(("Rules (frozen)", [Found(*f) for f in raw["findings"]], "engine"))
+    llm = ext / "llm_baseline" / "responses.json"
+    if llm.exists():
+        runs.append(("LLM only", findings_from_recording(json.loads(llm.read_text())), "llm"))
+
+    def totals(counts: dict[str, dict[str, int]]) -> dict[str, int]:
+        return {k: sum(c[k] for c in counts.values()) for k in ("tp", "fp", "fn")}
+
+    L = ["## External-author split (F4b)", "",
+         f"Cross-author check on {len(m.cases)} cases written by Gemini whose markers Claude revised, sealed before "
+         "any run: **not a human gold standard**, and 40 short cases give wide intervals. Rules were never tuned on "
+         "it. Per-rule tables, the adjudication and its limits: [external/results.md](external/results.md).", "",
+         "| Method | Strict TP/FP/FN | Precision | Recall | Adjudicated TP/FP/FN (provisional) |",
+         "|---|---|---|---|---|"]  # fmt: skip
+    for name, found, who in runs:
+        score = evaluate(m, found)
+        d = ext / "adjudication" / f"{who}.json"
+        decisions = json.loads(d.read_text())["decisions"] if d.exists() else []
+        s, a = totals(score.per_rule), totals(apply_adjudication(score, decisions))
+        p = prf(s["tp"], s["fp"], s["fn"])
+        L.append(f"| {name} | {s['tp']}/{s['fp']}/{s['fn']} | {_m(p, 'precision')} | {_m(p, 'recall')} "
+                 f"| {a['tp']}/{a['fp']}/{a['fn']} |")  # fmt: skip
+    return L + [""]
+
+
 def render_results(out: Path) -> str:
     test, dev = _load(out, "test.json"), _load(out, "dev.json")
     corpus, held = _load(out, "corpus.json"), _load(out, "heldout.json")
@@ -142,4 +191,5 @@ def render_results(out: Path) -> str:
                 f"| {r} | {_m(a, 'precision')} | {_m(a, 'recall')} | {_m(e, 'precision')} | {_m(e, 'recall')} |"
             )
         L.append("")
+    L += _external_section(out)
     return "\n".join(L).rstrip() + "\n"
