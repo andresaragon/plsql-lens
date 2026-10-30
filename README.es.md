@@ -56,6 +56,9 @@ make demo-f2             # los tres formatos + conteos por regla en docs/reports
   cambia hallazgos, y con un backend real cuesta dinero. El backend se elige con `--llm`: `claude-cli` (por defecto,
   ejecuta `claude -p`), `anthropic-api` (requiere `ANTHROPIC_API_KEY`) o `fake` (reproduce `--llm-recordings`,
   gratis). `--explain-max N` limita cuántos hallazgos se envían (los más graves primero, 10 por defecto).
+* `--fail-on never|info|low|medium|high` hace que el comando termine con código 1 si algún hallazgo tiene al menos esa
+  severidad (`never`, el valor por defecto, siempre termina con 0). El informe se escribe completo antes. Códigos de
+  salida: [docs/cli-exit-codes.md](docs/cli-exit-codes.md).
 
 ```bash
 uv run plsql-lens review corpus/logger/logger.pkb --explain --format json -o review.json   # llama al LLM
@@ -63,12 +66,29 @@ uv run plsql-lens review corpus/logger/logger.pkb --explain --format json -o rev
 
 Salida de ejemplo y los archivos SARIF/JSON: [docs/reports/phase-2/](docs/reports/phase-2/).
 
+## GitHub Action
+
+`action.yml` en la raíz del repositorio es una acción compuesta: ejecuta `plsql-lens review`, escribe los hallazgos
+como SARIF 2.1.0 y, con `fail-on`, hace fallar el paso a partir de un umbral de severidad. Instala la herramienta
+desde su propio checkout (no está publicada en PyPI) y la subida a code scanning es opcional (`upload: true`).
+
+```yaml
+- uses: andresaragon/plsql-lens@<full-commit-sha>
+  with:
+    path: db/packages
+    fail-on: high
+```
+
+Entradas, ejemplos de workflow completos y los requisitos de acceso para usarla desde otro repositorio privado:
+[docs/github-action.md](docs/github-action.md) (en inglés). Este repositorio comprueba la acción en cada push con
+[`action-selftest.yml`](.github/workflows/action-selftest.yml).
+
 ## Comandos
 
 | Comando | Qué hace | Requiere |
 |---|---|---|
 | `plsql-lens inventory RUTA` | Unidades, subprogramas y grafo de llamadas resuelto; `--format json\|mermaid`, `--level package\|unit` | nada |
-| `plsql-lens review RUTA` | Reglas de revisión PLL001–PLL007; `--format table\|json\|sarif`, `--rules`, `--explain` | nada (LLM solo con `--explain`) |
+| `plsql-lens review RUTA` | Reglas de revisión PLL001–PLL007; `--format table\|json\|sarif`, `--rules`, `--explain`, `--fail-on` | nada (LLM solo con `--explain`) |
 | `plsql-lens testgen RUTA --unit U` | Genera un paquete de tests utPLSQL para una unidad; `--run` lo compila, repara y ejecuta | LLM (cuesta dinero); Oracle para `--run` |
 | `plsql-lens testgen-setup` | Instala los objetos objetivo (Logger, HR, paquetes de test) en el esquema Oracle configurado | Oracle |
 | `plsql-lens testgen-suite` | Ejecuta los tests commiteados y escribe `report.json` / `junit.xml`; `--generate` los regenera | Oracle; LLM solo con `--generate` (cuesta dinero) |

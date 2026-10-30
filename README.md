@@ -56,6 +56,9 @@ make demo-f2             # the three formats + per-rule counts in docs/reports/p
   or changes findings, and it costs money with a real backend. Choose the backend with `--llm`: `claude-cli`
   (default, runs `claude -p`), `anthropic-api` (needs `ANTHROPIC_API_KEY`) or `fake` (replays `--llm-recordings`,
   free). `--explain-max N` caps how many findings are sent (most severe first, 10 by default).
+* `--fail-on never|info|low|medium|high` makes the command exit 1 when a finding has at least that severity
+  (`never`, the default, always exits 0). The report is written in full first. Exit codes:
+  [docs/cli-exit-codes.md](docs/cli-exit-codes.md).
 
 ```bash
 uv run plsql-lens review corpus/logger/logger.pkb --explain --format json -o review.json   # calls the LLM
@@ -63,12 +66,29 @@ uv run plsql-lens review corpus/logger/logger.pkb --explain --format json -o rev
 
 Sample output and the SARIF/JSON files: [docs/reports/phase-2/](docs/reports/phase-2/).
 
+## GitHub Action
+
+`action.yml` at the repository root is a composite action: it runs `plsql-lens review`, writes the findings as
+SARIF 2.1.0 and, with `fail-on`, fails the step on a severity threshold. It installs the tool from its own checkout
+(not published to PyPI) and uploading to code scanning is opt-in (`upload: true`).
+
+```yaml
+- uses: andresaragon/plsql-lens@<full-commit-sha>
+  with:
+    path: db/packages
+    fail-on: high
+```
+
+Inputs, full workflow examples and the access requirements for using it from another private repository:
+[docs/github-action.md](docs/github-action.md). This repository checks the action on every push with
+[`action-selftest.yml`](.github/workflows/action-selftest.yml).
+
 ## Commands
 
 | Command | What it does | Needs |
 |---|---|---|
 | `plsql-lens inventory PATH` | Units, subprograms and resolved call graph; `--format json\|mermaid`, `--level package\|unit` | nothing |
-| `plsql-lens review PATH` | Review rules PLL001–PLL007; `--format table\|json\|sarif`, `--rules`, `--explain` | nothing (LLM only with `--explain`) |
+| `plsql-lens review PATH` | Review rules PLL001–PLL007; `--format table\|json\|sarif`, `--rules`, `--explain`, `--fail-on` | nothing (LLM only with `--explain`) |
 | `plsql-lens testgen PATH --unit U` | Generates a utPLSQL test package for one unit; `--run` compiles, repairs and runs it | LLM (costs money); Oracle for `--run` |
 | `plsql-lens testgen-setup` | Installs the target objects (Logger, HR, test packages) into the configured Oracle schema | Oracle |
 | `plsql-lens testgen-suite` | Runs the committed tests and writes `report.json` / `junit.xml`; `--generate` regenerates them | Oracle; LLM only with `--generate` (costs money) |
