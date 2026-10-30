@@ -206,6 +206,46 @@
       "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
     },
     {
+      "id": "decode_13",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(a, b, 1, 0) FROM (SELECT CAST(NULL AS INTEGER) a, CAST(NULL AS INTEGER) b FROM DUAL)",
+      "oracle_result": "1",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "decode_14",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(a, b, 1, 0) FROM (SELECT CAST(NULL AS INTEGER) a, 5 b FROM DUAL)",
+      "oracle_result": "0",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "decode_15",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(a, b, 1, 0) FROM (SELECT 5 a, CAST(NULL AS INTEGER) b FROM DUAL)",
+      "oracle_result": "0",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "decode_16",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(a, b, 1, 0) FROM (SELECT 3 a, 3 b FROM DUAL)",
+      "oracle_result": "1",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "decode_17",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(a, 7, 70, b, 80, 0) FROM (SELECT CAST(NULL AS INTEGER) a, CAST(NULL AS INTEGER) b FROM DUAL)",
+      "oracle_result": "80",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
       "id": "nextval_01",
       "construct": "nextval",
       "setup": [

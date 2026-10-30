@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 FIXTURE = Path(__file__).resolve().parents[1] / "fixtures" / "migrate" / "semantics.json"
-SHA256 = "121039ccf51a6f957a9d3856ed399ad0b8b68ef61d697ee8039151dd58d10cf3"
+SHA256 = "0be583169f722ba22526aff013b97cfec3b32661f117193aab7be5b6df46d318"
 CONSTRUCTS = {"nvl", "decode", "nextval", "from_dual", "mixed"}
 DIVERGENCES = {"oracle_empty_string_is_null", "oracle_concat_ignores_null"}
 
@@ -24,7 +24,7 @@ def test_fixture_is_the_one_generated_from_oracle() -> None:
 
 def test_cases_are_well_formed() -> None:
     cases = _cases()
-    assert len(cases) == 37
+    assert len(cases) == 42
     assert len({c["id"] for c in cases}) == len(cases)
     for c in cases:
         assert c["construct"] in CONSTRUCTS

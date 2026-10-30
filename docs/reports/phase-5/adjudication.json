@@ -1,0 +1,1470 @@
+{
+ "adjudicated": "2026-10-30",
+ "adjudicator": "Claude (provisional; not a human review)",
+ "verdict": "tp = the token is the Oracle construct the rule names; fp = it is something else",
+ "impact": {
+  "mechanical": "a direct equivalent exists and behavior is the same",
+  "needs-rewrite": "no direct equivalent: needs a manual restructure",
+  "semantic-trap": "a direct or naive translation changes behavior in this usage",
+  "benign": "the token matched but behavior is the same on PostgreSQL"
+ },
+ "strata": {
+  "MIG002": {
+   "population": 11,
+   "adjudicated": 11,
+   "how": "all"
+  },
+  "MIG003": {
+   "population": 22,
+   "adjudicated": 22,
+   "how": "all"
+  },
+  "MIG004": {
+   "population": 15,
+   "adjudicated": 15,
+   "how": "all"
+  },
+  "MIG005": {
+   "population": 7,
+   "adjudicated": 7,
+   "how": "all"
+  },
+  "MIG006": {
+   "population": 2,
+   "adjudicated": 2,
+   "how": "all"
+  },
+  "MIG007": {
+   "population": 1,
+   "adjudicated": 1,
+   "how": "all"
+  },
+  "MIG010": {
+   "population": 14,
+   "adjudicated": 14,
+   "how": "all"
+  },
+  "MIG011": {
+   "population": 8,
+   "adjudicated": 8,
+   "how": "all"
+  },
+  "MIG001": {
+   "population": 70,
+   "adjudicated": 20,
+   "how": "seeded sample (seed 20261030)"
+  },
+  "MIG008": {
+   "population": 38,
+   "adjudicated": 20,
+   "how": "seeded sample (seed 20261030)"
+  },
+  "MIG009": {
+   "population": 46,
+   "adjudicated": 20,
+   "how": "seeded sample (seed 20261030)"
+  }
+ },
+ "items": [
+  {
+   "rule": "MIG002",
+   "n": 1,
+   "file": "corpus/logger/logger_configure.plb",
+   "line": 121,
+   "col": 7,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "literal search values: a plain CASE is exact"
+  },
+  {
+   "rule": "MIG002",
+   "n": 2,
+   "file": "corpus/utplsql/core/coverage/ut_coverage_helper.pkb",
+   "line": 65,
+   "col": 24,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "literal search values: a plain CASE is exact"
+  },
+  {
+   "rule": "MIG002",
+   "n": 3,
+   "file": "corpus/utplsql/core/ut_metadata.pkb",
+   "line": 126,
+   "col": 31,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "literal search values: a plain CASE is exact"
+  },
+  {
+   "rule": "MIG002",
+   "n": 4,
+   "file": "corpus/utplsql/expectations/data_values/ut_compound_data_helper.pkb",
+   "line": 683,
+   "col": 24,
+   "verdict": "tp",
+   "impact": "semantic-trap",
+   "note": "NULL-safe comparison of two columns: DECODE matches NULL with NULL, a plain CASE does not"
+  },
+  {
+   "rule": "MIG002",
+   "n": 5,
+   "file": "corpus/utplsql/expectations/data_values/ut_compound_data_helper.pkb",
+   "line": 689,
+   "col": 24,
+   "verdict": "tp",
+   "impact": "semantic-trap",
+   "note": "NULL-safe comparison of two columns: DECODE matches NULL with NULL, a plain CASE does not"
+  },
+  {
+   "rule": "MIG002",
+   "n": 6,
+   "file": "corpus/utplsql/expectations/data_values/ut_compound_data_helper.pkb",
+   "line": 710,
+   "col": 16,
+   "verdict": "tp",
+   "impact": "semantic-trap",
+   "note": "NULL-safe comparison of two columns: DECODE matches NULL with NULL, a plain CASE does not"
+  },
+  {
+   "rule": "MIG002",
+   "n": 7,
+   "file": "corpus/utplsql/expectations/data_values/ut_compound_data_helper.pkb",
+   "line": 711,
+   "col": 19,
+   "verdict": "tp",
+   "impact": "semantic-trap",
+   "note": "NULL-safe comparison of two columns: DECODE matches NULL with NULL, a plain CASE does not"
+  },
+  {
+   "rule": "MIG002",
+   "n": 8,
+   "file": "corpus/utplsql/expectations/data_values/ut_compound_data_helper.pkb",
+   "line": 714,
+   "col": 19,
+   "verdict": "tp",
+   "impact": "semantic-trap",
+   "note": "NULL-safe comparison of two columns: DECODE matches NULL with NULL, a plain CASE does not"
+  },
+  {
+   "rule": "MIG002",
+   "n": 9,
+   "file": "corpus/utplsql/expectations/data_values/ut_compound_data_helper.pkb",
+   "line": 719,
+   "col": 19,
+   "verdict": "tp",
+   "impact": "semantic-trap",
+   "note": "NULL-safe comparison of two columns: DECODE matches NULL with NULL, a plain CASE does not"
+  },
+  {
+   "rule": "MIG002",
+   "n": 10,
+   "file": "corpus/utplsql/expectations/data_values/ut_compound_data_helper.pkb",
+   "line": 725,
+   "col": 16,
+   "verdict": "tp",
+   "impact": "semantic-trap",
+   "note": "NULL-safe comparison of two columns: DECODE matches NULL with NULL, a plain CASE does not"
+  },
+  {
+   "rule": "MIG002",
+   "n": 11,
+   "file": "corpus/utplsql/expectations/data_values/ut_cursor_details.tpb",
+   "line": 26,
+   "col": 12,
+   "verdict": "tp",
+   "impact": "semantic-trap",
+   "note": "NULL-safe comparison of two columns: DECODE matches NULL with NULL, a plain CASE does not"
+  },
+  {
+   "rule": "MIG003",
+   "n": 1,
+   "file": "corpus/logger/logger.pkb",
+   "line": 1036,
+   "col": 25,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain use as a value or a comparison"
+  },
+  {
+   "rule": "MIG003",
+   "n": 2,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2125,
+   "col": 29,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain value; NUMTODSINTERVAL is a separate Oracle function"
+  },
+  {
+   "rule": "MIG003",
+   "n": 3,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2402,
+   "col": 28,
+   "verdict": "tp",
+   "impact": "semantic-trap",
+   "note": "sysdate + number: days on Oracle, an error on PostgreSQL"
+  },
+  {
+   "rule": "MIG003",
+   "n": 4,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2411,
+   "col": 30,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain use as a value or a comparison"
+  },
+  {
+   "rule": "MIG003",
+   "n": 5,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2414,
+   "col": 64,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain use as a value or a comparison"
+  },
+  {
+   "rule": "MIG003",
+   "n": 6,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2506,
+   "col": 15,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain use as a value or a comparison"
+  },
+  {
+   "rule": "MIG003",
+   "n": 7,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2831,
+   "col": 10,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain use as a value or a comparison"
+  },
+  {
+   "rule": "MIG003",
+   "n": 8,
+   "file": "corpus/oracle-db-sample-schemas/hr_code.sql",
+   "line": 69,
+   "col": 15,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain use as a value or a comparison"
+  },
+  {
+   "rule": "MIG003",
+   "n": 9,
+   "file": "corpus/oracle-db-sample-schemas/hr_code.sql",
+   "line": 70,
+   "col": 21,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain use as a value or a comparison"
+  },
+  {
+   "rule": "MIG003",
+   "n": 10,
+   "file": "corpus/oracle-db-sample-schemas/hr_code.sql",
+   "line": 110,
+   "col": 53,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain use as a value or a comparison"
+  },
+  {
+   "rule": "MIG003",
+   "n": 11,
+   "file": "corpus/oracle-db-sample-schemas/xdbUtilities.sql",
+   "line": 735,
+   "col": 38,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain use as a value or a comparison"
+  },
+  {
+   "rule": "MIG003",
+   "n": 12,
+   "file": "corpus/utplsql/api/ut_runner.pkb",
+   "line": 99,
+   "col": 33,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain value; the format mask 'ffff' is a separate difference"
+  },
+  {
+   "rule": "MIG003",
+   "n": 13,
+   "file": "corpus/utplsql/core/annotations/ut_annotation_cache_manager.pkb",
+   "line": 21,
+   "col": 38,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain use as a value or a comparison"
+  },
+  {
+   "rule": "MIG003",
+   "n": 14,
+   "file": "corpus/utplsql/core/annotations/ut_annotation_cache_manager.pkb",
+   "line": 69,
+   "col": 38,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain use as a value or a comparison"
+  },
+  {
+   "rule": "MIG003",
+   "n": 15,
+   "file": "corpus/utplsql/core/annotations/ut_annotation_manager.pkb",
+   "line": 144,
+   "col": 35,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain value; assigning it to a PostgreSQL date drops the time, which is a data-type decision"
+  },
+  {
+   "rule": "MIG003",
+   "n": 16,
+   "file": "corpus/utplsql/core/coverage/ut_coverage.pkb",
+   "line": 228,
+   "col": 85,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain use as a value or a comparison"
+  },
+  {
+   "rule": "MIG003",
+   "n": 17,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_buffer_base.tpb",
+   "line": 25,
+   "col": 50,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain use as a value or a comparison"
+  },
+  {
+   "rule": "MIG003",
+   "n": 18,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_buffer_base.tpb",
+   "line": 149,
+   "col": 38,
+   "verdict": "tp",
+   "impact": "semantic-trap",
+   "note": "sysdate - number: days on Oracle, an error on PostgreSQL"
+  },
+  {
+   "rule": "MIG003",
+   "n": 19,
+   "file": "corpus/utplsql/reporters/ut_coverage_cobertura_reporter.tpb",
+   "line": 100,
+   "col": 42,
+   "verdict": "tp",
+   "impact": "semantic-trap",
+   "note": "sysdate - date, times 24*60*60: a number of days on Oracle, an interval on PostgreSQL"
+  },
+  {
+   "rule": "MIG003",
+   "n": 20,
+   "file": "corpus/utplsql/reporters/ut_coverage_report_html_helper.pkb",
+   "line": 303,
+   "col": 27,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain use as a value or a comparison"
+  },
+  {
+   "rule": "MIG003",
+   "n": 21,
+   "file": "corpus/utplsql/reporters/ut_teamcity_reporter_helper.pkb",
+   "line": 34,
+   "col": 41,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain value; the format mask FF3TZHTZM is a separate difference"
+  },
+  {
+   "rule": "MIG003",
+   "n": 22,
+   "file": "corpus/utplsql/reporters/ut_tfs_junit_reporter.tpb",
+   "line": 39,
+   "col": 39,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "plain use as a value or a comparison"
+  },
+  {
+   "rule": "MIG004",
+   "n": 1,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2794,
+   "col": 30,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "seq.nextval: nextval('seq')"
+  },
+  {
+   "rule": "MIG004",
+   "n": 2,
+   "file": "corpus/utplsql/core/annotations/ut_annotation_cache_manager.pkb",
+   "line": 47,
+   "col": 41,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "seq.nextval: nextval('seq')"
+  },
+  {
+   "rule": "MIG004",
+   "n": 3,
+   "file": "corpus/utplsql/core/annotations/ut_annotation_cache_manager.pkb",
+   "line": 115,
+   "col": 38,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "seq.nextval: nextval('seq')"
+  },
+  {
+   "rule": "MIG004",
+   "n": 4,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_bulk_buffer.tpb",
+   "line": 38,
+   "col": 58,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "seq.nextval: nextval('seq')"
+  },
+  {
+   "rule": "MIG004",
+   "n": 5,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_bulk_buffer.tpb",
+   "line": 48,
+   "col": 72,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "seq.nextval: nextval('seq')"
+  },
+  {
+   "rule": "MIG004",
+   "n": 6,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_bulk_buffer.tpb",
+   "line": 67,
+   "col": 58,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "seq.nextval: nextval('seq')"
+  },
+  {
+   "rule": "MIG004",
+   "n": 7,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_clob_table_buffer.tpb",
+   "line": 30,
+   "col": 61,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "seq.nextval: nextval('seq')"
+  },
+  {
+   "rule": "MIG004",
+   "n": 8,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_clob_table_buffer.tpb",
+   "line": 39,
+   "col": 77,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "seq.nextval: nextval('seq')"
+  },
+  {
+   "rule": "MIG004",
+   "n": 9,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_clob_table_buffer.tpb",
+   "line": 50,
+   "col": 61,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "seq.nextval: nextval('seq')"
+  },
+  {
+   "rule": "MIG004",
+   "n": 10,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_table_buffer.tpb",
+   "line": 38,
+   "col": 58,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "seq.nextval: nextval('seq')"
+  },
+  {
+   "rule": "MIG004",
+   "n": 11,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_table_buffer.tpb",
+   "line": 48,
+   "col": 72,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "seq.nextval: nextval('seq')"
+  },
+  {
+   "rule": "MIG004",
+   "n": 12,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_table_buffer.tpb",
+   "line": 67,
+   "col": 58,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "seq.nextval: nextval('seq')"
+  },
+  {
+   "rule": "MIG004",
+   "n": 13,
+   "file": "corpus/utplsql/core/ut_suite_cache_manager.pkb",
+   "line": 369,
+   "col": 56,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "seq.nextval: nextval('seq')"
+  },
+  {
+   "rule": "MIG004",
+   "n": 14,
+   "file": "corpus/utplsql/core/ut_suite_cache_manager.pkb",
+   "line": 395,
+   "col": 54,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "seq.nextval: nextval('seq')"
+  },
+  {
+   "rule": "MIG004",
+   "n": 15,
+   "file": "corpus/utplsql/core/ut_utils.pkb",
+   "line": 66,
+   "col": 62,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "seq.nextval: nextval('seq')"
+  },
+  {
+   "rule": "MIG005",
+   "n": 1,
+   "file": "corpus/utplsql/core/coverage/ut_coverage_helper.pkb",
+   "line": 52,
+   "col": 82,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "rownum = 1: LIMIT 1"
+  },
+  {
+   "rule": "MIG005",
+   "n": 2,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_bulk_buffer.tpb",
+   "line": 108,
+   "col": 49,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "rownum = 1: LIMIT 1"
+  },
+  {
+   "rule": "MIG005",
+   "n": 3,
+   "file": "corpus/utplsql/core/ut_suite_cache_manager.pkb",
+   "line": 35,
+   "col": 16,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "rownum as a number: row_number()"
+  },
+  {
+   "rule": "MIG005",
+   "n": 4,
+   "file": "corpus/utplsql/core/ut_utils.pkb",
+   "line": 539,
+   "col": 37,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "rownum + offset: row_number()"
+  },
+  {
+   "rule": "MIG005",
+   "n": 5,
+   "file": "corpus/utplsql/expectations/data_values/ut_compound_data_helper.pkb",
+   "line": 659,
+   "col": 16,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "rownum <= n: LIMIT n"
+  },
+  {
+   "rule": "MIG005",
+   "n": 6,
+   "file": "corpus/utplsql/expectations/data_values/ut_cursor_details.tpb",
+   "line": 165,
+   "col": 36,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "rownum = 1: LIMIT 1"
+  },
+  {
+   "rule": "MIG005",
+   "n": 7,
+   "file": "corpus/utplsql/expectations/data_values/ut_cursor_details.tpb",
+   "line": 228,
+   "col": 9,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "rownum as a number: row_number()"
+  },
+  {
+   "rule": "MIG006",
+   "n": 1,
+   "file": "corpus/utplsql/core/ut_suite_tag_filter.pkb",
+   "line": 37,
+   "col": 15,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "row generator `from dual connect by level`: generate_series"
+  },
+  {
+   "rule": "MIG006",
+   "n": 2,
+   "file": "corpus/utplsql/core/ut_utils.pkb",
+   "line": 949,
+   "col": 27,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "row generator `from dual connect by level`: generate_series"
+  },
+  {
+   "rule": "MIG007",
+   "n": 1,
+   "file": "corpus/oracle-db-sample-schemas/poe_v3.sql",
+   "line": 107,
+   "col": 44,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "old outer join (+): LEFT JOIN"
+  },
+  {
+   "rule": "MIG010",
+   "n": 1,
+   "file": "corpus/logger/logger.pkb",
+   "line": 1055,
+   "col": 44,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "FROM DUAL dropped"
+  },
+  {
+   "rule": "MIG010",
+   "n": 2,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2041,
+   "col": 19,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "FROM DUAL dropped"
+  },
+  {
+   "rule": "MIG010",
+   "n": 3,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2405,
+   "col": 52,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "FROM DUAL dropped"
+  },
+  {
+   "rule": "MIG010",
+   "n": 4,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2796,
+   "col": 12,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "FROM DUAL dropped"
+  },
+  {
+   "rule": "MIG010",
+   "n": 5,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_buffer_base.tpb",
+   "line": 27,
+   "col": 30,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "FROM DUAL dropped"
+  },
+  {
+   "rule": "MIG010",
+   "n": 6,
+   "file": "corpus/utplsql/core/ut_metadata.pkb",
+   "line": 128,
+   "col": 12,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "FROM DUAL dropped"
+  },
+  {
+   "rule": "MIG010",
+   "n": 7,
+   "file": "corpus/utplsql/core/ut_suite_cache_manager.pkb",
+   "line": 473,
+   "col": 62,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "FROM DUAL dropped"
+  },
+  {
+   "rule": "MIG010",
+   "n": 8,
+   "file": "corpus/utplsql/core/ut_suite_cache_manager.pkb",
+   "line": 482,
+   "col": 62,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "FROM DUAL dropped"
+  },
+  {
+   "rule": "MIG010",
+   "n": 9,
+   "file": "corpus/utplsql/core/ut_suite_cache_manager.pkb",
+   "line": 490,
+   "col": 62,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "FROM DUAL dropped"
+  },
+  {
+   "rule": "MIG010",
+   "n": 10,
+   "file": "corpus/utplsql/core/ut_suite_manager.pkb",
+   "line": 615,
+   "col": 14,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "FROM DUAL with an alias: rewrite_sql skips it, a person drops it"
+  },
+  {
+   "rule": "MIG010",
+   "n": 11,
+   "file": "corpus/utplsql/core/ut_suite_tag_filter.pkb",
+   "line": 37,
+   "col": 10,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "from dual connect by: the row generator needs generate_series, not only dropping FROM DUAL"
+  },
+  {
+   "rule": "MIG010",
+   "n": 12,
+   "file": "corpus/utplsql/core/ut_utils.pkb",
+   "line": 658,
+   "col": 12,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "FROM DUAL dropped"
+  },
+  {
+   "rule": "MIG010",
+   "n": 13,
+   "file": "corpus/utplsql/core/ut_utils.pkb",
+   "line": 949,
+   "col": 22,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "from dual connect by: the row generator needs generate_series, not only dropping FROM DUAL"
+  },
+  {
+   "rule": "MIG010",
+   "n": 14,
+   "file": "corpus/utplsql/reporters/ut_debug_reporter.tpb",
+   "line": 74,
+   "col": 183,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "FROM DUAL dropped"
+  },
+  {
+   "rule": "MIG011",
+   "n": 1,
+   "file": "corpus/logger/logger.pkb",
+   "line": 652,
+   "col": 59,
+   "verdict": "tp",
+   "impact": "benign",
+   "note": "'' as regexp_replace replacement or concatenated: same behavior on PostgreSQL"
+  },
+  {
+   "rule": "MIG011",
+   "n": 2,
+   "file": "corpus/logger/logger.pkb",
+   "line": 653,
+   "col": 59,
+   "verdict": "tp",
+   "impact": "benign",
+   "note": "'' as regexp_replace replacement or concatenated: same behavior on PostgreSQL"
+  },
+  {
+   "rule": "MIG011",
+   "n": 3,
+   "file": "corpus/utplsql/core/ut_expectation_processor.pkb",
+   "line": 89,
+   "col": 101,
+   "verdict": "tp",
+   "impact": "benign",
+   "note": "'' as regexp_replace replacement or concatenated: same behavior on PostgreSQL"
+  },
+  {
+   "rule": "MIG011",
+   "n": 4,
+   "file": "corpus/utplsql/core/ut_expectation_processor.pkb",
+   "line": 166,
+   "col": 70,
+   "verdict": "tp",
+   "impact": "benign",
+   "note": "'' as regexp_replace replacement or concatenated: same behavior on PostgreSQL"
+  },
+  {
+   "rule": "MIG011",
+   "n": 5,
+   "file": "corpus/utplsql/core/ut_expectation_processor.pkb",
+   "line": 173,
+   "col": 9,
+   "verdict": "tp",
+   "impact": "benign",
+   "note": "'' as regexp_replace replacement or concatenated: same behavior on PostgreSQL"
+  },
+  {
+   "rule": "MIG011",
+   "n": 6,
+   "file": "corpus/utplsql/core/ut_utils.pkb",
+   "line": 809,
+   "col": 26,
+   "verdict": "tp",
+   "impact": "semantic-trap",
+   "note": "assigns '' (NULL on Oracle) to a collection element: later IS NULL tests differ"
+  },
+  {
+   "rule": "MIG011",
+   "n": 7,
+   "file": "corpus/utplsql/core/ut_utils.pkb",
+   "line": 827,
+   "col": 19,
+   "verdict": "tp",
+   "impact": "semantic-trap",
+   "note": "assigns '' to a variable just tested IS NULL: a no-op on Oracle, not on PostgreSQL"
+  },
+  {
+   "rule": "MIG011",
+   "n": 8,
+   "file": "corpus/utplsql/reporters/ut_coverage_report_html_helper.pkb",
+   "line": 335,
+   "col": 31,
+   "verdict": "tp",
+   "impact": "benign",
+   "note": "'' as regexp_replace replacement or concatenated: same behavior on PostgreSQL"
+  },
+  {
+   "rule": "MIG001",
+   "n": 1,
+   "file": "corpus/logger/logger.pkb",
+   "line": 1528,
+   "col": 20,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 2,
+   "file": "corpus/logger/logger.pkb",
+   "line": 1573,
+   "col": 26,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 3,
+   "file": "corpus/logger/logger.pkb",
+   "line": 1609,
+   "col": 20,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 4,
+   "file": "corpus/logger/logger.pkb",
+   "line": 1654,
+   "col": 20,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 5,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2113,
+   "col": 36,
+   "verdict": "tp",
+   "impact": "semantic-trap",
+   "note": "nvl(number, varchar2 function): Oracle converts the second argument, COALESCE(numeric, text) is an error on PostgreSQL"
+  },
+  {
+   "rule": "MIG001",
+   "n": 6,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2158,
+   "col": 56,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 7,
+   "file": "corpus/utplsql/api/ut_runner.pkb",
+   "line": 172,
+   "col": 37,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 8,
+   "file": "corpus/utplsql/core/coverage/ut_coverage.pkb",
+   "line": 301,
+   "col": 79,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 9,
+   "file": "corpus/utplsql/core/coverage/ut_coverage_block.pkb",
+   "line": 83,
+   "col": 42,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 10,
+   "file": "corpus/utplsql/core/coverage/ut_coverage_block.pkb",
+   "line": 104,
+   "col": 77,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 11,
+   "file": "corpus/utplsql/core/types/ut_suite_item.tpb",
+   "line": 44,
+   "col": 12,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 12,
+   "file": "corpus/utplsql/core/ut_metadata.pkb",
+   "line": 77,
+   "col": 12,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 13,
+   "file": "corpus/utplsql/core/ut_suite_cache_manager.pkb",
+   "line": 156,
+   "col": 33,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 14,
+   "file": "corpus/utplsql/core/ut_suite_cache_manager.pkb",
+   "line": 214,
+   "col": 34,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 15,
+   "file": "corpus/utplsql/expectations/data_values/ut_data_value_json.tpb",
+   "line": 88,
+   "col": 36,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 16,
+   "file": "corpus/utplsql/reporters/ut_coverage_report_html_helper.pkb",
+   "line": 55,
+   "col": 10,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 17,
+   "file": "corpus/utplsql/reporters/ut_coverage_report_html_helper.pkb",
+   "line": 88,
+   "col": 18,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 18,
+   "file": "corpus/utplsql/reporters/ut_coverage_report_html_helper.pkb",
+   "line": 166,
+   "col": 69,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 19,
+   "file": "corpus/utplsql/reporters/ut_teamcity_reporter.tpb",
+   "line": 38,
+   "col": 25,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG001",
+   "n": 20,
+   "file": "corpus/utplsql/reporters/ut_tfs_junit_reporter.tpb",
+   "line": 45,
+   "col": 46,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "same construct, same behavior assuming same-typed arguments (types not resolved)"
+  },
+  {
+   "rule": "MIG008",
+   "n": 1,
+   "file": "corpus/logger/logger.pkb",
+   "line": 214,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 2,
+   "file": "corpus/logger/logger.pkb",
+   "line": 1649,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 3,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2115,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 4,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2178,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 5,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2356,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 6,
+   "file": "corpus/utplsql/api/ut.pkb",
+   "line": 140,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 7,
+   "file": "corpus/utplsql/api/ut.pkb",
+   "line": 184,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 8,
+   "file": "corpus/utplsql/core/annotations/ut_annotation_cache_manager.pkb",
+   "line": 22,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 9,
+   "file": "corpus/utplsql/core/annotations/ut_annotation_cache_manager.pkb",
+   "line": 164,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 10,
+   "file": "corpus/utplsql/core/annotations/ut_annotation_cache_manager.pkb",
+   "line": 203,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 11,
+   "file": "corpus/utplsql/core/annotations/ut_trigger_check.pkb",
+   "line": 23,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 12,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_buffer_base.tpb",
+   "line": 20,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 13,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_buffer_base.tpb",
+   "line": 61,
+   "col": 7,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 14,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_bulk_buffer.tpb",
+   "line": 45,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 15,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_clob_table_buffer.tpb",
+   "line": 26,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 16,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_table_buffer.tpb",
+   "line": 55,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 17,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_table_buffer.tpb",
+   "line": 112,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 18,
+   "file": "corpus/utplsql/core/ut_suite_cache_manager.pkb",
+   "line": 304,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 19,
+   "file": "corpus/utplsql/core/ut_suite_cache_manager.pkb",
+   "line": 413,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG008",
+   "n": 20,
+   "file": "corpus/utplsql/core/ut_utils.pkb",
+   "line": 562,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "PRAGMA AUTONOMOUS_TRANSACTION has no PostgreSQL equivalent"
+  },
+  {
+   "rule": "MIG009",
+   "n": 1,
+   "file": "corpus/logger/logger.pkb",
+   "line": 466,
+   "col": 9,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 2,
+   "file": "corpus/logger/logger.pkb",
+   "line": 730,
+   "col": 9,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 3,
+   "file": "corpus/logger/logger.pkb",
+   "line": 756,
+   "col": 9,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 4,
+   "file": "corpus/logger/logger.pkb",
+   "line": 766,
+   "col": 11,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 5,
+   "file": "corpus/logger/logger.pkb",
+   "line": 961,
+   "col": 11,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 6,
+   "file": "corpus/logger/logger.pkb",
+   "line": 1219,
+   "col": 15,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 7,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2551,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 8,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2554,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 9,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2555,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 10,
+   "file": "corpus/logger/logger.pkb",
+   "line": 2556,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 11,
+   "file": "corpus/logger/logger_configure.plb",
+   "line": 134,
+   "col": 5,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 12,
+   "file": "corpus/utplsql/api/ut_runner.pkb",
+   "line": 149,
+   "col": 9,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 13,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_buffer_base.tpb",
+   "line": 140,
+   "col": 9,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 14,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_bulk_buffer.tpb",
+   "line": 82,
+   "col": 9,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 15,
+   "file": "corpus/utplsql/core/output_buffers/ut_output_table_buffer.tpb",
+   "line": 82,
+   "col": 9,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 16,
+   "file": "corpus/utplsql/core/types/ut_executable.tpb",
+   "line": 111,
+   "col": 9,
+   "verdict": "tp",
+   "impact": "needs-rewrite",
+   "note": "dbms_output.get_line reads the buffer back: no equivalent"
+  },
+  {
+   "rule": "MIG009",
+   "n": 17,
+   "file": "corpus/utplsql/core/ut_expectation_processor.pkb",
+   "line": 94,
+   "col": 9,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 18,
+   "file": "corpus/utplsql/core/ut_utils.pkb",
+   "line": 72,
+   "col": 7,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 19,
+   "file": "corpus/utplsql/core/ut_utils.pkb",
+   "line": 84,
+   "col": 9,
+   "verdict": "tp",
+   "impact": "mechanical",
+   "note": "put_line: RAISE NOTICE"
+  },
+  {
+   "rule": "MIG009",
+   "n": 20,
+   "file": "corpus/utplsql/core/ut_utils.pkb",
+   "line": 571,
+   "col": 11,
+   "verdict": "tp",
+   "impact": "semantic-trap",
+   "note": "dbms_output.put writes without a newline, RAISE NOTICE always adds one"
+  }
+ ]
+}

@@ -24,7 +24,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
-from ..parser.lexer import IDENT, OP, tokenize
+from ..parser.lexer import IDENT, NUMBER, OP, STRING, tokenize
 
 
 @dataclass(frozen=True, slots=True)
@@ -207,6 +207,21 @@ class _Pass:
                 return False
         return True
 
+    def _dotted(self, r: tuple[int, int]) -> bool:
+        """A plain name or a dotted chain of names (`a.x`, `s.t.c`): one operand, no parentheses."""
+        toks = self.toks[r[0] : r[1]]
+        return len(toks) % 2 == 1 and all(
+            (t.kind == IDENT) if i % 2 == 0 else (t.kind == OP and t.text == ".")
+            for i, t in enumerate(toks)
+        )
+
+    def _literal(self, r: tuple[int, int]) -> bool:
+        """A string or number literal, optionally signed: never NULL, so it compares like CASE."""
+        toks = self.toks[r[0] : r[1]]
+        if len(toks) == 2 and toks[0].kind == OP and toks[0].text in ("+", "-"):
+            toks = toks[1:]
+        return len(toks) == 1 and toks[0].kind in (STRING, NUMBER)
+
     def _decode(self, k: int, hi: int) -> _Edit | None:
         close = self._close(k + 1, hi)
         if close is None:
@@ -233,9 +248,17 @@ class _Pass:
         subject = args[0]
         # An untyped NULL after CASE is text on PostgreSQL (`CASE NULL WHEN 1` fails to compile).
         null_subject = subject[1] - subject[0] == 1 and self._word(subject[0], "null", hi)
-        when_form = bool(null_search) or null_subject
-        if null_search and not self._simple(*subject):
-            self._skip("MIG002", "NULL search value on a non-simple expression (evaluated twice)")
+        # DECODE matches NULL with NULL, `CASE x WHEN s` never does: `CASE x WHEN lit` is exact only
+        # when every search value is a non-NULL literal. Any other search value (a column, an
+        # expression) may be NULL at run time and is compared with IS NOT DISTINCT FROM.
+        null_safe = {
+            j for j in range(pairs) if j not in null_search and not self._literal(args[1 + 2 * j])
+        }
+        when_form = bool(null_search) or bool(null_safe) or null_subject
+        if (null_search or null_safe) and not self._simple(*subject):
+            self._skip(
+                "MIG002", "NULL-able search value on a non-simple expression (evaluated twice)"
+            )
             return None
         self.applied.append("MIG002")
         word = self.src[self.starts[k] : self.ends[k]]
@@ -248,7 +271,7 @@ class _Pass:
             return self.emit(r[0], r[1], self.starts[r[0]], self.ends[r[1] - 1])
 
         def atom(r: tuple[int, int]) -> str:
-            return text(r) if r[1] - r[0] == 1 else f"({text(r)})"
+            return text(r) if r[1] - r[0] == 1 or self._dotted(r) else f"({text(r)})"
 
         parts = [kw("case")]
         if not when_form:
@@ -260,6 +283,11 @@ class _Pass:
                 parts.append(text(search))
             elif j in null_search:
                 parts.append(f"{atom(subject)} {kw('is')} {kw('null')}")
+            elif j in null_safe:
+                parts.append(
+                    f"{atom(subject)} {kw('is')} {kw('not')} {kw('distinct')} {kw('from')} "
+                    f"{atom(search)}"
+                )
             else:
                 parts.append(f"{atom(subject)} = {atom(search)}")
             parts += [kw("then"), text(result)]

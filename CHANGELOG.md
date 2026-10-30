@@ -88,10 +88,23 @@ to PyPI and nothing has been released yet, so everything is listed under `[Unrel
 - `plsql_lens.migrate.rewrite.rewrite_sql`: conservative rewrites of `NVL` → `COALESCE`, `DECODE` → `CASE`,
   `seq.NEXTVAL`/`CURRVAL` → `nextval('seq')`/`currval('seq')` and `FROM DUAL` dropped. A construct that cannot be rewritten
   safely is left as it was and listed with its reason; the text outside the rewritten spans is unchanged and a second pass changes nothing.
-- 37 reference cases whose results were observed on Oracle Free 23.26.3 (`tests/fixtures/migrate/semantics.json`, with
+- 42 reference cases (37 at first, five added in F5c) whose results were observed on Oracle Free 23.26.3 (`tests/fixtures/migrate/semantics.json`, with
   `scripts/migrate_semantics.py` to regenerate them), run on PostgreSQL 16 by an integration test through `PLSQL_LENS_PSQL`; five
   cases are labelled as known divergences.
 - Manual workflow `postgres.yml`: runs those cases on `postgres:16` and publishes the results to the branch `ci-results/f5`.
+
+#### F5c — Measurement of the migration rules ([report](docs/reports/phase-5.md))
+
+- Adjudication of 140 of the 234 findings on `corpus/` (all of the small rules, a seeded sample of 20 for each large one) by verdict
+  and impact, in `docs/reports/phase-5/adjudication.json`, with `scripts/migrate_adjudication.py` to print the table and a test that
+  keeps the adjudicated set equal to what a fresh run selects.
+- Count of the Oracle constructs that sit inside string literals (dynamic SQL), which no rule sees.
+
+### Fixed
+
+- `rewrite_sql` rewrote `DECODE` with a column or expression as search value as `CASE x WHEN s`, which does not match NULL with
+  NULL as `DECODE` does. It now uses `x IS NOT DISTINCT FROM s` for those search values, and skips a non-simple subject instead of
+  rewriting it wrongly ([F5c report](docs/reports/phase-5.md)).
 
 ### Changed
 

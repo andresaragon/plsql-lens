@@ -1,6 +1,6 @@
 """Acceptance tests for ``rewrite_sql`` (F5b): conservative, idempotent, byte-preserving rewrites.
 
-The 37 reference cases of tests/fixtures/migrate/semantics.json (results observed on Oracle) drive
+The 42 reference cases of tests/fixtures/migrate/semantics.json (results observed on Oracle) drive
 the unit checks; the integration test runs the same rewrites on PostgreSQL.
 """
 
@@ -56,7 +56,7 @@ def test_nothing_to_rewrite_returns_the_input_unchanged() -> None:
         assert (r.sql, r.applied, r.skipped) == (sql, (), ())
 
 
-# --- the 37 reference cases -------------------------------------------------------------------
+# --- the 42 reference cases -------------------------------------------------------------------
 
 
 @pytest.mark.parametrize("case", CASES, ids=IDS)
@@ -99,8 +99,8 @@ def test_every_prefix_of_a_reference_case_is_idempotent_and_never_raises(
         assert rw(once.sql).sql == once.sql, sql[:n]
 
 
-def test_the_semantics_file_is_read_only_data_with_37_cases_and_5_divergences() -> None:
-    assert len(CASES) == 37
+def test_the_semantics_file_is_read_only_data_with_42_cases_and_5_divergences() -> None:
+    assert len(CASES) == 42
     assert sum("known_divergence" in c for c in CASES) == 5
 
 
@@ -154,7 +154,9 @@ def test_decode_with_a_null_search_value_matches_null_with_null() -> None:
 
 def test_decode_with_a_null_search_value_wraps_compound_operands() -> None:
     r = rw("DECODE(a + b, NULL, 0, c || d, 1)")
-    assert r.sql == "CASE WHEN (a + b) IS NULL THEN 0 WHEN (a + b) = (c || d) THEN 1 END"
+    assert r.sql == (
+        "CASE WHEN (a + b) IS NULL THEN 0 WHEN (a + b) IS NOT DISTINCT FROM (c || d) THEN 1 END"
+    )
 
 
 def test_decode_with_a_literal_null_subject_uses_the_when_form() -> None:
@@ -164,6 +166,73 @@ def test_decode_with_a_literal_null_subject_uses_the_when_form() -> None:
     assert r.sql == "CASE WHEN NULL = 1 THEN 'a' ELSE 'z' END"
     r = rw("DECODE(NULL, 1, 'a', NULL, 'n', 'd')")
     assert r.sql == "CASE WHEN NULL = 1 THEN 'a' WHEN NULL IS NULL THEN 'n' ELSE 'd' END"
+
+
+# DECODE treats NULL = NULL as a match, also between two columns: `CASE a WHEN b` would not
+# (F5c: Oracle gives 1 for DECODE(a, b, 1, 0) with a and b NULL, the plain CASE gives 0).
+@pytest.mark.parametrize(
+    ("sql", "expected"),
+    [
+        (
+            "DECODE(a, b, 1, 0)",
+            "CASE WHEN a IS NOT DISTINCT FROM b THEN 1 ELSE 0 END",
+        ),
+        (
+            "DECODE(a.x, e.x, 1, 0)",
+            "CASE WHEN a.x IS NOT DISTINCT FROM e.x THEN 1 ELSE 0 END",
+        ),
+        (
+            "DECODE(x, 'k', 1, y, 2, 0)",
+            "CASE WHEN x = 'k' THEN 1 WHEN x IS NOT DISTINCT FROM y THEN 2 ELSE 0 END",
+        ),
+        (
+            "DECODE(x, y, 1, NULL, 2)",
+            "CASE WHEN x IS NOT DISTINCT FROM y THEN 1 WHEN x IS NULL THEN 2 END",
+        ),
+        (
+            "DECODE(a + b, c, 1, 0)",
+            "CASE WHEN (a + b) IS NOT DISTINCT FROM c THEN 1 ELSE 0 END",
+        ),
+        (
+            "DECODE(a, b + 1, 1)",
+            "CASE WHEN a IS NOT DISTINCT FROM (b + 1) THEN 1 END",
+        ),
+        (
+            "decode(a, b, 1, 0)",
+            "case when a is not distinct from b then 1 else 0 end",
+        ),
+    ],
+)
+def test_decode_with_a_search_value_that_may_be_null_is_null_safe(sql: str, expected: str) -> None:
+    r = rw(sql)
+    assert r.sql == expected, r
+    assert r.applied == ("MIG002",) and r.skipped == ()
+
+
+@pytest.mark.parametrize(
+    "sql",
+    [
+        "DECODE(x, 'Y', 1, 0)",
+        "DECODE(x, 1, 'a', 2, 'b')",
+        "DECODE(x, -1, 'minus', +2, 'plus', 'z')",
+        "DECODE(f(x), 1, 'a', 'z')",
+        "DECODE(DECODE(1, 1, 2, 3), 2, 'ok', 'no')",
+    ],
+)
+def test_decode_with_only_non_null_literal_search_values_keeps_the_plain_case_form(
+    sql: str,
+) -> None:
+    # A NULL subject matches none of them on either database, so `CASE x WHEN lit` is exact.
+    assert re.search(r"^case \S", rw(sql).sql, re.I), rw(sql).sql
+    assert "DISTINCT" not in rw(sql).sql.upper()
+
+
+def test_decode_with_a_nullable_search_and_a_non_simple_subject_is_skipped() -> None:
+    # The NULL-safe form evaluates the subject once per search value.
+    for e in ("f(x)", "seq.nextval", "(select max(a) from t)"):
+        r = rw(f"decode({e}, y, 1, 2)")
+        assert r.sql.startswith("decode(") and "MIG002" not in r.applied, e
+        assert r.skipped[0][0] == "MIG002" and "NULL" in r.skipped[0][1], e
 
 
 def test_decode_null_as_result_or_default_needs_no_special_form() -> None:
