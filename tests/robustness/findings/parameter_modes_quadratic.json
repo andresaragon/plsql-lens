@@ -1,0 +1,18 @@
+{
+  "reason": "parse_params drops one mode token per iteration with rest = rest[1:], so a parameter with n mode keywords costs O(n^2): 30000 repetitions of `out nocopy` take ~7 s.",
+  "signature": "parse:Hang:structure.py",
+  "parts": [
+    [
+      "create package body p is procedure a (x in ",
+      1
+    ],
+    [
+      "out nocopy ",
+      30000
+    ],
+    [
+      "integer) is begin null; end; end;\n",
+      1
+    ]
+  ]
+}

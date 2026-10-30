@@ -1,0 +1,14 @@
+{
+  "reason": "RecursionError: 1500 nested subprogram declarations under `create ... package body` exhaust the recursion limit (parse_subprogram <-> parse_declarations).",
+  "signature": "parse:RecursionError:*",
+  "parts": [
+    [
+      "create or replace package body p is\n",
+      1
+    ],
+    [
+      "procedure a is\n",
+      1500
+    ]
+  ]
+}

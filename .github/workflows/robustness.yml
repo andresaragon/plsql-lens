@@ -1,0 +1,22 @@
+name: robustness
+# Manual job: seeded mutation fuzzing of the parser (tests/robustness). Never part of the unit CI.
+on:
+  workflow_dispatch:
+jobs:
+  robustness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync
+      - name: Run the robustness suite
+        env:
+          ROBUSTNESS_STATS: robustness-stats.json
+        run: uv run pytest tests/robustness -m robustness -v
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: robustness-stats
+          path: robustness-stats.json
+          if-no-files-found: ignore

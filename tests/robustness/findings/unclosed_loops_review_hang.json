@@ -1,0 +1,22 @@
+{
+  "reason": "PLL005 re-scans the statement list for every enclosing loop of every DML statement, so 1000 unclosed loops followed by 30 INSERTs take ~15 s in `review`.",
+  "signature": "review:Hang:pll005.py",
+  "parts": [
+    [
+      "create package body p is procedure a is begin\n",
+      1
+    ],
+    [
+      "loop;\n",
+      1000
+    ],
+    [
+      "insert into t values (1);\n",
+      30
+    ],
+    [
+      "end; end;\n",
+      1
+    ]
+  ]
+}

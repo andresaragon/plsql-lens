@@ -1,0 +1,10 @@
+{
+  "reason": "The q-string regex scans to end of input for every unclosed q'[, so n openers cost O(n^2): 24000 of them (72 KB) take ~8 s in the lexer.",
+  "signature": "parse:Hang:lexer.py",
+  "parts": [
+    [
+      "q'[",
+      24000
+    ]
+  ]
+}
