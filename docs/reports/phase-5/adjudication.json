@@ -793,8 +793,8 @@
    "line": 652,
    "col": 59,
    "verdict": "tp",
-   "impact": "benign",
-   "note": "'' as regexp_replace replacement or concatenated: same behavior on PostgreSQL"
+   "impact": "semantic-trap",
+   "note": "'' as the replacement of regexp_replace: same result unless the replacement empties the whole string, then Oracle returns NULL and PostgreSQL ''"
   },
   {
    "rule": "MIG011",
@@ -803,8 +803,8 @@
    "line": 653,
    "col": 59,
    "verdict": "tp",
-   "impact": "benign",
-   "note": "'' as regexp_replace replacement or concatenated: same behavior on PostgreSQL"
+   "impact": "semantic-trap",
+   "note": "'' as the replacement of regexp_replace: same result unless the replacement empties the whole string, then Oracle returns NULL and PostgreSQL ''"
   },
   {
    "rule": "MIG011",
@@ -814,7 +814,7 @@
    "col": 101,
    "verdict": "tp",
    "impact": "benign",
-   "note": "'' as regexp_replace replacement or concatenated: same behavior on PostgreSQL"
+   "note": "x || '' is x on both databases (and NULL || '' is NULL on both): strictly benign"
   },
   {
    "rule": "MIG011",
@@ -823,8 +823,8 @@
    "line": 166,
    "col": 70,
    "verdict": "tp",
-   "impact": "benign",
-   "note": "'' as regexp_replace replacement or concatenated: same behavior on PostgreSQL"
+   "impact": "semantic-trap",
+   "note": "'' as the replacement of regexp_replace: same result unless the replacement empties the whole string, then Oracle returns NULL and PostgreSQL ''"
   },
   {
    "rule": "MIG011",
@@ -833,8 +833,8 @@
    "line": 173,
    "col": 9,
    "verdict": "tp",
-   "impact": "benign",
-   "note": "'' as regexp_replace replacement or concatenated: same behavior on PostgreSQL"
+   "impact": "semantic-trap",
+   "note": "'' as the replacement of regexp_replace: same result unless the replacement empties the whole string, then Oracle returns NULL and PostgreSQL ''"
   },
   {
    "rule": "MIG011",
@@ -864,7 +864,7 @@
    "col": 31,
    "verdict": "tp",
    "impact": "benign",
-   "note": "'' as regexp_replace replacement or concatenated: same behavior on PostgreSQL"
+   "note": "x || '' is x on both databases (and NULL || '' is NULL on both): strictly benign"
   },
   {
    "rule": "MIG001",
@@ -1466,5 +1466,6 @@
    "impact": "semantic-trap",
    "note": "dbms_output.put writes without a newline, RAISE NOTICE always adds one"
   }
- ]
+ ],
+ "corrected": "2026-10-30: MIG011 items 1, 2, 4 and 5 were first labelled benign; checked on Oracle 23.26.3 and PostgreSQL 16.15, an empty result of the replacement is NULL on Oracle and '' on PostgreSQL"
 }

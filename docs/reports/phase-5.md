@@ -13,10 +13,11 @@ Branch `feat/f5c-measurement`, one draft PR on `main` @ `9e1e156`. F5c runs loca
   used literals. Details below.
 * **All 140 adjudicated findings are true positives** (the token is the Oracle construct the rule names). That number is close to
   automatic for token rules and says little; what the adjudication adds is the **impact** column: 86 are mechanical, 33 need a manual
-  restructure, 15 are semantic traps (a direct translation changes behavior) and 6 are benign.
-* **`MIG011` (`''`, severity `high`) is mostly benign on this corpus**: 6 of its 8 findings are `''` as a `regexp_replace`
-  replacement or in a concatenation, where Oracle and PostgreSQL behave the same. Only 2 assign `''` to a variable that is then
-  tested with `IS NULL`.
+  restructure, 19 are semantic traps (a direct translation changes behavior) and 2 are benign.
+* **`MIG011` (`''`, severity `high`): only 2 of its 8 findings are strictly benign** (`x || ''`). Four are `''` as a
+  `regexp_replace` replacement, which behaves the same unless the replacement empties the whole string (then Oracle returns `NULL`
+  and PostgreSQL `''`), and 2 assign `''` to a variable that is then tested with `IS NULL`. *(Corrected on 2026-10-30: this first
+  said 6 of 8 were benign; see "Correction".)*
 * **22 Oracle constructs sit inside string literals (dynamic SQL) and no rule sees them**, against 234 findings.
 
 ## Method
@@ -47,8 +48,8 @@ For each finding the source line and its neighbours were read and two things rec
 | MIG008 | 38 | 20 | sample | 20/20 | 0.84 | 0 | 20 | 0 | 0 |
 | MIG009 | 46 | 20 | sample | 20/20 | 0.84 | 18 | 1 | 1 | 0 |
 | MIG010 | 14 | 14 | all | 14/14 | complete | 12 | 2 | 0 | 0 |
-| MIG011 | 8 | 8 | all | 8/8 | complete | 0 | 0 | 2 | 6 |
-| **All** | 234 | 140 | | 140/140 | | 86 | 33 | 15 | 6 |
+| MIG011 | 8 | 8 | all | 8/8 | complete | 0 | 0 | 6 | 2 |
+| **All** | 234 | 140 | | 140/140 | | 86 | 33 | 19 | 2 |
 
 The totals mix complete rules and samples, so they are not an estimate for the 234. The Wilson bound is given only for the sampled
 rules; the others were adjudicated completely and have no sampling uncertainty.
@@ -58,7 +59,7 @@ What the impact column says rule by rule:
 * **MIG002** (`DECODE`): 8 of 11 are the NULL-safe comparison of two columns (the trap above); the other 3 compare with literals.
 * **MIG003** (`SYSDATE`/`SYSTIMESTAMP`): 3 of 22 are date arithmetic that differs on PostgreSQL (`sysdate + n`, `sysdate - n`,
   `sysdate - date`); the others are plain values.
-* **MIG011** (`''`): 6 benign, 2 traps (see above).
+* **MIG011** (`''`): 2 benign (`|| ''`), 4 conditional traps (a replacement that may empty the string) and 2 traps (assignments).
 * **MIG001** (`NVL`): 1 of the 20 sampled is a type trap: `nvl(number_parameter, varchar2_function())` in `logger.purge`. Oracle
   converts the second argument; `COALESCE(numeric, text)` is an error on PostgreSQL. Types are not resolved by the rules, so the
   19 "mechanical" ones assume same-typed arguments; only the suspicious ones were checked in the source.
@@ -112,6 +113,24 @@ the set to **42 cases**. Before the fix the PostgreSQL integration test failed o
 37 give the Oracle result and 5 differ as documented (`''` is not NULL on PostgreSQL; `'abc' || NULL` is NULL there). The red
 tests and the fix are separate commits.
 
+## Correction (2026-10-30): the `''` replacement is not benign
+
+The first version of this report labelled four `''` findings (`regexp_replace(…, '', …)`) as benign and headlined "6 of 8 are benign".
+That was too strong. In Oracle a function that returns an empty string returns `NULL`; PostgreSQL returns `''`. Checked on Oracle
+23.26.3 and PostgreSQL 16.15 (the same engines as above):
+
+| Expression | Oracle | PostgreSQL |
+|---|---|---|
+| `regexp_replace('abc','b','')` | `ac` | `ac` |
+| `regexp_replace('abc','^.*$','')` | NULL | `''` |
+| `replace('a','a','')` | NULL | `''` |
+| `'abc' \|\| ''` | `abc` | `abc` |
+| `NULL \|\| ''` | NULL | NULL |
+
+So a `''` replacement behaves the same only while the result is not empty, which cannot be known statically; those four findings are
+now `semantic-trap` (conditional), and only the two `|| ''` findings stay `benign`. The adjudication file and the totals above carry
+the correction.
+
 ## Limits
 
 * **The adjudicator is Claude**, in the same model family that wrote the rules in a cloud session. The labels are provisional and
@@ -131,8 +150,8 @@ tests and the fix are separate commits.
 
 ## What this suggests (not done here)
 
-* `MIG011` could split by context (assignment or comparison versus a function argument or a concatenation) instead of flagging every
-  `''` as `high`.
+* `MIG011` could split by context instead of flagging every `''` as `high`: only a concatenation operand (`x || ''`) is strictly
+  benign; a function argument can matter (`nvl(x, '')`, a replacement that empties the string).
 * The `MIG002` message could warn when a search value is not a literal.
 * `rewrite_sql` could look inside string literals that contain SQL, which is today an accepted false negative.
 

@@ -100,7 +100,7 @@ tiene comando en la CLI): nunca reescribe a medias y lista lo que deja intacto. 
 difieren por razones ajenas a la reescritura (`''` no es `NULL` en PostgreSQL, y `'abc' || NULL` es `NULL` allí). Es evidencia sobre
 esos casos, no una prueba de equivalencia general: [docs/reports/phase-5b.md](docs/reports/phase-5b.md) (en inglés). Adjudicar los
 hallazgos sobre `corpus/` (140 de 234, por impacto) también expuso un defecto de la reescritura de `DECODE`, ya corregido, y mostró que
-6 de los 8 hallazgos de `''` son benignos: [docs/reports/phase-5.md](docs/reports/phase-5.md) (en inglés).
+solo 2 de los 8 hallazgos de `''` son estrictamente benignos (una concatenación) y los otros 6 son trampas: [docs/reports/phase-5.md](docs/reports/phase-5.md) (en inglés).
 
 ```bash
 uv run plsql-lens migrate corpus/logger/logger.pkb                          # tabla de hallazgos

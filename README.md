@@ -99,8 +99,8 @@ has no CLI command): it never rewrites halfway, listing what it leaves untouched
 42 cases whose results were observed on a real Oracle (`tests/fixtures/migrate/semantics.json`): 37 give the same result and 5 differ
 for reasons outside the rewrite (`''` is not `NULL` in PostgreSQL, and `'abc' || NULL` is `NULL` there). That is evidence on those
 cases, not a proof of general equivalence: [docs/reports/phase-5b.md](docs/reports/phase-5b.md). Adjudicating the findings on `corpus/`
-(140 of 234, by impact) also exposed a `DECODE` rewrite defect that is now fixed, and showed that 6 of the 8 `''` findings are
-benign: [docs/reports/phase-5.md](docs/reports/phase-5.md).
+(140 of 234, by impact) also exposed a `DECODE` rewrite defect that is now fixed, and showed that only 2 of the 8 `''` findings
+are strictly benign (a concatenation), the other 6 being traps: [docs/reports/phase-5.md](docs/reports/phase-5.md).
 
 ```bash
 uv run plsql-lens migrate corpus/logger/logger.pkb                          # table of findings
