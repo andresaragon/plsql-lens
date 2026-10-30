@@ -45,3 +45,18 @@ and test data. Nothing from any employer or client is included.
             snippets inserted before the closing END. The copied portions keep their original license;
             the inserted snippets are original to this repository (MIT). The exact base file of each
             item is listed in the "bases" field of the split's manifest.json.
+
+6. AI-generated content
+   Much of the code, tests, documentation and benchmark material in this repository was written with the help of large
+   language models, mainly Claude (Anthropic) through Claude Code. The external benchmark split in
+   docs/benchmarks/external/ was authored by a Gemini model (Google), as docs/benchmarks/external/README.md says. The
+   generated utPLSQL tests (tests/generated/), the recorded LLM responses (docs/benchmarks/llm_baseline/) and the benchmark
+   templates are model output. All of it is offered under the MIT license of this repository; anyone reusing the generated
+   material should check the model providers' terms for the use of outputs.
+
+Upstream references (items 1 to 4), checked against the upstream repositories on 2026-10-30
+   * The four commits exist upstream.
+   * The license text of each copy is identical to the upstream file at that commit (utPLSQL Apache-2.0; Logger, the Oracle
+     sample schemas and the SARIF SDK MIT).
+   * None of the four repositories has a NOTICE file at the pinned commit (only a license file), so there is no upstream
+     NOTICE text that Apache-2.0 section 4(d) would require to travel with the copies.

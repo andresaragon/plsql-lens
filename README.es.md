@@ -176,6 +176,15 @@ cruzada con 40 casos escritos por otro LLM (Gemini), no por una persona: las reg
 adjudicado de forma provisional 65 / 1 / 0), y 0 de 9 defectos reales fuera del contrato (`beyond`). Valen las mismas
 salvedades.
 
+## Cómo se construyó
+
+La mayor parte del código, los tests y la documentación se escribieron con Claude (Anthropic) mediante Claude Code, en sesiones
+dirigidas por el propietario; el split externo del benchmark lo escribió un modelo Gemini (Google). [NOTICE](NOTICE) enumera lo
+generado con IA y las fuentes de terceros. El proyecto se desarrolló en un repositorio privado y se publicó con el historial
+reescrito (una dirección de autor sustituida y los enlaces de sesión quitados de los mensajes): los números de pull request y los
+identificadores de ejecución de CI que citan los informes son de ese repositorio privado, y las ramas `ci-results/*` las escriben
+los workflows manuales (`oracle`, `postgres`, `differential`).
+
 ## Informes y lecturas
 
 * Plan y decisiones: [SPEC.md](SPEC.md). Contrato de las reglas de revisión: [docs/rules.md](docs/rules.md). Contrato de las reglas de migración: [docs/migration-rules.md](docs/migration-rules.md).

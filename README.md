@@ -174,6 +174,15 @@ The external-author split ([docs/benchmarks/external/](docs/benchmarks/external/
 cases written by another LLM (Gemini), not by a human: the frozen rules and an LLM-only baseline both score 64 TP / 2 FP / 0 FN (strict; adjudicated
 provisionally 65 / 1 / 0), and 0 of 9 real-world (`beyond`) defects outside the contract. Same caveats apply.
 
+## How this was built
+
+Most of the code, tests and documentation were written with Claude (Anthropic) through Claude Code, in sessions directed by the
+owner; the external benchmark split was authored by a Gemini model (Google). [NOTICE](NOTICE) lists what is AI-generated and
+the third-party sources. The project was developed in a private repository and published with its history rewritten (one author
+address replaced, session links removed from messages): the pull-request numbers and CI run ids cited in the reports refer to
+that private repository, and the `ci-results/*` branches are written by the manual workflows (`oracle`, `postgres`,
+`differential`).
+
 ## Reports and further reading
 
 * Plan and decisions: [SPEC.md](SPEC.md). Review-rule contract: [docs/rules.md](docs/rules.md). Migration-rule contract: [docs/migration-rules.md](docs/migration-rules.md).
