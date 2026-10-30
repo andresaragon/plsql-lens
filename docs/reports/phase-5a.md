@@ -1,6 +1,6 @@
 # Phase F5a report — Oracle→PostgreSQL migration rules
 
-Branch `feat/f5-migrate-rules`, one draft PR on `main` @ `4aaacb1`. Contract: [`docs/migration-rules.md`](../migration-rules.md).
+Branch `feat/f5-migrate-rules`, one draft PR on `main` @ `acfb71b`. Contract: [`docs/migration-rules.md`](../migration-rules.md).
 
 ## What was built
 

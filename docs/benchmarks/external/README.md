@@ -31,13 +31,13 @@ Results: [results.md](results.md) · raw: [raw/engine.json](raw/engine.json), [r
 [llm_baseline/responses.json](llm_baseline/responses.json) · adjudication: [adjudication/](adjudication/).
 Reproduce with `plsql-lens bench-external convert|run|run-before|llm|report`.
 
-1. **Reference rules frozen** (`frozen.json`, commit `6c2982c`; parser + rules + `docs/rules.md` hashed and checked by a unit test).
+1. **Reference rules frozen** (`frozen.json`, commit `390e96b`; parser + rules + `docs/rules.md` hashed and checked by a unit test).
 2. **Converter and evaluator** written and tested on synthetic data only (`tests/fixtures/external_synthetic/`).
 3. **Seal commit** `d2755f2`: 40 cases converted (64 `expect`, 60 `clean`, 9 `beyond` markers; markers and the descriptive
    header stripped, line numbers kept), manifest SHA-256 `5f1e1eeef047026120541f8973d6fc02e31a84e4e0a9772f1c4fca12d167f11f`
    in `../seal.json`. Neither the engine nor the LLM had seen the files.
 4. **Engine run once** (`bench-external run` refuses a second run without `--force`).
-   **"Before" rules run once** (follow-up PR, `bench-external run-before`): F4's `BEFORE_SHA` (`67afb85`, exported from git) over the same
+   **"Before" rules run once** (follow-up PR, `bench-external run-before`): F4's `BEFORE_SHA` (`ca4ba43`, exported from git) over the same
    sealed cases, with the same once-only rule. No LLM, no cost. It only measures what F4's tuning on `dev` did on a split it never saw.
 5. **LLM-only baseline** (`claude-sonnet-5-5`, `claude-cli`, lean flags, contract of `docs/rules.md`, no engine): 40 files, 0.596 USD.
 6. **Two tables.** *Strict*: any finding on an unmarked line is a false positive (the author's rule). *Adjudicated*: each
@@ -50,7 +50,7 @@ Reproduce with `plsql-lens bench-external convert|run|run-before|llm|report`.
 * The two findings on unmarked lines: `e023:17` PLL004 — a real contract defect the author did not mark (adjudicated TP);
   `e037:43` PLL002 — concatenation guarded by `DBMS_ASSERT` through a variable, safe code that the contract's
   "direct `DBMS_ASSERT` call" exemption does not recognise (stays a false positive; also the one `clean` trap that fired).
-* "Before" rules (`67afb85`): strict 64 TP / 3 FP / 0 FN; adjudicated (provisional) 65 / 2 / 0. The only finding that differs from the
+* "Before" rules (`ca4ba43`): strict 64 TP / 3 FP / 0 FN; adjudicated (provisional) 65 / 2 / 0. The only finding that differs from the
   frozen rules is `e012:22` PLL004 (`select nvl(max(price), 0) into …`, a `clean` trap): the contract exempts aggregates inside expressions and
   the "before" code looked for them only at depth 0, which F4's tuning on `dev` fixed. One case is an illustration, not a statistic.
 * `beyond` (real defects outside the contract): 0 of 9 for both. Expected: the rules implement the contract, and the LLM was

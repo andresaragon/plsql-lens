@@ -8,7 +8,7 @@
    "line": 22,
    "kind": "unmarked_finding",
    "verdict": "false_positive",
-   "reason": "`select nvl(max(price), 0) into p_max from seats ...` is an aggregate-only select list (MAX inside NVL): docs/rules.md exempts it explicitly (\"including inside expressions such as NVL(MAX(x), 0) + 1\"), so the author's `clean: PLL004` marker is right and there is no defect. The \"before\" rules flag it because they only looked for an aggregate at expression depth 0 (src/plsql_lens/rules/pll004.py at 67afb85); the \"after\" rules, tuned on `dev` only, accept aggregates at any depth, which is why this is the only finding that differs between the two runs."
+   "reason": "`select nvl(max(price), 0) into p_max from seats ...` is an aggregate-only select list (MAX inside NVL): docs/rules.md exempts it explicitly (\"including inside expressions such as NVL(MAX(x), 0) + 1\"), so the author's `clean: PLL004` marker is right and there is no defect. The \"before\" rules flag it because they only looked for an aggregate at expression depth 0 (src/plsql_lens/rules/pll004.py at ca4ba43); the \"after\" rules, tuned on `dev` only, accept aggregates at any depth, which is why this is the only finding that differs between the two runs."
   },
   {
    "file": "e023.pkb",

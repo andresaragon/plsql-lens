@@ -58,7 +58,7 @@ PLL007 incidental-literal problem above, before the rule engine had ever been ru
 the engine was run on `test` once, after the rules were final.
 
 ### Before / after
-* **before** = `src/plsql_lens/` exactly as of `67afb855ea1f3d54199356f65a0cdf6e8944e868` (origin/main at the start of F4:
+* **before** = `src/plsql_lens/` exactly as of `ca4ba438b3f0086a1a603b4726bbb45d346dd60f` (origin/main at the start of F4:
   F2 + F3, untouched), exported from git and run through the same script as "after".
 * **after** = the current rules. Tuning (on `dev` plus the five false positives known from F2's real-corpus QC):
   PLL004 recognises aggregates nested in expressions (`NVL(MAX(x), 0) + 1`), `LISTAGG`, excludes analytic

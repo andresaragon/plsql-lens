@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 # The "before" rules: src/plsql_lens/ as of origin/main at the start of F4 (end of F2 + F3, untouched).
-BEFORE_SHA = "67afb855ea1f3d54199356f65a0cdf6e8944e868"
+BEFORE_SHA = "ca4ba438b3f0086a1a603b4726bbb45d346dd60f"
 SEEDS = {"dev": 1001, "test": 2002}
 MAX_BASE_LINES = 400
 LLM_SAMPLE_FILES = 40

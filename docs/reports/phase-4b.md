@@ -1,6 +1,6 @@
 # Phase F4b report — external-author split
 
-Date: 2026-10-26. Branch `feat/f4b-external-split` (one draft PR on current `main` @ `6c2982c`).
+Date: 2026-10-26. Branch `feat/f4b-external-split` (one draft PR on current `main` @ `390e96b`).
 
 > The prompt file named in the request (`PL-SQL Lens - Prompt F4b (nube).md`, in the owner's Obsidian vault) is not
 > reachable from the cloud session, so I worked from the seven-step order in the request and from the F4b plan written in
@@ -8,7 +8,7 @@ Date: 2026-10-26. Branch `feat/f4b-external-split` (one draft PR on current `mai
 > (a budget, extra deliverables), they are not reflected here.
 
 ## What was done, in the requested order
-1. **Reference rules frozen** — `docs/benchmarks/external/frozen.json` (parser, rules and contract hashes at `6c2982c`), enforced by `tests/unit/test_external_frozen.py`.
+1. **Reference rules frozen** — `docs/benchmarks/external/frozen.json` (parser, rules and contract hashes at `390e96b`), enforced by `tests/unit/test_external_frozen.py`.
 2. **Converter and evaluator, on synthetic data** — `src/plsql_lens/bench/external.py` (+ `external_run.py`, CLI `bench-external convert|run|llm|report`); tests written red first.
 3. **Seal commit** `d2755f2` before any real execution: manifest SHA-256 `5f1e1eee…f11f` in `docs/benchmarks/seal.json`.
 4. **Engine executed once** on the sealed cases (second run refused by the tool).
@@ -19,7 +19,7 @@ Date: 2026-10-26. Branch `feat/f4b-external-split` (one draft PR on current `mai
 ## Result (40 cases; 64 `expect`, 60 `clean`, 9 `beyond` markers)
 | | Strict TP/FP/FN | Precision | Recall | Adjudicated TP/FP/FN (provisional) |
 |---|---|---|---|---|
-| Rules (frozen @ `6c2982c`) | 64 / 2 / 0 | 0.970 [0.90–0.99] | 1.000 [0.94–1.00] | 65 / 1 / 0 |
+| Rules (frozen @ `390e96b`) | 64 / 2 / 0 | 0.970 [0.90–0.99] | 1.000 [0.94–1.00] | 65 / 1 / 0 |
 | LLM only (contract, no engine) | 64 / 2 / 0 | 0.970 [0.90–0.99] | 1.000 [0.94–1.00] | 65 / 1 / 0 |
 
 Per-rule tables, intervals and the `beyond` figure (0 of 9 for both) are in `docs/benchmarks/external/results.md`.
@@ -55,13 +55,13 @@ balance is the reference). No reserve used.
 ## Addendum — "before" rules run (follow-up PR `feat/f4b-before-rules`, 2026-10-28)
 The requested order included running the engine with F4's "before" rules as well; the first delivery ran only the frozen rules (the prompt
 file was not reachable from the cloud session, see the header). This follow-up adds `bench-external run-before` (F4's `BEFORE_SHA`
-`67afb85` exported with `git archive`, run once on the sealed cases, no LLM, no cost), the section "Rules (before, 67afb85)" in
+`ca4ba43` exported with `git archive`, run once on the sealed cases, no LLM, no cost), the section "Rules (before, ca4ba43)" in
 `docs/benchmarks/external/results.md`, and a compact table in the generated `docs/benchmarks/results.md`.
 
 | | Strict TP/FP/FN | Adjudicated (provisional) |
 |---|---|---|
-| Rules, before (`67afb85`) | 64 / 3 / 0 | 65 / 2 / 0 |
-| Rules, frozen (`6c2982c`) | 64 / 2 / 0 | 65 / 1 / 0 |
+| Rules, before (`ca4ba43`) | 64 / 3 / 0 | 65 / 2 / 0 |
+| Rules, frozen (`390e96b`) | 64 / 2 / 0 | 65 / 1 / 0 |
 | LLM only | 64 / 2 / 0 | 65 / 1 / 0 |
 
 The only finding that differs is `e012:22` PLL004 (`nvl(max(price), 0)`, a `clean` trap): the contract exempts aggregates inside expressions,

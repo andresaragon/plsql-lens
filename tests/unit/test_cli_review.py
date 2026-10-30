@@ -18,7 +18,7 @@ MEDIUM = str(FIX / "PLL003" / "pos_1.pkb")  # only a `medium` finding
 CLEAN = str(FIX / "PLL003" / "neg_1.pkb")  # no findings
 
 
-# SHA-256 of `review corpus/logger/logger.pkb` captured from origin/main (f1588b0) before
+# SHA-256 of `review corpus/logger/logger.pkb` captured from origin/main (0c3a540) before
 # --fail-on existed. docs/reports/phase-2/review.json cannot serve as the baseline: it predates
 # the PLL006 tuning and already differs from main by six findings.
 BASELINE_SHA256 = {

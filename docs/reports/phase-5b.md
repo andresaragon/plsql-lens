@@ -1,6 +1,6 @@
 # Phase F5b report — safe rewrite, checked on PostgreSQL
 
-Branch `feat/f5-rewrite`, one draft PR on `main` @ `4aaacb1`. Independent of F5a (it imports neither the rules nor the CLI).
+Branch `feat/f5-rewrite`, one draft PR on `main` @ `acfb71b`. Independent of F5a (it imports neither the rules nor the CLI).
 
 > **Amendment (F5c, 2026-10-30).** The reference set grew from 37 to 42 cases: reading the `DECODE` findings of the corpus showed that `CASE x WHEN s` is not equivalent when the search value is a column or an expression that may be NULL (DECODE matches NULL with NULL). The rewrite was fixed and five cases (`decode_13`–`decode_17`) were added; the figures below are those of the original 37 cases (32 matching, 5 divergent). With the 42 cases it is 37 matching and 5 divergent. See [phase-5.md](phase-5.md).
 

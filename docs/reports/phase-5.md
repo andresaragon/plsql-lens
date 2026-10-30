@@ -1,6 +1,6 @@
 # Phase F5c report — measuring the migration rules on `corpus/`
 
-Branch `feat/f5c-measurement`, one draft PR on `main` @ `9e1e156`. F5c runs locally (no cloud credit) on top of F5a
+Branch `feat/f5c-measurement`, one draft PR on `main` @ `ce62af8`. F5c runs locally (no cloud credit) on top of F5a
 ([report](phase-5a.md)) and F5b ([report](phase-5b.md)). The adjudication data is in
 [`phase-5/adjudication.json`](phase-5/adjudication.json); the table below is `python scripts/migrate_adjudication.py`.
 

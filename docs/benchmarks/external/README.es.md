@@ -31,12 +31,12 @@ Resultados: [results.md](results.md) · crudos: [raw/engine.json](raw/engine.jso
 [llm_baseline/responses.json](llm_baseline/responses.json) · adjudicación: [adjudication/](adjudication/).
 Se reproduce con `plsql-lens bench-external convert|run|run-before|llm|report`.
 
-1. **Reglas de referencia congeladas** (`frozen.json`, commit `6c2982c`; parser, reglas y `docs/rules.md` con hash y una prueba unitaria).
+1. **Reglas de referencia congeladas** (`frozen.json`, commit `390e96b`; parser, reglas y `docs/rules.md` con hash y una prueba unitaria).
 2. **Conversor y evaluador**, escritos y probados solo con datos sintéticos.
 3. **Commit-sello** `d2755f2`: 40 casos (64 `expect`, 60 `clean`, 9 `beyond`; marcadores y cabecera descriptiva fuera, mismas líneas),
    SHA-256 del manifiesto `5f1e1eeef047026120541f8973d6fc02e31a84e4e0a9772f1c4fca12d167f11f` en `../seal.json`.
 4. **Motor congelado, una sola vez** (`bench-external run` rechaza una segunda ejecución sin `--force`).
-5. **Reglas «before», una sola vez** (`bench-external run-before`): el `BEFORE_SHA` de F4 (`67afb85`, exportado de git) sobre los mismos
+5. **Reglas «before», una sola vez** (`bench-external run-before`): el `BEFORE_SHA` de F4 (`ca4ba43`, exportado de git) sobre los mismos
    casos sellados, con la misma regla de «una vez». Sin LLM y sin costo; solo mide qué hizo el ajuste de F4 sobre `dev` en un split que nunca vio.
 6. **Línea base solo-LLM** (`claude-sonnet-5-5`, contrato de `docs/rules.md`, sin motor): 40 archivos, 0,596 USD.
 7. **Dos tablas.** *Estricta*: todo hallazgo en una línea sin marcador es falso positivo. *Adjudicada*: cada hallazgo sin marcar se leyó en el caso original
@@ -44,8 +44,8 @@ Se reproduce con `plsql-lens bench-external convert|run|run-before|llm|report`.
 
 | Método | Estricto TP/FP/FN | Adjudicado (provisional) |
 |---|---|---|
-| Reglas «before» (`67afb85`) | 64 / 3 / 0 | 65 / 2 / 0 |
-| Reglas congeladas (`6c2982c`) | 64 / 2 / 0 | 65 / 1 / 0 |
+| Reglas «before» (`ca4ba43`) | 64 / 3 / 0 | 65 / 2 / 0 |
+| Reglas congeladas (`390e96b`) | 64 / 2 / 0 | 65 / 1 / 0 |
 | Solo LLM | 64 / 2 / 0 | 65 / 1 / 0 |
 
 * La única diferencia entre «before» y las congeladas es `e012:22` PLL004 (`select nvl(max(price), 0) into …`, una trampa `clean`): el contrato exime

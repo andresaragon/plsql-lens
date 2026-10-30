@@ -20,6 +20,6 @@
   "src/plsql_lens/rules/suppress.py": "7adbc24f97f27e24a1a538230c744263ddede599ba1473b9bb7eeaed71b603ec",
   "src/plsql_lens/rules/util.py": "807c2b32d6b3460dff13aab51643e1166f06aa86288e77706a0986a208633f3b"
  },
- "frozen_at_commit": "6c2982ca2e506cb30852f9710d45f1b72fd60931",
+ "frozen_at_commit": "390e96bbc44d63d16355cf1f919ed284d4fe7b6d",
  "note": "Reference rules for the external-split evaluation (F4b). The engine files below must not change while that evaluation exists; the hash is checked by tests/unit/test_external_frozen.py."
 }

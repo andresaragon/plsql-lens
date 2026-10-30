@@ -1,6 +1,6 @@
 # External split — results
 
-Frozen reference rules: commit `6c2982ca2e506cb30852f9710d45f1b72fd60931`. Manifest SHA-256 `5f1e1eeef047026120541f8973d6fc02e31a84e4e0a9772f1c4fca12d167f11f`. 40 cases. Rules were never tuned on this split.
+Frozen reference rules: commit `390e96bbc44d63d16355cf1f919ed284d4fe7b6d`. Manifest SHA-256 `5f1e1eeef047026120541f8973d6fc02e31a84e4e0a9772f1c4fca12d167f11f`. 40 cases. Rules were never tuned on this split.
 
 ### Rules (frozen)
 
@@ -32,9 +32,9 @@ Frozen reference rules: commit `6c2982ca2e506cb30852f9710d45f1b72fd60931`. Manif
 
 **Real-world (`beyond`) recall**: 0 of 9 markers reported (reported apart, not in the tables above).
 
-Before rules: `src/plsql_lens/` at commit `67afb855ea1f3d54199356f65a0cdf6e8944e868` (F4's "before", prior to the tuning on `dev`), run once on the same sealed cases. Findings only in before: 1; only in after: 0. Not tuned on this split either.
+Before rules: `src/plsql_lens/` at commit `ca4ba438b3f0086a1a603b4726bbb45d346dd60f` (F4's "before", prior to the tuning on `dev`), run once on the same sealed cases. Findings only in before: 1; only in after: 0. Not tuned on this split either.
 
-### Rules (before, 67afb85)
+### Rules (before, ca4ba43)
 
 **Strict** (every finding on an unmarked line is a false positive)
 
