@@ -1,0 +1,335 @@
+{
+  "null_marker": "<NULL>",
+  "cases": [
+    {
+      "id": "nvl_01",
+      "construct": "nvl",
+      "setup": [],
+      "oracle_sql": "SELECT NVL(NULL, 'x') FROM DUAL",
+      "oracle_result": "x",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "nvl_02",
+      "construct": "nvl",
+      "setup": [],
+      "oracle_sql": "SELECT NVL('a', 'x') FROM DUAL",
+      "oracle_result": "a",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "nvl_03",
+      "construct": "nvl",
+      "setup": [],
+      "oracle_sql": "SELECT NVL(NULL, 5) FROM DUAL",
+      "oracle_result": "5",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "nvl_04",
+      "construct": "nvl",
+      "setup": [],
+      "oracle_sql": "SELECT NVL(NVL(NULL, 3), 7) FROM DUAL",
+      "oracle_result": "3",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "nvl_05",
+      "construct": "nvl",
+      "setup": [],
+      "oracle_sql": "SELECT NVL(NULL, NULL) FROM DUAL",
+      "oracle_result": "<NULL>",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "nvl_06",
+      "construct": "nvl",
+      "setup": [],
+      "oracle_sql": "SELECT NVL(1 + 2, 0) FROM DUAL",
+      "oracle_result": "3",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "nvl_07",
+      "construct": "nvl",
+      "setup": [],
+      "oracle_sql": "SELECT NVL(NULLIF(1, 1), 9) FROM DUAL",
+      "oracle_result": "9",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "nvl_08",
+      "construct": "nvl",
+      "setup": [],
+      "oracle_sql": "SELECT NVL('', 'x') FROM DUAL",
+      "oracle_result": "x",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free",
+      "known_divergence": {
+        "reason": "oracle_empty_string_is_null",
+        "pg_naive_result": ""
+      }
+    },
+    {
+      "id": "nvl_09",
+      "construct": "nvl",
+      "setup": [],
+      "oracle_sql": "SELECT NVL(TRIM('  '), 'blank') FROM DUAL",
+      "oracle_result": "blank",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free",
+      "known_divergence": {
+        "reason": "oracle_empty_string_is_null",
+        "pg_naive_result": ""
+      }
+    },
+    {
+      "id": "nvl_10",
+      "construct": "nvl",
+      "setup": [],
+      "oracle_sql": "SELECT NVL(SUBSTR('abc', 5), 'e') FROM DUAL",
+      "oracle_result": "e",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free",
+      "known_divergence": {
+        "reason": "oracle_empty_string_is_null",
+        "pg_naive_result": ""
+      }
+    },
+    {
+      "id": "nvl_11",
+      "construct": "nvl",
+      "setup": [],
+      "oracle_sql": "SELECT NVL('abc' || NULL, 'z') FROM DUAL",
+      "oracle_result": "abc",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free",
+      "known_divergence": {
+        "reason": "oracle_concat_ignores_null",
+        "pg_naive_result": "z"
+      }
+    },
+    {
+      "id": "decode_01",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(1, 1, 'a', 2, 'b', 'c') FROM DUAL",
+      "oracle_result": "a",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "decode_02",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(2, 1, 'a', 2, 'b', 'c') FROM DUAL",
+      "oracle_result": "b",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "decode_03",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(3, 1, 'a', 2, 'b', 'c') FROM DUAL",
+      "oracle_result": "c",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "decode_04",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(3, 1, 'a', 2, 'b') FROM DUAL",
+      "oracle_result": "<NULL>",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "decode_05",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(NULL, NULL, 'isnull', 'notnull') FROM DUAL",
+      "oracle_result": "isnull",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "decode_06",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(NULL, 1, 'a', 'z') FROM DUAL",
+      "oracle_result": "z",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "decode_07",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE('x', 'x', 1, 'y', 2) FROM DUAL",
+      "oracle_result": "1",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "decode_08",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(1 + 1, 2, 'two', 'other') FROM DUAL",
+      "oracle_result": "two",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "decode_09",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(DECODE(1, 1, 2, 3), 2, 'ok', 'no') FROM DUAL",
+      "oracle_result": "ok",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "decode_10",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(NULL, 1, 'a', NULL, 'n', 'd') FROM DUAL",
+      "oracle_result": "n",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "decode_11",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE('', NULL, 'isnull', 'notnull') FROM DUAL",
+      "oracle_result": "isnull",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free",
+      "known_divergence": {
+        "reason": "oracle_empty_string_is_null",
+        "pg_naive_result": "notnull"
+      }
+    },
+    {
+      "id": "decode_12",
+      "construct": "decode",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(2, 1, 'a', 2, 'b', 2, 'c') FROM DUAL",
+      "oracle_result": "b",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "nextval_01",
+      "construct": "nextval",
+      "setup": [
+        "create sequence f5_s1 start with 5 increment by 1"
+      ],
+      "oracle_sql": "SELECT f5_s1.NEXTVAL FROM DUAL",
+      "oracle_result": "5",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "nextval_02",
+      "construct": "nextval",
+      "setup": [
+        "create sequence f5_s2 start with 10 increment by 5"
+      ],
+      "oracle_sql": "SELECT f5_s2.NEXTVAL FROM DUAL",
+      "oracle_result": "10",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "nextval_03",
+      "construct": "nextval",
+      "setup": [
+        "create sequence f5_s3 start with 1 increment by 1"
+      ],
+      "oracle_sql": "SELECT f5_s3.NEXTVAL + f5_s3.CURRVAL FROM DUAL",
+      "oracle_result": "2",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "nextval_04",
+      "construct": "nextval",
+      "setup": [
+        "create sequence f5_s4 start with 100 increment by 1"
+      ],
+      "oracle_sql": "SELECT 'id-' || f5_s4.NEXTVAL FROM DUAL",
+      "oracle_result": "id-100",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "nextval_05",
+      "construct": "nextval",
+      "setup": [
+        "create sequence f5_s5 start with 21 increment by 1"
+      ],
+      "oracle_sql": "SELECT f5_s5.NEXTVAL * 2 FROM DUAL",
+      "oracle_result": "42",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "nextval_06",
+      "construct": "nextval",
+      "setup": [
+        "create sequence f5_s6 start with 7 increment by 1"
+      ],
+      "oracle_sql": "SELECT F5_S6.nextval FROM dual",
+      "oracle_result": "7",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "from_dual_01",
+      "construct": "from_dual",
+      "setup": [],
+      "oracle_sql": "SELECT 1 FROM DUAL",
+      "oracle_result": "1",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "from_dual_02",
+      "construct": "from_dual",
+      "setup": [],
+      "oracle_sql": "SELECT 'a' || 'b' FROM DUAL",
+      "oracle_result": "ab",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "from_dual_03",
+      "construct": "from_dual",
+      "setup": [],
+      "oracle_sql": "SELECT 1 + 1 FROM dual",
+      "oracle_result": "2",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "from_dual_04",
+      "construct": "from_dual",
+      "setup": [],
+      "oracle_sql": "SELECT   2 * 3\nFROM   DUAL",
+      "oracle_result": "6",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "from_dual_05",
+      "construct": "from_dual",
+      "setup": [],
+      "oracle_sql": "SELECT 'x' FROM DUAL WHERE 1 = 1",
+      "oracle_result": "x",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "mixed_01",
+      "construct": "mixed",
+      "setup": [],
+      "oracle_sql": "SELECT NVL(NULL, 'x') || DECODE(1, 1, 'a', 'b') FROM DUAL",
+      "oracle_result": "xa",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "mixed_02",
+      "construct": "mixed",
+      "setup": [
+        "create sequence f5_s7 start with 3 increment by 1"
+      ],
+      "oracle_sql": "SELECT NVL(f5_s7.NEXTVAL, 0) FROM DUAL",
+      "oracle_result": "3",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    },
+    {
+      "id": "mixed_03",
+      "construct": "mixed",
+      "setup": [],
+      "oracle_sql": "SELECT DECODE(NVL(NULL, 2), 2, 'two', 'other') FROM DUAL",
+      "oracle_result": "two",
+      "oracle_version": "Oracle AI Database 26ai Free Release 23.26.3.0.0 - Develop, Learn, and Run for Free"
+    }
+  ]
+}
