@@ -1,0 +1,79 @@
+name: differential
+# Differential fuzzing of rewrite_sql (F5-G1): the generated NVL/DECODE statements run on Oracle Free
+# (original) and on PostgreSQL 16 (rewritten) and the results are compared. Never part of the unit CI.
+# Trigger: workflow_dispatch (n and seed are inputs), or a push to a feat/f5-differential* branch that
+# touches the fuzzing files. Results are published to branch ci-results/f5-differential.
+on:
+  workflow_dispatch:
+    inputs:
+      n:
+        description: "Number of generated statements (1-5000)"
+        default: "2000"
+      seed:
+        description: "Generator seed"
+        default: "20261030"
+  push:
+    branches: ["feat/f5-differential**"]
+    paths:
+      - "scripts/migrate_differential.py"
+      - "tests/differential/**"
+      - "src/plsql_lens/migrate/rewrite.py"
+      - ".github/workflows/differential.yml"
+jobs:
+  differential:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    env:
+      N: ${{ github.event.inputs.n || '2000' }}
+      SEED: ${{ github.event.inputs.seed || '20261030' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync
+      - name: Generate throw-away passwords
+        run: |
+          mkdir -p out/differential
+          ora="$(openssl rand -hex 12)"
+          pg="$(openssl rand -hex 12)"
+          echo "::add-mask::$ora"
+          echo "::add-mask::$pg"
+          echo "ORACLE_PASSWORD=$ora" >> "$GITHUB_ENV"
+          echo "PG_PASSWORD=$pg" >> "$GITHUB_ENV"
+          # the commands are split on spaces, so the (hex, masked) password is expanded here
+          echo "PLSQL_LENS_SQLPLUS=docker exec -i plsql-lens-oracle sqlplus -s -L system/$ora@//localhost/FREEPDB1" >> "$GITHUB_ENV"
+          echo "PLSQL_LENS_PSQL=docker exec -i plsql-lens-pg psql -X -q -A -t -U postgres" >> "$GITHUB_ENV"
+      - name: Start PostgreSQL 16
+        run: |
+          docker run -d --name plsql-lens-pg -e POSTGRES_PASSWORD="$PG_PASSWORD" postgres:16
+          for i in $(seq 1 60); do
+            docker exec plsql-lens-pg pg_isready -h localhost -U postgres && break
+            sleep 2
+          done
+          docker exec plsql-lens-pg pg_isready -h localhost -U postgres
+      - name: Start Oracle Free
+        run: docker compose -f docker/compose.yml up -d --wait --wait-timeout 900
+      - name: Versions
+        run: |
+          docker exec -i plsql-lens-pg psql -X -q -A -t -U postgres -c "select version()" | tee out/differential/versions.txt
+          echo "select banner_full from v\$version;" | docker exec -i plsql-lens-oracle sqlplus -s -L system/"$ORACLE_PASSWORD"@//localhost/FREEPDB1 | tee -a out/differential/versions.txt || true
+      - name: Differential run
+        run: |
+          set -o pipefail
+          uv run python scripts/migrate_differential.py --seed "$SEED" --n "$N" --out out/differential 2>&1 | tee out/differential/run.log
+      - name: Publish results to branch ci-results/f5-differential (artifact downloads are not reachable from the lead session)
+        if: always()
+        run: |
+          set -e
+          git config --global user.name andresaragon
+          git config --global user.email 16310427+andresaragon@users.noreply.github.com
+          url="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}"
+          git clone --depth 1 --branch ci-results/f5-differential "$url" results 2>/dev/null || {
+            mkdir results; git -C results init -q -b ci-results/f5-differential; git -C results remote add origin "$url"; }
+          find results -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -r out/differential/. results/ 2>/dev/null || true
+          echo "$GITHUB_SHA" > results/commit.txt
+          git -C results add -A
+          git -C results commit -q -m "differential run $GITHUB_RUN_ID for $GITHUB_SHA (n=$N seed=$SEED)" || exit 0
+          git -C results push -q origin ci-results/f5-differential
