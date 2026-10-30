@@ -27,7 +27,7 @@ uv sync
 uv run plsql-lens inventory corpus/ --format json -o inventory.json
 uv run plsql-lens inventory corpus/ --format mermaid -o callgraph.mmd   # --level unit para subprogramas
 uv run plsql-lens review corpus/logger/logger.pkb                       # tabla de hallazgos
-uv run pytest            # tests unitarios y de aceptación, sin red ni Docker
+uv run pytest            # tests unitarios y de aceptación; sin Docker y sin necesitar red (los de empaquetado se saltan sin conexión)
 make demo-f1             # regenera docs/reports/phase-1/
 ```
 
@@ -84,9 +84,8 @@ desde su propio checkout (no está publicada en PyPI) y la subida a code scannin
     fail-on: high
 ```
 
-Entradas, ejemplos de workflow completos y los requisitos de acceso para usarla desde otro repositorio privado:
-[docs/github-action.md](docs/github-action.md) (en inglés). Este repositorio comprueba la acción en cada push con
-[`action-selftest.yml`](.github/workflows/action-selftest.yml).
+Entradas y ejemplos de workflow completos: [docs/github-action.md](docs/github-action.md) (en inglés). Este repositorio comprueba la acción con
+[`action-selftest.yml`](.github/workflows/action-selftest.yml) en los pull requests y en los pushes a `main`.
 
 ## Migración: pistas Oracle → PostgreSQL (F5a)
 

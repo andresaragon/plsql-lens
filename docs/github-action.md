@@ -47,10 +47,6 @@ jobs:
 
 * **Pin to a full commit SHA.** The repository has no tags or releases yet, so there is no `@v1`: replace
   `<full-commit-sha>` in the examples with a commit of `main`.
-* **Private repositories must be allowed to use it.** An action in a private repository can only be used by other
-  repositories when this one allows it: *Settings → Actions → General → Access*. At the time of writing
-  (`GET /repos/andresaragon/plsql-lens/actions/permissions/access` returns `{"access_level":"none"}`) it is not
-  accessible from any other repository.
 
 Inside this repository the action is exercised with `uses: ./` by
 `.github/workflows/action-selftest.yml`.

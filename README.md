@@ -27,7 +27,7 @@ uv sync
 uv run plsql-lens inventory corpus/ --format json -o inventory.json
 uv run plsql-lens inventory corpus/ --format mermaid -o callgraph.mmd   # --level unit for subprograms
 uv run plsql-lens review corpus/logger/logger.pkb                       # table of findings
-uv run pytest            # unit + acceptance tests, no network, no Docker
+uv run pytest            # unit + acceptance tests; no Docker, no network needed (the packaging tests skip offline)
 make demo-f1             # regenerates docs/reports/phase-1/
 ```
 
@@ -84,9 +84,8 @@ SARIF 2.1.0 and, with `fail-on`, fails the step on a severity threshold. It inst
     fail-on: high
 ```
 
-Inputs, full workflow examples and the access requirements for using it from another private repository:
-[docs/github-action.md](docs/github-action.md). This repository checks the action on every push with
-[`action-selftest.yml`](.github/workflows/action-selftest.yml).
+Inputs and full workflow examples: [docs/github-action.md](docs/github-action.md). This repository checks the action with
+[`action-selftest.yml`](.github/workflows/action-selftest.yml) on pull requests and on pushes to `main`.
 
 ## Migration: Oracle → PostgreSQL hints (F5a)
 

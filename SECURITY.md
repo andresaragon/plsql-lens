@@ -2,15 +2,10 @@
 
 ## Reporting a vulnerability
 
-Please do not describe a security problem in a public place.
-
-- **While the repository is private** (as of this writing), only its collaborators can see issues, so report
-  the problem in an [issue](https://github.com/andresaragon/plsql-lens/issues) and say how to reproduce it and
-  which version or commit you used.
-- **Once the repository is public**, use GitHub's private reporting instead: open the
-  [Security tab](https://github.com/andresaragon/plsql-lens/security), choose **Report a vulnerability** and
-  describe the problem there. Private vulnerability reporting is not available on this repository while it is
-  private, and has to be enabled in its settings when it is made public.
+Please do not describe a security problem in a public issue or pull request. Use GitHub's private
+vulnerability reporting instead: open the [Security tab](https://github.com/andresaragon/plsql-lens/security),
+choose **Report a vulnerability** and describe the problem, how to reproduce it and which version or commit you
+used. Only the maintainers can see the report.
 
 Please do not publish the details until a fix is available.
 
