@@ -13,7 +13,7 @@ from pathlib import Path
 import pytest
 
 from plsql_lens.migrate import MIGRATION_RULES, migrate_file, migrate_source
-from plsql_lens.rules import RULES, Finding
+from plsql_lens.rules import RULES, SEVERITIES, Finding
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = ROOT / "tests" / "fixtures" / "migrate" / "rules"
@@ -21,7 +21,7 @@ CONTRACT = ROOT / "docs" / "migration-rules.md"
 RULE_IDS = [f"MIG{i:03d}" for i in range(1, 12)]
 SEVERITY = {
     "MIG001": "low",
-    "MIG002": "low",
+    "MIG002": "medium",  # the highest a finding can have; each finding carries its own
     "MIG003": "medium",
     "MIG004": "low",
     "MIG005": "medium",
@@ -32,7 +32,8 @@ SEVERITY = {
     "MIG010": "low",
     "MIG011": "high",
 }
-EXPECT = re.compile(r"--\s*expect:\s*(MIG\d{3})")
+EXPECT = re.compile(r"--\s*expect:\s*(MIG\d{3})(?:\s+(info|low|medium|high))?")
+PER_FINDING = {"MIG002", "MIG011"}  # severity decided from the context of each match
 
 
 def expected_lines(path: Path, rule: str) -> set[int]:
@@ -40,6 +41,15 @@ def expected_lines(path: Path, rule: str) -> set[int]:
         n
         for n, line in enumerate(path.read_text().splitlines(), 1)
         if (m := EXPECT.search(line)) and m.group(1) == rule
+    }
+
+
+def expected_severities(path: Path, rule: str) -> dict[int, str]:
+    """Line -> severity for the markers that state one (``-- expect: MIG011 info``)."""
+    return {
+        n: m.group(2)
+        for n, line in enumerate(path.read_text().splitlines(), 1)
+        if (m := EXPECT.search(line)) and m.group(1) == rule and m.group(2)
     }
 
 
@@ -96,10 +106,28 @@ def test_fixture_findings_match_markers(rule: str, path: Path) -> None:
 
 @pytest.mark.parametrize(("rule", "path"), CASES)
 def test_one_finding_per_occurrence_with_the_contract_severity(rule: str, path: Path) -> None:
+    stated = expected_severities(path, rule)
     for f in found(path, rule):
-        assert f.severity == SEVERITY[rule]
         assert f.location.path == str(path)
         assert f.location.col >= 1
+        if rule in PER_FINDING:
+            assert f.severity in SEVERITIES and SEVERITIES.index(f.severity) <= SEVERITIES.index(
+                SEVERITY[rule]
+            )
+            if f.location.line in stated:
+                assert f.severity == stated[f.location.line], (path.name, f.location.line)
+        else:
+            assert f.severity == SEVERITY[rule]
+
+
+@pytest.mark.parametrize("rule", sorted(PER_FINDING))
+def test_the_severity_markers_cover_every_level_the_rule_can_give(rule: str) -> None:
+    levels = {
+        sev
+        for p in (FIXTURES / rule).glob("pos_*.pkb")
+        for sev in expected_severities(p, rule).values()
+    }
+    assert levels == ({"info", "medium", "high"} if rule == "MIG011" else {"low", "medium"})
 
 
 # --- finding text and details -----------------------------------------------------------------

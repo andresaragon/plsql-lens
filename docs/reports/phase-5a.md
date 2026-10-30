@@ -35,7 +35,7 @@ fails if this table stops matching a fresh run.
 | Rule | Severity | Occurrences | Files |
 |---|---|---|---|
 | MIG001 | low | 70 | 21 |
-| MIG002 | low | 11 | 5 |
+| MIG002 | medium | 11 | 5 |
 | MIG003 | medium | 22 | 12 |
 | MIG004 | low | 15 | 7 |
 | MIG005 | medium | 7 | 6 |

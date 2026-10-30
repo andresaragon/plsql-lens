@@ -5,14 +5,23 @@ from __future__ import annotations
 from collections.abc import Callable, Iterable, Sequence
 from dataclasses import replace
 from pathlib import Path
+from typing import NamedTuple
 
 from ..parser import FileIR, Subprogram, Unit, parse_source
-from ..parser.lexer import IDENT, OP, STRING, Token, tokenize
+from ..parser.lexer import IDENT, NUMBER, OP, STRING, Token, tokenize
 from ..rules.model import Finding, Location, Rule
 from ..rules.suppress import apply_suppressions
 
-# A check sees the tokens of one file and returns (token, message override | None) hits.
-Hit = tuple[Token, str | None]
+
+class Hit(NamedTuple):
+    """A match: its token, a rule-specific text (or None) and a severity (None: the rule's own)."""
+
+    token: Token
+    detail: str | None = None
+    severity: str | None = None
+
+
+# A check sees the tokens of one file and returns its hits.
 TokenCheck = Callable[[Sequence[Token]], list[Hit]]
 
 
@@ -36,7 +45,7 @@ def _call_indices(toks: Sequence[Token], name: str) -> list[int]:
 
 
 def _call_of(name: str) -> TokenCheck:
-    return lambda toks: [(toks[i], None) for i in _call_indices(toks, name)]
+    return lambda toks: [Hit(toks[i]) for i in _call_indices(toks, name)]
 
 
 def _split_args(toks: Sequence[Token], open_idx: int) -> list[list[Token]]:
@@ -59,14 +68,27 @@ def _split_args(toks: Sequence[Token], open_idx: int) -> list[list[Token]]:
     return args
 
 
+def _non_null_literal(arg: Sequence[Token]) -> bool:
+    """A number or a string, with an optional sign: it can never be NULL."""
+    if len(arg) == 2 and arg[0].kind == OP and arg[0].text in ("+", "-"):
+        arg = arg[1:]
+    return len(arg) == 1 and arg[0].kind in (NUMBER, STRING)
+
+
+_DECODE_NULLS = "DECODE matches NULL with NULL, also between columns, and a simple CASE does not"
+
+
 def _decode(toks: Sequence[Token]) -> list[Hit]:
     hits: list[Hit] = []
     for i in _call_indices(toks, "decode"):
         args = _split_args(toks, i + 1)
-        searches = range(1, len(args) - 1, 2)  # even positions that have a result after them
-        has_null = any(len(args[k]) == 1 and _is(args[k][0], IDENT, "null") for k in searches)
-        message = "Oracle DECODE() call with a NULL search argument" if has_null else None
-        hits.append((toks[i], message))
+        searches = [args[k] for k in range(1, len(args) - 1, 2)]  # those that have a result after
+        if all(_non_null_literal(a) for a in searches):
+            hits.append(Hit(toks[i], None, "low"))
+            continue
+        has_null = any(len(a) == 1 and _is(a[0], IDENT, "null") for a in searches)
+        what = "a NULL search argument" if has_null else "a search value that is not a literal"
+        hits.append(Hit(toks[i], f"Oracle DECODE() call with {what}: {_DECODE_NULLS}", "medium"))
     return hits
 
 
@@ -74,7 +96,7 @@ def _idents(*names: str) -> TokenCheck:
     wanted = set(names)
 
     def check(toks: Sequence[Token]) -> list[Hit]:
-        return [(t, None) for t in toks if t.kind == IDENT and t.text in wanted]
+        return [Hit(t) for t in toks if t.kind == IDENT and t.text in wanted]
 
     return check
 
@@ -92,13 +114,13 @@ def _sequence_pseudo_columns(toks: Sequence[Token]) -> list[Hit]:
         while _is(_at(toks, k), OP, ".") and (p := _at(toks, k - 1)) and p.kind == IDENT:
             parts.insert(0, p.text)
             k -= 2
-        hits.append((t, ".".join(parts)))
+        hits.append(Hit(t, ".".join(parts)))
     return hits
 
 
 def _rownum(toks: Sequence[Token]) -> list[Hit]:
     return [
-        (t, None)
+        Hit(t)
         for i, t in enumerate(toks)
         if _is(t, IDENT, "rownum") and not _is(_at(toks, i - 1), OP, ".")
     ]
@@ -106,7 +128,7 @@ def _rownum(toks: Sequence[Token]) -> list[Hit]:
 
 def _connect_by(toks: Sequence[Token]) -> list[Hit]:
     return [
-        (t, None)
+        Hit(t)
         for i, t in enumerate(toks)
         if _is(t, IDENT, "connect") and _is(_at(toks, i + 1), IDENT, "by")
     ]
@@ -114,7 +136,7 @@ def _connect_by(toks: Sequence[Token]) -> list[Hit]:
 
 def _outer_join(toks: Sequence[Token]) -> list[Hit]:
     return [
-        (t, None)
+        Hit(t)
         for i, t in enumerate(toks)
         if _is(t, OP, "(") and _is(_at(toks, i + 1), OP, "+") and _is(_at(toks, i + 2), OP, ")")
     ]
@@ -122,7 +144,7 @@ def _outer_join(toks: Sequence[Token]) -> list[Hit]:
 
 def _autonomous(toks: Sequence[Token]) -> list[Hit]:
     return [
-        (t, None)
+        Hit(t)
         for i, t in enumerate(toks)
         if _is(t, IDENT, "pragma") and _is(_at(toks, i + 1), IDENT, "autonomous_transaction")
     ]
@@ -143,20 +165,59 @@ def _dbms_output(toks: Sequence[Token]) -> list[Hit]:
             if not _is(_at(toks, i - 2), IDENT, "sys") or _is(_at(toks, i - 3), OP, "."):
                 continue
             start = i - 2
-        hits.append((toks[start], None))
+        hits.append(Hit(toks[start]))
     return hits
 
 
 def _from_dual(toks: Sequence[Token]) -> list[Hit]:
     return [
-        (t, None)
+        Hit(t)
         for i, t in enumerate(toks)
         if _is(t, IDENT, "dual") and _is(_at(toks, i - 1), IDENT, "from")
     ]
 
 
+def _is_replacement(toks: Sequence[Token], i: int) -> bool:
+    """The token ``i`` is the whole third argument of ``replace(`` / ``regexp_replace(``."""
+    if not (
+        _is(_at(toks, i - 1), OP, ",")
+        and (_is(_at(toks, i + 1), OP, ",") or _is(_at(toks, i + 1), OP, ")"))
+    ):
+        return False
+    depth = commas = 0
+    for k in range(i - 1, -1, -1):
+        t = toks[k]
+        if t.kind == OP and t.text == ")":
+            depth += 1
+        elif t.kind == OP and t.text == "(":
+            if depth == 0:
+                name = _at(toks, k - 1)
+                return (
+                    commas == 2
+                    and name is not None
+                    and name.kind == IDENT
+                    and name.text in ("replace", "regexp_replace")
+                    and not _is(_at(toks, k - 2), OP, ".")
+                )
+            depth -= 1
+        elif t.kind == OP and t.text == "," and depth == 0:
+            commas += 1
+    return False
+
+
 def _empty_string(toks: Sequence[Token]) -> list[Hit]:
-    return [(t, None) for t in toks if t.kind == STRING and t.text.lower() in ("''", "n''")]
+    hits: list[Hit] = []
+    for i, t in enumerate(toks):
+        if t.kind != STRING or t.text.lower() not in ("''", "n''"):
+            continue
+        if _is(_at(toks, i - 1), OP, "||") or _is(_at(toks, i + 1), OP, "||"):
+            severity = "info"  # a concatenation gives the same result on both databases
+        elif _is_replacement(toks, i):
+            severity = "medium"  # the same unless the replacement empties the whole string
+        else:
+            severity = "high"
+        hits.append(Hit(t, None, severity))
+    return hits
 
 
 class _Spec:
@@ -185,7 +246,7 @@ _SPECS: dict[str, _Spec] = {
         "COALESCE(a, b)",
     ),
     "MIG002": _Spec(
-        "low",
+        "medium",
         "DECODE call",
         _decode,
         "Oracle DECODE() call",
@@ -277,8 +338,9 @@ _SPECS: dict[str, _Spec] = {
 }
 
 
-def _finding(rid: str, tok: Token, path: str, detail: str | None) -> Finding:
-    """``detail`` is a rule-specific text: the full message (MIG002) or the sequence (MIG004)."""
+def _finding(rid: str, hit: Hit, path: str) -> Finding:
+    """``hit.detail`` is rule-specific: the full message (MIG002) or the sequence (MIG004)."""
+    tok, detail = hit.token, hit.detail
     spec = _SPECS[rid]
     message, fix = spec.message, spec.fix_hint
     if rid == "MIG002" and detail:
@@ -288,9 +350,8 @@ def _finding(rid: str, tok: Token, path: str, detail: str | None) -> Finding:
     elif rid == "MIG004" and detail:
         message = f"Oracle sequence pseudo-column {detail}.{tok.text.upper()}"
         fix = f"{tok.text}('{detail}')"
-    return Finding(
-        rid, spec.severity, Location(path, tok.line, tok.col), message, spec.rationale, fix
-    )
+    severity = hit.severity or spec.severity
+    return Finding(rid, severity, Location(path, tok.line, tok.col), message, spec.rationale, fix)
 
 
 def _unit_spans(ir: FileIR) -> list[tuple[int, int, str]]:
@@ -324,7 +385,7 @@ def _with_unit(findings: list[Finding], ir: FileIR) -> list[Finding]:
 
 
 def _check(rid: str, toks: Sequence[Token], path: str) -> list[Finding]:
-    return [_finding(rid, tok, path, detail) for tok, detail in _SPECS[rid].check(toks)]
+    return [_finding(rid, hit, path) for hit in _SPECS[rid].check(toks)]
 
 
 def _rule_check(rid: str) -> Callable[[FileIR], list[Finding]]:
