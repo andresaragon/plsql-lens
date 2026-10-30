@@ -32,7 +32,7 @@ author's portfolio (Oracle Senior / AI Engineer roles).
 | M5 | `testgen` — IR → utPLSQL test packages via Claude; runner against Oracle Docker | M1, M4 client | unit: prompt/packaging with fakes; integration: compile+run in container |
 | M6 | `bench` — seeded-defect corpus generator + scorer → `docs/benchmarks/` | M1, M3 | scorer unit tests on tiny labeled corpus |
 | M7 | `cli` — thin `plsql-lens` command over M2–M6 | all | CLI tests with `CliRunner` |
-| M8 | *(optional F5)* Oracle→PostgreSQL migration hints | M1, M3 | only if budget remains |
+| M8 | `migrate` — Oracle→PostgreSQL migration hints and safe rewrites (F5, approved 2026-10-30) | M1 (lexer, IR) | pos/neg fixtures per rule; rewrites checked on PostgreSQL against results observed on Oracle |
 
 Dependency direction is strictly downward (M1 ← everything). No module imports `cli`.
 Build order = phase order below.
@@ -51,7 +51,7 @@ delegated to Claude Code subagents (cloud sessions cannot run `/orquestador:*`, 
 | F3 utPLSQL generation + execution | 16 | 15–19 ⚠ | Oracle container setup + compile/fix loop; **highest overrun risk** | `plsql-lens testgen … --run` → pass rate report |
 | F4 Benchmark | 14 | 12–15 | corpus generation (delegated), scoring, before/after table | `make bench` regenerates `docs/benchmarks/` |
 | Reserve | 12 | — | only with explicit approval | — |
-| F5 (optional) | from reserve | — | only if the reserve is untouched after F4 | — |
+| F5 Oracle→PostgreSQL | 13 cloud (F5a 7 + F5b 6) from the 24 USD left on 2026-10-30; F5c runs locally | — | F5b: proof on real PostgreSQL; meters under-reported up to 1.9× in F4 | `plsql-lens migrate corpus/` → findings; `rewrite_sql` validated on PostgreSQL |
 
 **Stop rules:** at the end of each phase I report actual spend (`/cost`; `ccusage` is not installed) vs
 budget and stop. If a phase is projected or measured at **> 125 % of its budget**, I stop and ask
@@ -119,6 +119,25 @@ Each run records the tokens and cost reported by the backend; the benchmark publ
 - Scorer: precision, recall ("coverage") and F1 per rule; false-positive examples listed.
 - `docs/benchmarks/`: methodology, corpus description, **before/after table** (before = first rule version, after = tuned rules), optional LLM-only baseline on a small sample for contrast, raw results JSON.
 - **Acceptance:** `make bench` regenerates every table byte-for-byte from a fixed seed.
+
+### F5 — Oracle→PostgreSQL migration hints (approved 2026-10-30)
+M8 is a **new package** `src/plsql_lens/migrate/`. `parser/`, `rules/` and `docs/rules.md` stay frozen (the F4b seal), `review`
+is unchanged and `RULES` keeps exactly PLL001–PLL007. Detection is deterministic: an LLM never decides whether a finding exists.
+- **F5a — detection:** contract in `docs/migration-rules.md` (MIG001–MIG011: `NVL`, `DECODE`, `SYSDATE`/`SYSTIMESTAMP`,
+  `seq.NEXTVAL`/`CURRVAL`, `ROWNUM`, `CONNECT BY`, `(+)`, `PRAGMA AUTONOMOUS_TRANSACTION`, `DBMS_OUTPUT`, `FROM DUAL`, the empty
+  string literal `''`), library API `migrate_file`/`migrate_source`, command `plsql-lens migrate` (table, JSON, SARIF, `--fail-on`).
+  The rules work on `parser.lexer.tokenize` of the whole file (the IR keeps only statement bodies, not declarations); the rules'
+  `to_sarif` indexes `RULES`, so `migrate` writes its own SARIF.
+- **F5b — safe rewrite + proof:** `rewrite_sql` applies the mechanical rewrites (`NVL`→`COALESCE`, `DECODE`→`CASE`, `seq.NEXTVAL`→
+  `nextval('seq')`, `FROM DUAL` dropped) conservatively (never half-rewrites; idempotent; text outside the rewritten spans is
+  untouched). Each case of `tests/fixtures/migrate/semantics.json` — expected results **observed on Oracle Free 23.26.3**, not
+  written by an LLM — is run on PostgreSQL 16 (GitHub Actions service container; results published to branch `ci-results/f5`).
+  Cases whose results differ for a reason outside the rewrite (e.g. Oracle's `''` = NULL) are labelled `known_divergence` and reported.
+- **F5c — measurement (local):** per-rule counts on `corpus/` and an adjudicated sample, `docs/reports/phase-5.md`.
+- **Out of scope (v1):** a full PL/SQL→PL/pgSQL transpiler, DDL, data types, `BULK COLLECT`/`FORALL`, `EXECUTE IMMEDIATE`,
+  Oracle-supplied packages, package state, and any connection to a real database.
+- **Acceptance:** a claim about a rewrite is made only if a command reproduces it; the evidence is correspondence on the
+  reference cases, not a proof of general equivalence.
 
 ## 4. Commands
 
