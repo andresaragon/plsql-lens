@@ -80,6 +80,14 @@ class ReviewFormat(StrEnum):
     sarif = "sarif"
 
 
+class FailOn(StrEnum):
+    never = "never"
+    info = "info"
+    low = "low"
+    medium = "medium"
+    high = "high"
+
+
 @app.command(name="review")
 def review_cmd(
     path: Annotated[Path, typer.Argument(exists=True, help="File or directory to review.")],
@@ -103,6 +111,13 @@ def review_cmd(
     explain_max: Annotated[
         int, typer.Option("--explain-max", help="Max findings sent to the LLM (most severe first).")
     ] = 10,
+    fail_on: Annotated[
+        FailOn,
+        typer.Option(
+            "--fail-on",
+            help="Exit 1 if any finding has at least this severity (never: always exit 0).",
+        ),
+    ] = FailOn.never,
 ) -> None:
     """Run the review rules on PATH."""
     selected = [r.strip().upper() for r in rules.split(",")] if rules else None
@@ -152,6 +167,10 @@ def review_cmd(
     else:
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_text(text)
+    if fail_on is not FailOn.never:
+        threshold = SEVERITY_RANK[fail_on.value]
+        if any(SEVERITY_RANK[f.severity] >= threshold for f in findings):
+            raise typer.Exit(1)
 
 
 # ---- testgen -------------------------------------------------------------------------------
