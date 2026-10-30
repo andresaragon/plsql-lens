@@ -2,6 +2,8 @@ name: robustness
 # Manual job: seeded mutation fuzzing of the parser (tests/robustness). Never part of the unit CI.
 on:
   workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   robustness:
     runs-on: ubuntu-latest
