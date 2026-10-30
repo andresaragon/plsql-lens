@@ -24,7 +24,7 @@ README = ROOT / "README.md"
 README_ES = ROOT / "README.es.md"
 
 FENCE = re.compile(r"^```(\w*)\s*$")
-CLI_LINE = re.compile(r"^(?:uv run )?plsql-lens (inventory|review)\b")
+CLI_LINE = re.compile(r"^(?:uv run )?plsql-lens (inventory|review|migrate)\b")
 
 
 def _commands() -> list[str]:
@@ -96,6 +96,7 @@ def test_the_command_list_is_the_one_the_issue_names() -> None:
         [
             "inventory",
             "review",
+            "migrate",
             "testgen",
             "testgen-setup",
             "testgen-suite",

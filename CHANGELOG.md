@@ -72,6 +72,17 @@ to PyPI and nothing has been released yet, so everything is listed under `[Unrel
   `plsql-lens bench-external convert|run|llm|report`.
 - A sealed manifest of the external cases, with a strict and a provisional adjudicated result table.
 
+#### F5a — Oracle→PostgreSQL migration rules ([report](docs/reports/phase-5a.md))
+
+- Contract for eleven token rules, MIG001–MIG011, in [`docs/migration-rules.md`](docs/migration-rules.md): `NVL`, `DECODE`,
+  `SYSDATE`/`SYSTIMESTAMP`, `seq.NEXTVAL`/`CURRVAL`, `ROWNUM`, `CONNECT BY`, `(+)`, `PRAGMA AUTONOMOUS_TRANSACTION`,
+  `DBMS_OUTPUT`, `FROM DUAL` and the empty string literal `''`.
+- Package `plsql_lens.migrate` (`MIGRATION_RULES`, `migrate_file`, `migrate_source`), separate from the review rules, which are
+  unchanged.
+- CLI command `plsql-lens migrate PATH [--format table|json|sarif] [-o OUT] [--rules …] [--fail-on …]`, with its own SARIF
+  writer because the review one indexes the review rules.
+- Positive and negative fixtures for every rule, written from the contract only.
+
 ### Changed
 
 - Rules tuned on the `dev` split of the benchmark: the PLL004 contract now also exempts `LISTAGG`

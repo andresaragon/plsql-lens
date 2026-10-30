@@ -14,6 +14,8 @@ import typer
 
 from .inventory import build_inventory, collect_files, render_mermaid
 from .llm import LLMError, LLMProvider, UsageLog, explain_findings, make_provider
+from .migrate import MIGRATION_RULES, migrate_file
+from .migrate.output import to_sarif as migrate_sarif
 from .parser import parse_file
 from .rules import RULES, review
 from .rules.output import table_notes, to_json, to_sarif, to_table
@@ -162,6 +164,47 @@ def review_cmd(
         text = to_json(findings, notes, usage)
     else:
         text = to_sarif(findings, notes)
+    if output is None:
+        typer.echo(text, nl=False)
+    else:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(text)
+    if fail_on is not FailOn.never:
+        threshold = SEVERITY_RANK[fail_on.value]
+        if any(SEVERITY_RANK[f.severity] >= threshold for f in findings):
+            raise typer.Exit(1)
+
+
+@app.command(name="migrate")
+def migrate_cmd(
+    path: Annotated[Path, typer.Argument(exists=True, help="File or directory to check.")],
+    fmt: Annotated[ReviewFormat, typer.Option("--format", help="Output format.")] = (
+        ReviewFormat.table
+    ),
+    output: Annotated[Path | None, typer.Option("-o", "--output", help="Write to a file.")] = None,
+    rules: Annotated[
+        str | None, typer.Option("--rules", help="Comma-separated rule ids (default: all).")
+    ] = None,
+    fail_on: Annotated[
+        FailOn,
+        typer.Option(
+            "--fail-on",
+            help="Exit 1 if any finding has at least this severity (never: always exit 0).",
+        ),
+    ] = FailOn.never,
+) -> None:
+    """Report Oracle constructs that need attention when migrating to PostgreSQL (MIG rules)."""
+    selected = [r.strip().upper() for r in rules.split(",")] if rules else None
+    unknown = [r for r in selected or [] if r not in MIGRATION_RULES]
+    if unknown:
+        raise typer.BadParameter(f"unknown rule(s): {', '.join(unknown)}", param_hint="--rules")
+    findings = [f for p in collect_files([path]) for f in migrate_file(p, selected)]
+    if fmt is ReviewFormat.table:
+        text = to_table(findings)
+    elif fmt is ReviewFormat.json:
+        text = to_json(findings)
+    else:
+        text = migrate_sarif(findings)
     if output is None:
         typer.echo(text, nl=False)
     else:

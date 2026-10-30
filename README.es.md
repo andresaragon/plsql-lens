@@ -5,7 +5,7 @@ con siete reglas deterministas, genera y ejecuta tests utPLSQL, y mide las regla
 
 ## Estado
 
-Las fases F1 a F4b están implementadas (plan y decisiones: [SPEC.md](SPEC.md); un informe por fase en
+Las fases F1 a F4b y F5a están implementadas (plan y decisiones: [SPEC.md](SPEC.md); un informe por fase en
 [Informes y lecturas](#informes-y-lecturas)):
 
 | Fase | Qué entrega | Requiere |
@@ -15,6 +15,7 @@ Las fases F1 a F4b están implementadas (plan y decisiones: [SPEC.md](SPEC.md); 
 | F3 | Generación de tests utPLSQL, compilar/reparar/ejecutar en Oracle Free, informe de métricas | Oracle; un LLM solo para generar |
 | F4 | Benchmark sembrado de las reglas (antes/después del ajuste, línea base solo-LLM) | nada (un LLM solo para la línea base) |
 | F4b | Split de autor externo: comprobación cruzada de las reglas congeladas | nada (un LLM solo para la línea base) |
+| F5a | Reglas de migración Oracle→PostgreSQL MIG001–MIG011 y `plsql-lens migrate` (solo detección) | nada |
 
 ## Inicio rápido
 
@@ -83,6 +84,25 @@ Entradas, ejemplos de workflow completos y los requisitos de acceso para usarla 
 [docs/github-action.md](docs/github-action.md) (en inglés). Este repositorio comprueba la acción en cada push con
 [`action-selftest.yml`](.github/workflows/action-selftest.yml).
 
+## Migración: pistas Oracle → PostgreSQL (F5a)
+
+`plsql-lens migrate RUTA` reporta las construcciones Oracle que requieren atención al pasar PL/SQL a PostgreSQL: once reglas
+deterministas sobre tokens, MIG001–MIG011 (`NVL`, `DECODE`, `SYSDATE`/`SYSTIMESTAMP`, `seq.NEXTVAL`/`CURRVAL`, `ROWNUM`,
+`CONNECT BY`, `(+)`, `PRAGMA AUTONOMOUS_TRANSACTION`, `DBMS_OUTPUT`, `FROM DUAL` y el literal de cadena vacía `''`, que en
+Oracle es `NULL` y en PostgreSQL no). Contrato, severidades y falsos positivos y negativos aceptados:
+[docs/migration-rules.md](docs/migration-rules.md) (en inglés). Son independientes de las reglas de revisión (`review` no las
+ejecuta), no interviene ningún LLM y el comando solo reporta: no reescribe código.
+
+```bash
+uv run plsql-lens migrate corpus/logger/logger.pkb                          # tabla de hallazgos
+uv run plsql-lens migrate corpus/ --format sarif -o migrate.sarif           # SARIF 2.1.0
+uv run plsql-lens migrate corpus/ --rules MIG008,MIG011 --fail-on high      # solo estas reglas; sale con 1 si hay un hallazgo high
+```
+
+`--format`, `-o`, `--rules` y `--fail-on` funcionan como en `review` (códigos de salida: [docs/cli-exit-codes.md](docs/cli-exit-codes.md)),
+y `-- plsql-lens: disable=MIG001` suprime un hallazgo en el código. Sobre `corpus/` reporta 234 hallazgos en 42 de 264
+archivos; conteos por regla y lo que no significan: [docs/reports/phase-5a.md](docs/reports/phase-5a.md) (en inglés).
+
 ## Comandos
 
 | Comando | Qué hace | Requiere |
@@ -92,6 +112,7 @@ Entradas, ejemplos de workflow completos y los requisitos de acceso para usarla 
 | `plsql-lens testgen RUTA --unit U` | Genera un paquete de tests utPLSQL para una unidad; `--run` lo compila, repara y ejecuta | LLM (cuesta dinero); Oracle para `--run` |
 | `plsql-lens testgen-setup` | Instala los objetos objetivo (Logger, HR, paquetes de test) en el esquema Oracle configurado | Oracle |
 | `plsql-lens testgen-suite` | Ejecuta los tests commiteados y escribe `report.json` / `junit.xml`; `--generate` los regenera | Oracle; LLM solo con `--generate` (cuesta dinero) |
+| `plsql-lens migrate RUTA` | Reglas de migración Oracle→PostgreSQL MIG001–MIG011; `--format table\|json\|sarif`, `--rules`, `--fail-on` | nada |
 | `plsql-lens bench` | Regenera los splits del benchmark, corre las reglas antes/después, puntúa y escribe `results.md` | nada |
 | `plsql-lens bench-llm` | Línea base solo-LLM sobre una muestra con semilla del split `test`, limitada con `--max-usd` | LLM (cuesta dinero) |
 | `plsql-lens bench-external` | Evaluación sobre el split de autor externo: `convert`, `run`, `run-before`, `llm`, `report` | nada; `llm` cuesta dinero |
@@ -137,9 +158,9 @@ salvedades.
 
 ## Informes y lecturas
 
-* Plan y decisiones: [SPEC.md](SPEC.md). Contrato de las reglas de revisión: [docs/rules.md](docs/rules.md).
+* Plan y decisiones: [SPEC.md](SPEC.md). Contrato de las reglas de revisión: [docs/rules.md](docs/rules.md). Contrato de las reglas de migración: [docs/migration-rules.md](docs/migration-rules.md).
 * Informes por fase: [F1](docs/reports/phase-1.md) · [F2](docs/reports/phase-2.md) · [F3](docs/reports/phase-3.md) ·
-  [F4](docs/reports/phase-4.md) · [F4b](docs/reports/phase-4b.md).
+  [F4](docs/reports/phase-4.md) · [F4b](docs/reports/phase-4b.md) · [F5a](docs/reports/phase-5a.md).
 * Benchmark: [metodología](docs/benchmarks/README.md) · [resultados](docs/benchmarks/results.md) ·
   [split de autor externo](docs/benchmarks/external/README.es.md) ([resultados](docs/benchmarks/external/results.md)).
 * Decisiones de diseño: [ADR 0001 (parser)](docs/adr/0001-parser.md) ·
