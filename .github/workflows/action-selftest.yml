@@ -1,0 +1,42 @@
+name: action-selftest
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  selftest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Review corpus/logger (no threshold)
+        uses: ./
+        with:
+          path: corpus/logger
+          sarif-file: selftest-pass.sarif
+          upload: false
+
+      - name: Review corpus/logger (fails on high)
+        id: gate
+        uses: ./
+        continue-on-error: true
+        with:
+          path: corpus/logger
+          fail-on: high
+          sarif-file: selftest-gate.sarif
+          upload: false
+
+      - name: Check the outcomes and the SARIF files
+        env:
+          GATE_OUTCOME: ${{ steps.gate.outcome }}
+        run: |
+          test "$GATE_OUTCOME" = "failure"
+          python3 - <<'PY'
+          import json
+
+          for name in ("selftest-pass.sarif", "selftest-gate.sarif"):
+              doc = json.load(open(name))
+              assert doc["version"] == "2.1.0", name
+              assert doc["runs"][0]["results"], name
+          PY

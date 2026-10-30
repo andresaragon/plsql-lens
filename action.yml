@@ -1,0 +1,46 @@
+name: PL/SQL Lens review
+description: Run the PL/SQL Lens review rules on a path and write the findings as SARIF, optionally uploading them to code scanning.
+inputs:
+  path:
+    description: File or directory of PL/SQL sources to review, relative to the workspace.
+    required: false
+    default: "."
+  fail-on:
+    description: Fail the step if any finding has at least this severity (never, info, low, medium or high). The SARIF file is written either way.
+    required: false
+    default: never
+  rules:
+    description: Comma-separated rule ids to run, for example PLL001,PLL002. Empty runs all rules.
+    required: false
+    default: ""
+  sarif-file:
+    description: Where to write the SARIF 2.1.0 report, relative to the workspace.
+    required: false
+    default: plsql-lens.sarif
+  upload:
+    description: Set to the string "true" to upload the SARIF file with github/codeql-action/upload-sarif, even when the review step failed. Private repositories need GitHub Advanced Security for this.
+    required: false
+    default: "false"
+runs:
+  using: composite
+  steps:
+    - uses: astral-sh/setup-uv@v5
+    - name: Review
+      shell: bash
+      env:
+        PLSQL_LENS_SOURCE: ${{ github.action_path }}
+        PLSQL_LENS_PATH: ${{ inputs.path }}
+        PLSQL_LENS_FAIL_ON: ${{ inputs.fail-on }}
+        PLSQL_LENS_RULES: ${{ inputs.rules }}
+        PLSQL_LENS_SARIF: ${{ inputs.sarif-file }}
+      run: |
+        args=(review "$PLSQL_LENS_PATH" --format sarif --output "$PLSQL_LENS_SARIF" --fail-on "$PLSQL_LENS_FAIL_ON")
+        if [ -n "$PLSQL_LENS_RULES" ]; then
+          args+=(--rules "$PLSQL_LENS_RULES")
+        fi
+        uvx --from "$PLSQL_LENS_SOURCE" plsql-lens "${args[@]}"
+    - name: Upload SARIF
+      if: always() && inputs.upload == 'true' && hashFiles(inputs.sarif-file) != ''
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: ${{ inputs.sarif-file }}
