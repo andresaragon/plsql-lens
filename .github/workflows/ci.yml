@@ -20,3 +20,17 @@ jobs:
       - run: uv run ruff format --check .
       - run: uv run mypy
       - run: uv run pytest --cov=plsql_lens --cov-fail-under=85
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv build
+      - run: uvx twine check --strict dist/*
+      - run: uv sync
+      - name: Build, inspect and install the package in a clean venv
+        run: uv run pytest tests/unit/test_packaging.py -v
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
