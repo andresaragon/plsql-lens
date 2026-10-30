@@ -1,5 +1,11 @@
 # Pre-publication audit of `plsql-lens`
 
+> **Update at publication.** This audit was run on the private repository that preceded this one. When the project was
+> published the history was rewritten: findings P1 and H1 (the institutional address in one commit, and the
+> pull-request references that kept every pre-squash commit) are resolved by that rewrite, and the commit ids, commit counts,
+> pull-request numbers and CI run ids below refer to the private repository. The rest of the findings were handled in the
+> commits that followed the rewrite.
+
 Audited commit: `main` @ `a1e4ea0` (24 commits on `main`; 125 commits reachable from all refs, see H1). Date: 2026-10-30.
 This is a read-only audit: nothing was changed, rotated, deleted or fixed. The report is written to be published with the
 repository, so it contains no secret and no personal value: e-mail addresses appear only by type and location.

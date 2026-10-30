@@ -40,9 +40,12 @@ Tests: 17 pass (6 acceptance, 11 unit), 93 % line coverage, ruff/mypy clean. Rep
 ## Known gaps
 * The parse rate comes from the corpus the parser was developed against (two lexer bugs were fixed from
   corpus failures); it is not a held-out measurement. The ground truth was not used for tuning.
-* 4 false-positive edges, all calls to parameterless functions inside expressions
-  (`then include_call_stack`, `ut_owner` in a package-level initializer). The labeling convention only
-  counted `name(...)`/`name;`; these look like real calls the labels omitted. Left as is.
+* 4 edges that are not in the labels. Three of them (`logger.pkb:1973`, `:2299` and `:2409`) are **column names** of
+  `logger_prefs_by_client_id` inside SQL statements, which the parser takes for calls to the function of the same name,
+  `include_call_stack`: false positives of the parser (the labels are right there). The fourth, `ut_owner()` in a package-level
+  constant initializer of `ut_utils.pkb:25`, is a real call that the labels omitted. Left as is.
+  *(Correction at publication: this paragraph first said that all four were real calls omitted by the labels; reading the
+  source showed that three are column names. The call-edge precision above is unchanged.)*
 * Calls are resolved by name only: no types, no `schema.pkg` disambiguation beyond the last two parts,
   overloads (and same-name function/procedure pairs) collapse into one unit keyed by the first declared kind.
 * Both branches of `$if ... $then` are kept as code. Compound triggers and type-member bodies of

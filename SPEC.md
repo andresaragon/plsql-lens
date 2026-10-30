@@ -1,6 +1,6 @@
 # SPEC — PL/SQL Lens (working name)
 
-> Status: **DRAFT — awaiting approval.** No code is written until this spec and the phase plan are approved.
+> Status: **Approved** on 2026-10-22 (see §9, Decisions). The text is kept as it was approved; F5 was added later and is described in §3.
 
 ## 1. Objective
 
