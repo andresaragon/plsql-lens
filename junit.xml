@@ -1,0 +1,529 @@
+<testsuites tests="405" failures="8" errors="7">
+  <testsuite name="pkg_calc_round_money" tests="12" failures="0" errors="0">
+    <testcase classname="pkg_calc_round_money" name="Rounds down when third decimal is below 5" />
+    <testcase classname="pkg_calc_round_money" name="Rounds up when third decimal is above 5" />
+    <testcase classname="pkg_calc_round_money" name="Half rounds away from zero for positive" />
+    <testcase classname="pkg_calc_round_money" name="Half rounds away from zero for negative" />
+    <testcase classname="pkg_calc_round_money" name="Negative value rounds correctly" />
+    <testcase classname="pkg_calc_round_money" name="Value with two decimals is unchanged" />
+    <testcase classname="pkg_calc_round_money" name="Integer is unchanged" />
+    <testcase classname="pkg_calc_round_money" name="Zero returns zero" />
+    <testcase classname="pkg_calc_round_money" name="Tiny value rounds to zero" />
+    <testcase classname="pkg_calc_round_money" name="Value just below half cent rounds down" />
+    <testcase classname="pkg_calc_round_money" name="Large value rounds correctly" />
+    <testcase classname="pkg_calc_round_money" name="NULL input returns NULL" />
+  </testsuite>
+  <testsuite name="pkg_calc_percent_of" tests="17" failures="0" errors="0">
+    <testcase classname="pkg_calc_percent_of" name="15 percent of 200 is 30" />
+    <testcase classname="pkg_calc_percent_of" name="Result is rounded to 2 decimals" />
+    <testcase classname="pkg_calc_percent_of" name="Rounding is half away from zero for positive values" />
+    <testcase classname="pkg_calc_percent_of" name="Rounding is half away from zero for negative values" />
+    <testcase classname="pkg_calc_percent_of" name="Zero percent returns zero" />
+    <testcase classname="pkg_calc_percent_of" name="Zero value returns zero" />
+    <testcase classname="pkg_calc_percent_of" name="100 percent returns the value" />
+    <testcase classname="pkg_calc_percent_of" name="Percent above 100 increases the value" />
+    <testcase classname="pkg_calc_percent_of" name="Negative percent returns negative result" />
+    <testcase classname="pkg_calc_percent_of" name="Negative value returns negative result" />
+    <testcase classname="pkg_calc_percent_of" name="Two negatives give positive result" />
+    <testcase classname="pkg_calc_percent_of" name="Fractional percent" />
+    <testcase classname="pkg_calc_percent_of" name="Very small result rounds to zero" />
+    <testcase classname="pkg_calc_percent_of" name="NULL value returns NULL" />
+    <testcase classname="pkg_calc_percent_of" name="NULL percent returns NULL" />
+    <testcase classname="pkg_calc_percent_of" name="Both NULL returns NULL" />
+    <testcase classname="pkg_calc_percent_of" name="Large values are computed correctly" />
+  </testsuite>
+  <testsuite name="pkg_calc_safe_divide" tests="15" failures="0" errors="0">
+    <testcase classname="pkg_calc_safe_divide" name="Divides two positive numbers exactly" />
+    <testcase classname="pkg_calc_safe_divide" name="Returns a fractional result without rounding" />
+    <testcase classname="pkg_calc_safe_divide" name="Negative dividend gives negative result" />
+    <testcase classname="pkg_calc_safe_divide" name="Negative divisor gives negative result" />
+    <testcase classname="pkg_calc_safe_divide" name="Two negatives give a positive result" />
+    <testcase classname="pkg_calc_safe_divide" name="Zero dividend with non-zero divisor returns zero" />
+    <testcase classname="pkg_calc_safe_divide" name="Zero divisor returns NULL" />
+    <testcase classname="pkg_calc_safe_divide" name="NULL divisor returns NULL" />
+    <testcase classname="pkg_calc_safe_divide" name="NULL dividend with non-zero divisor returns NULL" />
+    <testcase classname="pkg_calc_safe_divide" name="Both NULL returns NULL" />
+    <testcase classname="pkg_calc_safe_divide" name="Zero dividend and zero divisor returns NULL" />
+    <testcase classname="pkg_calc_safe_divide" name="Divisor of one returns the dividend" />
+    <testcase classname="pkg_calc_safe_divide" name="Dividing a number by itself returns one" />
+    <testcase classname="pkg_calc_safe_divide" name="Very small divisor gives large result" />
+    <testcase classname="pkg_calc_safe_divide" name="Very small non-zero divisor does not raise" />
+  </testsuite>
+  <testsuite name="pkg_calc_clamp" tests="16" failures="0" errors="0">
+    <testcase classname="pkg_calc_clamp" name="Value inside range is returned unchanged" />
+    <testcase classname="pkg_calc_clamp" name="Value below lower bound returns lower bound" />
+    <testcase classname="pkg_calc_clamp" name="Value above upper bound returns upper bound" />
+    <testcase classname="pkg_calc_clamp" name="Value equal to lower bound returns lower bound" />
+    <testcase classname="pkg_calc_clamp" name="Value equal to upper bound returns upper bound" />
+    <testcase classname="pkg_calc_clamp" name="Equal bounds return that bound for any value" />
+    <testcase classname="pkg_calc_clamp" name="Negative ranges are handled" />
+    <testcase classname="pkg_calc_clamp" name="Range spanning zero" />
+    <testcase classname="pkg_calc_clamp" name="Decimal values and bounds are handled" />
+    <testcase classname="pkg_calc_clamp" name="NULL value returns NULL" />
+    <testcase classname="pkg_calc_clamp" name="NULL lower bound returns NULL" />
+    <testcase classname="pkg_calc_clamp" name="NULL upper bound returns NULL" />
+    <testcase classname="pkg_calc_clamp" name="All NULL inputs return NULL" />
+    <testcase classname="pkg_calc_clamp" name="Lower bound greater than upper bound raises ORA-20001" />
+    <testcase classname="pkg_calc_clamp" name="Slightly inverted decimal bounds raise ORA-20001" />
+    <testcase classname="pkg_calc_clamp" name="Inverted bounds raise ORA-20001 even when value is NULL" />
+  </testsuite>
+  <testsuite name="pkg_calc_is_leap_year" tests="9" failures="0" errors="0">
+    <testcase classname="pkg_calc_is_leap_year" name="Year divisible by 4 but not 100 is a leap year" />
+    <testcase classname="pkg_calc_is_leap_year" name="Year not divisible by 4 is not a leap year" />
+    <testcase classname="pkg_calc_is_leap_year" name="Century year not divisible by 400 is not a leap year" />
+    <testcase classname="pkg_calc_is_leap_year" name="Year divisible by 400 is a leap year" />
+    <testcase classname="pkg_calc_is_leap_year" name="Boundary years around a leap year" />
+    <testcase classname="pkg_calc_is_leap_year" name="NULL year returns FALSE" />
+    <testcase classname="pkg_calc_is_leap_year" name="Year zero is divisible by 400 and is a leap year" />
+    <testcase classname="pkg_calc_is_leap_year" name="Negative years follow the same rules" />
+    <testcase classname="pkg_calc_is_leap_year" name="Result agrees with an independent SQL computation for 1 to 2400" />
+  </testsuite>
+  <testsuite name="pkg_text_slugify" tests="12" failures="0" errors="0">
+    <testcase classname="pkg_text_slugify" name="Simple text is lower-cased" />
+    <testcase classname="pkg_text_slugify" name="Spaces become a single hyphen" />
+    <testcase classname="pkg_text_slugify" name="Runs of non-alphanumerics collapse into one hyphen" />
+    <testcase classname="pkg_text_slugify" name="Leading and trailing separators are removed" />
+    <testcase classname="pkg_text_slugify" name="NULL input returns NULL" />
+    <testcase classname="pkg_text_slugify" name="Empty string is treated as NULL by Oracle and returns NULL" />
+    <testcase classname="pkg_text_slugify" name="Only separators returns NULL" />
+    <testcase classname="pkg_text_slugify" name="Digits are preserved" />
+    <testcase classname="pkg_text_slugify" name="Single character input" />
+    <testcase classname="pkg_text_slugify" name="Already a slug is unchanged" />
+    <testcase classname="pkg_text_slugify" name="Mixed case and punctuation" />
+    <testcase classname="pkg_text_slugify" name="Non-ASCII letters are treated as separators" />
+  </testsuite>
+  <testsuite name="pkg_text_mask_email" tests="11" failures="2" errors="0">
+    <testcase classname="pkg_text_mask_email" name="Masks a typical email address" />
+    <testcase classname="pkg_text_mask_email" name="Boundary: single character before the at sign" />
+    <testcase classname="pkg_text_mask_email" name="Boundary: at sign is at position 1 returns NULL" />
+    <testcase classname="pkg_text_mask_email" name="No at sign returns NULL" />
+    <testcase classname="pkg_text_mask_email" name="NULL input returns NULL per documented contract">
+      <failure message="Actual: '***' (varchar2) was expected to be null&#10;at &quot;PLLT.TEST_PKG_TEXT_MASK_EMAIL.NULL_INPUT&quot;, line 25 ut.expect(pkg_text.mask_email(null)).to_be_null();">Actual: '***' (varchar2) was expected to be null
+at "PLLT.TEST_PKG_TEXT_MASK_EMAIL.NULL_INPUT", line 25 ut.expect(pkg_text.mask_email(null)).to_be_null();</failure>
+    </testcase>
+    <testcase classname="pkg_text_mask_email" name="Empty string input returns NULL per documented contract">
+      <failure message="Actual: '***' (varchar2) was expected to be null&#10;at &quot;PLLT.TEST_PKG_TEXT_MASK_EMAIL.EMPTY_INPUT&quot;, line 30 ut.expect(pkg_text.mask_email('')).to_be_null();">Actual: '***' (varchar2) was expected to be null
+at "PLLT.TEST_PKG_TEXT_MASK_EMAIL.EMPTY_INPUT", line 30 ut.expect(pkg_text.mask_email('')).to_be_null();</failure>
+    </testcase>
+    <testcase classname="pkg_text_mask_email" name="Only the at sign returns NULL" />
+    <testcase classname="pkg_text_mask_email" name="Nothing after the at sign keeps the at sign" />
+    <testcase classname="pkg_text_mask_email" name="Multiple at signs: first one is used" />
+    <testcase classname="pkg_text_mask_email" name="Output keeps the case of the first character and domain" />
+    <testcase classname="pkg_text_mask_email" name="Long local part is hidden entirely" />
+  </testsuite>
+  <testsuite name="pkg_text_is_palindrome" tests="22" failures="0" errors="0">
+    <testcase classname="pkg_text_is_palindrome" name="Simple odd-length palindrome returns TRUE" />
+    <testcase classname="pkg_text_is_palindrome" name="Simple even-length palindrome returns TRUE" />
+    <testcase classname="pkg_text_is_palindrome" name="Mixed case palindrome ignores case" />
+    <testcase classname="pkg_text_is_palindrome" name="Phrase with spaces and punctuation returns TRUE" />
+    <testcase classname="pkg_text_is_palindrome" name="Numeric palindrome returns TRUE" />
+    <testcase classname="pkg_text_is_palindrome" name="Alphanumeric palindrome returns TRUE" />
+    <testcase classname="pkg_text_is_palindrome" name="Non palindrome returns FALSE" />
+    <testcase classname="pkg_text_is_palindrome" name="Non palindrome with mismatch only in outer characters returns FALSE" />
+    <testcase classname="pkg_text_is_palindrome" name="Non palindrome with mismatch in inner characters returns FALSE" />
+    <testcase classname="pkg_text_is_palindrome" name="Even-length non palindrome returns FALSE" />
+    <testcase classname="pkg_text_is_palindrome" name="Numeric non palindrome returns FALSE" />
+    <testcase classname="pkg_text_is_palindrome" name="Single character returns TRUE" />
+    <testcase classname="pkg_text_is_palindrome" name="Two identical characters returns TRUE" />
+    <testcase classname="pkg_text_is_palindrome" name="Two different characters returns FALSE" />
+    <testcase classname="pkg_text_is_palindrome" name="Single character surrounded by punctuation returns TRUE" />
+    <testcase classname="pkg_text_is_palindrome" name="Punctuation differences are ignored" />
+    <testcase classname="pkg_text_is_palindrome" name="NULL returns FALSE" />
+    <testcase classname="pkg_text_is_palindrome" name="Empty string returns FALSE" />
+    <testcase classname="pkg_text_is_palindrome" name="Only spaces returns FALSE" />
+    <testcase classname="pkg_text_is_palindrome" name="Only punctuation returns FALSE" />
+    <testcase classname="pkg_text_is_palindrome" name="Maximum length palindrome of 4000 characters returns TRUE" />
+    <testcase classname="pkg_text_is_palindrome" name="Maximum length non palindrome returns FALSE" />
+  </testsuite>
+  <testsuite name="pkg_text_truncate_text" tests="12" failures="1" errors="0">
+    <testcase classname="pkg_text_truncate_text" name="Text shorter than max length is returned unchanged" />
+    <testcase classname="pkg_text_truncate_text" name="Text exactly as long as max length is returned unchanged" />
+    <testcase classname="pkg_text_truncate_text" name="Text one char over max length is truncated with ellipsis" />
+    <testcase classname="pkg_text_truncate_text" name="Long text is cut to max length ending with ellipsis" />
+    <testcase classname="pkg_text_truncate_text" name="Minimum allowed max length 4 keeps one char plus ellipsis" />
+    <testcase classname="pkg_text_truncate_text" name="Minimum max length 4 with text of length 4 is unchanged" />
+    <testcase classname="pkg_text_truncate_text" name="Result length never exceeds max length" />
+    <testcase classname="pkg_text_truncate_text" name="NULL text returns NULL as documented">
+      <failure message="Actual: '...' (varchar2) was expected to be null&#10;at &quot;PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT.NULL_TEXT_RETURNS_NULL&quot;, line 43 ut.expect(pkg_text.truncate_text(null, 10)).to_be_null();">Actual: '...' (varchar2) was expected to be null
+at "PLLT.TEST_PKG_TEXT_TRUNCATE_TEXT.NULL_TEXT_RETURNS_NULL", line 43 ut.expect(pkg_text.truncate_text(null, 10)).to_be_null();</failure>
+    </testcase>
+    <testcase classname="pkg_text_truncate_text" name="Max length 3 raises ORA-20002" />
+    <testcase classname="pkg_text_truncate_text" name="Max length 0 raises ORA-20002" />
+    <testcase classname="pkg_text_truncate_text" name="Negative max length raises ORA-20002" />
+    <testcase classname="pkg_text_truncate_text" name="Invalid max length raises even when text is NULL" />
+  </testsuite>
+  <testsuite name="pkg_orders_create_order" tests="12" failures="0" errors="0">
+    <testcase classname="pkg_orders_create_order" name="Creates an order and returns a non-null id" />
+    <testcase classname="pkg_orders_create_order" name="Inserts exactly one row with the returned id and the customer" />
+    <testcase classname="pkg_orders_create_order" name="New order has status NEW and a created_at date" />
+    <testcase classname="pkg_orders_create_order" name="Customer is trimmed before being stored" />
+    <testcase classname="pkg_orders_create_order" name="Two calls return different ids and create two rows" />
+    <testcase classname="pkg_orders_create_order" name="Customer of exactly 50 characters is accepted" />
+    <testcase classname="pkg_orders_create_order" name="Customer of 50 characters padded with spaces is accepted after trim" />
+    <testcase classname="pkg_orders_create_order" name="Customer longer than 50 characters fails with value too large" />
+    <testcase classname="pkg_orders_create_order" name="NULL customer raises ORA-20010" />
+    <testcase classname="pkg_orders_create_order" name="Empty customer raises ORA-20010" />
+    <testcase classname="pkg_orders_create_order" name="Blank customer raises ORA-20010" />
+    <testcase classname="pkg_orders_create_order" name="Failed call inserts no row and leaves out id null" />
+  </testsuite>
+  <testsuite name="pkg_orders_add_item" tests="25" failures="0" errors="0">
+    <testcase classname="pkg_orders_add_item" name="Adds a line to a NEW order with the given values" />
+    <testcase classname="pkg_orders_add_item" name="Adds several lines to the same NEW order" />
+    <testcase classname="pkg_orders_add_item" name="Does not touch lines of other orders" />
+    <testcase classname="pkg_orders_add_item" name="Boundary: qty = 1 is accepted" />
+    <testcase classname="pkg_orders_add_item" name="Boundary: qty = 999999 is accepted" />
+    <testcase classname="pkg_orders_add_item" name="Boundary: unit_price = 0 is accepted" />
+    <testcase classname="pkg_orders_add_item" name="Boundary: unit_price = 99999999.99 is accepted" />
+    <testcase classname="pkg_orders_add_item" name="Boundary: sku of 20 characters is accepted" />
+    <testcase classname="pkg_orders_add_item" name="unit_price with 3 decimals is rounded to 2 decimals by the column" />
+    <testcase classname="pkg_orders_add_item" name="Non-existing order raises ORA-20011" />
+    <testcase classname="pkg_orders_add_item" name="Non-existing order message is order not found" />
+    <testcase classname="pkg_orders_add_item" name="NULL order id raises ORA-20011" />
+    <testcase classname="pkg_orders_add_item" name="PAID order raises ORA-20011" />
+    <testcase classname="pkg_orders_add_item" name="CANCELLED order raises ORA-20011" />
+    <testcase classname="pkg_orders_add_item" name="Non open order message is order is not open" />
+    <testcase classname="pkg_orders_add_item" name="Rejected add on PAID order inserts no line" />
+    <testcase classname="pkg_orders_add_item" name="NULL sku raises ORA-01400" />
+    <testcase classname="pkg_orders_add_item" name="NULL qty raises ORA-01400" />
+    <testcase classname="pkg_orders_add_item" name="NULL unit_price raises ORA-01400" />
+    <testcase classname="pkg_orders_add_item" name="qty = 0 violates check constraint" />
+    <testcase classname="pkg_orders_add_item" name="Negative qty violates check constraint" />
+    <testcase classname="pkg_orders_add_item" name="Negative unit_price violates check constraint" />
+    <testcase classname="pkg_orders_add_item" name="qty = 1000000 exceeds NUMBER(6)" />
+    <testcase classname="pkg_orders_add_item" name="unit_price = 100000000 exceeds NUMBER(10,2)" />
+    <testcase classname="pkg_orders_add_item" name="sku of 21 characters exceeds column length" />
+  </testsuite>
+  <testsuite name="pkg_orders_order_total" tests="14" failures="0" errors="0">
+    <testcase classname="pkg_orders_order_total" name="Returns 0 for an existing order without items" />
+    <testcase classname="pkg_orders_order_total" name="Returns qty * unit_price for a single item" />
+    <testcase classname="pkg_orders_order_total" name="Sums several items of the same order" />
+    <testcase classname="pkg_orders_order_total" name="Handles decimal unit prices exactly" />
+    <testcase classname="pkg_orders_order_total" name="Item with unit_price 0 contributes 0" />
+    <testcase classname="pkg_orders_order_total" name="Minimum quantity of 1 boundary" />
+    <testcase classname="pkg_orders_order_total" name="Large qty and price boundary" />
+    <testcase classname="pkg_orders_order_total" name="Items of other orders are not included" />
+    <testcase classname="pkg_orders_order_total" name="Cancelled order still returns its total" />
+    <testcase classname="pkg_orders_order_total" name="Paid order returns its total" />
+    <testcase classname="pkg_orders_order_total" name="Total reflects items added after a first call" />
+    <testcase classname="pkg_orders_order_total" name="Non-existent order raises ORA-20012" />
+    <testcase classname="pkg_orders_order_total" name="NULL order id raises ORA-20012" />
+    <testcase classname="pkg_orders_order_total" name="Negative order id raises ORA-20012" />
+  </testsuite>
+  <testsuite name="pkg_orders_cancel_order" tests="10" failures="0" errors="0">
+    <testcase classname="pkg_orders_cancel_order" name="Cancels a NEW order" />
+    <testcase classname="pkg_orders_cancel_order" name="Cancels a PAID order" />
+    <testcase classname="pkg_orders_cancel_order" name="Cancelling does not change other orders" />
+    <testcase classname="pkg_orders_cancel_order" name="Cancelling does not change customer or created_at" />
+    <testcase classname="pkg_orders_cancel_order" name="Already cancelled order raises ORA-20013" />
+    <testcase classname="pkg_orders_cancel_order" name="Cancelling twice raises ORA-20013 and status stays CANCELLED" />
+    <testcase classname="pkg_orders_cancel_order" name="Missing order raises ORA-20012" />
+    <testcase classname="pkg_orders_cancel_order" name="NULL order id raises ORA-20012" />
+    <testcase classname="pkg_orders_cancel_order" name="Negative order id raises ORA-20012" />
+    <testcase classname="pkg_orders_cancel_order" name="Failed cancel of a missing order creates no rows" />
+  </testsuite>
+  <testsuite name="pkg_orders_open_orders" tests="8" failures="0" errors="0">
+    <testcase classname="pkg_orders_open_orders" name="Returns an open cursor" />
+    <testcase classname="pkg_orders_open_orders" name="Includes NEW and PAID orders and excludes CANCELLED ones" />
+    <testcase classname="pkg_orders_open_orders" name="Result matches an independent query, in the same order" />
+    <testcase classname="pkg_orders_open_orders" name="Ids are returned in ascending order" />
+    <testcase classname="pkg_orders_open_orders" name="Cursor is empty when every order is CANCELLED" />
+    <testcase classname="pkg_orders_open_orders" name="Boundary: exactly one open order is returned alone" />
+    <testcase classname="pkg_orders_open_orders" name="Order created through create_order is included" />
+    <testcase classname="pkg_orders_open_orders" name="Order cancelled through cancel_order is no longer returned" />
+  </testsuite>
+  <testsuite name="pkg_orders_apply_bulk_discount" tests="18" failures="0" errors="0">
+    <testcase classname="pkg_orders_apply_bulk_discount" name="NULL percentage raises ORA-20014" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="Zero percentage raises ORA-20014" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="Negative percentage raises ORA-20014" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="Percentage just above 50 raises ORA-20014" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="Percentage 100 raises ORA-20014" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="Invalid percentage leaves prices unchanged" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="10 percent discount lowers the price" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="Upper boundary 50 percent is accepted" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="Small percentage 0.01 is accepted and rounded" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="Result is rounded to 2 decimals" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="Rounding of half cent at 50 percent" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="Return value counts all lines of NEW orders" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="Every line of an order is discounted" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="PAID order lines are not changed" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="CANCELLED order lines are not changed" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="NEW order without items does not change the count" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="Zero priced line stays zero but is counted" />
+    <testcase classname="pkg_orders_apply_bulk_discount" name="Quantity is not changed" />
+  </testsuite>
+  <testsuite name="pkg_hr_stats_headcount" tests="8" failures="0" errors="0">
+    <testcase classname="pkg_hr_stats_headcount" name="Returns 0 for an existing department without employees" />
+    <testcase classname="pkg_hr_stats_headcount" name="Counts all employees of a department with three employees" />
+    <testcase classname="pkg_hr_stats_headcount" name="Boundary: a department with exactly one employee returns 1" />
+    <testcase classname="pkg_hr_stats_headcount" name="Adding one employee increments the headcount by one" />
+    <testcase classname="pkg_hr_stats_headcount" name="Does not count employees of other departments" />
+    <testcase classname="pkg_hr_stats_headcount" name="Matches an independent count for an existing department" />
+    <testcase classname="pkg_hr_stats_headcount" name="Returns 0 for an unknown department id" />
+    <testcase classname="pkg_hr_stats_headcount" name="NULL input returns 0, even when employees have NULL department" />
+  </testsuite>
+  <testsuite name="pkg_hr_stats_avg_salary" tests="11" failures="0" errors="0">
+    <testcase classname="pkg_hr_stats_avg_salary" name="Average of two employees is exact" />
+    <testcase classname="pkg_hr_stats_avg_salary" name="Single employee returns that salary" />
+    <testcase classname="pkg_hr_stats_avg_salary" name="Average rounds down to 2 decimals" />
+    <testcase classname="pkg_hr_stats_avg_salary" name="Average rounds up to 2 decimals" />
+    <testcase classname="pkg_hr_stats_avg_salary" name="Department without employees returns NULL" />
+    <testcase classname="pkg_hr_stats_avg_salary" name="Unknown department id returns NULL" />
+    <testcase classname="pkg_hr_stats_avg_salary" name="NULL department id returns NULL even if employees have no department" />
+    <testcase classname="pkg_hr_stats_avg_salary" name="NULL salaries are ignored by the average" />
+    <testcase classname="pkg_hr_stats_avg_salary" name="All salaries NULL returns NULL" />
+    <testcase classname="pkg_hr_stats_avg_salary" name="Employees of other departments do not affect the result" />
+    <testcase classname="pkg_hr_stats_avg_salary" name="Result matches an independent query on existing data" />
+  </testsuite>
+  <testsuite name="pkg_hr_stats_top_earner" tests="10" failures="0" errors="0">
+    <testcase classname="pkg_hr_stats_top_earner" name="Single employee in department is returned" />
+    <testcase classname="pkg_hr_stats_top_earner" name="Highest salary wins among several employees" />
+    <testcase classname="pkg_hr_stats_top_earner" name="Tie on salary returns the lowest employee_id" />
+    <testcase classname="pkg_hr_stats_top_earner" name="Tie where the lower id is inserted last still returns the lowest id" />
+    <testcase classname="pkg_hr_stats_top_earner" name="Minimal salary difference of 0.01 is respected" />
+    <testcase classname="pkg_hr_stats_top_earner" name="Employees of other departments are ignored" />
+    <testcase classname="pkg_hr_stats_top_earner" name="Result matches independent query for an existing department" />
+    <testcase classname="pkg_hr_stats_top_earner" name="Empty department raises ORA-20020" />
+    <testcase classname="pkg_hr_stats_top_earner" name="Unknown department raises ORA-20020" />
+    <testcase classname="pkg_hr_stats_top_earner" name="NULL department raises ORA-20020" />
+  </testsuite>
+  <testsuite name="pkg_hr_stats_give_raise" tests="15" failures="0" errors="0">
+    <testcase classname="pkg_hr_stats_give_raise" name="Raises salary by 10 percent" />
+    <testcase classname="pkg_hr_stats_give_raise" name="Boundary: 20 percent is accepted" />
+    <testcase classname="pkg_hr_stats_give_raise" name="Boundary: smallest positive percent 0.01 is accepted and rounded" />
+    <testcase classname="pkg_hr_stats_give_raise" name="Result is rounded to 2 decimals" />
+    <testcase classname="pkg_hr_stats_give_raise" name="Only the target employee is changed" />
+    <testcase classname="pkg_hr_stats_give_raise" name="Two consecutive raises compound" />
+    <testcase classname="pkg_hr_stats_give_raise" name="Percent 0 raises ORA-20021" />
+    <testcase classname="pkg_hr_stats_give_raise" name="Negative percent raises ORA-20021" />
+    <testcase classname="pkg_hr_stats_give_raise" name="Percent just above 20 raises ORA-20021" />
+    <testcase classname="pkg_hr_stats_give_raise" name="Percent far above 20 raises ORA-20021" />
+    <testcase classname="pkg_hr_stats_give_raise" name="NULL percent raises ORA-20021" />
+    <testcase classname="pkg_hr_stats_give_raise" name="Invalid percent leaves salary unchanged" />
+    <testcase classname="pkg_hr_stats_give_raise" name="Unknown employee raises ORA-20022" />
+    <testcase classname="pkg_hr_stats_give_raise" name="NULL employee id raises ORA-20022" />
+    <testcase classname="pkg_hr_stats_give_raise" name="Invalid percent is checked before employee existence" />
+  </testsuite>
+  <testsuite name="logger_convert_level_char_to_num" tests="17" failures="0" errors="0">
+    <testcase classname="logger_convert_level_char_to_num" name="OFF maps to g_off" />
+    <testcase classname="logger_convert_level_char_to_num" name="PERMANENT maps to g_permanent" />
+    <testcase classname="logger_convert_level_char_to_num" name="ERROR maps to g_error" />
+    <testcase classname="logger_convert_level_char_to_num" name="WARNING maps to g_warning" />
+    <testcase classname="logger_convert_level_char_to_num" name="INFORMATION maps to g_information" />
+    <testcase classname="logger_convert_level_char_to_num" name="DEBUG maps to g_debug" />
+    <testcase classname="logger_convert_level_char_to_num" name="TIMING maps to g_timing" />
+    <testcase classname="logger_convert_level_char_to_num" name="SYS_CONTEXT maps to g_sys_context" />
+    <testcase classname="logger_convert_level_char_to_num" name="APEX maps to g_apex" />
+    <testcase classname="logger_convert_level_char_to_num" name="Unknown name returns -1" />
+    <testcase classname="logger_convert_level_char_to_num" name="NULL input returns -1" />
+    <testcase classname="logger_convert_level_char_to_num" name="Lowercase name is case sensitive and returns -1" />
+    <testcase classname="logger_convert_level_char_to_num" name="Mixed case name returns -1" />
+    <testcase classname="logger_convert_level_char_to_num" name="Name with surrounding spaces returns -1" />
+    <testcase classname="logger_convert_level_char_to_num" name="Empty string is treated as NULL and returns -1" />
+    <testcase classname="logger_convert_level_char_to_num" name="Numeric string returns -1" />
+    <testcase classname="logger_convert_level_char_to_num" name="Result is consistent with convert_level_num_to_char round trip" />
+  </testsuite>
+  <testsuite name="logger_convert_level_num_to_char" tests="15" failures="0" errors="0">
+    <testcase classname="logger_convert_level_num_to_char" name="OFF level 0 returns OFF" />
+    <testcase classname="logger_convert_level_num_to_char" name="PERMANENT level 1 returns PERMANENT" />
+    <testcase classname="logger_convert_level_num_to_char" name="ERROR level 2 returns ERROR" />
+    <testcase classname="logger_convert_level_num_to_char" name="WARNING level 4 returns WARNING" />
+    <testcase classname="logger_convert_level_num_to_char" name="INFORMATION level 8 returns INFORMATION" />
+    <testcase classname="logger_convert_level_num_to_char" name="DEBUG level 16 returns DEBUG" />
+    <testcase classname="logger_convert_level_num_to_char" name="TIMING level 32 returns TIMING" />
+    <testcase classname="logger_convert_level_num_to_char" name="SYS_CONTEXT level 64 returns SYS_CONTEXT" />
+    <testcase classname="logger_convert_level_num_to_char" name="APEX level 128 returns APEX" />
+    <testcase classname="logger_convert_level_num_to_char" name="NULL input returns NULL" />
+    <testcase classname="logger_convert_level_num_to_char" name="Unknown value 3 returns NULL" />
+    <testcase classname="logger_convert_level_num_to_char" name="Negative value returns NULL" />
+    <testcase classname="logger_convert_level_num_to_char" name="Value above max 256 returns NULL" />
+    <testcase classname="logger_convert_level_num_to_char" name="Fractional value returns NULL" />
+    <testcase classname="logger_convert_level_num_to_char" name="Constants map to their names" />
+  </testsuite>
+  <testsuite name="logger_sprintf" tests="11" failures="0" errors="0">
+    <testcase classname="logger_sprintf" name="Returns the string unchanged when there are no placeholders" />
+    <testcase classname="logger_sprintf" name="Replaces sequential %s placeholders in order" />
+    <testcase classname="logger_sprintf" name="Replaces numbered placeholders %s1 and %s2 out of order" />
+    <testcase classname="logger_sprintf" name="Same numbered placeholder can be used several times" />
+    <testcase classname="logger_sprintf" name="Numbered placeholder with NULL value is replaced by empty string" />
+    <testcase classname="logger_sprintf" name="Double percent is escaped to a single percent" />
+    <testcase classname="logger_sprintf" name="NULL input string returns NULL" />
+    <testcase classname="logger_sprintf" name="Nine numbered placeholders are all replaced" />
+    <testcase classname="logger_sprintf" name="Ten sequential placeholders are all replaced" />
+    <testcase classname="logger_sprintf" name="Text around placeholders is preserved" />
+    <testcase classname="logger_sprintf" name="Numbered placeholder without a following digit match is left to sequential logic" />
+  </testsuite>
+  <testsuite name="logger_tochar" tests="17" failures="0" errors="0">
+    <testcase classname="logger_tochar" name="number: integer value" />
+    <testcase classname="logger_tochar" name="number: decimal value matches to_char" />
+    <testcase classname="logger_tochar" name="number: negative value" />
+    <testcase classname="logger_tochar" name="number: zero" />
+    <testcase classname="logger_tochar" name="number: null returns null" />
+    <testcase classname="logger_tochar" name="date: contains date and time parts" />
+    <testcase classname="logger_tochar" name="date: midnight boundary keeps time part" />
+    <testcase classname="logger_tochar" name="date: null returns null" />
+    <testcase classname="logger_tochar" name="timestamp: contains date, time and fractional seconds" />
+    <testcase classname="logger_tochar" name="timestamp: null returns null" />
+    <testcase classname="logger_tochar" name="timestamp with time zone: contains time and zone" />
+    <testcase classname="logger_tochar" name="timestamp with time zone: null returns null" />
+    <testcase classname="logger_tochar" name="timestamp with local time zone: contains time part" />
+    <testcase classname="logger_tochar" name="timestamp with local time zone: null returns null" />
+    <testcase classname="logger_tochar" name="boolean: true returns TRUE" />
+    <testcase classname="logger_tochar" name="boolean: false returns FALSE" />
+    <testcase classname="logger_tochar" name="boolean: null returns null" />
+  </testsuite>
+  <testsuite name="logger_date_text_format" tests="7" failures="0" errors="0">
+    <testcase classname="logger_date_text_format" name="Recent date returns non-null text" />
+    <testcase classname="logger_date_text_format" name="Date ten days in the past returns non-null text" />
+    <testcase classname="logger_date_text_format" name="Very old date gives the same text on repeated calls" />
+    <testcase classname="logger_date_text_format" name="Very old date and very recent date give different text" />
+    <testcase classname="logger_date_text_format" name="Future date does not raise an error" />
+    <testcase classname="logger_date_text_format" name="NULL date does not raise an error" />
+    <testcase classname="logger_date_text_format" name="Result fits in a VARCHAR2 of 4000 characters" />
+  </testsuite>
+  <testsuite name="logger_append_param" tests="22" failures="0" errors="0">
+    <testcase classname="logger_append_param" name="varchar2: appends one param to an empty table" />
+    <testcase classname="logger_append_param" name="varchar2: appends at count+1 and keeps order" />
+    <testcase classname="logger_append_param" name="varchar2: existing entries are preserved" />
+    <testcase classname="logger_append_param" name="varchar2: null value is stored as null" />
+    <testcase classname="logger_append_param" name="varchar2: null name is stored as null" />
+    <testcase classname="logger_append_param" name="varchar2: name of 255 chars and value of 4000 chars accepted" />
+    <testcase classname="logger_append_param" name="varchar2: name longer than 255 raises value error" />
+    <testcase classname="logger_append_param" name="varchar2: value longer than 4000 raises value error" />
+    <testcase classname="logger_append_param" name="number: value converted with tochar" />
+    <testcase classname="logger_append_param" name="number: null value" />
+    <testcase classname="logger_append_param" name="date: value converted with tochar" />
+    <testcase classname="logger_append_param" name="date: null value" />
+    <testcase classname="logger_append_param" name="timestamp: value converted with tochar" />
+    <testcase classname="logger_append_param" name="timestamp: null value" />
+    <testcase classname="logger_append_param" name="timestamp with time zone: value converted with tochar" />
+    <testcase classname="logger_append_param" name="timestamp with time zone: null value" />
+    <testcase classname="logger_append_param" name="timestamp with local time zone: value converted with tochar" />
+    <testcase classname="logger_append_param" name="timestamp with local time zone: null value" />
+    <testcase classname="logger_append_param" name="boolean: true value" />
+    <testcase classname="logger_append_param" name="boolean: false value" />
+    <testcase classname="logger_append_param" name="boolean: null value" />
+    <testcase classname="logger_append_param" name="mixed overloads append sequentially" />
+  </testsuite>
+  <testsuite name="logger_ok_to_log" tests="13" failures="0" errors="0">
+    <testcase classname="logger_ok_to_log" name="Numeric: level equal to configured level returns true" />
+    <testcase classname="logger_ok_to_log" name="Numeric: lower (more severe) level returns true" />
+    <testcase classname="logger_ok_to_log" name="Numeric: higher (more verbose) level returns false" />
+    <testcase classname="logger_ok_to_log" name="Numeric: boundary just above configured level returns false" />
+    <testcase classname="logger_ok_to_log" name="Numeric: level OFF blocks errors" />
+    <testcase classname="logger_ok_to_log" name="Numeric: OFF level argument is always ok when level is OFF" />
+    <testcase classname="logger_ok_to_log" name="Numeric: NULL level returns false" />
+    <testcase classname="logger_ok_to_log" name="Varchar: level equal returns true" />
+    <testcase classname="logger_ok_to_log" name="Varchar: more severe level returns true" />
+    <testcase classname="logger_ok_to_log" name="Varchar: more verbose level returns false" />
+    <testcase classname="logger_ok_to_log" name="Varchar: OFF configured blocks ERROR" />
+    <testcase classname="logger_ok_to_log" name="Varchar overload is consistent with numeric overload" />
+    <testcase classname="logger_ok_to_log" name="Changing the level changes the result" />
+  </testsuite>
+  <testsuite name="logger_get_pref" tests="10" failures="0" errors="1">
+    <testcase classname="logger_get_pref" name="Returns value of a custom pref for given type" />
+    <testcase classname="logger_get_pref" name="Pref name and type are case insensitive" />
+    <testcase classname="logger_get_pref" name="Unknown pref name returns null" />
+    <testcase classname="logger_get_pref" name="NULL pref name returns null" />
+    <testcase classname="logger_get_pref" name="NULL pref type returns null" />
+    <testcase classname="logger_get_pref" name="Default pref type is LOGGER">
+      <error message="ORA-20000: Setting system level preferences are restricted to a set list.&#10;ORA-06512: at &quot;PLLT.BIU_LOGGER_PREFS&quot;, line 55&#10;ORA-04088: error during execution of trigger 'PLLT.BIU_LOGGER_PREFS'&#10;ORA-06512: at &quot;PLLT.TEST_LOGGER_GET_PREF&quot;, line 50&#10;ORA-06512: at &quot;PLLT.BIU_LOGGER_PREFS&quot;, line 55&#10;ORA-06512: at &quot;PLLT.TEST_LOGGER_GET_PREF&quot;, line 50&#10;ORA-06512: at line 6">ORA-20000: Setting system level preferences are restricted to a set list.
+ORA-06512: at "PLLT.BIU_LOGGER_PREFS", line 55
+ORA-04088: error during execution of trigger 'PLLT.BIU_LOGGER_PREFS'
+ORA-06512: at "PLLT.TEST_LOGGER_GET_PREF", line 50
+ORA-06512: at "PLLT.BIU_LOGGER_PREFS", line 55
+ORA-06512: at "PLLT.TEST_LOGGER_GET_PREF", line 50
+ORA-06512: at line 6</error>
+    </testcase>
+    <testcase classname="logger_get_pref" name="Same name under different types returns the matching value" />
+    <testcase classname="logger_get_pref" name="Existing name with wrong type returns null" />
+    <testcase classname="logger_get_pref" name="Maximum length value 255 chars is returned intact" />
+    <testcase classname="logger_get_pref" name="Client identifier does not affect custom prefs" />
+  </testsuite>
+  <testsuite name="logger_log_error" tests="14" failures="5" errors="6">
+    <testcase classname="logger_log_error" name="Inserts one row with ERROR level and given scope">
+      <error message="ORA-01403: no data found&#10;ORA-06512: at &quot;PLLT.TEST_LOGGER_LOG_ERROR&quot;, line 31&#10;ORA-06512: at &quot;PLLT.TEST_LOGGER_LOG_ERROR&quot;, line 31&#10;ORA-06512: at line 6">ORA-01403: no data found
+ORA-06512: at "PLLT.TEST_LOGGER_LOG_ERROR", line 31
+ORA-06512: at "PLLT.TEST_LOGGER_LOG_ERROR", line 31
+ORA-06512: at line 6</error>
+    </testcase>
+    <testcase classname="logger_log_error" name="Stores text supplied by caller">
+      <failure message="Actual: 0 (number) was expected to equal: 1 (number)&#10;at &quot;PLLT.TEST_LOGGER_LOG_ERROR.STORES_TEXT&quot;, line 42 ut.expect(l_n).to_equal(1);">Actual: 0 (number) was expected to equal: 1 (number)
+at "PLLT.TEST_LOGGER_LOG_ERROR.STORES_TEXT", line 42 ut.expect(l_n).to_equal(1);</failure>
+    </testcase>
+    <testcase classname="logger_log_error" name="NULL text still logs a row">
+      <failure message="Actual: 0 (number) was expected to equal: 1 (number)&#10;at &quot;PLLT.TEST_LOGGER_LOG_ERROR.NULL_TEXT_LOGS_ROW&quot;, line 49 ut.expect(cnt(l_scope)).to_equal(1);">Actual: 0 (number) was expected to equal: 1 (number)
+at "PLLT.TEST_LOGGER_LOG_ERROR.NULL_TEXT_LOGS_ROW", line 49 ut.expect(cnt(l_scope)).to_equal(1);</failure>
+    </testcase>
+    <testcase classname="logger_log_error" name="NULL scope logs a row with NULL scope" />
+    <testcase classname="logger_log_error" name="Stores extra clob">
+      <error message="ORA-01403: no data found&#10;ORA-06512: at &quot;PLLT.TEST_LOGGER_LOG_ERROR&quot;, line 70&#10;ORA-06512: at &quot;PLLT.TEST_LOGGER_LOG_ERROR&quot;, line 70&#10;ORA-06512: at line 6">ORA-01403: no data found
+ORA-06512: at "PLLT.TEST_LOGGER_LOG_ERROR", line 70
+ORA-06512: at "PLLT.TEST_LOGGER_LOG_ERROR", line 70
+ORA-06512: at line 6</error>
+    </testcase>
+    <testcase classname="logger_log_error" name="NULL extra is stored as NULL">
+      <error message="ORA-01403: no data found&#10;ORA-06512: at &quot;PLLT.TEST_LOGGER_LOG_ERROR&quot;, line 79&#10;ORA-06512: at &quot;PLLT.TEST_LOGGER_LOG_ERROR&quot;, line 79&#10;ORA-06512: at line 6">ORA-01403: no data found
+ORA-06512: at "PLLT.TEST_LOGGER_LOG_ERROR", line 79
+ORA-06512: at "PLLT.TEST_LOGGER_LOG_ERROR", line 79
+ORA-06512: at line 6</error>
+    </testcase>
+    <testcase classname="logger_log_error" name="Params are appended to extra">
+      <error message="ORA-01403: no data found&#10;ORA-06512: at &quot;PLLT.TEST_LOGGER_LOG_ERROR&quot;, line 90&#10;ORA-06512: at &quot;PLLT.TEST_LOGGER_LOG_ERROR&quot;, line 90&#10;ORA-06512: at line 6">ORA-01403: no data found
+ORA-06512: at "PLLT.TEST_LOGGER_LOG_ERROR", line 90
+ORA-06512: at "PLLT.TEST_LOGGER_LOG_ERROR", line 90
+ORA-06512: at line 6</error>
+    </testcase>
+    <testcase classname="logger_log_error" name="Error stack is included in text when an exception is active">
+      <error message="ORA-01403: no data found&#10;ORA-06512: at &quot;PLLT.TEST_LOGGER_LOG_ERROR&quot;, line 105&#10;ORA-06512: at &quot;PLLT.TEST_LOGGER_LOG_ERROR&quot;, line 105&#10;ORA-06512: at line 6">ORA-01403: no data found
+ORA-06512: at "PLLT.TEST_LOGGER_LOG_ERROR", line 105
+ORA-06512: at "PLLT.TEST_LOGGER_LOG_ERROR", line 105
+ORA-06512: at line 6</error>
+    </testcase>
+    <testcase classname="logger_log_error" name="Unit name is stored in upper case">
+      <error message="ORA-01403: no data found&#10;ORA-06512: at &quot;PLLT.TEST_LOGGER_LOG_ERROR&quot;, line 115&#10;ORA-06512: at &quot;PLLT.TEST_LOGGER_LOG_ERROR&quot;, line 115&#10;ORA-06512: at line 6">ORA-01403: no data found
+ORA-06512: at "PLLT.TEST_LOGGER_LOG_ERROR", line 115
+ORA-06512: at "PLLT.TEST_LOGGER_LOG_ERROR", line 115
+ORA-06512: at line 6</error>
+    </testcase>
+    <testcase classname="logger_log_error" name="Boundary: 4000 character text logs a row">
+      <failure message="Actual: 0 (number) was expected to equal: 1 (number)&#10;at &quot;PLLT.TEST_LOGGER_LOG_ERROR.MAX_LENGTH_TEXT&quot;, line 123 ut.expect(cnt(l_scope)).to_equal(1);">Actual: 0 (number) was expected to equal: 1 (number)
+at "PLLT.TEST_LOGGER_LOG_ERROR.MAX_LENGTH_TEXT", line 123 ut.expect(cnt(l_scope)).to_equal(1);</failure>
+    </testcase>
+    <testcase classname="logger_log_error" name="Level ERROR logs when logger level is ERROR">
+      <failure message="Actual: 0 (number) was expected to equal: 1 (number)&#10;at &quot;PLLT.TEST_LOGGER_LOG_ERROR.LOGS_AT_ERROR_LEVEL&quot;, line 131 ut.expect(cnt(l_scope)).to_equal(1);">Actual: 0 (number) was expected to equal: 1 (number)
+at "PLLT.TEST_LOGGER_LOG_ERROR.LOGS_AT_ERROR_LEVEL", line 131 ut.expect(cnt(l_scope)).to_equal(1);</failure>
+    </testcase>
+    <testcase classname="logger_log_error" name="Level OFF suppresses logging" />
+    <testcase classname="logger_log_error" name="Level PERMANENT suppresses error logging" />
+    <testcase classname="logger_log_error" name="Multiple calls insert multiple rows">
+      <failure message="Actual: 0 (number) was expected to equal: 3 (number)&#10;at &quot;PLLT.TEST_LOGGER_LOG_ERROR.MULTIPLE_CALLS&quot;, line 156 ut.expect(cnt(l_scope)).to_equal(3);">Actual: 0 (number) was expected to equal: 3 (number)
+at "PLLT.TEST_LOGGER_LOG_ERROR.MULTIPLE_CALLS", line 156 ut.expect(cnt(l_scope)).to_equal(3);</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="hr_add_job_history" tests="16" failures="0" errors="0">
+    <testcase classname="hr_add_job_history" name="Inserts a row with all values supplied" />
+    <testcase classname="hr_add_job_history" name="Inserts exactly one row for the employee" />
+    <testcase classname="hr_add_job_history" name="Accepts NULL department_id" />
+    <testcase classname="hr_add_job_history" name="Boundary: end_date one second after start_date is accepted" />
+    <testcase classname="hr_add_job_history" name="Time portion of dates is preserved" />
+    <testcase classname="hr_add_job_history" name="end_date equal to start_date violates check constraint" />
+    <testcase classname="hr_add_job_history" name="end_date before start_date violates check constraint" />
+    <testcase classname="hr_add_job_history" name="NULL employee id is rejected" />
+    <testcase classname="hr_add_job_history" name="NULL start_date is rejected" />
+    <testcase classname="hr_add_job_history" name="NULL end_date is rejected" />
+    <testcase classname="hr_add_job_history" name="NULL job_id is rejected" />
+    <testcase classname="hr_add_job_history" name="Duplicate primary key is rejected" />
+    <testcase classname="hr_add_job_history" name="Same employee with different start_date is accepted" />
+    <testcase classname="hr_add_job_history" name="Unknown job_id violates foreign key" />
+    <testcase classname="hr_add_job_history" name="Unknown employee violates foreign key" />
+    <testcase classname="hr_add_job_history" name="Unknown department violates foreign key" />
+  </testsuite>
+  <testsuite name="hr_secure_dml" tests="6" failures="0" errors="0">
+    <testcase classname="hr_secure_dml" name="Outcome matches the office-hours rule evaluated independently from the clock" />
+    <testcase classname="hr_secure_dml" name="Error code is -20205 when outside office hours, otherwise no error" />
+    <testcase classname="hr_secure_dml" name="Error message text is correct when raised" />
+    <testcase classname="hr_secure_dml" name="Procedure never raises an error other than -20205" />
+    <testcase classname="hr_secure_dml" name="Two consecutive calls behave consistently" />
+    <testcase classname="hr_secure_dml" name="Procedure leaves no uncommitted side effects requiring cleanup, no exception on allowed time" />
+  </testsuite>
+</testsuites>

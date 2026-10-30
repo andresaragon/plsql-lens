@@ -1,0 +1,36 @@
+== prefs
+
+PREF_TYPE||'/'||PREF_NAME||'='||PREF_VALUE
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+LOGGER/LOGGER_DEBUG=FALSE
+LOGGER/PREF_BY_CLIENT_ID_EXPIRE_HOURS=12
+LOGGER/PLUGIN_FN_ERROR=NONE
+LOGGER/PURGE_MIN_LEVEL=DEBUG
+LOGGER/INSTALL_SCHEMA=PLLT
+LOGGER/INCLUDE_CALL_STACK=TRUE
+LOGGER/LEVEL=DEBUG
+LOGGER/PURGE_AFTER_DAYS=7
+LOGGER/PROTECT_ADMIN_PROCS=TRUE
+LOGGER/LOGGER_VERSION=x.x.x
+LOGGER/GLOBAL_CONTEXT_NAME=PLLT_LOGCTX
+
+11 rows selected.
+
+== context level before
+
+'CTX_LEVEL='||NVL(SYS_CONTEXT('LOGGER_CONTEXT','LEVEL'),'NULL')
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ctx_level=NULL
+
+ok_to_log(error)=TRUE
+ok_to_log(debug)=TRUE
+rows_after_log_error=1
+rows_after_log_debug=1
+rows_total=4
+
+PL/SQL procedure successfully completed.
+
+== invalid objects
+
+no rows selected
+
