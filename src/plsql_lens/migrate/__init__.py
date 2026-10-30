@@ -1,6 +1,8 @@
-"""Oracle→PostgreSQL migration hints (F5a): rules MIG001–MIG011, see docs/migration-rules.md.
+"""Oracle→PostgreSQL migration hints (F5).
 
-The rules are token-based and live apart from ``plsql_lens.rules.RULES`` (the review rules).
+F5a: rules MIG001–MIG011 (see docs/migration-rules.md), token-based and apart from
+``plsql_lens.rules.RULES`` (the review rules). F5b: ``plsql_lens.migrate.rewrite`` holds the
+conservative SQL rewrites (``rewrite_sql``).
 """
 
 from __future__ import annotations

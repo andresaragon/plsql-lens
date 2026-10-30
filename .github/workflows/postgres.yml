@@ -1,0 +1,61 @@
+name: postgres
+# Integration job: runs the F5b SQL rewrites on PostgreSQL 16 and compares them with the results
+# observed on Oracle (tests/fixtures/migrate/semantics.json). Never part of the unit CI.
+# Trigger: workflow_dispatch, or a push to a feat/f5-* branch that touches the F5 rewrite or its test bed.
+on:
+  workflow_dispatch:
+  push:
+    branches: ["feat/f5-**"]
+    paths:
+      - "src/plsql_lens/migrate/**"
+      - "tests/fixtures/migrate/**"
+      - "tests/integration/test_migrate_postgres.py"
+      - ".github/workflows/postgres.yml"
+jobs:
+  postgres:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    env:
+      # psql runs inside the container over its unix socket; the port is not published.
+      PLSQL_LENS_PSQL: docker exec -i plsql-lens-pg psql -X -q -A -t -v ON_ERROR_STOP=1 -U postgres
+      PLSQL_LENS_MIGRATE_RESULTS: out/phase-5b/results.json
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync
+      - name: Generate a throw-away password
+        run: |
+          pw="$(openssl rand -hex 12)"
+          echo "::add-mask::$pw"
+          echo "PG_PASSWORD=$pw" >> "$GITHUB_ENV"
+      - name: Start PostgreSQL 16
+        run: |
+          docker run -d --name plsql-lens-pg -e POSTGRES_PASSWORD="$PG_PASSWORD" postgres:16
+          for i in $(seq 1 60); do
+            docker exec plsql-lens-pg pg_isready -h localhost -U postgres && break
+            sleep 2
+          done
+          docker exec plsql-lens-pg pg_isready -h localhost -U postgres
+      - name: Run the rewritten reference cases on PostgreSQL
+        run: |
+          set -o pipefail
+          mkdir -p out/phase-5b
+          docker exec -i plsql-lens-pg psql -X -q -A -t -U postgres -c "select version()" | tee out/phase-5b/version.txt
+          uv run pytest tests/integration/test_migrate_postgres.py -m integration -v 2>&1 | tee out/phase-5b/pytest.log
+      - name: Publish results to branch ci-results/f5 (artifact downloads are not reachable from the lead session)
+        if: always()
+        run: |
+          set -e
+          git config --global user.name andresaragon
+          git config --global user.email 16310427+andresaragon@users.noreply.github.com
+          url="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}"
+          git clone --depth 1 --branch ci-results/f5 "$url" results 2>/dev/null || {
+            mkdir results; git -C results init -q -b ci-results/f5; git -C results remote add origin "$url"; }
+          find results -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -r out/phase-5b/. results/ 2>/dev/null || true
+          echo "$GITHUB_SHA" > results/commit.txt
+          git -C results add -A
+          git -C results commit -q -m "postgres run $GITHUB_RUN_ID for $GITHUB_SHA" || exit 0
+          git -C results push -q origin ci-results/f5

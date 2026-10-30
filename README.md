@@ -5,7 +5,7 @@ seven deterministic rules, generates and runs utPLSQL tests, and measures the ru
 
 ## Status
 
-Phases F1 to F4b and F5a are implemented (plan and decisions: [SPEC.md](SPEC.md); one report per phase in
+Phases F1 to F4b, F5a and F5b are implemented (plan and decisions: [SPEC.md](SPEC.md); one report per phase in
 [Reports and further reading](#reports-and-further-reading)):
 
 | Phase | What it delivers | Needs |
@@ -16,6 +16,7 @@ Phases F1 to F4b and F5a are implemented (plan and decisions: [SPEC.md](SPEC.md)
 | F4 | Seeded benchmark of the rules (before/after tuning, LLM-only baseline) | nothing (an LLM only for the baseline) |
 | F4b | External-author split: a cross-author check of the frozen rules | nothing (an LLM only for the baseline) |
 | F5a | Oracle→PostgreSQL migration rules MIG001–MIG011 and `plsql-lens migrate` (detection only) | nothing |
+| F5b | Conservative SQL rewrite (`rewrite_sql`) of `NVL`, `DECODE`, `seq.NEXTVAL` and `FROM DUAL`, checked on PostgreSQL against results observed on Oracle | nothing (PostgreSQL 16 for the integration test) |
 
 ## Quick start
 
@@ -91,7 +92,12 @@ deterministic token rules, MIG001–MIG011 (`NVL`, `DECODE`, `SYSDATE`/`SYSTIMES
 `CONNECT BY`, `(+)`, `PRAGMA AUTONOMOUS_TRANSACTION`, `DBMS_OUTPUT`, `FROM DUAL` and the empty string literal `''`, which
 is `NULL` in Oracle but not in PostgreSQL). Contract, severities and accepted false positives and negatives:
 [docs/migration-rules.md](docs/migration-rules.md). They are separate from the review rules (`review` does not run them),
-no LLM is involved, and the command only reports: it does not rewrite code.
+no LLM is involved, and the command only reports: it does not rewrite code. The mechanical subset (`NVL`, `DECODE`,
+`seq.NEXTVAL`/`CURRVAL`, `FROM DUAL`) can be rewritten by the library function `plsql_lens.migrate.rewrite.rewrite_sql` (F5b; it
+has no CLI command): it never rewrites halfway, listing what it leaves untouched. Each rewrite is run on PostgreSQL 16 against
+37 cases whose results were observed on a real Oracle (`tests/fixtures/migrate/semantics.json`): 32 give the same result and 5 differ
+for reasons outside the rewrite (`''` is not `NULL` in PostgreSQL, and `'abc' || NULL` is `NULL` there). That is evidence on those
+cases, not a proof of general equivalence: [docs/reports/phase-5b.md](docs/reports/phase-5b.md).
 
 ```bash
 uv run plsql-lens migrate corpus/logger/logger.pkb                          # table of findings
@@ -159,7 +165,7 @@ provisionally 65 / 1 / 0), and 0 of 9 real-world (`beyond`) defects outside the 
 
 * Plan and decisions: [SPEC.md](SPEC.md). Review-rule contract: [docs/rules.md](docs/rules.md). Migration-rule contract: [docs/migration-rules.md](docs/migration-rules.md).
 * Phase reports: [F1](docs/reports/phase-1.md) · [F2](docs/reports/phase-2.md) · [F3](docs/reports/phase-3.md) ·
-  [F4](docs/reports/phase-4.md) · [F4b](docs/reports/phase-4b.md) · [F5a](docs/reports/phase-5a.md).
+  [F4](docs/reports/phase-4.md) · [F4b](docs/reports/phase-4b.md) · [F5a](docs/reports/phase-5a.md) · [F5b](docs/reports/phase-5b.md).
 * Benchmark: [methodology](docs/benchmarks/README.md) · [results](docs/benchmarks/results.md) ·
   [external-author split](docs/benchmarks/external/README.md) ([results](docs/benchmarks/external/results.md)).
 * Design decisions: [ADR 0001 (parser)](docs/adr/0001-parser.md) ·

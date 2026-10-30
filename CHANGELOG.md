@@ -83,6 +83,16 @@ to PyPI and nothing has been released yet, so everything is listed under `[Unrel
   writer because the review one indexes the review rules.
 - Positive and negative fixtures for every rule, written from the contract only.
 
+#### F5b — Safe rewrite, checked on PostgreSQL ([report](docs/reports/phase-5b.md))
+
+- `plsql_lens.migrate.rewrite.rewrite_sql`: conservative rewrites of `NVL` → `COALESCE`, `DECODE` → `CASE`,
+  `seq.NEXTVAL`/`CURRVAL` → `nextval('seq')`/`currval('seq')` and `FROM DUAL` dropped. A construct that cannot be rewritten
+  safely is left as it was and listed with its reason; the text outside the rewritten spans is unchanged and a second pass changes nothing.
+- 37 reference cases whose results were observed on Oracle Free 23.26.3 (`tests/fixtures/migrate/semantics.json`, with
+  `scripts/migrate_semantics.py` to regenerate them), run on PostgreSQL 16 by an integration test through `PLSQL_LENS_PSQL`; five
+  cases are labelled as known divergences.
+- Manual workflow `postgres.yml`: runs those cases on `postgres:16` and publishes the results to the branch `ci-results/f5`.
+
 ### Changed
 
 - Rules tuned on the `dev` split of the benchmark: the PLL004 contract now also exempts `LISTAGG`

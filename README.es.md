@@ -5,7 +5,7 @@ con siete reglas deterministas, genera y ejecuta tests utPLSQL, y mide las regla
 
 ## Estado
 
-Las fases F1 a F4b y F5a están implementadas (plan y decisiones: [SPEC.md](SPEC.md); un informe por fase en
+Las fases F1 a F4b, F5a y F5b están implementadas (plan y decisiones: [SPEC.md](SPEC.md); un informe por fase en
 [Informes y lecturas](#informes-y-lecturas)):
 
 | Fase | Qué entrega | Requiere |
@@ -16,6 +16,7 @@ Las fases F1 a F4b y F5a están implementadas (plan y decisiones: [SPEC.md](SPEC
 | F4 | Benchmark sembrado de las reglas (antes/después del ajuste, línea base solo-LLM) | nada (un LLM solo para la línea base) |
 | F4b | Split de autor externo: comprobación cruzada de las reglas congeladas | nada (un LLM solo para la línea base) |
 | F5a | Reglas de migración Oracle→PostgreSQL MIG001–MIG011 y `plsql-lens migrate` (solo detección) | nada |
+| F5b | Reescritura conservadora de SQL (`rewrite_sql`) de `NVL`, `DECODE`, `seq.NEXTVAL` y `FROM DUAL`, comprobada en PostgreSQL contra resultados observados en Oracle | nada (PostgreSQL 16 para la prueba de integración) |
 
 ## Inicio rápido
 
@@ -91,7 +92,12 @@ deterministas sobre tokens, MIG001–MIG011 (`NVL`, `DECODE`, `SYSDATE`/`SYSTIME
 `CONNECT BY`, `(+)`, `PRAGMA AUTONOMOUS_TRANSACTION`, `DBMS_OUTPUT`, `FROM DUAL` y el literal de cadena vacía `''`, que en
 Oracle es `NULL` y en PostgreSQL no). Contrato, severidades y falsos positivos y negativos aceptados:
 [docs/migration-rules.md](docs/migration-rules.md) (en inglés). Son independientes de las reglas de revisión (`review` no las
-ejecuta), no interviene ningún LLM y el comando solo reporta: no reescribe código.
+ejecuta), no interviene ningún LLM y el comando solo reporta: no reescribe código. El subconjunto mecánico (`NVL`, `DECODE`,
+`seq.NEXTVAL`/`CURRVAL`, `FROM DUAL`) lo reescribe la función de la librería `plsql_lens.migrate.rewrite.rewrite_sql` (F5b; no
+tiene comando en la CLI): nunca reescribe a medias y lista lo que deja intacto. Cada reescritura se ejecuta en PostgreSQL 16 contra
+37 casos cuyos resultados se observaron en un Oracle real (`tests/fixtures/migrate/semantics.json`): 32 dan el mismo resultado y 5
+difieren por razones ajenas a la reescritura (`''` no es `NULL` en PostgreSQL, y `'abc' || NULL` es `NULL` allí). Es evidencia sobre
+esos casos, no una prueba de equivalencia general: [docs/reports/phase-5b.md](docs/reports/phase-5b.md) (en inglés).
 
 ```bash
 uv run plsql-lens migrate corpus/logger/logger.pkb                          # tabla de hallazgos
@@ -160,7 +166,7 @@ salvedades.
 
 * Plan y decisiones: [SPEC.md](SPEC.md). Contrato de las reglas de revisión: [docs/rules.md](docs/rules.md). Contrato de las reglas de migración: [docs/migration-rules.md](docs/migration-rules.md).
 * Informes por fase: [F1](docs/reports/phase-1.md) · [F2](docs/reports/phase-2.md) · [F3](docs/reports/phase-3.md) ·
-  [F4](docs/reports/phase-4.md) · [F4b](docs/reports/phase-4b.md) · [F5a](docs/reports/phase-5a.md).
+  [F4](docs/reports/phase-4.md) · [F4b](docs/reports/phase-4b.md) · [F5a](docs/reports/phase-5a.md) · [F5b](docs/reports/phase-5b.md).
 * Benchmark: [metodología](docs/benchmarks/README.md) · [resultados](docs/benchmarks/results.md) ·
   [split de autor externo](docs/benchmarks/external/README.es.md) ([resultados](docs/benchmarks/external/results.md)).
 * Decisiones de diseño: [ADR 0001 (parser)](docs/adr/0001-parser.md) ·
