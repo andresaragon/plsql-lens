@@ -1,0 +1,55 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.7.0 -- /home/runner/work/plsql-lens/plsql-lens/.venv/bin/python
+cachedir: .pytest_cache
+hypothesis profile 'ci' -> database=None, deadline=None, print_blob=True, derandomize=True, suppress_health_check=(HealthCheck.too_slow,)
+rootdir: /home/runner/work/plsql-lens/plsql-lens
+configfile: pyproject.toml
+plugins: hypothesis-6.170.14, cov-7.1.0
+collecting ... collected 44 items
+
+tests/integration/test_migrate_postgres.py::test_postgres_is_version_16 PASSED [  2%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nvl_01] PASSED [  4%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nvl_02] PASSED [  6%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nvl_03] PASSED [  9%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nvl_04] PASSED [ 11%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nvl_05] PASSED [ 13%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nvl_06] PASSED [ 15%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nvl_07] PASSED [ 18%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nvl_08] PASSED [ 20%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nvl_09] PASSED [ 22%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nvl_10] PASSED [ 25%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nvl_11] PASSED [ 27%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_01] PASSED [ 29%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_02] PASSED [ 31%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_03] PASSED [ 34%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_04] PASSED [ 36%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_05] PASSED [ 38%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_06] PASSED [ 40%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_07] PASSED [ 43%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_08] PASSED [ 45%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_09] PASSED [ 47%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_10] PASSED [ 50%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_11] PASSED [ 52%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_12] PASSED [ 54%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_13] PASSED [ 56%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_14] PASSED [ 59%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_15] PASSED [ 61%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_16] PASSED [ 63%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[decode_17] PASSED [ 65%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nextval_01] PASSED [ 68%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nextval_02] PASSED [ 70%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nextval_03] PASSED [ 72%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nextval_04] PASSED [ 75%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nextval_05] PASSED [ 77%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[nextval_06] PASSED [ 79%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[from_dual_01] PASSED [ 81%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[from_dual_02] PASSED [ 84%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[from_dual_03] PASSED [ 86%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[from_dual_04] PASSED [ 88%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[from_dual_05] PASSED [ 90%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[mixed_01] PASSED [ 93%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[mixed_02] PASSED [ 95%]
+tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[mixed_03] PASSED [ 97%]
+tests/integration/test_migrate_postgres.py::test_zz_write_the_results_report PASSED [100%]
+
+============================== 44 passed in 3.86s ==============================

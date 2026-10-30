@@ -1,0 +1,616 @@
+{
+  "summary": {
+    "cases": 42,
+    "match": 37,
+    "divergent_as_documented": 5,
+    "mismatch": [],
+    "unexpected": [],
+    "postgres": "16.15 (Debian 16.15-1.pgdg13+2)"
+  },
+  "cases": [
+    {
+      "id": "nvl_01",
+      "construct": "nvl",
+      "oracle_sql": "SELECT NVL(NULL, 'x') FROM DUAL",
+      "rewritten_sql": "SELECT COALESCE(NULL, 'x')",
+      "applied": [
+        "MIG001",
+        "MIG010"
+      ],
+      "oracle_result": "x",
+      "postgres_result": "x",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "nvl_02",
+      "construct": "nvl",
+      "oracle_sql": "SELECT NVL('a', 'x') FROM DUAL",
+      "rewritten_sql": "SELECT COALESCE('a', 'x')",
+      "applied": [
+        "MIG001",
+        "MIG010"
+      ],
+      "oracle_result": "a",
+      "postgres_result": "a",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "nvl_03",
+      "construct": "nvl",
+      "oracle_sql": "SELECT NVL(NULL, 5) FROM DUAL",
+      "rewritten_sql": "SELECT COALESCE(NULL, 5)",
+      "applied": [
+        "MIG001",
+        "MIG010"
+      ],
+      "oracle_result": "5",
+      "postgres_result": "5",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "nvl_04",
+      "construct": "nvl",
+      "oracle_sql": "SELECT NVL(NVL(NULL, 3), 7) FROM DUAL",
+      "rewritten_sql": "SELECT COALESCE(COALESCE(NULL, 3), 7)",
+      "applied": [
+        "MIG001",
+        "MIG001",
+        "MIG010"
+      ],
+      "oracle_result": "3",
+      "postgres_result": "3",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "nvl_05",
+      "construct": "nvl",
+      "oracle_sql": "SELECT NVL(NULL, NULL) FROM DUAL",
+      "rewritten_sql": "SELECT COALESCE(NULL, NULL)",
+      "applied": [
+        "MIG001",
+        "MIG010"
+      ],
+      "oracle_result": "<NULL>",
+      "postgres_result": "<NULL>",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "nvl_06",
+      "construct": "nvl",
+      "oracle_sql": "SELECT NVL(1 + 2, 0) FROM DUAL",
+      "rewritten_sql": "SELECT COALESCE(1 + 2, 0)",
+      "applied": [
+        "MIG001",
+        "MIG010"
+      ],
+      "oracle_result": "3",
+      "postgres_result": "3",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "nvl_07",
+      "construct": "nvl",
+      "oracle_sql": "SELECT NVL(NULLIF(1, 1), 9) FROM DUAL",
+      "rewritten_sql": "SELECT COALESCE(NULLIF(1, 1), 9)",
+      "applied": [
+        "MIG001",
+        "MIG010"
+      ],
+      "oracle_result": "9",
+      "postgres_result": "9",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "nvl_08",
+      "construct": "nvl",
+      "oracle_sql": "SELECT NVL('', 'x') FROM DUAL",
+      "rewritten_sql": "SELECT COALESCE('', 'x')",
+      "applied": [
+        "MIG001",
+        "MIG010"
+      ],
+      "oracle_result": "x",
+      "postgres_result": "",
+      "known_divergence": {
+        "reason": "oracle_empty_string_is_null",
+        "pg_naive_result": ""
+      },
+      "status": "divergent as documented"
+    },
+    {
+      "id": "nvl_09",
+      "construct": "nvl",
+      "oracle_sql": "SELECT NVL(TRIM('  '), 'blank') FROM DUAL",
+      "rewritten_sql": "SELECT COALESCE(TRIM('  '), 'blank')",
+      "applied": [
+        "MIG001",
+        "MIG010"
+      ],
+      "oracle_result": "blank",
+      "postgres_result": "",
+      "known_divergence": {
+        "reason": "oracle_empty_string_is_null",
+        "pg_naive_result": ""
+      },
+      "status": "divergent as documented"
+    },
+    {
+      "id": "nvl_10",
+      "construct": "nvl",
+      "oracle_sql": "SELECT NVL(SUBSTR('abc', 5), 'e') FROM DUAL",
+      "rewritten_sql": "SELECT COALESCE(SUBSTR('abc', 5), 'e')",
+      "applied": [
+        "MIG001",
+        "MIG010"
+      ],
+      "oracle_result": "e",
+      "postgres_result": "",
+      "known_divergence": {
+        "reason": "oracle_empty_string_is_null",
+        "pg_naive_result": ""
+      },
+      "status": "divergent as documented"
+    },
+    {
+      "id": "nvl_11",
+      "construct": "nvl",
+      "oracle_sql": "SELECT NVL('abc' || NULL, 'z') FROM DUAL",
+      "rewritten_sql": "SELECT COALESCE('abc' || NULL, 'z')",
+      "applied": [
+        "MIG001",
+        "MIG010"
+      ],
+      "oracle_result": "abc",
+      "postgres_result": "z",
+      "known_divergence": {
+        "reason": "oracle_concat_ignores_null",
+        "pg_naive_result": "z"
+      },
+      "status": "divergent as documented"
+    },
+    {
+      "id": "decode_01",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE(1, 1, 'a', 2, 'b', 'c') FROM DUAL",
+      "rewritten_sql": "SELECT CASE 1 WHEN 1 THEN 'a' WHEN 2 THEN 'b' ELSE 'c' END",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "a",
+      "postgres_result": "a",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "decode_02",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE(2, 1, 'a', 2, 'b', 'c') FROM DUAL",
+      "rewritten_sql": "SELECT CASE 2 WHEN 1 THEN 'a' WHEN 2 THEN 'b' ELSE 'c' END",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "b",
+      "postgres_result": "b",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "decode_03",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE(3, 1, 'a', 2, 'b', 'c') FROM DUAL",
+      "rewritten_sql": "SELECT CASE 3 WHEN 1 THEN 'a' WHEN 2 THEN 'b' ELSE 'c' END",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "c",
+      "postgres_result": "c",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "decode_04",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE(3, 1, 'a', 2, 'b') FROM DUAL",
+      "rewritten_sql": "SELECT CASE 3 WHEN 1 THEN 'a' WHEN 2 THEN 'b' END",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "<NULL>",
+      "postgres_result": "<NULL>",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "decode_05",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE(NULL, NULL, 'isnull', 'notnull') FROM DUAL",
+      "rewritten_sql": "SELECT CASE WHEN NULL IS NULL THEN 'isnull' ELSE 'notnull' END",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "isnull",
+      "postgres_result": "isnull",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "decode_06",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE(NULL, 1, 'a', 'z') FROM DUAL",
+      "rewritten_sql": "SELECT CASE WHEN NULL = 1 THEN 'a' ELSE 'z' END",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "z",
+      "postgres_result": "z",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "decode_07",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE('x', 'x', 1, 'y', 2) FROM DUAL",
+      "rewritten_sql": "SELECT CASE 'x' WHEN 'x' THEN 1 WHEN 'y' THEN 2 END",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "1",
+      "postgres_result": "1",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "decode_08",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE(1 + 1, 2, 'two', 'other') FROM DUAL",
+      "rewritten_sql": "SELECT CASE 1 + 1 WHEN 2 THEN 'two' ELSE 'other' END",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "two",
+      "postgres_result": "two",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "decode_09",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE(DECODE(1, 1, 2, 3), 2, 'ok', 'no') FROM DUAL",
+      "rewritten_sql": "SELECT CASE CASE 1 WHEN 1 THEN 2 ELSE 3 END WHEN 2 THEN 'ok' ELSE 'no' END",
+      "applied": [
+        "MIG002",
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "ok",
+      "postgres_result": "ok",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "decode_10",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE(NULL, 1, 'a', NULL, 'n', 'd') FROM DUAL",
+      "rewritten_sql": "SELECT CASE WHEN NULL = 1 THEN 'a' WHEN NULL IS NULL THEN 'n' ELSE 'd' END",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "n",
+      "postgres_result": "n",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "decode_11",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE('', NULL, 'isnull', 'notnull') FROM DUAL",
+      "rewritten_sql": "SELECT CASE WHEN '' IS NULL THEN 'isnull' ELSE 'notnull' END",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "isnull",
+      "postgres_result": "notnull",
+      "known_divergence": {
+        "reason": "oracle_empty_string_is_null",
+        "pg_naive_result": "notnull"
+      },
+      "status": "divergent as documented"
+    },
+    {
+      "id": "decode_12",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE(2, 1, 'a', 2, 'b', 2, 'c') FROM DUAL",
+      "rewritten_sql": "SELECT CASE 2 WHEN 1 THEN 'a' WHEN 2 THEN 'b' WHEN 2 THEN 'c' END",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "b",
+      "postgres_result": "b",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "decode_13",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE(a, b, 1, 0) FROM (SELECT CAST(NULL AS INTEGER) a, CAST(NULL AS INTEGER) b FROM DUAL)",
+      "rewritten_sql": "SELECT CASE WHEN a IS NOT DISTINCT FROM b THEN 1 ELSE 0 END FROM (SELECT CAST(NULL AS INTEGER) a, CAST(NULL AS INTEGER) b)",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "1",
+      "postgres_result": "1",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "decode_14",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE(a, b, 1, 0) FROM (SELECT CAST(NULL AS INTEGER) a, 5 b FROM DUAL)",
+      "rewritten_sql": "SELECT CASE WHEN a IS NOT DISTINCT FROM b THEN 1 ELSE 0 END FROM (SELECT CAST(NULL AS INTEGER) a, 5 b)",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "0",
+      "postgres_result": "0",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "decode_15",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE(a, b, 1, 0) FROM (SELECT 5 a, CAST(NULL AS INTEGER) b FROM DUAL)",
+      "rewritten_sql": "SELECT CASE WHEN a IS NOT DISTINCT FROM b THEN 1 ELSE 0 END FROM (SELECT 5 a, CAST(NULL AS INTEGER) b)",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "0",
+      "postgres_result": "0",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "decode_16",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE(a, b, 1, 0) FROM (SELECT 3 a, 3 b FROM DUAL)",
+      "rewritten_sql": "SELECT CASE WHEN a IS NOT DISTINCT FROM b THEN 1 ELSE 0 END FROM (SELECT 3 a, 3 b)",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "1",
+      "postgres_result": "1",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "decode_17",
+      "construct": "decode",
+      "oracle_sql": "SELECT DECODE(a, 7, 70, b, 80, 0) FROM (SELECT CAST(NULL AS INTEGER) a, CAST(NULL AS INTEGER) b FROM DUAL)",
+      "rewritten_sql": "SELECT CASE WHEN a = 7 THEN 70 WHEN a IS NOT DISTINCT FROM b THEN 80 ELSE 0 END FROM (SELECT CAST(NULL AS INTEGER) a, CAST(NULL AS INTEGER) b)",
+      "applied": [
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "80",
+      "postgres_result": "80",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "nextval_01",
+      "construct": "nextval",
+      "oracle_sql": "SELECT f5_s1.NEXTVAL FROM DUAL",
+      "rewritten_sql": "SELECT nextval('f5_s1')",
+      "applied": [
+        "MIG004",
+        "MIG010"
+      ],
+      "oracle_result": "5",
+      "postgres_result": "5",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "nextval_02",
+      "construct": "nextval",
+      "oracle_sql": "SELECT f5_s2.NEXTVAL FROM DUAL",
+      "rewritten_sql": "SELECT nextval('f5_s2')",
+      "applied": [
+        "MIG004",
+        "MIG010"
+      ],
+      "oracle_result": "10",
+      "postgres_result": "10",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "nextval_03",
+      "construct": "nextval",
+      "oracle_sql": "SELECT f5_s3.NEXTVAL + f5_s3.CURRVAL FROM DUAL",
+      "rewritten_sql": "SELECT nextval('f5_s3') + currval('f5_s3')",
+      "applied": [
+        "MIG004",
+        "MIG004",
+        "MIG010"
+      ],
+      "oracle_result": "2",
+      "postgres_result": "2",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "nextval_04",
+      "construct": "nextval",
+      "oracle_sql": "SELECT 'id-' || f5_s4.NEXTVAL FROM DUAL",
+      "rewritten_sql": "SELECT 'id-' || nextval('f5_s4')",
+      "applied": [
+        "MIG004",
+        "MIG010"
+      ],
+      "oracle_result": "id-100",
+      "postgres_result": "id-100",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "nextval_05",
+      "construct": "nextval",
+      "oracle_sql": "SELECT f5_s5.NEXTVAL * 2 FROM DUAL",
+      "rewritten_sql": "SELECT nextval('f5_s5') * 2",
+      "applied": [
+        "MIG004",
+        "MIG010"
+      ],
+      "oracle_result": "42",
+      "postgres_result": "42",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "nextval_06",
+      "construct": "nextval",
+      "oracle_sql": "SELECT F5_S6.nextval FROM dual",
+      "rewritten_sql": "SELECT nextval('F5_S6')",
+      "applied": [
+        "MIG004",
+        "MIG010"
+      ],
+      "oracle_result": "7",
+      "postgres_result": "7",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "from_dual_01",
+      "construct": "from_dual",
+      "oracle_sql": "SELECT 1 FROM DUAL",
+      "rewritten_sql": "SELECT 1",
+      "applied": [
+        "MIG010"
+      ],
+      "oracle_result": "1",
+      "postgres_result": "1",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "from_dual_02",
+      "construct": "from_dual",
+      "oracle_sql": "SELECT 'a' || 'b' FROM DUAL",
+      "rewritten_sql": "SELECT 'a' || 'b'",
+      "applied": [
+        "MIG010"
+      ],
+      "oracle_result": "ab",
+      "postgres_result": "ab",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "from_dual_03",
+      "construct": "from_dual",
+      "oracle_sql": "SELECT 1 + 1 FROM dual",
+      "rewritten_sql": "SELECT 1 + 1",
+      "applied": [
+        "MIG010"
+      ],
+      "oracle_result": "2",
+      "postgres_result": "2",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "from_dual_04",
+      "construct": "from_dual",
+      "oracle_sql": "SELECT   2 * 3\nFROM   DUAL",
+      "rewritten_sql": "SELECT   2 * 3",
+      "applied": [
+        "MIG010"
+      ],
+      "oracle_result": "6",
+      "postgres_result": "6",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "from_dual_05",
+      "construct": "from_dual",
+      "oracle_sql": "SELECT 'x' FROM DUAL WHERE 1 = 1",
+      "rewritten_sql": "SELECT 'x' WHERE 1 = 1",
+      "applied": [
+        "MIG010"
+      ],
+      "oracle_result": "x",
+      "postgres_result": "x",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "mixed_01",
+      "construct": "mixed",
+      "oracle_sql": "SELECT NVL(NULL, 'x') || DECODE(1, 1, 'a', 'b') FROM DUAL",
+      "rewritten_sql": "SELECT COALESCE(NULL, 'x') || CASE 1 WHEN 1 THEN 'a' ELSE 'b' END",
+      "applied": [
+        "MIG001",
+        "MIG002",
+        "MIG010"
+      ],
+      "oracle_result": "xa",
+      "postgres_result": "xa",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "mixed_02",
+      "construct": "mixed",
+      "oracle_sql": "SELECT NVL(f5_s7.NEXTVAL, 0) FROM DUAL",
+      "rewritten_sql": "SELECT COALESCE(nextval('f5_s7'), 0)",
+      "applied": [
+        "MIG001",
+        "MIG004",
+        "MIG010"
+      ],
+      "oracle_result": "3",
+      "postgres_result": "3",
+      "known_divergence": null,
+      "status": "match"
+    },
+    {
+      "id": "mixed_03",
+      "construct": "mixed",
+      "oracle_sql": "SELECT DECODE(NVL(NULL, 2), 2, 'two', 'other') FROM DUAL",
+      "rewritten_sql": "SELECT CASE COALESCE(NULL, 2) WHEN 2 THEN 'two' ELSE 'other' END",
+      "applied": [
+        "MIG002",
+        "MIG001",
+        "MIG010"
+      ],
+      "oracle_result": "two",
+      "postgres_result": "two",
+      "known_divergence": null,
+      "status": "match"
+    }
+  ]
+}
