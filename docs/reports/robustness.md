@@ -41,12 +41,19 @@ Run it with `uv run pytest tests/robustness -m robustness` (also available as th
 | | |
 |---|---|
 | Seed | `20261030` |
-| Mutations | `2400` (minimum required: 2000) over 324 distinct seed files, ~230–255 per operator |
+| Mutations | `2400` (minimum required: 2000) over 397 distinct seed files out of 398, 220–261 per operator |
 | Failures (exception, hang, slow, wrong type) | **0** |
-| Total time of the sweep | 8.0 s |
-| Slowest `parse_file` | 1.17 s (`tests/fixtures/rules/PLL005/pos_2.pkb` with a `repeat_span`; close to the 2 s limit) |
-| Slowest `review` | 0.08 s |
-| Whole `-m robustness` suite | about 21 s |
+| Total time of the sweep | 2.9 s |
+| Slowest `parse_file` | 0.06 s (`tests/fixtures/rules/PLL005/neg_2.pkb`) |
+| Slowest `review` | 0.01 s |
+| Whole `-m robustness` suite | about 15 s |
+
+These figures are those of `main` after the F5-G3 fixtures (398 seed files). **They depend on the seed pool**: the generator
+draws every mutation from one shared random stream, so adding or removing a fixture changes all of them. The first version of
+this report (324 files) measured a slowest parse of 1.17 s and 8.0 s in total; on `main` right after F5a added fixtures the same
+seed drew a mutation of `tests/fixtures/migrate/rules/MIG006/neg_2.pkb` that hung the parser, and one commit later, with
+more fixtures, the sweep passed again with the numbers above. A clean sweep therefore says little; the recipes below are the stable
+check.
 
 Exploratory runs outside the committed suite, with other seeds and a few thousand to 20 000
 mutations each, reproduced nothing beyond the failure types below.
@@ -54,7 +61,7 @@ mutations each, reproduced nothing beyond the failure types below.
 ## Findings
 
 The sweep itself is clean, but extreme repetition (which the `repeat_span` operator only reaches by
-chance) breaks the claim in four ways. They were found with targeted probes and with larger
+chance) breaks the claim in five ways. They were found with targeted probes and with larger
 exploratory seeds, then minimized. Each is stored as a small JSON recipe in
 `tests/robustness/findings/` (text parts × repeat count, so the input stays reviewable) and pinned by
 a strict xfail in `tests/robustness/test_findings.py`. If the parser is ever fixed, the strict xfail
@@ -65,10 +72,11 @@ fails and the entry must be deleted.
 | `nested_subprograms_recursion` | parse | `create or replace package body p is` + `procedure a is` × 1500 | `RecursionError`. The exact threshold depends on how much stack the caller already uses: with the default limit of 1000 and a shallow caller (a plain script) 495 levels still pass and 700 fail; under pytest the same input fails from 495 levels, and with a deeper caller from fewer. The recipe uses 1500 so that it fails whatever the caller's depth. Needs the `create` form; without it the parser tolerates the same nesting. |
 | `unclosed_q_quote_quadratic` | parse | `q'[` × 24 000 (72 KB) | ~8 s in `lexer.tokenize`; 8 000 take 0.9 s, 12 000 take 2.0 s. The q-string regex scans to the end of input for every unclosed opener: O(n²). |
 | `parameter_modes_quadratic` | parse | `create package body p is procedure a (x in` + `out nocopy` × 30 000 + `integer) is begin null; end; end;` | ~7 s in `parse_params`: `rest = rest[1:]` per mode keyword, O(n²). 20 000 repetitions take 3 s. |
+| `loop_statements_quadratic` | parse | `procedure p is begin` + `loop;` × 40 000 + `end;` (234 KB) | ~16 s unguarded in `statements.split_statements`; 16 000 repetitions take 2.6 s, 24 000 take 5.9 s (a profile of 12 000 puts 1.4 of 1.5 s in `emit`, which fits a context stack that grows with every unclosed `loop;`): O(n²). Found by the F5-G2 audit. |
 | `unclosed_loops_review_hang` | review | `procedure a is begin` + `loop;` × 1000 + `insert into t values (1);` × 30 | ~15 s in `PLL005.check`; the rule re-scans the statements for every enclosing loop of every DML statement. 400 loops and 40 statements already take 2.5 s. |
 
-The repetition counts of the three timing findings carry a safety margin of 3–4× over the limit, so a
-faster machine still fails them. All four need inputs far from real PL/SQL (hundreds to thousands of
+The repetition counts of the four timing findings carry a safety margin of 3–4× over the limit, so a
+faster machine still fails them. All five need inputs far from real PL/SQL (hundreds to thousands of
 identical tokens in a row); none was reachable with the single-token operators.
 
 Nothing was inferred without a reproduction: each row was reproduced from its stored recipe by the

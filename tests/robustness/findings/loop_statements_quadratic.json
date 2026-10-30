@@ -1,0 +1,18 @@
+{
+  "reason": "Each unclosed `loop;` opens a block, so the enclosing-context stack grows with n and `split_statements` (`emit`, in statements.py) pays for it on every statement: 16 000 of them (94 KB) take ~2.6 s, 24 000 take ~5.9 s, O(n^2).",
+  "signature": "parse:Hang:statements.py",
+  "parts": [
+    [
+      "create or replace procedure p is\nbegin\n",
+      1
+    ],
+    [
+      "loop;\n",
+      40000
+    ],
+    [
+      "end;\n",
+      1
+    ]
+  ]
+}

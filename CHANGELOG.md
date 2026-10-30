@@ -100,6 +100,20 @@ to PyPI and nothing has been released yet, so everything is listed under `[Unrel
   keeps the adjudicated set equal to what a fresh run selects.
 - Count of the Oracle constructs that sit inside string literals (dynamic SQL), which no rule sees.
 
+#### F5d — Severity per finding, differential fuzzing and a pre-publication audit
+
+- `MIG011` and `MIG002` report a severity per finding and the rule's severity is the maximum: `MIG011` is `info` next to `||`,
+  `medium` as the replacement of `replace`/`regexp_replace` and `high` otherwise; `MIG002` is `medium` when a search value may be
+  `NULL` and `low` when all are literals. `--fail-on`, the table, JSON and SARIF use the finding's severity
+  ([report](docs/reports/migrate-severity.md)).
+- Differential fuzzing of `rewrite_sql`: a seeded generator of integer `NVL`/`DECODE` statements, an executor that compares Oracle
+  with PostgreSQL, a control that must detect the naive `CASE` rewrite, and a `differential` workflow that publishes its results to
+  the branch `ci-results/f5-differential` ([report](docs/reports/migrate-differential.md)).
+- A pre-publication audit of the repository: secrets, personal data, licences, reproducibility of the README and what to change
+  when it becomes public ([report](docs/reports/prepublication-audit.md)).
+- A fifth recorded failure of the parser's "never raises, quickly" claim (an `xfail(strict)` recipe), found by that audit, and a
+  note that the seeded robustness sweep depends on the set of seed files ([report](docs/reports/robustness.md)).
+
 ### Fixed
 
 - `rewrite_sql` rewrote `DECODE` with a column or expression as search value as `CASE x WHEN s`, which does not match NULL with

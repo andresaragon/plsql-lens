@@ -16,6 +16,7 @@ Phases F1 to F4b and F5a to F5c are implemented (plan and decisions: [SPEC.md](S
 | F4 | Seeded benchmark of the rules (before/after tuning, LLM-only baseline) | nothing (an LLM only for the baseline) |
 | F4b | External-author split: a cross-author check of the frozen rules | nothing (an LLM only for the baseline) |
 | F5a | Oracle→PostgreSQL migration rules MIG001–MIG011 and `plsql-lens migrate` (detection only) | nothing |
+| F5d | Per-finding severity for `MIG011` and `MIG002`, differential fuzzing of the rewrite on Oracle and PostgreSQL, and a pre-publication audit | nothing (Oracle and PostgreSQL for the fuzzing run) |
 | F5c | Measurement of the migration rules on `corpus/`: 140 of 234 findings adjudicated by impact, and a `DECODE` rewrite defect it exposed and fixed | nothing |
 | F5b | Conservative SQL rewrite (`rewrite_sql`) of `NVL`, `DECODE`, `seq.NEXTVAL` and `FROM DUAL`, checked on PostgreSQL against results observed on Oracle | nothing (PostgreSQL 16 for the integration test) |
 
@@ -67,7 +68,8 @@ make demo-f2             # the three formats + per-rule counts in docs/reports/p
 uv run plsql-lens review corpus/logger/logger.pkb --explain --format json -o review.json   # calls the LLM
 ```
 
-Sample output and the SARIF/JSON files: [docs/reports/phase-2/](docs/reports/phase-2/).
+Sample output and the SARIF/JSON files: [docs/reports/phase-2/](docs/reports/phase-2/) (as of F2, before the F4 tuning: a
+fresh `review` of `corpus/logger/logger.pkb` gives 95 findings, the sample has 101).
 
 ## GitHub Action
 
@@ -112,6 +114,14 @@ uv run plsql-lens migrate corpus/ --rules MIG008,MIG011 --fail-on high      # on
 and `-- plsql-lens: disable=MIG001` suppresses a finding in the source. On `corpus/` it reports 234 findings in 42 of 264
 files; counts per rule and what they do not mean: [docs/reports/phase-5a.md](docs/reports/phase-5a.md).
 
+Severity is per finding: `MIG011` is `info` next to `||`, `medium` as the replacement of `replace`/`regexp_replace` and `high`
+otherwise, and `MIG002` is `medium` when a search value may be `NULL` and `low` when all are literals, so `--fail-on high` stops
+on the real traps only ([docs/reports/migrate-severity.md](docs/reports/migrate-severity.md); on `corpus/`: 2 `info`, 4 `medium`
+and 2 `high` for `MIG011`). A differential run of 977 generated integer `NVL`/`DECODE` statements gave the same result on
+Oracle 23.26.3 and PostgreSQL 16.15, with 0 discrepancies and a control that does detect the naive `CASE` rewrite; the other
+1023 of the 2000 generated statements are skipped by the rewrite on purpose and were not run
+([docs/reports/migrate-differential.md](docs/reports/migrate-differential.md)).
+
 ## Commands
 
 | Command | What it does | Needs |
@@ -130,8 +140,9 @@ Run `uv run plsql-lens COMMAND --help` for every option. Commands that cost mone
 
 ## Parser and inventory (F1)
 
-* Tolerant lexer + structural recursive-descent parser (no external parser dependency); it never raises
-  on unknown syntax and reports structural problems in `FileIR.issues`.
+* Tolerant lexer + structural recursive-descent parser (no external parser dependency); it reports structural
+  problems in `FileIR.issues` and did not raise on any of 2400 seeded mutations of the corpus. Five inputs of extreme repetition
+  do break "never raises, quickly" (one `RecursionError`, four slow cases): [docs/reports/robustness.md](docs/reports/robustness.md).
 * Inventory of packages, standalone procedures/functions, triggers and types, with parameters and a
   resolved call graph; JSON and Mermaid output.
 * Measured results: [docs/reports/phase-1.md](docs/reports/phase-1.md); parser decision:
@@ -168,7 +179,7 @@ provisionally 65 / 1 / 0), and 0 of 9 real-world (`beyond`) defects outside the 
 
 * Plan and decisions: [SPEC.md](SPEC.md). Review-rule contract: [docs/rules.md](docs/rules.md). Migration-rule contract: [docs/migration-rules.md](docs/migration-rules.md).
 * Phase reports: [F1](docs/reports/phase-1.md) · [F2](docs/reports/phase-2.md) · [F3](docs/reports/phase-3.md) ·
-  [F4](docs/reports/phase-4.md) · [F4b](docs/reports/phase-4b.md) · [F5a](docs/reports/phase-5a.md) · [F5b](docs/reports/phase-5b.md) · [F5c](docs/reports/phase-5.md).
+  [F4](docs/reports/phase-4.md) · [F4b](docs/reports/phase-4b.md) · [F5a](docs/reports/phase-5a.md) · [F5b](docs/reports/phase-5b.md) · [F5c](docs/reports/phase-5.md) · [robustness](docs/reports/robustness.md) · [pre-publication audit](docs/reports/prepublication-audit.md).
 * Benchmark: [methodology](docs/benchmarks/README.md) · [results](docs/benchmarks/results.md) ·
   [external-author split](docs/benchmarks/external/README.md) ([results](docs/benchmarks/external/results.md)).
 * Design decisions: [ADR 0001 (parser)](docs/adr/0001-parser.md) ·
