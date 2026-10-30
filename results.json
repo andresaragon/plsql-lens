@@ -1,0 +1,97 @@
+{
+  "seed": 20261030,
+  "n": 2000,
+  "generated": 2000,
+  "rewritable": 977,
+  "rewritable_pct": 48.9,
+  "skipped_by_rewrite": {
+    "count": 1023,
+    "by_reason": {
+      "NULL-able search value on a non-simple expression (evaluated twice)": 1801
+    },
+    "examples": [
+      {
+        "id": "g00000",
+        "sql": "SELECT DECODE(NVL(9, 4), v4, v1, DECODE(v1, v2, 7, 4)) FROM (SELECT CAST(NULL AS INTEGER) n1, CAST(NULL AS INTEGER) n2, 1 v1, 2 v2, 2 v3, 7 v4 FROM DUAL)",
+        "skipped": [
+          [
+            "MIG002",
+            "NULL-able search value on a non-simple expression (evaluated twice)"
+          ]
+        ]
+      },
+      {
+        "id": "g00001",
+        "sql": "SELECT DECODE(NVL(n1, v3), NVL(NVL(7, v3), n1), 5, v1 + 1) FROM (SELECT CAST(NULL AS INTEGER) n1, CAST(NULL AS INTEGER) n2, 1 v1, 2 v2, 2 v3, 7 v4 FROM DUAL)",
+        "skipped": [
+          [
+            "MIG002",
+            "NULL-able search value on a non-simple expression (evaluated twice)"
+          ]
+        ]
+      },
+      {
+        "id": "g00002",
+        "sql": "SELECT NVL(DECODE(CAST(NULL AS INTEGER) + 1, v1, DECODE(v4, NULL, 9), n1, 5), NVL(2 + 1, NVL(n1, v1))) FROM (SELECT CAST(NULL AS INTEGER) n1, CAST(NULL AS INTEGER) n2, 1 v1, 2 v2, 2 v3, 7 v4 FROM DUAL)",
+        "skipped": [
+          [
+            "MIG002",
+            "NULL-able search value on a non-simple expression (evaluated twice)"
+          ]
+        ]
+      },
+      {
+        "id": "g00003",
+        "sql": "SELECT DECODE(n2, DECODE(DECODE(n2, v4, CAST(NULL AS INTEGER), n2, v1, n1), n1, NVL(n1, 2), 7 + 1), DECODE(3, NULL, NVL(v4, n1), DECODE(4, n2, v3, 5, 3, 9), DECODE(v4, n1, CAST(NULL AS INTEGER), NULL, v1, NULL, v1, 4)), DECODE(4, 7, 7, v4, v4, v4) + 1, NVL(DECODE(n2, 0, v3, v4, v3), n2 + 1), v1, DECODE(CAST(NULL AS INTEGER), DECODE(6, NULL, v3), NVL(CAST(NULL AS INTEGER), 9), DECODE(v2, CAST(NULL AS INTEGER), 3, n1, CAST(NULL AS INTEGER), v1, v4, 7))) FROM (SELECT CAST(NULL AS INTEGER) n1, CAST(NULL AS INTEGER) n2, 1 v1, 2 v2, 2 v3, 7 v4 FROM DUAL)",
+        "skipped": [
+          [
+            "MIG002",
+            "NULL-able search value on a non-simple expression (evaluated twice)"
+          ],
+          [
+            "MIG002",
+            "NULL-able search value on a non-simple expression (evaluated twice)"
+          ]
+        ]
+      },
+      {
+        "id": "g00005",
+        "sql": "SELECT DECODE(DECODE(DECODE(CAST(NULL AS INTEGER), 3, n1, 5), 8, DECODE(n1, 1, 5, NULL, CAST(NULL AS INTEGER), CAST(NULL AS INTEGER), v2, v2), DECODE(v1, NULL, n2, v2)), n1, DECODE(NVL(v3, 5), 7, 5, CAST(NULL AS INTEGER) + 1), v2, DECODE(DECODE(n2, 2, v3, 4), 1, DECODE(7, CAST(NULL AS INTEGER), n2)), v2 + 1) FROM (SELECT CAST(NULL AS INTEGER) n1, CAST(NULL AS INTEGER) n2, 1 v1, 2 v2, 2 v3, 7 v4 FROM DUAL)",
+        "skipped": [
+          [
+            "MIG002",
+            "NULL-able search value on a non-simple expression (evaluated twice)"
+          ]
+        ]
+      }
+    ]
+  },
+  "executed": 977,
+  "oracle_errors": [],
+  "postgres_errors": [],
+  "matches": 977,
+  "value_distribution": {
+    "<NULL>": 293,
+    "2": 186,
+    "1": 107,
+    "7": 103,
+    "3": 47,
+    "4": 44,
+    "6": 41,
+    "8": 40,
+    "5": 39,
+    "9": 37,
+    "0": 30,
+    "10": 9,
+    "11": 1
+  },
+  "discrepancies": [],
+  "control": {
+    "id": "control-naive-decode",
+    "original": "SELECT DECODE(n1, n2, 1, 0) FROM (SELECT CAST(NULL AS INTEGER) n1, CAST(NULL AS INTEGER) n2, 1 v1, 2 v2, 2 v3, 7 v4 FROM DUAL)",
+    "naive": "SELECT CASE n1 WHEN n2 THEN 1 ELSE 0 END FROM (SELECT CAST(NULL AS INTEGER) n1, CAST(NULL AS INTEGER) n2, 1 v1, 2 v2, 2 v3, 7 v4)",
+    "oracle": "1",
+    "postgres": "0",
+    "detected": true
+  }
+}

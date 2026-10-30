@@ -1,0 +1,42 @@
+{
+  "seed": 20261030,
+  "n": 2000,
+  "generated": 2000,
+  "rewritable": 977,
+  "rewritable_pct": 48.9,
+  "skipped_by_rewrite": {
+    "count": 1023,
+    "by_reason": {
+      "NULL-able search value on a non-simple expression (evaluated twice)": 1801
+    }
+  },
+  "executed": 977,
+  "matches": 977,
+  "value_distribution": {
+    "<NULL>": 293,
+    "2": 186,
+    "1": 107,
+    "7": 103,
+    "3": 47,
+    "4": 44,
+    "6": 41,
+    "8": 40,
+    "5": 39,
+    "9": 37,
+    "0": 30,
+    "10": 9,
+    "11": 1
+  },
+  "control": {
+    "id": "control-naive-decode",
+    "original": "SELECT DECODE(n1, n2, 1, 0) FROM (SELECT CAST(NULL AS INTEGER) n1, CAST(NULL AS INTEGER) n2, 1 v1, 2 v2, 2 v3, 7 v4 FROM DUAL)",
+    "naive": "SELECT CASE n1 WHEN n2 THEN 1 ELSE 0 END FROM (SELECT CAST(NULL AS INTEGER) n1, CAST(NULL AS INTEGER) n2, 1 v1, 2 v2, 2 v3, 7 v4)",
+    "oracle": "1",
+    "postgres": "0",
+    "detected": true
+  },
+  "oracle_errors": 0,
+  "postgres_errors": 0,
+  "discrepancies": 0
+}
+control (naive CASE for DECODE(n1, n2, 1, 0)): {"id": "control-naive-decode", "original": "SELECT DECODE(n1, n2, 1, 0) FROM (SELECT CAST(NULL AS INTEGER) n1, CAST(NULL AS INTEGER) n2, 1 v1, 2 v2, 2 v3, 7 v4 FROM DUAL)", "naive": "SELECT CASE n1 WHEN n2 THEN 1 ELSE 0 END FROM (SELECT CAST(NULL AS INTEGER) n1, CAST(NULL AS INTEGER) n2, 1 v1, 2 v2, 2 v3, 7 v4)", "oracle": "1", "postgres": "0", "detected": true}
