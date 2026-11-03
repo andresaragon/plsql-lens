@@ -134,8 +134,9 @@ is unchanged and `RULES` keeps exactly PLL001–PLL007. Detection is determinist
   written by an LLM — is run on PostgreSQL 16 (GitHub Actions service container; results published to branch `ci-results/f5`).
   Cases whose results differ for a reason outside the rewrite (e.g. Oracle's `''` = NULL) are labelled `known_divergence` and reported.
 - **F5c — measurement (local):** per-rule counts on `corpus/` and an adjudicated sample, `docs/reports/phase-5.md`.
-- **Out of scope (v1):** a full PL/SQL→PL/pgSQL transpiler, DDL, data types, `BULK COLLECT`/`FORALL`, `EXECUTE IMMEDIATE`,
-  Oracle-supplied packages, package state, and any connection to a real database.
+- **Out of scope (v1):** a full PL/SQL→PL/pgSQL transpiler, DDL, data types, package state, and any connection to a real
+  database. `BULK COLLECT`/`FORALL`, `EXECUTE IMMEDIATE`, `RAISE_APPLICATION_ERROR`, `DBMS_LOB`/`DBMS_SQL`/`UTL_FILE` and
+  pipelined functions are detected (MIG012–MIG017, F5-G4) but never rewritten.
 - **Acceptance:** a claim about a rewrite is made only if a command reproduces it; the evidence is correspondence on the
   reference cases, not a proof of general equivalence.
 
