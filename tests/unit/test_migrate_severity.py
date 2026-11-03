@@ -207,6 +207,7 @@ def _corpus() -> dict[tuple[str, int, int], tuple[str, str]]:
 
 
 CORPUS = _corpus()
+REPORTED_UP_TO = "MIG011"  # the last rule that docs/reports/migrate-severity.md covers
 
 
 def _counts(rule: str) -> dict[str, int]:
@@ -252,6 +253,10 @@ def test_the_report_counts_match_a_fresh_run() -> None:
     occurrences: collections.Counter[tuple[str, str]] = collections.Counter()
     files: collections.defaultdict[tuple[str, str], set[str]] = collections.defaultdict(set)
     for (path, _line, _col), (rule, severity) in CORPUS.items():
+        if (
+            rule > REPORTED_UP_TO
+        ):  # the report predates MIG012+ (their counts: migrate-new-rules.md)
+            continue
         occurrences[(rule, severity)] += 1
         files[(rule, severity)].add(path)
     reported = {(r, s): (int(o), int(f)) for r, s, o, f in rows}
