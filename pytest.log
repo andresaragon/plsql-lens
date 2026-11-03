@@ -52,4 +52,4 @@ tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_o
 tests/integration/test_migrate_postgres.py::test_rewritten_statement_gives_the_oracle_result_on_postgres[mixed_03] PASSED [ 97%]
 tests/integration/test_migrate_postgres.py::test_zz_write_the_results_report PASSED [100%]
 
-============================== 44 passed in 3.86s ==============================
+============================== 44 passed in 4.33s ==============================
