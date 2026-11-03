@@ -1,0 +1,32 @@
+{
+  "files": 26,
+  "lines": 6449,
+  "per_file": {
+    "source/future/oos_util_transform.pkb": 545,
+    "source/future/oos_util_transform.pks": 51,
+    "source/future/reusable_table_create_template.sql": 380,
+    "source/packages/oos_util.pkb": 120,
+    "source/packages/oos_util.pks": 50,
+    "source/packages/oos_util_apex.pkb": 466,
+    "source/packages/oos_util_apex.pks": 36,
+    "source/packages/oos_util_bit.pkb": 212,
+    "source/packages/oos_util_bit.pks": 40,
+    "source/packages/oos_util_crypto.pkb": 2416,
+    "source/packages/oos_util_crypto.pks": 100,
+    "source/packages/oos_util_date.pkb": 107,
+    "source/packages/oos_util_date.pks": 17,
+    "source/packages/oos_util_lob.pkb": 417,
+    "source/packages/oos_util_lob.pks": 78,
+    "source/packages/oos_util_string.pkb": 577,
+    "source/packages/oos_util_string.pks": 97,
+    "source/packages/oos_util_totp.pkb": 275,
+    "source/packages/oos_util_totp.pks": 32,
+    "source/packages/oos_util_validation.pkb": 81,
+    "source/packages/oos_util_validation.pks": 16,
+    "source/packages/oos_util_web.pkb": 182,
+    "source/packages/oos_util_web.pks": 31,
+    "source/scripts/prereqs.sql": 56,
+    "source/scripts/recompile.sql": 37,
+    "source/tables/oos_util_values.sql": 30
+  }
+}

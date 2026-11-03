@@ -1,0 +1,38 @@
+SEVERITY  RULE    LOCATION                                                 MESSAGE
+--------  ------  -------------------------------------------------------  -------
+LOW       MIG010  source/future/oos_util_transform.pkb:75:37               Oracle FROM DUAL
+LOW       MIG010  source/future/oos_util_transform.pkb:121:77              Oracle FROM DUAL
+MEDIUM    MIG011  source/future/reusable_table_create_template.sql:235:96  Empty string literal '' (NULL in Oracle)
+LOW       MIG009  source/future/reusable_table_create_template.sql:315:9   Oracle DBMS_OUTPUT call
+MEDIUM    MIG003  source/packages/oos_util.pkb:105:24                      Oracle SYSTIMESTAMP
+MEDIUM    MIG003  source/packages/oos_util.pkb:113:16                      Oracle SYSTIMESTAMP
+MEDIUM    MIG003  source/packages/oos_util_apex.pkb:104:11                 Oracle SYSDATE
+MEDIUM    MIG003  source/packages/oos_util_apex.pkb:105:11                 Oracle SYSDATE
+LOW       MIG001  source/packages/oos_util_crypto.pkb:196:16               Oracle NVL() call
+HIGH      MIG011  source/packages/oos_util_crypto.pkb:229:26               Empty string literal '' (NULL in Oracle)
+LOW       MIG001  source/packages/oos_util_crypto.pkb:231:14               Oracle NVL() call
+LOW       MIG001  source/packages/oos_util_crypto.pkb:355:16               Oracle NVL() call
+HIGH      MIG011  source/packages/oos_util_crypto.pkb:383:26               Empty string literal '' (NULL in Oracle)
+LOW       MIG001  source/packages/oos_util_crypto.pkb:385:14               Oracle NVL() call
+LOW       MIG001  source/packages/oos_util_crypto.pkb:466:16               Oracle NVL() call
+HIGH      MIG011  source/packages/oos_util_crypto.pkb:517:26               Empty string literal '' (NULL in Oracle)
+LOW       MIG001  source/packages/oos_util_crypto.pkb:519:14               Oracle NVL() call
+LOW       MIG001  source/packages/oos_util_crypto.pkb:602:16               Oracle NVL() call
+LOW       MIG001  source/packages/oos_util_crypto.pkb:722:16               Oracle NVL() call
+HIGH      MIG011  source/packages/oos_util_crypto.pkb:771:26               Empty string literal '' (NULL in Oracle)
+LOW       MIG001  source/packages/oos_util_crypto.pkb:773:14               Oracle NVL() call
+LOW       MIG001  source/packages/oos_util_crypto.pkb:880:16               Oracle NVL() call
+HIGH      MIG011  source/packages/oos_util_crypto.pkb:943:26               Empty string literal '' (NULL in Oracle)
+LOW       MIG001  source/packages/oos_util_crypto.pkb:945:14               Oracle NVL() call
+MEDIUM    MIG003  source/packages/oos_util_crypto.pkb:1229:64              Oracle SYSTIMESTAMP
+MEDIUM    MIG003  source/packages/oos_util_crypto.pkb:1237:64              Oracle SYSTIMESTAMP
+LOW       MIG001  source/packages/oos_util_lob.pkb:143:16                  Oracle NVL() call
+LOW       MIG001  source/packages/oos_util_string.pkb:205:27               Oracle NVL() call
+LOW       MIG001  source/packages/oos_util_string.pkb:208:14               Oracle NVL() call
+MEDIUM    MIG011  source/packages/oos_util_totp.pkb:116:75                 Empty string literal '' (NULL in Oracle)
+LOW       MIG010  source/packages/oos_util_totp.pkb:182:12                 Oracle FROM DUAL
+LOW       MIG009  source/scripts/prereqs.sql:23:5                          Oracle DBMS_OUTPUT call
+LOW       MIG009  source/scripts/prereqs.sql:32:11                         Oracle DBMS_OUTPUT call
+LOW       MIG009  source/scripts/prereqs.sql:40:7                          Oracle DBMS_OUTPUT call
+LOW       MIG009  source/scripts/prereqs.sql:43:5                          Oracle DBMS_OUTPUT call
+LOW       MIG002  source/scripts/recompile.sql:14:10                       Oracle DECODE() call
