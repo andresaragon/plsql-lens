@@ -188,3 +188,21 @@ def test_sarif_lists_the_new_rules_with_per_finding_levels_and_validates() -> No
     for r in doc["runs"][0]["results"]:
         levels[r["ruleId"]].add(r["level"])
     assert levels["MIG016"] == {"warning", "error"}
+
+
+def test_the_new_rules_report_counts_match_a_fresh_run_over_the_corpus() -> None:
+    import collections
+    import re
+
+    from plsql_lens.inventory import collect_files
+
+    occ: collections.Counter[tuple[str, str]] = collections.Counter()
+    files: collections.defaultdict[tuple[str, str], set[str]] = collections.defaultdict(set)
+    for path in collect_files([ROOT / "corpus"]):
+        for f in migrate_file(path, NEW):
+            occ[(f.rule_id, f.severity)] += 1
+            files[(f.rule_id, f.severity)].add(f.location.path)
+    text = (ROOT / "docs" / "reports" / "migrate-new-rules.md").read_text()
+    rows = re.findall(r"^\| (MIG\d{3}) \| (\w+) \| (\d+) \| (\d+) \|$", text, flags=re.MULTILINE)
+    reported = {(r, s): (int(o), int(n)) for r, s, o, n in rows}
+    assert reported == {k: (occ[k], len(files[k])) for k in occ}
