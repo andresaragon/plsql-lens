@@ -6,6 +6,8 @@ This is a **sample** produced with PL/SQL Lens on public code that the tool was 
 raw output ([`raw/`](raw/)) or from the manual review of a sample (marked as such); the blocks of numbers are generated and checked
 by [`tables.py`](tables.py). Read "What this report does not cover" before drawing conclusions.
 
+**Revision 2 (2026-11-04).** First published with the rules MIG001–MIG011 (36 findings, a 20-finding review sample). Regenerated after the rules MIG012–MIG017 were merged (95 findings, a 37-finding sample); the text of section 4.6 and the counts that changed are new, the rest is as before. The first revision stays in the git history of this file.
+
 ## 1. Scope
 
 | Item | Value |
@@ -15,7 +17,7 @@ by [`tables.py`](tables.py). Read "What this report does not cover" before drawi
 | Commit analyzed | `b6217292bc744211eaee9e1d11ca7a0b495bc44d` |
 | License | MIT, read in the `LICENSE` file at that commit (copyright 2015 OraOpenSource); SHA-256 of the file in [`raw/meta.txt`](raw/meta.txt) |
 | Path analyzed | `source/` (packages, `source/future/` and the SQL scripts). `install/` is left out: its header says it is auto-generated from the same sources, and counting it would count them twice |
-| PL/SQL Lens | version 0.1.0; last commit that changed `src/`: `8251b1cdb3687d8ec9204996aae6eb88f909e30c`; migration rules MIG001–MIG011 only |
+| PL/SQL Lens | version 0.1.0; last commit that changed `src/`: `558dcee3664ca4c794e723f9c1ee574350420c1e`; migration rules MIG001–MIG017 |
 | Command | `bash scripts/demo_migration_audit.sh` (clones at the fixed commit, runs `plsql-lens migrate` in JSON and table format and `plsql-lens inventory`, writes [`raw/`](raw/)) |
 
 <!-- BEGIN:facts -->
@@ -23,10 +25,10 @@ by [`tables.py`](tables.py). Read "What this report does not cover" before drawi
 |---|---|
 | PL/SQL files analyzed | 26 |
 | Lines in those files | 6449 |
-| Findings | 36 |
-| Files with at least one finding | 10 |
-| Findings by severity: `high` | 5 |
-| Findings by severity: `medium` | 8 |
+| Findings | 95 |
+| Files with at least one finding | 14 |
+| Findings by severity: `high` | 18 |
+| Findings by severity: `medium` | 54 |
 | Findings by severity: `low` | 23 |
 <!-- END:facts -->
 
@@ -37,18 +39,23 @@ and `tests/` (not analyzed) I found no personal data by pattern search and a par
 
 ## 2. Executive summary
 
-* PL/SQL Lens (migration rules MIG001–MIG011) reports **36 findings in 10 of 26 files**: 5 `high`, 8 `medium`, 23 `low`
-  (raw output). The mechanical `low` findings (NVL, `FROM DUAL`, `DBMS_OUTPUT`, one DECODE) are most of the count.
+* PL/SQL Lens (migration rules MIG001–MIG017) reports **95 findings in 14 of 26 files**: 18 `high`, 54 `medium`, 23 `low`
+  (raw output). 36 come from MIG001–MIG011 and 59 from the six rules added after the first revision (MIG012–MIG017). The 23 `low`
+  findings are mechanical (NVL, `FROM DUAL`, `DBMS_OUTPUT`, one DECODE). MIG016 counts references to `DBMS_LOB` and `DBMS_SQL`
+  (types and constants too), not routines to redesign.
 * **Main risks, in business terms:**
-  1. *Silent differences with empty text.* The five `high` findings assign `''` (which is NULL in Oracle) to a buffer inside hash
+  1. *Silent differences with empty text.* Five of the `high` findings (MIG011) assign `''` (which is NULL in Oracle) to a buffer inside hash
      routines. In my reading the result does not change here, but this is the category of defect that moves a migration from
      "compiles" to "returns different data", and it needs a test, not only a review.
   2. *Time-dependent code.* A wait loop uses `SYSTIMESTAMP`; the replacement the tool suggests (`CURRENT_TIMESTAMP`) is fixed
-     during a PostgreSQL transaction and would make that loop never end.
-  3. *Oracle-only features around the findings that this version does not look at* (raw-byte functions, XML functions,
-     APEX views, dynamic SQL). The 36 findings are what 11 rules see, not an estimate of the work.
-* Manual review of a 20-finding sample (Claude, provisional): 16 real hits, 4 doubtful, 0 false positives. Twenty findings
-  justify no estimate of precision on the rest.
+     during a PostgreSQL transaction and would make that loop never end (issue #3).
+  3. *Code that has to be redesigned, not ported.* All 13 `DBMS_SQL` findings (`high`) are in one routine that turns a REF CURSOR
+     into a `DBMS_SQL` cursor and describes its columns; PostgreSQL has no equivalent API (section 4.6).
+  4. *Oracle-only features around the findings that this version does not look at* (raw-byte functions, XML functions,
+     APEX views, and the text inside dynamic SQL, which the rules flag but do not read). The 95 findings are what 17 rules see,
+     not an estimate of the work.
+* Manual review of a 37-finding sample (Claude, provisional): 33 real hits, 4 doubtful, 0 false positives. Thirty-seven findings
+  justify no estimate of precision on the other 58.
 
 ## 3. Findings by rule and severity, and by file
 
@@ -64,6 +71,12 @@ Raw output: [`raw/migrate.json`](raw/migrate.json), [`raw/migrate.txt`](raw/migr
 | MIG010 | low | 3 | 2 |
 | MIG011 | high | 5 | 1 |
 | MIG011 | medium | 2 | 2 |
+| MIG012 | medium | 2 | 1 |
+| MIG014 | medium | 13 | 3 |
+| MIG015 | medium | 3 | 2 |
+| MIG016 | high | 13 | 1 |
+| MIG016 | medium | 24 | 5 |
+| MIG017 | medium | 4 | 2 |
 <!-- END:by_rule -->
 
 The ten files with most findings (all files with findings if there are fewer):
@@ -71,23 +84,24 @@ The ten files with most findings (all files with findings if there are fewer):
 <!-- BEGIN:by_file -->
 | File | Findings |
 |---|---|
+| `source/future/oos_util_transform.pkb` | 21 |
 | `source/packages/oos_util_crypto.pkb` | 18 |
-| `source/scripts/prereqs.sql` | 4 |
-| `source/future/oos_util_transform.pkb` | 2 |
-| `source/future/reusable_table_create_template.sql` | 2 |
-| `source/packages/oos_util.pkb` | 2 |
+| `source/future/reusable_table_create_template.sql` | 15 |
+| `source/packages/oos_util_lob.pkb` | 15 |
+| `source/packages/oos_util_string.pkb` | 6 |
+| `source/scripts/prereqs.sql` | 6 |
+| `source/packages/oos_util.pkb` | 3 |
 | `source/packages/oos_util_apex.pkb` | 2 |
-| `source/packages/oos_util_string.pkb` | 2 |
+| `source/packages/oos_util_string.pks` | 2 |
 | `source/packages/oos_util_totp.pkb` | 2 |
-| `source/packages/oos_util_lob.pkb` | 1 |
-| `source/scripts/recompile.sql` | 1 |
-| **Total** (10) | 36 |
+| **Total** (14) | 95 |
 <!-- END:by_file -->
 
 ## 4. Main risks
 
-All `high` and `medium` findings were read in context (13 of them: 5 `high`, 8 `medium`). Statements about PostgreSQL are my
-reading of the code; **none was run on a database**.
+The 13 `high` and `medium` findings of MIG001–MIG011 (5 `high`, 8 `medium`) were read in context. Of the 59 findings of
+MIG012–MIG017, only the 17 of the sample in section 5 were read, and 4.6 describes what that reading showed. Statements about
+PostgreSQL are my reading of the code; **none was run on a database**.
 
 ### 4.1 `''` assigned to a variable (MIG011, `high`) — `oos_util_crypto.pkb:229, 383, 517, 771, 943`
 
@@ -162,10 +176,27 @@ reading of the code; **none was run on a database**.
   (`regexp_replace(..., ':|;', '')`), where the same rule applies.
 * **What to do:** nothing unless the value can be exactly the removed text and is then tested for NULL.
 
+### 4.6 Dynamic SQL and `DBMS_SQL` (MIG014 and MIG016) — `oos_util_transform.pkb`, `reusable_table_create_template.sql`
+
+```plsql
+    v_cur_id := dbms_sql.to_cursor_number(p_rc);
+
+    dbms_sql.describe_columns3(v_cur_id, v_col_count, v_col_desc);
+```
+*(`source/future/oos_util_transform.pkb:218-220`, oos-utils, MIT, © 2015 OraOpenSource)*
+
+* **What changes:** all 13 `DBMS_SQL` findings are in this one routine of a file under `source/future/`: it converts a REF CURSOR
+  into a `DBMS_SQL` cursor and describes its columns to write text. PostgreSQL has no cursor-number API, so in my reading this is a
+  redesign and not a port. Of the 13 `EXECUTE IMMEDIATE` findings (MIG014), 11 are in a table-creation template script that
+  builds `CREATE` / `ALTER` text from constants with `replace()` and runs it; each statement ports as `EXECUTE`, but the DDL text
+  is not analyzed by the rule.
+* **What to do:** decide first whether the code under `source/future/` is in the migration scope: it holds 24 of these 26
+  findings. I did not check whether the rest of the project uses it.
+
 ## 5. Manual review of a sample
 
 **Method.** The sample is stratified by rule: the first 4 findings of each rule ordered by file path, line and column
-(all of them when a rule has fewer than 4). That gives 20 findings. It is reproducible, and it is **not random**: it favors the
+(all of them when a rule has fewer than 4). That gives 37 findings. It is reproducible, and it is **not random**: it favors the
 files that sort first alphabetically. **The verdicts are a review by Claude, provisional, on a small sample;** they are not
 tool output and nobody else has checked them.
 
@@ -173,7 +204,7 @@ tool output and nobody else has checked them.
 I could not show that it changes behavior here, or the severity does not fit. *False positive*: the token is something else.
 
 <!-- BEGIN:sample_totals -->
-Reviewed sample: 20 findings, 16 real hit, 4 doubtful, 0 false positive.
+Reviewed sample: 37 findings, 33 real hit, 4 doubtful, 0 false positive.
 <!-- END:sample_totals -->
 
 <!-- BEGIN:sample -->
@@ -199,18 +230,35 @@ Reviewed sample: 20 findings, 16 real hit, 4 doubtful, 0 false positive.
 | 18 | MIG011 | high | `source/packages/oos_util_crypto.pkb:229` | doubtful | Severity high, but the buffer is then only concatenated and measured with NVL(LENGTH(...)); I found no path where NULL versus '' changes the result (a reading, not a proof). |
 | 19 | MIG011 | high | `source/packages/oos_util_crypto.pkb:383` | doubtful | Same pattern as line 229, in another hash function. |
 | 20 | MIG011 | high | `source/packages/oos_util_crypto.pkb:517` | doubtful | Same pattern as line 229, in another hash function. |
+| 21 | MIG012 | medium | `source/future/reusable_table_create_template.sql:190` | real hit | SELECT ... BULK COLLECT INTO a collection of constraint names read from user_constraints: PostgreSQL needs SELECT array_agg(...) INTO, and user_constraints is an Oracle dictionary view with no direct counterpart (not reported by this version). |
+| 22 | MIG012 | medium | `source/future/reusable_table_create_template.sql:329` | real hit | Same pattern as line 190, reading user_triggers. |
+| 23 | MIG014 | medium | `source/future/reusable_table_create_template.sql:94` | real hit | Dynamic DDL: l_sql is the template constant c_table_sql with %table_name% replaced. EXECUTE l_sql ports, but the rule does not analyze the DDL text, so Oracle-only syntax inside it would need its own review. |
+| 24 | MIG014 | medium | `source/future/reusable_table_create_template.sql:129` | real hit | Dynamic ALTER TABLE ... ADD built from c_add_column_sql with replace(); the data type comes from a variable. Same remark as line 94: the text of the DDL is not analyzed. |
+| 25 | MIG014 | medium | `source/future/reusable_table_create_template.sql:159` | real hit | Dynamic ALTER TABLE ... DROP COLUMN from c_drop_column_sql; same remark as line 94. |
+| 26 | MIG014 | medium | `source/future/reusable_table_create_template.sql:177` | real hit | Dynamic CREATE SEQUENCE from c_sequence_sql (a q'!...!' literal); same remark as line 94. |
+| 27 | MIG015 | medium | `source/packages/oos_util.pkb:70` | real hit | Call with the package constant gc_assert_error_number (-20000, defined at line 5 of the body): the rule does not see the value. Callers that test SQLCODE = -20000 need the mapping to an ERRCODE. |
+| 28 | MIG015 | medium | `source/scripts/prereqs.sql:46` | real hit | -20000 in an anonymous block of the SQL*Plus installation check; RAISE EXCEPTION ... USING ERRCODE ports the call, but the script as a whole is an Oracle install helper. |
+| 29 | MIG015 | medium | `source/scripts/prereqs.sql:51` | real hit | -20001, same script and remark as line 46. |
+| 30 | MIG016 | high | `source/future/oos_util_transform.pkb:206` | real hit | A variable declared with the type dbms_sql.desc_tab3: the rule counts the type reference. The routine describes the columns of an arbitrary cursor with DBMS_SQL (describe_columns3), which has no PostgreSQL counterpart: a redesign, not a port. |
+| 31 | MIG016 | medium | `source/future/oos_util_transform.pkb:214` | real hit | dbms_lob.createtemporary for a local CLOB: in PostgreSQL the value is a text variable; there is no temporary-LOB lifecycle or duration. |
+| 32 | MIG016 | medium | `source/future/oos_util_transform.pkb:216` | real hit | The constant dbms_lob.call used as an argument of the previous call (it counts as a hit by the contract); it disappears with that call. |
+| 33 | MIG016 | high | `source/future/oos_util_transform.pkb:218` | real hit | dbms_sql.to_cursor_number turns a REF CURSOR into a DBMS_SQL cursor number: there is no equivalent, and the rest of the routine depends on it. |
+| 34 | MIG017 | medium | `source/packages/oos_util_string.pkb:455` | real hit | Pipelined function (listunagg, varchar2 overload) in the body: RETURNS SETOF with RETURN NEXT, and PIPE ROW goes away. The return type oos_util.tab_vc2 is a collection type. |
+| 35 | MIG017 | medium | `source/packages/oos_util_string.pkb:484` | real hit | The second overload of listunagg (clob), in the body; same remark as line 455. |
+| 36 | MIG017 | medium | `source/packages/oos_util_string.pks:81` | real hit | The same function in the package specification: the contract counts specification and body, so one function gives two findings. |
+| 37 | MIG017 | medium | `source/packages/oos_util_string.pks:86` | real hit | Specification of the clob overload; same remark as line 81. |
 <!-- END:sample -->
 
-The data is in [`review.json`](review.json); [`tables.py`](tables.py) fails if it does not match the selection above. Twenty
-findings do not allow an estimate of precision for the 36, and none of the 16 *real hits* says how costly the migration is.
+The data is in [`review.json`](review.json); [`tables.py`](tables.py) fails if it does not match the selection above. Thirty-seven
+findings do not allow an estimate of precision for the 95, and none of the 33 *real hits* says how costly the migration is.
 
 ## 6. What this report does not cover
 
-* **Constructs outside the 11 rules of this version.** In this version `BULK COLLECT` / `FORALL`, `EXECUTE IMMEDIATE`,
-  `RAISE_APPLICATION_ERROR`, the packages `DBMS_LOB`, `DBMS_SQL` and `UTL_FILE`, and pipelined functions **are not detected**.
-  Reading the code I saw, for example, `execute immediate l_sql;` (`reusable_table_create_template.sql:237`), which the tool
-  does not report. Other Oracle-only elements that no rule covers also appear (`utl_raw`, `dbms_utility`, XML functions such as
-  `existsnode` and `xmlquery`, `bin_to_num`, APEX views).
+* **Constructs outside the 17 rules of this version.** `BULK COLLECT` / `FORALL`, `EXECUTE IMMEDIATE`,
+  `RAISE_APPLICATION_ERROR`, the packages `DBMS_LOB`, `DBMS_SQL` and `UTL_FILE`, and pipelined functions are detected since
+  MIG012–MIG017, which only detect and never rewrite, and the text inside dynamic SQL is not analyzed. Other Oracle-only
+  elements that no rule covers also appear (`utl_raw`, `dbms_utility`, XML functions such as `existsnode` and `xmlquery`,
+  `bin_to_num`, APEX views).
 * **The out-of-scope list of the contract** ([`docs/migration-rules.md`](../../migration-rules.md)): data types, package state
   (package-level variables and initialization), DDL, and rewriting code. The tool reports; it does not convert.
 * **Dynamic SQL.** Text inside string literals is opaque to every rule: an Oracle construct in a string is never reported.
@@ -222,7 +270,7 @@ findings do not allow an estimate of precision for the 36, and none of the 16 *r
   identifier is not told apart, and a construct hidden in a string, or written in a way the contract does not list (for example
   `FROM SYS.DUAL`), is missed. The precision above is about what was reported; nothing is known about what was not.
 * **The tool's own limits.** The `unit` field of some findings is imprecise: it names `oos_util_crypto.sha256` for lines that, by
-  the line ranges I read, belong to `sha512` (line 943) and `randombytes` (lines 1229 and 1237). I report it and did not change the
+  the line ranges I read, belong to `sha512` (line 943) and `randombytes` (lines 1229 and 1237). I report it (issue #4) and did not change the
   tool.
 * **A single project, a single commit.** Nothing here generalizes to other code bases.
 

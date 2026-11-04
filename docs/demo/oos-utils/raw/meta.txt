@@ -5,5 +5,5 @@ analyzed_path: source
 license_file: LICENSE
 license_sha256: 2ac8bb682892189969fd0b6defaf50459f77b0b2ede0060e774da3ce2178372f
 license_first_line: The MIT License (MIT)
-plsql_lens_src_commit: 8251b1cdb3687d8ec9204996aae6eb88f909e30c
+plsql_lens_src_commit: 558dcee3664ca4c794e723f9c1ee574350420c1e
 plsql_lens_version: 0.1.0

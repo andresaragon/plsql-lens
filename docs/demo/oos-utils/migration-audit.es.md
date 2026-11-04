@@ -7,6 +7,8 @@ cifras salen de la salida cruda de la herramienta ([`raw/`](raw/)) o de la revis
 los bloques de cifras se generan y se comprueban con [`tables.py`](tables.py). Lee «Lo que este informe no cubre» antes de sacar
 conclusiones.
 
+**Revisión 2 (2026-11-04).** Publicado primero con las reglas MIG001–MIG011 (36 hallazgos, muestra revisada de 20). Regenerado tras fusionar las reglas MIG012–MIG017 (95 hallazgos, muestra de 37); el texto de la sección 4.6 y las cifras que cambiaron son nuevos, el resto sigue igual. La primera revisión queda en el historial de git de este archivo.
+
 ## 1. Alcance
 
 | Elemento | Valor |
@@ -16,7 +18,7 @@ conclusiones.
 | Commit analizado | `b6217292bc744211eaee9e1d11ca7a0b495bc44d` |
 | Licencia | MIT, leída en el archivo `LICENSE` de ese commit (copyright 2015 OraOpenSource); el SHA-256 del archivo está en [`raw/meta.txt`](raw/meta.txt) |
 | Ruta analizada | `source/` (paquetes, `source/future/` y los scripts SQL). Se deja fuera `install/`: su cabecera dice que se genera automáticamente a partir de las mismas fuentes, y contarlo sería contarlas dos veces |
-| PL/SQL Lens | versión 0.1.0; último commit que cambió `src/`: `8251b1cdb3687d8ec9204996aae6eb88f909e30c`; solo las reglas de migración MIG001–MIG011 |
+| PL/SQL Lens | versión 0.1.0; último commit que cambió `src/`: `558dcee3664ca4c794e723f9c1ee574350420c1e`; reglas de migración MIG001–MIG017 |
 | Comando | `bash scripts/demo_migration_audit.sh` (clona en el commit fijo, ejecuta `plsql-lens migrate` en formato JSON y tabla y `plsql-lens inventory`, y escribe [`raw/`](raw/)) |
 
 <!-- BEGIN:facts -->
@@ -24,10 +26,10 @@ conclusiones.
 |---|---|
 | Archivos PL/SQL analizados | 26 |
 | Líneas en esos archivos | 6449 |
-| Hallazgos | 36 |
-| Archivos con al menos un hallazgo | 10 |
-| Hallazgos por severidad: `high` | 5 |
-| Hallazgos por severidad: `medium` | 8 |
+| Hallazgos | 95 |
+| Archivos con al menos un hallazgo | 14 |
+| Hallazgos por severidad: `high` | 18 |
+| Hallazgos por severidad: `medium` | 54 |
 | Hallazgos por severidad: `low` | 23 |
 <!-- END:facts -->
 
@@ -39,18 +41,23 @@ lectura parcial.
 
 ## 2. Resumen ejecutivo
 
-* PL/SQL Lens (reglas de migración MIG001–MIG011) reporta **36 hallazgos en 10 de 26 archivos**: 5 `high`, 8 `medium`, 23 `low`
-  (salida cruda). Los hallazgos `low`, mecánicos (NVL, `FROM DUAL`, `DBMS_OUTPUT`, un DECODE), son la mayor parte del total.
+* PL/SQL Lens (reglas de migración MIG001–MIG017) reporta **95 hallazgos en 14 de 26 archivos**: 18 `high`, 54 `medium`, 23 `low`
+  (salida cruda). 36 vienen de MIG001–MIG011 y 59 de las seis reglas añadidas tras la primera revisión (MIG012–MIG017). Los 23
+  hallazgos `low` son mecánicos (NVL, `FROM DUAL`, `DBMS_OUTPUT`, un DECODE). MIG016 cuenta referencias a `DBMS_LOB` y `DBMS_SQL`
+  (también tipos y constantes), no rutinas por rediseñar.
 * **Riesgos principales, en términos de negocio:**
-  1. *Diferencias silenciosas con el texto vacío.* Los cinco hallazgos `high` asignan `''` (que en Oracle es NULL) a un búfer
+  1. *Diferencias silenciosas con el texto vacío.* Cinco de los hallazgos `high` (MIG011) asignan `''` (que en Oracle es NULL) a un búfer
      dentro de rutinas de hash. En mi lectura el resultado no cambia aquí, pero es la categoría de defecto que convierte una
      migración de «compila» en «devuelve otros datos», y requiere una prueba, no solo una revisión.
   2. *Código que depende de la hora.* Un bucle de espera usa `SYSTIMESTAMP`; el reemplazo que sugiere la herramienta
-     (`CURRENT_TIMESTAMP`) es fijo durante una transacción de PostgreSQL y haría que ese bucle no termine nunca.
-  3. *Características exclusivas de Oracle alrededor de los hallazgos que esta versión no mira* (funciones sobre bytes,
-     funciones XML, vistas de APEX, SQL dinámico). Los 36 hallazgos son lo que ven 11 reglas, no una estimación del trabajo.
-* Revisión manual de una muestra de 20 hallazgos (Claude, provisional): 16 aciertos reales, 4 dudosos, 0 falsos positivos. Veinte
-  hallazgos no permiten estimar la precisión sobre el resto.
+     (`CURRENT_TIMESTAMP`) es fijo durante una transacción de PostgreSQL y haría que ese bucle no termine nunca (issue #3).
+  3. *Código que hay que rediseñar, no portar.* Los 13 hallazgos de `DBMS_SQL` (`high`) están en una sola rutina que convierte un
+     REF CURSOR en un cursor de `DBMS_SQL` y describe sus columnas; PostgreSQL no tiene una API equivalente (sección 4.6).
+  4. *Características exclusivas de Oracle alrededor de los hallazgos que esta versión no mira* (funciones sobre bytes,
+     funciones XML, vistas de APEX y el texto dentro del SQL dinámico, que las reglas señalan pero no leen). Los 95 hallazgos son
+     lo que ven 17 reglas, no una estimación del trabajo.
+* Revisión manual de una muestra de 37 hallazgos (Claude, provisional): 33 aciertos reales, 4 dudosos, 0 falsos positivos. Treinta
+  y siete hallazgos no permiten estimar la precisión sobre los otros 58.
 
 ## 3. Hallazgos por regla y severidad, y por archivo
 
@@ -66,6 +73,12 @@ Salida cruda: [`raw/migrate.json`](raw/migrate.json), [`raw/migrate.txt`](raw/mi
 | MIG010 | low | 3 | 2 |
 | MIG011 | high | 5 | 1 |
 | MIG011 | medium | 2 | 2 |
+| MIG012 | medium | 2 | 1 |
+| MIG014 | medium | 13 | 3 |
+| MIG015 | medium | 3 | 2 |
+| MIG016 | high | 13 | 1 |
+| MIG016 | medium | 24 | 5 |
+| MIG017 | medium | 4 | 2 |
 <!-- END:by_rule -->
 
 Los diez archivos con más hallazgos (todos los que tienen hallazgos, si son menos):
@@ -73,23 +86,24 @@ Los diez archivos con más hallazgos (todos los que tienen hallazgos, si son men
 <!-- BEGIN:by_file -->
 | Archivo | Hallazgos |
 |---|---|
+| `source/future/oos_util_transform.pkb` | 21 |
 | `source/packages/oos_util_crypto.pkb` | 18 |
-| `source/scripts/prereqs.sql` | 4 |
-| `source/future/oos_util_transform.pkb` | 2 |
-| `source/future/reusable_table_create_template.sql` | 2 |
-| `source/packages/oos_util.pkb` | 2 |
+| `source/future/reusable_table_create_template.sql` | 15 |
+| `source/packages/oos_util_lob.pkb` | 15 |
+| `source/packages/oos_util_string.pkb` | 6 |
+| `source/scripts/prereqs.sql` | 6 |
+| `source/packages/oos_util.pkb` | 3 |
 | `source/packages/oos_util_apex.pkb` | 2 |
-| `source/packages/oos_util_string.pkb` | 2 |
+| `source/packages/oos_util_string.pks` | 2 |
 | `source/packages/oos_util_totp.pkb` | 2 |
-| `source/packages/oos_util_lob.pkb` | 1 |
-| `source/scripts/recompile.sql` | 1 |
-| **Total** (10) | 36 |
+| **Total** (14) | 95 |
 <!-- END:by_file -->
 
 ## 4. Riesgos principales
 
-Se leyeron en contexto todos los hallazgos `high` y `medium` (13: 5 `high`, 8 `medium`). Lo que se dice de PostgreSQL es mi lectura
-del código; **nada se ejecutó en una base de datos**.
+Se leyeron en contexto los 13 hallazgos `high` y `medium` de MIG001–MIG011 (5 `high`, 8 `medium`). De los 59 de MIG012–MIG017 solo
+se leyeron los 17 de la muestra de la sección 5, y la 4.6 describe lo que mostró esa lectura. Lo que se dice de PostgreSQL es mi
+lectura del código; **nada se ejecutó en una base de datos**.
 
 ### 4.1 `''` asignado a una variable (MIG011, `high`) — `oos_util_crypto.pkb:229, 383, 517, 771, 943`
 
@@ -165,10 +179,27 @@ del código; **nada se ejecutó en una base de datos**.
   (`regexp_replace(..., ':|;', '')`), donde se aplica la misma regla.
 * **Qué hacer:** nada, salvo que el valor pueda ser exactamente el texto eliminado y luego se pruebe si es NULL.
 
+### 4.6 SQL dinámico y `DBMS_SQL` (MIG014 y MIG016) — `oos_util_transform.pkb`, `reusable_table_create_template.sql`
+
+```plsql
+    v_cur_id := dbms_sql.to_cursor_number(p_rc);
+
+    dbms_sql.describe_columns3(v_cur_id, v_col_count, v_col_desc);
+```
+*(`source/future/oos_util_transform.pkb:218-220`, oos-utils, MIT, © 2015 OraOpenSource)*
+
+* **Qué cambia:** los 13 hallazgos de `DBMS_SQL` están en esta rutina de un archivo bajo `source/future/`: convierte un REF CURSOR
+  en un cursor de `DBMS_SQL` y describe sus columnas para escribir texto. PostgreSQL no tiene una API de números de cursor, así que
+  en mi lectura esto es un rediseño y no un porte. De los 13 hallazgos de `EXECUTE IMMEDIATE` (MIG014), 11 están en un script
+  plantilla de creación de tablas que arma texto `CREATE` / `ALTER` desde constantes con `replace()` y lo ejecuta; cada sentencia
+  se porta como `EXECUTE`, pero la regla no analiza el texto del DDL.
+* **Qué hacer:** decidir primero si el código bajo `source/future/` entra en el alcance de la migración: concentra 24 de estos 26
+  hallazgos. No comprobé si el resto del proyecto lo usa.
+
 ## 5. Revisión manual de una muestra
 
 **Método.** La muestra está estratificada por regla: los primeros 4 hallazgos de cada regla ordenados por ruta, línea y columna
-(todos, si la regla tiene menos de 4). Salen 20 hallazgos. Es reproducible y **no es aleatoria**: favorece los archivos que van
+(todos, si la regla tiene menos de 4). Salen 37 hallazgos. Es reproducible y **no es aleatoria**: favorece los archivos que van
 primero alfabéticamente. **Los veredictos son una revisión de Claude, provisional, sobre una muestra pequeña;** no son salida de
 la herramienta y nadie más los ha comprobado.
 
@@ -177,7 +208,7 @@ construcción está, pero no pude demostrar que cambie el comportamiento aquí, 
 es otra cosa.
 
 <!-- BEGIN:sample_totals -->
-Muestra revisada: 20 hallazgos, 16 aciertos reales, 4 dudosos, 0 falsos positivos.
+Muestra revisada: 37 hallazgos, 33 aciertos reales, 4 dudosos, 0 falsos positivos.
 <!-- END:sample_totals -->
 
 <!-- BEGIN:sample -->
@@ -203,17 +234,34 @@ Muestra revisada: 20 hallazgos, 16 aciertos reales, 4 dudosos, 0 falsos positivo
 | 18 | MIG011 | high | `source/packages/oos_util_crypto.pkb:229` | dudoso | Severidad high, pero el búfer solo se concatena y se mide con NVL(LENGTH(...)); no encontré un camino donde NULL frente a '' cambie el resultado (una lectura, no una prueba). |
 | 19 | MIG011 | high | `source/packages/oos_util_crypto.pkb:383` | dudoso | El mismo patrón que la línea 229, en otra función de hash. |
 | 20 | MIG011 | high | `source/packages/oos_util_crypto.pkb:517` | dudoso | El mismo patrón que la línea 229, en otra función de hash. |
+| 21 | MIG012 | medium | `source/future/reusable_table_create_template.sql:190` | acierto real | SELECT ... BULK COLLECT INTO una colección de nombres de restricciones leídos de user_constraints: en PostgreSQL se usa SELECT array_agg(...) INTO, y user_constraints es una vista del diccionario de Oracle sin equivalente directo (esta versión no lo reporta). |
+| 22 | MIG012 | medium | `source/future/reusable_table_create_template.sql:329` | acierto real | Mismo patrón que la línea 190, leyendo user_triggers. |
+| 23 | MIG014 | medium | `source/future/reusable_table_create_template.sql:94` | acierto real | DDL dinámico: l_sql es la constante plantilla c_table_sql con %table_name% sustituido. EXECUTE l_sql se porta, pero la regla no analiza el texto del DDL, así que la sintaxis solo de Oracle que lleve dentro necesitaría su propia revisión. |
+| 24 | MIG014 | medium | `source/future/reusable_table_create_template.sql:129` | acierto real | ALTER TABLE ... ADD dinámico armado desde c_add_column_sql con replace(); el tipo de dato viene de una variable. Misma salvedad que la línea 94: el texto del DDL no se analiza. |
+| 25 | MIG014 | medium | `source/future/reusable_table_create_template.sql:159` | acierto real | ALTER TABLE ... DROP COLUMN dinámico desde c_drop_column_sql; misma salvedad que la línea 94. |
+| 26 | MIG014 | medium | `source/future/reusable_table_create_template.sql:177` | acierto real | CREATE SEQUENCE dinámico desde c_sequence_sql (un literal q'!...!'); misma salvedad que la línea 94. |
+| 27 | MIG015 | medium | `source/packages/oos_util.pkb:70` | acierto real | Llamada con la constante del paquete gc_assert_error_number (-20000, definida en la línea 5 del cuerpo): la regla no ve el valor. Quien compare SQLCODE = -20000 necesita la correspondencia con un ERRCODE. |
+| 28 | MIG015 | medium | `source/scripts/prereqs.sql:46` | acierto real | -20000 en un bloque anónimo de la comprobación de instalación para SQL*Plus; RAISE EXCEPTION ... USING ERRCODE porta la llamada, pero el script completo es un ayudante de instalación de Oracle. |
+| 29 | MIG015 | medium | `source/scripts/prereqs.sql:51` | acierto real | -20001, mismo script y misma salvedad que la línea 46. |
+| 30 | MIG016 | high | `source/future/oos_util_transform.pkb:206` | acierto real | Una variable declarada con el tipo dbms_sql.desc_tab3: la regla cuenta la referencia al tipo. La rutina describe las columnas de un cursor arbitrario con DBMS_SQL (describe_columns3), que no tiene equivalente en PostgreSQL: es un rediseño, no un porte. |
+| 31 | MIG016 | medium | `source/future/oos_util_transform.pkb:214` | acierto real | dbms_lob.createtemporary para un CLOB local: en PostgreSQL el valor es una variable text; no hay ciclo de vida ni duración de LOB temporal. |
+| 32 | MIG016 | medium | `source/future/oos_util_transform.pkb:216` | acierto real | La constante dbms_lob.call usada como argumento de la llamada anterior (cuenta como acierto por el contrato); desaparece con esa llamada. |
+| 33 | MIG016 | high | `source/future/oos_util_transform.pkb:218` | acierto real | dbms_sql.to_cursor_number convierte un REF CURSOR en un número de cursor de DBMS_SQL: no hay equivalente, y el resto de la rutina depende de eso. |
+| 34 | MIG017 | medium | `source/packages/oos_util_string.pkb:455` | acierto real | Función pipelined (listunagg, sobrecarga varchar2) en el cuerpo: RETURNS SETOF con RETURN NEXT, y PIPE ROW desaparece. El tipo devuelto oos_util.tab_vc2 es un tipo de colección. |
+| 35 | MIG017 | medium | `source/packages/oos_util_string.pkb:484` | acierto real | La segunda sobrecarga de listunagg (clob), en el cuerpo; misma salvedad que la línea 455. |
+| 36 | MIG017 | medium | `source/packages/oos_util_string.pks:81` | acierto real | La misma función en la especificación del paquete: el contrato cuenta especificación y cuerpo, así que una función da dos hallazgos. |
+| 37 | MIG017 | medium | `source/packages/oos_util_string.pks:86` | acierto real | Especificación de la sobrecarga clob; misma salvedad que la línea 81. |
 <!-- END:sample -->
 
-Los datos están en [`review.json`](review.json); [`tables.py`](tables.py) falla si no coinciden con la selección de arriba. Veinte
-hallazgos no permiten estimar la precisión de los 36, y ninguno de los 16 *aciertos reales* dice cuánto cuesta la migración.
+Los datos están en [`review.json`](review.json); [`tables.py`](tables.py) falla si no coinciden con la selección de arriba. Treinta y siete
+hallazgos no permiten estimar la precisión de los 95, y ninguno de los 33 *aciertos reales* dice cuánto cuesta la migración.
 
 ## 6. Lo que este informe no cubre
 
-* **Construcciones fuera de las 11 reglas de esta versión.** En esta versión **no se detectan** `BULK COLLECT` / `FORALL`,
-  `EXECUTE IMMEDIATE`, `RAISE_APPLICATION_ERROR`, los paquetes `DBMS_LOB`, `DBMS_SQL` y `UTL_FILE`, ni las funciones pipelined.
-  Al leer el código vi, por ejemplo, `execute immediate l_sql;` (`reusable_table_create_template.sql:237`), que la herramienta no
-  reporta. También aparecen otros elementos exclusivos de Oracle que ninguna regla cubre (`utl_raw`, `dbms_utility`, funciones
+* **Construcciones fuera de las 17 reglas de esta versión.** `BULK COLLECT` / `FORALL`, `EXECUTE IMMEDIATE`,
+  `RAISE_APPLICATION_ERROR`, los paquetes `DBMS_LOB`, `DBMS_SQL` y `UTL_FILE` y las funciones pipelined se detectan desde
+  MIG012–MIG017, que solo detectan y nunca reescriben, y el texto dentro del SQL dinámico no se analiza. También aparecen otros
+  elementos exclusivos de Oracle que ninguna regla cubre (`utl_raw`, `dbms_utility`, funciones
   XML como `existsnode` y `xmlquery`, `bin_to_num`, vistas de APEX).
 * **La lista de fuera de alcance del contrato** ([`docs/migration-rules.md`](../../migration-rules.md)): tipos de datos, estado
   de paquete (variables de paquete e inicialización), DDL y reescritura de código. La herramienta reporta; no convierte.
@@ -229,7 +277,7 @@ hallazgos no permiten estimar la precisión de los 36, y ninguno de los 16 *acie
   sabe nada.
 * **Límites de la propia herramienta.** El campo `unit` de algunos hallazgos es impreciso: nombra `oos_util_crypto.sha256` para
   líneas que, según los rangos de líneas que leí, pertenecen a `sha512` (línea 943) y `randombytes` (líneas 1229 y 1237). Lo
-  reporto y no cambié la herramienta.
+  lo reporto (issue #4) y no cambié la herramienta.
 * **Un solo proyecto, un solo commit.** Nada de esto se generaliza a otras bases de código.
 
 ## 7. Cómo sería la auditoría completa
