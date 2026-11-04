@@ -24,6 +24,281 @@
       "unit": "oos_util_transform.xquery"
     },
     {
+      "rule_id": "MIG016",
+      "severity": "high",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 206,
+      "col": 16,
+      "message": "Oracle package DBMS_SQL",
+      "rationale": "PostgreSQL has no DBMS_SQL; there is no cursor-number API for dynamic SQL.",
+      "fix_hint": "redesign with EXECUTE format(...) USING ...",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 214,
+      "col": 5,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 216,
+      "col": 41,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "high",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 218,
+      "col": 17,
+      "message": "Oracle package DBMS_SQL",
+      "rationale": "PostgreSQL has no DBMS_SQL; there is no cursor-number API for dynamic SQL.",
+      "fix_hint": "redesign with EXECUTE format(...) USING ...",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "high",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 220,
+      "col": 5,
+      "message": "Oracle package DBMS_SQL",
+      "rationale": "PostgreSQL has no DBMS_SQL; there is no cursor-number API for dynamic SQL.",
+      "fix_hint": "redesign with EXECUTE format(...) USING ...",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 231,
+      "col": 9,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 233,
+      "col": 7,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "high",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 241,
+      "col": 22,
+      "message": "Oracle package DBMS_SQL",
+      "rationale": "PostgreSQL has no DBMS_SQL; there is no cursor-number API for dynamic SQL.",
+      "fix_hint": "redesign with EXECUTE format(...) USING ...",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "high",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 242,
+      "col": 22,
+      "message": "Oracle package DBMS_SQL",
+      "rationale": "PostgreSQL has no DBMS_SQL; there is no cursor-number API for dynamic SQL.",
+      "fix_hint": "redesign with EXECUTE format(...) USING ...",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "high",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 243,
+      "col": 22,
+      "message": "Oracle package DBMS_SQL",
+      "rationale": "PostgreSQL has no DBMS_SQL; there is no cursor-number API for dynamic SQL.",
+      "fix_hint": "redesign with EXECUTE format(...) USING ...",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "high",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 244,
+      "col": 22,
+      "message": "Oracle package DBMS_SQL",
+      "rationale": "PostgreSQL has no DBMS_SQL; there is no cursor-number API for dynamic SQL.",
+      "fix_hint": "redesign with EXECUTE format(...) USING ...",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "high",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 245,
+      "col": 22,
+      "message": "Oracle package DBMS_SQL",
+      "rationale": "PostgreSQL has no DBMS_SQL; there is no cursor-number API for dynamic SQL.",
+      "fix_hint": "redesign with EXECUTE format(...) USING ...",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "high",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 251,
+      "col": 11,
+      "message": "Oracle package DBMS_SQL",
+      "rationale": "PostgreSQL has no DBMS_SQL; there is no cursor-number API for dynamic SQL.",
+      "fix_hint": "redesign with EXECUTE format(...) USING ...",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "high",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 257,
+      "col": 13,
+      "message": "Oracle package DBMS_SQL",
+      "rationale": "PostgreSQL has no DBMS_SQL; there is no cursor-number API for dynamic SQL.",
+      "fix_hint": "redesign with EXECUTE format(...) USING ...",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "high",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 260,
+      "col": 13,
+      "message": "Oracle package DBMS_SQL",
+      "rationale": "PostgreSQL has no DBMS_SQL; there is no cursor-number API for dynamic SQL.",
+      "fix_hint": "redesign with EXECUTE format(...) USING ...",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "high",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 263,
+      "col": 13,
+      "message": "Oracle package DBMS_SQL",
+      "rationale": "PostgreSQL has no DBMS_SQL; there is no cursor-number API for dynamic SQL.",
+      "fix_hint": "redesign with EXECUTE format(...) USING ...",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "high",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 266,
+      "col": 13,
+      "message": "Oracle package DBMS_SQL",
+      "rationale": "PostgreSQL has no DBMS_SQL; there is no cursor-number API for dynamic SQL.",
+      "fix_hint": "redesign with EXECUTE format(...) USING ...",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 273,
+      "col": 9,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/future/oos_util_transform.pkb",
+      "line": 275,
+      "col": 7,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_transform.refcur2csv2"
+    },
+    {
+      "rule_id": "MIG014",
+      "severity": "medium",
+      "file": "source/future/reusable_table_create_template.sql",
+      "line": 94,
+      "col": 7,
+      "message": "Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)",
+      "rationale": "PL/pgSQL runs dynamic SQL with EXECUTE; the text is in a string or a variable, so Oracle constructs inside it are not reported, and the bind markers :1 / :name become $1.",
+      "fix_hint": "EXECUTE format('...') USING ...; :1 / :name become $1",
+      "unit": null
+    },
+    {
+      "rule_id": "MIG014",
+      "severity": "medium",
+      "file": "source/future/reusable_table_create_template.sql",
+      "line": 129,
+      "col": 9,
+      "message": "Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)",
+      "rationale": "PL/pgSQL runs dynamic SQL with EXECUTE; the text is in a string or a variable, so Oracle constructs inside it are not reported, and the bind markers :1 / :name become $1.",
+      "fix_hint": "EXECUTE format('...') USING ...; :1 / :name become $1",
+      "unit": null
+    },
+    {
+      "rule_id": "MIG014",
+      "severity": "medium",
+      "file": "source/future/reusable_table_create_template.sql",
+      "line": 159,
+      "col": 9,
+      "message": "Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)",
+      "rationale": "PL/pgSQL runs dynamic SQL with EXECUTE; the text is in a string or a variable, so Oracle constructs inside it are not reported, and the bind markers :1 / :name become $1.",
+      "fix_hint": "EXECUTE format('...') USING ...; :1 / :name become $1",
+      "unit": null
+    },
+    {
+      "rule_id": "MIG014",
+      "severity": "medium",
+      "file": "source/future/reusable_table_create_template.sql",
+      "line": 177,
+      "col": 9,
+      "message": "Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)",
+      "rationale": "PL/pgSQL runs dynamic SQL with EXECUTE; the text is in a string or a variable, so Oracle constructs inside it are not reported, and the bind markers :1 / :name become $1.",
+      "fix_hint": "EXECUTE format('...') USING ...; :1 / :name become $1",
+      "unit": null
+    },
+    {
+      "rule_id": "MIG012",
+      "severity": "medium",
+      "file": "source/future/reusable_table_create_template.sql",
+      "line": 190,
+      "col": 7,
+      "message": "Oracle BULK COLLECT",
+      "rationale": "PL/pgSQL has no BULK COLLECT; a query result is loaded into a variable with SELECT ... INTO or read row by row.",
+      "fix_hint": "SELECT array_agg(...) INTO arr FROM ..., or FOR rec IN SELECT ... LOOP",
+      "unit": null
+    },
+    {
+      "rule_id": "MIG014",
+      "severity": "medium",
+      "file": "source/future/reusable_table_create_template.sql",
+      "line": 200,
+      "col": 9,
+      "message": "Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)",
+      "rationale": "PL/pgSQL runs dynamic SQL with EXECUTE; the text is in a string or a variable, so Oracle constructs inside it are not reported, and the bind markers :1 / :name become $1.",
+      "fix_hint": "EXECUTE format('...') USING ...; :1 / :name become $1",
+      "unit": null
+    },
+    {
       "rule_id": "MIG011",
       "severity": "medium",
       "file": "source/future/reusable_table_create_template.sql",
@@ -32,6 +307,39 @@
       "message": "Empty string literal '' (NULL in Oracle)",
       "rationale": "In Oracle '' is NULL; in PostgreSQL it is an empty string that is not NULL, so comparisons, concatenations and IS NULL tests silently behave differently.",
       "fix_hint": "write NULL where NULL is meant; if an empty string is meant, test for it explicitly (x IS NULL OR x = '')",
+      "unit": null
+    },
+    {
+      "rule_id": "MIG014",
+      "severity": "medium",
+      "file": "source/future/reusable_table_create_template.sql",
+      "line": 237,
+      "col": 9,
+      "message": "Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)",
+      "rationale": "PL/pgSQL runs dynamic SQL with EXECUTE; the text is in a string or a variable, so Oracle constructs inside it are not reported, and the bind markers :1 / :name become $1.",
+      "fix_hint": "EXECUTE format('...') USING ...; :1 / :name become $1",
+      "unit": null
+    },
+    {
+      "rule_id": "MIG014",
+      "severity": "medium",
+      "file": "source/future/reusable_table_create_template.sql",
+      "line": 243,
+      "col": 9,
+      "message": "Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)",
+      "rationale": "PL/pgSQL runs dynamic SQL with EXECUTE; the text is in a string or a variable, so Oracle constructs inside it are not reported, and the bind markers :1 / :name become $1.",
+      "fix_hint": "EXECUTE format('...') USING ...; :1 / :name become $1",
+      "unit": null
+    },
+    {
+      "rule_id": "MIG014",
+      "severity": "medium",
+      "file": "source/future/reusable_table_create_template.sql",
+      "line": 283,
+      "col": 9,
+      "message": "Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)",
+      "rationale": "PL/pgSQL runs dynamic SQL with EXECUTE; the text is in a string or a variable, so Oracle constructs inside it are not reported, and the bind markers :1 / :name become $1.",
+      "fix_hint": "EXECUTE format('...') USING ...; :1 / :name become $1",
       "unit": null
     },
     {
@@ -44,6 +352,61 @@
       "rationale": "PostgreSQL has no DBMS_OUTPUT package; PL/pgSQL reports messages with RAISE.",
       "fix_hint": "RAISE NOTICE '...'",
       "unit": null
+    },
+    {
+      "rule_id": "MIG014",
+      "severity": "medium",
+      "file": "source/future/reusable_table_create_template.sql",
+      "line": 316,
+      "col": 9,
+      "message": "Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)",
+      "rationale": "PL/pgSQL runs dynamic SQL with EXECUTE; the text is in a string or a variable, so Oracle constructs inside it are not reported, and the bind markers :1 / :name become $1.",
+      "fix_hint": "EXECUTE format('...') USING ...; :1 / :name become $1",
+      "unit": null
+    },
+    {
+      "rule_id": "MIG012",
+      "severity": "medium",
+      "file": "source/future/reusable_table_create_template.sql",
+      "line": 329,
+      "col": 7,
+      "message": "Oracle BULK COLLECT",
+      "rationale": "PL/pgSQL has no BULK COLLECT; a query result is loaded into a variable with SELECT ... INTO or read row by row.",
+      "fix_hint": "SELECT array_agg(...) INTO arr FROM ..., or FOR rec IN SELECT ... LOOP",
+      "unit": null
+    },
+    {
+      "rule_id": "MIG014",
+      "severity": "medium",
+      "file": "source/future/reusable_table_create_template.sql",
+      "line": 338,
+      "col": 9,
+      "message": "Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)",
+      "rationale": "PL/pgSQL runs dynamic SQL with EXECUTE; the text is in a string or a variable, so Oracle constructs inside it are not reported, and the bind markers :1 / :name become $1.",
+      "fix_hint": "EXECUTE format('...') USING ...; :1 / :name become $1",
+      "unit": null
+    },
+    {
+      "rule_id": "MIG014",
+      "severity": "medium",
+      "file": "source/future/reusable_table_create_template.sql",
+      "line": 376,
+      "col": 7,
+      "message": "Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)",
+      "rationale": "PL/pgSQL runs dynamic SQL with EXECUTE; the text is in a string or a variable, so Oracle constructs inside it are not reported, and the bind markers :1 / :name become $1.",
+      "fix_hint": "EXECUTE format('...') USING ...; :1 / :name become $1",
+      "unit": null
+    },
+    {
+      "rule_id": "MIG015",
+      "severity": "medium",
+      "file": "source/packages/oos_util.pkb",
+      "line": 70,
+      "col": 7,
+      "message": "Oracle RAISE_APPLICATION_ERROR call",
+      "rationale": "PostgreSQL has no RAISE_APPLICATION_ERROR; the error numbers -20000..-20999 and the handlers that compare SQLCODE do not carry over by themselves.",
+      "fix_hint": "RAISE EXCEPTION '...' USING ERRCODE = '...'",
+      "unit": "oos_util.assert"
     },
     {
       "rule_id": "MIG003",
@@ -288,6 +651,138 @@
       "unit": "oos_util_crypto.sha256"
     },
     {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_lob.pkb",
+      "line": 28,
+      "col": 27,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_lob.clob2blob"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_lob.pkb",
+      "line": 35,
+      "col": 5,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_lob.clob2blob"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_lob.pkb",
+      "line": 39,
+      "col": 5,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_lob.clob2blob"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_lob.pkb",
+      "line": 42,
+      "col": 17,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_lob.clob2blob"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_lob.pkb",
+      "line": 45,
+      "col": 20,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_lob.clob2blob"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_lob.pkb",
+      "line": 49,
+      "col": 33,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_lob.clob2blob"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_lob.pkb",
+      "line": 77,
+      "col": 36,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_lob.blob2clob"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_lob.pkb",
+      "line": 83,
+      "col": 31,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_lob.blob2clob"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_lob.pkb",
+      "line": 91,
+      "col": 5,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_lob.blob2clob"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_lob.pkb",
+      "line": 95,
+      "col": 5,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_lob.blob2clob"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_lob.pkb",
+      "line": 98,
+      "col": 17,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_lob.blob2clob"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_lob.pkb",
+      "line": 105,
+      "col": 33,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_lob.blob2clob"
+    },
+    {
       "rule_id": "MIG001",
       "severity": "low",
       "file": "source/packages/oos_util_lob.pkb",
@@ -297,6 +792,39 @@
       "rationale": "PostgreSQL has no NVL(); the portable function is COALESCE.",
       "fix_hint": "COALESCE(a, b)",
       "unit": "oos_util_lob.get_file_size"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_lob.pkb",
+      "line": 201,
+      "col": 22,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_lob.get_lob_size"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_lob.pkb",
+      "line": 222,
+      "col": 22,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_lob.get_lob_size"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_lob.pks",
+      "line": 43,
+      "col": 36,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_lob"
     },
     {
       "rule_id": "MIG001",
@@ -321,6 +849,72 @@
       "unit": "oos_util_string.truncate"
     },
     {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_string.pkb",
+      "line": 386,
+      "col": 18,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_string.string_to_table"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_string.pkb",
+      "line": 392,
+      "col": 43,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_string.string_to_table"
+    },
+    {
+      "rule_id": "MIG017",
+      "severity": "medium",
+      "file": "source/packages/oos_util_string.pkb",
+      "line": 455,
+      "col": 29,
+      "message": "Oracle PIPELINED function",
+      "rationale": "PostgreSQL has no pipelined functions; a function returns its rows as a set and PIPE ROW disappears.",
+      "fix_hint": "RETURNS SETOF / RETURNS TABLE with RETURN NEXT or RETURN QUERY",
+      "unit": "oos_util_string.listunagg"
+    },
+    {
+      "rule_id": "MIG017",
+      "severity": "medium",
+      "file": "source/packages/oos_util_string.pkb",
+      "line": 484,
+      "col": 29,
+      "message": "Oracle PIPELINED function",
+      "rationale": "PostgreSQL has no pipelined functions; a function returns its rows as a set and PIPE ROW disappears.",
+      "fix_hint": "RETURNS SETOF / RETURNS TABLE with RETURN NEXT or RETURN QUERY",
+      "unit": "oos_util_string.listunagg"
+    },
+    {
+      "rule_id": "MIG017",
+      "severity": "medium",
+      "file": "source/packages/oos_util_string.pks",
+      "line": 81,
+      "col": 29,
+      "message": "Oracle PIPELINED function",
+      "rationale": "PostgreSQL has no pipelined functions; a function returns its rows as a set and PIPE ROW disappears.",
+      "fix_hint": "RETURNS SETOF / RETURNS TABLE with RETURN NEXT or RETURN QUERY",
+      "unit": "oos_util_string"
+    },
+    {
+      "rule_id": "MIG017",
+      "severity": "medium",
+      "file": "source/packages/oos_util_string.pks",
+      "line": 86,
+      "col": 29,
+      "message": "Oracle PIPELINED function",
+      "rationale": "PostgreSQL has no pipelined functions; a function returns its rows as a set and PIPE ROW disappears.",
+      "fix_hint": "RETURNS SETOF / RETURNS TABLE with RETURN NEXT or RETURN QUERY",
+      "unit": "oos_util_string"
+    },
+    {
       "rule_id": "MIG011",
       "severity": "medium",
       "file": "source/packages/oos_util_totp.pkb",
@@ -341,6 +935,17 @@
       "rationale": "PostgreSQL has no DUAL table; a SELECT without a FROM clause returns one row.",
       "fix_hint": "omit the FROM clause",
       "unit": "oos_util_totp.generate_otp"
+    },
+    {
+      "rule_id": "MIG016",
+      "severity": "medium",
+      "file": "source/packages/oos_util_web.pkb",
+      "line": 110,
+      "col": 37,
+      "message": "Oracle package DBMS_LOB",
+      "rationale": "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with ordinary functions.",
+      "fix_hint": "bytea / text with substr(), length() and ||",
+      "unit": "oos_util_web.download_file"
     },
     {
       "rule_id": "MIG009",
@@ -387,6 +992,28 @@
       "unit": null
     },
     {
+      "rule_id": "MIG015",
+      "severity": "medium",
+      "file": "source/scripts/prereqs.sql",
+      "line": 46,
+      "col": 7,
+      "message": "Oracle RAISE_APPLICATION_ERROR call",
+      "rationale": "PostgreSQL has no RAISE_APPLICATION_ERROR; the error numbers -20000..-20999 and the handlers that compare SQLCODE do not carry over by themselves.",
+      "fix_hint": "RAISE EXCEPTION '...' USING ERRCODE = '...'",
+      "unit": null
+    },
+    {
+      "rule_id": "MIG015",
+      "severity": "medium",
+      "file": "source/scripts/prereqs.sql",
+      "line": 51,
+      "col": 7,
+      "message": "Oracle RAISE_APPLICATION_ERROR call",
+      "rationale": "PostgreSQL has no RAISE_APPLICATION_ERROR; the error numbers -20000..-20999 and the handlers that compare SQLCODE do not carry over by themselves.",
+      "fix_hint": "RAISE EXCEPTION '...' USING ERRCODE = '...'",
+      "unit": null
+    },
+    {
       "rule_id": "MIG002",
       "severity": "low",
       "file": "source/scripts/recompile.sql",
@@ -395,6 +1022,28 @@
       "message": "Oracle DECODE() call",
       "rationale": "PostgreSQL has no DECODE(); it is a CASE expression. DECODE also treats NULL as equal to NULL, which CASE x WHEN NULL never does.",
       "fix_hint": "CASE expr WHEN s1 THEN r1 ... ELSE default END; use CASE WHEN expr IS NULL ... for a NULL search value",
+      "unit": null
+    },
+    {
+      "rule_id": "MIG014",
+      "severity": "medium",
+      "file": "source/scripts/recompile.sql",
+      "line": 21,
+      "col": 5,
+      "message": "Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)",
+      "rationale": "PL/pgSQL runs dynamic SQL with EXECUTE; the text is in a string or a variable, so Oracle constructs inside it are not reported, and the bind markers :1 / :name become $1.",
+      "fix_hint": "EXECUTE format('...') USING ...; :1 / :name become $1",
+      "unit": null
+    },
+    {
+      "rule_id": "MIG014",
+      "severity": "medium",
+      "file": "source/tables/oos_util_values.sql",
+      "line": 26,
+      "col": 5,
+      "message": "Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)",
+      "rationale": "PL/pgSQL runs dynamic SQL with EXECUTE; the text is in a string or a variable, so Oracle constructs inside it are not reported, and the bind markers :1 / :name become $1.",
+      "fix_hint": "EXECUTE format('...') USING ...; :1 / :name become $1",
       "unit": null
     }
   ]

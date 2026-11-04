@@ -2,8 +2,41 @@ SEVERITY  RULE    LOCATION                                                 MESSA
 --------  ------  -------------------------------------------------------  -------
 LOW       MIG010  source/future/oos_util_transform.pkb:75:37               Oracle FROM DUAL
 LOW       MIG010  source/future/oos_util_transform.pkb:121:77              Oracle FROM DUAL
+HIGH      MIG016  source/future/oos_util_transform.pkb:206:16              Oracle package DBMS_SQL
+MEDIUM    MIG016  source/future/oos_util_transform.pkb:214:5               Oracle package DBMS_LOB
+MEDIUM    MIG016  source/future/oos_util_transform.pkb:216:41              Oracle package DBMS_LOB
+HIGH      MIG016  source/future/oos_util_transform.pkb:218:17              Oracle package DBMS_SQL
+HIGH      MIG016  source/future/oos_util_transform.pkb:220:5               Oracle package DBMS_SQL
+MEDIUM    MIG016  source/future/oos_util_transform.pkb:231:9               Oracle package DBMS_LOB
+MEDIUM    MIG016  source/future/oos_util_transform.pkb:233:7               Oracle package DBMS_LOB
+HIGH      MIG016  source/future/oos_util_transform.pkb:241:22              Oracle package DBMS_SQL
+HIGH      MIG016  source/future/oos_util_transform.pkb:242:22              Oracle package DBMS_SQL
+HIGH      MIG016  source/future/oos_util_transform.pkb:243:22              Oracle package DBMS_SQL
+HIGH      MIG016  source/future/oos_util_transform.pkb:244:22              Oracle package DBMS_SQL
+HIGH      MIG016  source/future/oos_util_transform.pkb:245:22              Oracle package DBMS_SQL
+HIGH      MIG016  source/future/oos_util_transform.pkb:251:11              Oracle package DBMS_SQL
+HIGH      MIG016  source/future/oos_util_transform.pkb:257:13              Oracle package DBMS_SQL
+HIGH      MIG016  source/future/oos_util_transform.pkb:260:13              Oracle package DBMS_SQL
+HIGH      MIG016  source/future/oos_util_transform.pkb:263:13              Oracle package DBMS_SQL
+HIGH      MIG016  source/future/oos_util_transform.pkb:266:13              Oracle package DBMS_SQL
+MEDIUM    MIG016  source/future/oos_util_transform.pkb:273:9               Oracle package DBMS_LOB
+MEDIUM    MIG016  source/future/oos_util_transform.pkb:275:7               Oracle package DBMS_LOB
+MEDIUM    MIG014  source/future/reusable_table_create_template.sql:94:7    Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)
+MEDIUM    MIG014  source/future/reusable_table_create_template.sql:129:9   Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)
+MEDIUM    MIG014  source/future/reusable_table_create_template.sql:159:9   Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)
+MEDIUM    MIG014  source/future/reusable_table_create_template.sql:177:9   Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)
+MEDIUM    MIG012  source/future/reusable_table_create_template.sql:190:7   Oracle BULK COLLECT
+MEDIUM    MIG014  source/future/reusable_table_create_template.sql:200:9   Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)
 MEDIUM    MIG011  source/future/reusable_table_create_template.sql:235:96  Empty string literal '' (NULL in Oracle)
+MEDIUM    MIG014  source/future/reusable_table_create_template.sql:237:9   Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)
+MEDIUM    MIG014  source/future/reusable_table_create_template.sql:243:9   Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)
+MEDIUM    MIG014  source/future/reusable_table_create_template.sql:283:9   Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)
 LOW       MIG009  source/future/reusable_table_create_template.sql:315:9   Oracle DBMS_OUTPUT call
+MEDIUM    MIG014  source/future/reusable_table_create_template.sql:316:9   Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)
+MEDIUM    MIG012  source/future/reusable_table_create_template.sql:329:7   Oracle BULK COLLECT
+MEDIUM    MIG014  source/future/reusable_table_create_template.sql:338:9   Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)
+MEDIUM    MIG014  source/future/reusable_table_create_template.sql:376:7   Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)
+MEDIUM    MIG015  source/packages/oos_util.pkb:70:7                        Oracle RAISE_APPLICATION_ERROR call
 MEDIUM    MIG003  source/packages/oos_util.pkb:105:24                      Oracle SYSTIMESTAMP
 MEDIUM    MIG003  source/packages/oos_util.pkb:113:16                      Oracle SYSTIMESTAMP
 MEDIUM    MIG003  source/packages/oos_util_apex.pkb:104:11                 Oracle SYSDATE
@@ -26,13 +59,39 @@ HIGH      MIG011  source/packages/oos_util_crypto.pkb:943:26               Empty
 LOW       MIG001  source/packages/oos_util_crypto.pkb:945:14               Oracle NVL() call
 MEDIUM    MIG003  source/packages/oos_util_crypto.pkb:1229:64              Oracle SYSTIMESTAMP
 MEDIUM    MIG003  source/packages/oos_util_crypto.pkb:1237:64              Oracle SYSTIMESTAMP
+MEDIUM    MIG016  source/packages/oos_util_lob.pkb:28:27                   Oracle package DBMS_LOB
+MEDIUM    MIG016  source/packages/oos_util_lob.pkb:35:5                    Oracle package DBMS_LOB
+MEDIUM    MIG016  source/packages/oos_util_lob.pkb:39:5                    Oracle package DBMS_LOB
+MEDIUM    MIG016  source/packages/oos_util_lob.pkb:42:17                   Oracle package DBMS_LOB
+MEDIUM    MIG016  source/packages/oos_util_lob.pkb:45:20                   Oracle package DBMS_LOB
+MEDIUM    MIG016  source/packages/oos_util_lob.pkb:49:33                   Oracle package DBMS_LOB
+MEDIUM    MIG016  source/packages/oos_util_lob.pkb:77:36                   Oracle package DBMS_LOB
+MEDIUM    MIG016  source/packages/oos_util_lob.pkb:83:31                   Oracle package DBMS_LOB
+MEDIUM    MIG016  source/packages/oos_util_lob.pkb:91:5                    Oracle package DBMS_LOB
+MEDIUM    MIG016  source/packages/oos_util_lob.pkb:95:5                    Oracle package DBMS_LOB
+MEDIUM    MIG016  source/packages/oos_util_lob.pkb:98:17                   Oracle package DBMS_LOB
+MEDIUM    MIG016  source/packages/oos_util_lob.pkb:105:33                  Oracle package DBMS_LOB
 LOW       MIG001  source/packages/oos_util_lob.pkb:143:16                  Oracle NVL() call
+MEDIUM    MIG016  source/packages/oos_util_lob.pkb:201:22                  Oracle package DBMS_LOB
+MEDIUM    MIG016  source/packages/oos_util_lob.pkb:222:22                  Oracle package DBMS_LOB
+MEDIUM    MIG016  source/packages/oos_util_lob.pks:43:36                   Oracle package DBMS_LOB
 LOW       MIG001  source/packages/oos_util_string.pkb:205:27               Oracle NVL() call
 LOW       MIG001  source/packages/oos_util_string.pkb:208:14               Oracle NVL() call
+MEDIUM    MIG016  source/packages/oos_util_string.pkb:386:18               Oracle package DBMS_LOB
+MEDIUM    MIG016  source/packages/oos_util_string.pkb:392:43               Oracle package DBMS_LOB
+MEDIUM    MIG017  source/packages/oos_util_string.pkb:455:29               Oracle PIPELINED function
+MEDIUM    MIG017  source/packages/oos_util_string.pkb:484:29               Oracle PIPELINED function
+MEDIUM    MIG017  source/packages/oos_util_string.pks:81:29                Oracle PIPELINED function
+MEDIUM    MIG017  source/packages/oos_util_string.pks:86:29                Oracle PIPELINED function
 MEDIUM    MIG011  source/packages/oos_util_totp.pkb:116:75                 Empty string literal '' (NULL in Oracle)
 LOW       MIG010  source/packages/oos_util_totp.pkb:182:12                 Oracle FROM DUAL
+MEDIUM    MIG016  source/packages/oos_util_web.pkb:110:37                  Oracle package DBMS_LOB
 LOW       MIG009  source/scripts/prereqs.sql:23:5                          Oracle DBMS_OUTPUT call
 LOW       MIG009  source/scripts/prereqs.sql:32:11                         Oracle DBMS_OUTPUT call
 LOW       MIG009  source/scripts/prereqs.sql:40:7                          Oracle DBMS_OUTPUT call
 LOW       MIG009  source/scripts/prereqs.sql:43:5                          Oracle DBMS_OUTPUT call
+MEDIUM    MIG015  source/scripts/prereqs.sql:46:7                          Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  source/scripts/prereqs.sql:51:7                          Oracle RAISE_APPLICATION_ERROR call
 LOW       MIG002  source/scripts/recompile.sql:14:10                       Oracle DECODE() call
+MEDIUM    MIG014  source/scripts/recompile.sql:21:5                        Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)
+MEDIUM    MIG014  source/tables/oos_util_values.sql:26:5                   Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)

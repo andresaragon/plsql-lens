@@ -7,7 +7,7 @@ Reports produced with `plsql-lens migrate` on public PL/SQL code that the tool w
 |---|---|---|---|
 | [oos-utils](https://github.com/OraOpenSource/oos-utils) | `b6217292bc744211eaee9e1d11ca7a0b495bc44d` | MIT | [English](oos-utils/migration-audit.md) · [Español](oos-utils/migration-audit.es.md) |
 
-Uses the migration rules MIG001–MIG011 of `main` only; the report must be regenerated when newer rules are merged.
+Uses the migration rules MIG001–MIG017 of `main` (revision 2, 2026-11-04); the report must be regenerated when newer rules are merged.
 
 ## Contents of `oos-utils/`
 
