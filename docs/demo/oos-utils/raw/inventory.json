@@ -1,0 +1,2585 @@
+{
+  "files": [
+    {
+      "path": "source/future/oos_util_transform.pkb",
+      "lines": 546,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/future/oos_util_transform.pks",
+      "lines": 52,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/future/reusable_table_create_template.sql",
+      "lines": 381,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util.pkb",
+      "lines": 121,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util.pks",
+      "lines": 51,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_apex.pkb",
+      "lines": 467,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_apex.pks",
+      "lines": 37,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_bit.pkb",
+      "lines": 213,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_bit.pks",
+      "lines": 41,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_crypto.pkb",
+      "lines": 2417,
+      "ok": false,
+      "issues": [
+        "721: unterminated body of sha256",
+        "2416: unexpected end of file in package oos_util_crypto"
+      ]
+    },
+    {
+      "path": "source/packages/oos_util_crypto.pks",
+      "lines": 101,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_date.pkb",
+      "lines": 108,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_date.pks",
+      "lines": 18,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_lob.pkb",
+      "lines": 418,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_lob.pks",
+      "lines": 79,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_string.pkb",
+      "lines": 578,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_string.pks",
+      "lines": 98,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_totp.pkb",
+      "lines": 276,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_totp.pks",
+      "lines": 33,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_validation.pkb",
+      "lines": 82,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_validation.pks",
+      "lines": 17,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_web.pkb",
+      "lines": 183,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/packages/oos_util_web.pks",
+      "lines": 32,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/scripts/prereqs.sql",
+      "lines": 57,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/scripts/recompile.sql",
+      "lines": 38,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "source/tables/oos_util_values.sql",
+      "lines": 31,
+      "ok": true,
+      "issues": []
+    }
+  ],
+  "units": [
+    {
+      "key": "package:oos_util_transform",
+      "kind": "package",
+      "name": "oos_util_transform",
+      "container": null,
+      "files": [
+        "source/future/oos_util_transform.pkb",
+        "source/future/oos_util_transform.pks"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_transform.refcur2xml",
+      "kind": "function",
+      "name": "refcur2xml",
+      "container": "oos_util_transform",
+      "files": [
+        "source/future/oos_util_transform.pkb",
+        "source/future/oos_util_transform.pks"
+      ],
+      "line": 3,
+      "params": [
+        {
+          "name": "p_rc",
+          "mode": "in",
+          "type": "sys_refcursor",
+          "default": false
+        },
+        {
+          "name": "p_null_handling",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "xmltype",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_transform.xml_has_rows",
+      "kind": "function",
+      "name": "xml_has_rows",
+      "container": "oos_util_transform",
+      "files": [
+        "source/future/oos_util_transform.pkb",
+        "source/future/oos_util_transform.pks"
+      ],
+      "line": 8,
+      "params": [
+        {
+          "name": "p_xml",
+          "mode": "in",
+          "type": "xmltype",
+          "default": false
+        }
+      ],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_transform.xslt",
+      "kind": "function",
+      "name": "xslt",
+      "container": "oos_util_transform",
+      "files": [
+        "source/future/oos_util_transform.pkb",
+        "source/future/oos_util_transform.pks"
+      ],
+      "line": 12,
+      "params": [
+        {
+          "name": "p_in",
+          "mode": "in",
+          "type": "xmltype",
+          "default": false
+        },
+        {
+          "name": "p_trans",
+          "mode": "in",
+          "type": "xmltype",
+          "default": false
+        }
+      ],
+      "return_type": "xmltype",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_transform.xquery",
+      "kind": "function",
+      "name": "xquery",
+      "container": "oos_util_transform",
+      "files": [
+        "source/future/oos_util_transform.pkb",
+        "source/future/oos_util_transform.pks"
+      ],
+      "line": 17,
+      "params": [
+        {
+          "name": "p_in",
+          "mode": "in",
+          "type": "xmltype",
+          "default": false
+        },
+        {
+          "name": "p_trans",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "xmltype",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_transform.refcur2csv",
+      "kind": "function",
+      "name": "refcur2csv",
+      "container": "oos_util_transform",
+      "files": [
+        "source/future/oos_util_transform.pkb",
+        "source/future/oos_util_transform.pks"
+      ],
+      "line": 22,
+      "params": [
+        {
+          "name": "p_rc",
+          "mode": "in",
+          "type": "sys_refcursor",
+          "default": false
+        },
+        {
+          "name": "p_column_names",
+          "mode": "in",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "name": "p_return_empty",
+          "mode": "in",
+          "type": "boolean",
+          "default": true
+        }
+      ],
+      "return_type": "clob",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_transform.refcur2csv2",
+      "kind": "function",
+      "name": "refcur2csv2",
+      "container": "oos_util_transform",
+      "files": [
+        "source/future/oos_util_transform.pkb",
+        "source/future/oos_util_transform.pks"
+      ],
+      "line": 28,
+      "params": [
+        {
+          "name": "p_rc",
+          "mode": "in out",
+          "type": "sys_refcursor",
+          "default": false
+        },
+        {
+          "name": "p_column_names",
+          "mode": "in",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "name": "p_separator",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_endline",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_date_fmt",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        }
+      ],
+      "return_type": "clob",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_transform.refcur2html",
+      "kind": "function",
+      "name": "refcur2html",
+      "container": "oos_util_transform",
+      "files": [
+        "source/future/oos_util_transform.pkb",
+        "source/future/oos_util_transform.pks"
+      ],
+      "line": 36,
+      "params": [
+        {
+          "name": "p_rc",
+          "mode": "in",
+          "type": "sys_refcursor",
+          "default": false
+        },
+        {
+          "name": "p_return_empty",
+          "mode": "in",
+          "type": "boolean",
+          "default": true
+        }
+      ],
+      "return_type": "clob",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_transform.refcur2json",
+      "kind": "function",
+      "name": "refcur2json",
+      "container": "oos_util_transform",
+      "files": [
+        "source/future/oos_util_transform.pkb",
+        "source/future/oos_util_transform.pks"
+      ],
+      "line": 41,
+      "params": [
+        {
+          "name": "p_rc",
+          "mode": "in",
+          "type": "sys_refcursor",
+          "default": false
+        },
+        {
+          "name": "p_return_empty",
+          "mode": "in",
+          "type": "boolean",
+          "default": true
+        }
+      ],
+      "return_type": "clob",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_transform.entity_decode",
+      "kind": "function",
+      "name": "entity_decode",
+      "container": "oos_util_transform",
+      "files": [
+        "source/future/oos_util_transform.pkb",
+        "source/future/oos_util_transform.pks"
+      ],
+      "line": 46,
+      "params": [
+        {
+          "name": "p_in",
+          "mode": "in",
+          "type": "clob",
+          "default": false
+        }
+      ],
+      "return_type": "clob",
+      "has_body": true
+    },
+    {
+      "key": "package:oos_util",
+      "kind": "package",
+      "name": "oos_util",
+      "container": null,
+      "files": [
+        "source/packages/oos_util.pkb",
+        "source/packages/oos_util.pks"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:oos_util.log",
+      "kind": "procedure",
+      "name": "log",
+      "container": "oos_util",
+      "files": [
+        "source/packages/oos_util.pkb"
+      ],
+      "line": 21,
+      "params": [
+        {
+          "name": "p_text",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_scope",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:oos_util.assert",
+      "kind": "procedure",
+      "name": "assert",
+      "container": "oos_util",
+      "files": [
+        "source/packages/oos_util.pkb",
+        "source/packages/oos_util.pks"
+      ],
+      "line": 42,
+      "params": [
+        {
+          "name": "p_condition",
+          "mode": "in",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "p_msg",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:oos_util.sleep",
+      "kind": "procedure",
+      "name": "sleep",
+      "container": "oos_util",
+      "files": [
+        "source/packages/oos_util.pkb",
+        "source/packages/oos_util.pks"
+      ],
+      "line": 46,
+      "params": [
+        {
+          "name": "p_seconds",
+          "mode": "in",
+          "type": "simple_integer",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "package:oos_util_apex",
+      "kind": "package",
+      "name": "oos_util_apex",
+      "container": null,
+      "files": [
+        "source/packages/oos_util_apex.pkb",
+        "source/packages/oos_util_apex.pks"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_apex.is_developer",
+      "kind": "function",
+      "name": "is_developer",
+      "container": "oos_util_apex",
+      "files": [
+        "source/packages/oos_util_apex.pkb",
+        "source/packages/oos_util_apex.pks"
+      ],
+      "line": 4,
+      "params": [],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_apex.is_developer_yn",
+      "kind": "function",
+      "name": "is_developer_yn",
+      "container": "oos_util_apex",
+      "files": [
+        "source/packages/oos_util_apex.pkb",
+        "source/packages/oos_util_apex.pks"
+      ],
+      "line": 7,
+      "params": [],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_apex.is_session_valid",
+      "kind": "function",
+      "name": "is_session_valid",
+      "container": "oos_util_apex",
+      "files": [
+        "source/packages/oos_util_apex.pkb",
+        "source/packages/oos_util_apex.pks"
+      ],
+      "line": 10,
+      "params": [
+        {
+          "name": "p_session_id",
+          "mode": "in",
+          "type": "apex_workspace_sessions.apex_session_id%type",
+          "default": false
+        }
+      ],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_apex.is_session_valid_yn",
+      "kind": "function",
+      "name": "is_session_valid_yn",
+      "container": "oos_util_apex",
+      "files": [
+        "source/packages/oos_util_apex.pkb",
+        "source/packages/oos_util_apex.pks"
+      ],
+      "line": 14,
+      "params": [
+        {
+          "name": "p_session_id",
+          "mode": "in",
+          "type": "apex_workspace_sessions.apex_session_id%type",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "procedure:oos_util_apex.create_session",
+      "kind": "procedure",
+      "name": "create_session",
+      "container": "oos_util_apex",
+      "files": [
+        "source/packages/oos_util_apex.pkb",
+        "source/packages/oos_util_apex.pks"
+      ],
+      "line": 18,
+      "params": [
+        {
+          "name": "p_app_id",
+          "mode": "in",
+          "type": "apex_applications.application_id%type",
+          "default": false
+        },
+        {
+          "name": "p_user_name",
+          "mode": "in",
+          "type": "apex_workspace_sessions.user_name%type",
+          "default": false
+        },
+        {
+          "name": "p_page_id",
+          "mode": "in",
+          "type": "apex_application_pages.page_id%type",
+          "default": true
+        },
+        {
+          "name": "p_session_id",
+          "mode": "in",
+          "type": "apex_workspace_sessions.apex_session_id%type",
+          "default": true
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:oos_util_apex.join_session",
+      "kind": "procedure",
+      "name": "join_session",
+      "container": "oos_util_apex",
+      "files": [
+        "source/packages/oos_util_apex.pkb",
+        "source/packages/oos_util_apex.pks"
+      ],
+      "line": 24,
+      "params": [
+        {
+          "name": "p_session_id",
+          "mode": "in",
+          "type": "apex_workspace_sessions.apex_session_id%type",
+          "default": false
+        },
+        {
+          "name": "p_app_id",
+          "mode": "in",
+          "type": "apex_applications.application_id%type",
+          "default": true
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:oos_util_apex.trim_page_items",
+      "kind": "procedure",
+      "name": "trim_page_items",
+      "container": "oos_util_apex",
+      "files": [
+        "source/packages/oos_util_apex.pkb",
+        "source/packages/oos_util_apex.pks"
+      ],
+      "line": 28,
+      "params": [
+        {
+          "name": "p_page_id",
+          "mode": "in",
+          "type": "apex_application_pages.page_id%type",
+          "default": true
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_apex.is_page_item_rendered",
+      "kind": "function",
+      "name": "is_page_item_rendered",
+      "container": "oos_util_apex",
+      "files": [
+        "source/packages/oos_util_apex.pkb",
+        "source/packages/oos_util_apex.pks"
+      ],
+      "line": 31,
+      "params": [
+        {
+          "name": "p_item_name",
+          "mode": "in",
+          "type": "apex_application_page_items.item_name%type",
+          "default": false
+        }
+      ],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "package:oos_util_bit",
+      "kind": "package",
+      "name": "oos_util_bit",
+      "container": null,
+      "files": [
+        "source/packages/oos_util_bit.pkb",
+        "source/packages/oos_util_bit.pks"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_bit.bitand",
+      "kind": "function",
+      "name": "bitand",
+      "container": "oos_util_bit",
+      "files": [
+        "source/packages/oos_util_bit.pkb",
+        "source/packages/oos_util_bit.pks"
+      ],
+      "line": 4,
+      "params": [
+        {
+          "name": "p_x",
+          "mode": "in",
+          "type": "binary_integer",
+          "default": false
+        },
+        {
+          "name": "p_y",
+          "mode": "in",
+          "type": "binary_integer",
+          "default": false
+        }
+      ],
+      "return_type": "binary_integer",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_bit.bitor",
+      "kind": "function",
+      "name": "bitor",
+      "container": "oos_util_bit",
+      "files": [
+        "source/packages/oos_util_bit.pkb",
+        "source/packages/oos_util_bit.pks"
+      ],
+      "line": 10,
+      "params": [
+        {
+          "name": "p_x",
+          "mode": "in",
+          "type": "binary_integer",
+          "default": false
+        },
+        {
+          "name": "p_y",
+          "mode": "in",
+          "type": "binary_integer",
+          "default": false
+        }
+      ],
+      "return_type": "binary_integer",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_bit.bitxor",
+      "kind": "function",
+      "name": "bitxor",
+      "container": "oos_util_bit",
+      "files": [
+        "source/packages/oos_util_bit.pkb",
+        "source/packages/oos_util_bit.pks"
+      ],
+      "line": 16,
+      "params": [
+        {
+          "name": "p_x",
+          "mode": "in",
+          "type": "binary_integer",
+          "default": false
+        },
+        {
+          "name": "p_y",
+          "mode": "in",
+          "type": "binary_integer",
+          "default": false
+        }
+      ],
+      "return_type": "binary_integer",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_bit.bitnot",
+      "kind": "function",
+      "name": "bitnot",
+      "container": "oos_util_bit",
+      "files": [
+        "source/packages/oos_util_bit.pkb",
+        "source/packages/oos_util_bit.pks"
+      ],
+      "line": 22,
+      "params": [
+        {
+          "name": "p_x",
+          "mode": "in",
+          "type": "binary_integer",
+          "default": false
+        }
+      ],
+      "return_type": "binary_integer",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_bit.bitshift_left",
+      "kind": "function",
+      "name": "bitshift_left",
+      "container": "oos_util_bit",
+      "files": [
+        "source/packages/oos_util_bit.pkb",
+        "source/packages/oos_util_bit.pks"
+      ],
+      "line": 27,
+      "params": [
+        {
+          "name": "p_x",
+          "mode": "in",
+          "type": "binary_integer",
+          "default": false
+        },
+        {
+          "name": "p_y",
+          "mode": "in",
+          "type": "binary_integer",
+          "default": false
+        }
+      ],
+      "return_type": "binary_integer",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_bit.bitshift_right",
+      "kind": "function",
+      "name": "bitshift_right",
+      "container": "oos_util_bit",
+      "files": [
+        "source/packages/oos_util_bit.pkb",
+        "source/packages/oos_util_bit.pks"
+      ],
+      "line": 33,
+      "params": [
+        {
+          "name": "p_x",
+          "mode": "in",
+          "type": "binary_integer",
+          "default": false
+        },
+        {
+          "name": "p_y",
+          "mode": "in",
+          "type": "binary_integer",
+          "default": false
+        }
+      ],
+      "return_type": "binary_integer",
+      "has_body": true
+    },
+    {
+      "key": "package:oos_util_crypto",
+      "kind": "package",
+      "name": "oos_util_crypto",
+      "container": null,
+      "files": [
+        "source/packages/oos_util_crypto.pkb",
+        "source/packages/oos_util_crypto.pks"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.bitor",
+      "kind": "function",
+      "name": "bitor",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 20,
+      "params": [
+        {
+          "name": "x",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "y",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        }
+      ],
+      "return_type": "number",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.bitxor",
+      "kind": "function",
+      "name": "bitxor",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 27,
+      "params": [
+        {
+          "name": "x",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "y",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        }
+      ],
+      "return_type": "number",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.shl",
+      "kind": "function",
+      "name": "shl",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 34,
+      "params": [
+        {
+          "name": "x",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "b",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        }
+      ],
+      "return_type": "number",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.shr",
+      "kind": "function",
+      "name": "shr",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 41,
+      "params": [
+        {
+          "name": "x",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "b",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        }
+      ],
+      "return_type": "number",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.bitor32",
+      "kind": "function",
+      "name": "bitor32",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 48,
+      "params": [
+        {
+          "name": "x",
+          "mode": "in",
+          "type": "integer",
+          "default": false
+        },
+        {
+          "name": "y",
+          "mode": "in",
+          "type": "integer",
+          "default": false
+        }
+      ],
+      "return_type": "integer",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.bitxor32",
+      "kind": "function",
+      "name": "bitxor32",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 55,
+      "params": [
+        {
+          "name": "x",
+          "mode": "in",
+          "type": "integer",
+          "default": false
+        },
+        {
+          "name": "y",
+          "mode": "in",
+          "type": "integer",
+          "default": false
+        }
+      ],
+      "return_type": "integer",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.ror32",
+      "kind": "function",
+      "name": "ror32",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 62,
+      "params": [
+        {
+          "name": "x",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "b",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        }
+      ],
+      "return_type": "number",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.rol32",
+      "kind": "function",
+      "name": "rol32",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 71,
+      "params": [
+        {
+          "name": "x",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "b",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        }
+      ],
+      "return_type": "number",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.ror64",
+      "kind": "function",
+      "name": "ror64",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 80,
+      "params": [
+        {
+          "name": "x",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "b",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        }
+      ],
+      "return_type": "number",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.rol64",
+      "kind": "function",
+      "name": "rol64",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 89,
+      "params": [
+        {
+          "name": "x",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "b",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        }
+      ],
+      "return_type": "number",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.ripemd160",
+      "kind": "function",
+      "name": "ripemd160",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 98,
+      "params": [
+        {
+          "name": "p_msg",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        }
+      ],
+      "return_type": "raw",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.md4",
+      "kind": "function",
+      "name": "md4",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 308,
+      "params": [
+        {
+          "name": "p_msg",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        }
+      ],
+      "return_type": "raw",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.md5",
+      "kind": "function",
+      "name": "md5",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 438,
+      "params": [
+        {
+          "name": "p_msg",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        }
+      ],
+      "return_type": "raw",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.sha1",
+      "kind": "function",
+      "name": "sha1",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 572,
+      "params": [
+        {
+          "name": "p_val",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        }
+      ],
+      "return_type": "raw",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.sha256",
+      "kind": "function",
+      "name": "sha256",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 687,
+      "params": [
+        {
+          "name": "p_msg",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        },
+        {
+          "name": "p_256",
+          "mode": "in",
+          "type": "boolean",
+          "default": false
+        }
+      ],
+      "return_type": "raw",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.hash",
+      "kind": "function",
+      "name": "hash",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pks"
+      ],
+      "line": 65,
+      "params": [
+        {
+          "name": "p_src",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        },
+        {
+          "name": "p_typ",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        }
+      ],
+      "return_type": "raw",
+      "has_body": false
+    },
+    {
+      "key": "function:oos_util_crypto.hash_str",
+      "kind": "function",
+      "name": "hash_str",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pks"
+      ],
+      "line": 70,
+      "params": [
+        {
+          "name": "p_src",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_typ",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": false
+    },
+    {
+      "key": "function:oos_util_crypto.mac",
+      "kind": "function",
+      "name": "mac",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pks"
+      ],
+      "line": 75,
+      "params": [
+        {
+          "name": "p_src",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        },
+        {
+          "name": "p_typ",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        },
+        {
+          "name": "p_key",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        }
+      ],
+      "return_type": "raw",
+      "has_body": false
+    },
+    {
+      "key": "function:oos_util_crypto.mac_str",
+      "kind": "function",
+      "name": "mac_str",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pks"
+      ],
+      "line": 81,
+      "params": [
+        {
+          "name": "p_src",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_typ",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        },
+        {
+          "name": "p_key",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": false
+    },
+    {
+      "key": "package:oos_util_date",
+      "kind": "package",
+      "name": "oos_util_date",
+      "container": null,
+      "files": [
+        "source/packages/oos_util_date.pkb",
+        "source/packages/oos_util_date.pks"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_date.date2epoch",
+      "kind": "function",
+      "name": "date2epoch",
+      "container": "oos_util_date",
+      "files": [
+        "source/packages/oos_util_date.pkb",
+        "source/packages/oos_util_date.pks"
+      ],
+      "line": 4,
+      "params": [
+        {
+          "name": "p_date",
+          "mode": "in",
+          "type": "date",
+          "default": false
+        }
+      ],
+      "return_type": "number",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_date.epoch2date",
+      "kind": "function",
+      "name": "epoch2date",
+      "container": "oos_util_date",
+      "files": [
+        "source/packages/oos_util_date.pkb",
+        "source/packages/oos_util_date.pks"
+      ],
+      "line": 8,
+      "params": [
+        {
+          "name": "p_epoch",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        }
+      ],
+      "return_type": "date",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_date.timestamp2epoch",
+      "kind": "function",
+      "name": "timestamp2epoch",
+      "container": "oos_util_date",
+      "files": [
+        "source/packages/oos_util_date.pkb",
+        "source/packages/oos_util_date.pks"
+      ],
+      "line": 12,
+      "params": [
+        {
+          "name": "p_timestamp",
+          "mode": "in",
+          "type": "timestamp",
+          "default": false
+        }
+      ],
+      "return_type": "pls_integer",
+      "has_body": true
+    },
+    {
+      "key": "package:oos_util_lob",
+      "kind": "package",
+      "name": "oos_util_lob",
+      "container": null,
+      "files": [
+        "source/packages/oos_util_lob.pkb",
+        "source/packages/oos_util_lob.pks"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_lob.clob2blob",
+      "kind": "function",
+      "name": "clob2blob",
+      "container": "oos_util_lob",
+      "files": [
+        "source/packages/oos_util_lob.pkb",
+        "source/packages/oos_util_lob.pks"
+      ],
+      "line": 37,
+      "params": [
+        {
+          "name": "p_clob",
+          "mode": "in",
+          "type": "clob",
+          "default": false
+        }
+      ],
+      "return_type": "blob",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_lob.blob2clob",
+      "kind": "function",
+      "name": "blob2clob",
+      "container": "oos_util_lob",
+      "files": [
+        "source/packages/oos_util_lob.pkb",
+        "source/packages/oos_util_lob.pks"
+      ],
+      "line": 41,
+      "params": [
+        {
+          "name": "p_blob",
+          "mode": "in",
+          "type": "blob",
+          "default": false
+        },
+        {
+          "name": "p_blob_csid",
+          "mode": "in",
+          "type": "integer",
+          "default": true
+        }
+      ],
+      "return_type": "clob",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_lob.get_file_size",
+      "kind": "function",
+      "name": "get_file_size",
+      "container": "oos_util_lob",
+      "files": [
+        "source/packages/oos_util_lob.pkb",
+        "source/packages/oos_util_lob.pks"
+      ],
+      "line": 46,
+      "params": [
+        {
+          "name": "p_file_size",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "p_units",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_lob.get_lob_size",
+      "kind": "function",
+      "name": "get_lob_size",
+      "container": "oos_util_lob",
+      "files": [
+        "source/packages/oos_util_lob.pkb",
+        "source/packages/oos_util_lob.pks"
+      ],
+      "line": 51,
+      "params": [
+        {
+          "name": "p_lob",
+          "mode": "in",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "p_units",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_lob.replace_clob",
+      "kind": "function",
+      "name": "replace_clob",
+      "container": "oos_util_lob",
+      "files": [
+        "source/packages/oos_util_lob.pkb",
+        "source/packages/oos_util_lob.pks"
+      ],
+      "line": 61,
+      "params": [
+        {
+          "name": "p_str",
+          "mode": "in",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "p_search",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_replace",
+          "mode": "in",
+          "type": "clob",
+          "default": false
+        }
+      ],
+      "return_type": "clob",
+      "has_body": true
+    },
+    {
+      "key": "package:oos_util_string",
+      "kind": "package",
+      "name": "oos_util_string",
+      "container": null,
+      "files": [
+        "source/packages/oos_util_string.pkb",
+        "source/packages/oos_util_string.pks"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_string.to_char",
+      "kind": "function",
+      "name": "to_char",
+      "container": "oos_util_string",
+      "files": [
+        "source/packages/oos_util_string.pkb",
+        "source/packages/oos_util_string.pks"
+      ],
+      "line": 18,
+      "params": [
+        {
+          "name": "p_val",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_string.truncate",
+      "kind": "function",
+      "name": "truncate",
+      "container": "oos_util_string",
+      "files": [
+        "source/packages/oos_util_string.pkb",
+        "source/packages/oos_util_string.pks"
+      ],
+      "line": 47,
+      "params": [
+        {
+          "name": "p_str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_length",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        },
+        {
+          "name": "p_by_word",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_ellipsis",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_string.sprintf",
+      "kind": "function",
+      "name": "sprintf",
+      "container": "oos_util_string",
+      "files": [
+        "source/packages/oos_util_string.pkb",
+        "source/packages/oos_util_string.pks"
+      ],
+      "line": 54,
+      "params": [
+        {
+          "name": "p_str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_s1",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_s2",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_s3",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_s4",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_s5",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_s6",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_s7",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_s8",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_s9",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_s10",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_string.string_to_table",
+      "kind": "function",
+      "name": "string_to_table",
+      "container": "oos_util_string",
+      "files": [
+        "source/packages/oos_util_string.pkb",
+        "source/packages/oos_util_string.pks"
+      ],
+      "line": 68,
+      "params": [
+        {
+          "name": "p_str",
+          "mode": "in",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "p_delim",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        }
+      ],
+      "return_type": "oos_util.tab_vc2_arr",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_string.listunagg",
+      "kind": "function",
+      "name": "listunagg",
+      "container": "oos_util_string",
+      "files": [
+        "source/packages/oos_util_string.pkb",
+        "source/packages/oos_util_string.pks"
+      ],
+      "line": 78,
+      "params": [
+        {
+          "name": "p_str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_delim",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        }
+      ],
+      "return_type": "oos_util.tab_vc2",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_string.reverse",
+      "kind": "function",
+      "name": "reverse",
+      "container": "oos_util_string",
+      "files": [
+        "source/packages/oos_util_string.pkb",
+        "source/packages/oos_util_string.pks"
+      ],
+      "line": 88,
+      "params": [
+        {
+          "name": "p_str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_string.ordinal",
+      "kind": "function",
+      "name": "ordinal",
+      "container": "oos_util_string",
+      "files": [
+        "source/packages/oos_util_string.pkb",
+        "source/packages/oos_util_string.pks"
+      ],
+      "line": 92,
+      "params": [
+        {
+          "name": "p_num",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "package:oos_util_totp",
+      "kind": "package",
+      "name": "oos_util_totp",
+      "container": null,
+      "files": [
+        "source/packages/oos_util_totp.pkb",
+        "source/packages/oos_util_totp.pks"
+      ],
+      "line": 6,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_totp.to_binary",
+      "kind": "function",
+      "name": "to_binary",
+      "container": "oos_util_totp",
+      "files": [
+        "source/packages/oos_util_totp.pkb"
+      ],
+      "line": 22,
+      "params": [
+        {
+          "name": "p_num",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_totp.generate_secret",
+      "kind": "function",
+      "name": "generate_secret",
+      "container": "oos_util_totp",
+      "files": [
+        "source/packages/oos_util_totp.pkb",
+        "source/packages/oos_util_totp.pks"
+      ],
+      "line": 10,
+      "params": [
+        {
+          "name": "p_length",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_totp.format_key_uri",
+      "kind": "function",
+      "name": "format_key_uri",
+      "container": "oos_util_totp",
+      "files": [
+        "source/packages/oos_util_totp.pkb",
+        "source/packages/oos_util_totp.pks"
+      ],
+      "line": 12,
+      "params": [
+        {
+          "name": "p_type",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        },
+        {
+          "name": "p_label_accountname",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_label_issuer",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_secret",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_issuer",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_algorithm",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_digits",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        },
+        {
+          "name": "p_counter",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        },
+        {
+          "name": "p_period",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_totp.generate_otp",
+      "kind": "function",
+      "name": "generate_otp",
+      "container": "oos_util_totp",
+      "files": [
+        "source/packages/oos_util_totp.pkb",
+        "source/packages/oos_util_totp.pks"
+      ],
+      "line": 24,
+      "params": [
+        {
+          "name": "p_secret",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_offset",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_totp.validate_otp",
+      "kind": "function",
+      "name": "validate_otp",
+      "container": "oos_util_totp",
+      "files": [
+        "source/packages/oos_util_totp.pkb",
+        "source/packages/oos_util_totp.pks"
+      ],
+      "line": 26,
+      "params": [
+        {
+          "name": "p_secret",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_otp",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "p_skew",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "number",
+      "has_body": true
+    },
+    {
+      "key": "package:oos_util_validation",
+      "kind": "package",
+      "name": "oos_util_validation",
+      "container": null,
+      "files": [
+        "source/packages/oos_util_validation.pkb",
+        "source/packages/oos_util_validation.pks"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_validation.is_number",
+      "kind": "function",
+      "name": "is_number",
+      "container": "oos_util_validation",
+      "files": [
+        "source/packages/oos_util_validation.pkb",
+        "source/packages/oos_util_validation.pks"
+      ],
+      "line": 4,
+      "params": [
+        {
+          "name": "p_str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_validation.is_date",
+      "kind": "function",
+      "name": "is_date",
+      "container": "oos_util_validation",
+      "files": [
+        "source/packages/oos_util_validation.pkb",
+        "source/packages/oos_util_validation.pks"
+      ],
+      "line": 8,
+      "params": [
+        {
+          "name": "p_str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_date_format",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "package:oos_util_web",
+      "kind": "package",
+      "name": "oos_util_web",
+      "container": null,
+      "files": [
+        "source/packages/oos_util_web.pkb",
+        "source/packages/oos_util_web.pks"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_web.get_mime_type",
+      "kind": "function",
+      "name": "get_mime_type",
+      "container": "oos_util_web",
+      "files": [
+        "source/packages/oos_util_web.pkb",
+        "source/packages/oos_util_web.pks"
+      ],
+      "line": 11,
+      "params": [
+        {
+          "name": "p_filename",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "oos_util_values.value%type",
+      "has_body": true
+    },
+    {
+      "key": "procedure:oos_util_web.download_file",
+      "kind": "procedure",
+      "name": "download_file",
+      "container": "oos_util_web",
+      "files": [
+        "source/packages/oos_util_web.pkb",
+        "source/packages/oos_util_web.pks"
+      ],
+      "line": 15,
+      "params": [
+        {
+          "name": "p_filename",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_mime_type",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_content_disposition",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_cache_control",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        },
+        {
+          "name": "p_blob",
+          "mode": "in",
+          "type": "blob",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    }
+  ],
+  "edges": [
+    {
+      "caller": "function:oos_util_apex.is_developer_yn",
+      "callee": "function:oos_util_apex.is_developer",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_apex.is_page_item_rendered",
+      "callee": "procedure:oos_util.assert",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_apex.is_session_valid",
+      "callee": "procedure:oos_util.assert",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_apex.is_session_valid_yn",
+      "callee": "function:oos_util_apex.is_session_valid",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_bit.bitor",
+      "callee": "function:oos_util_bit.bitand",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_bit.bitxor",
+      "callee": "function:oos_util_bit.bitand",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_bit.bitxor",
+      "callee": "function:oos_util_bit.bitor",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.md4",
+      "callee": "function:oos_util_crypto.bitor",
+      "count": 3
+    },
+    {
+      "caller": "function:oos_util_crypto.md4",
+      "callee": "function:oos_util_crypto.bitxor",
+      "count": 2
+    },
+    {
+      "caller": "function:oos_util_crypto.md4",
+      "callee": "function:oos_util_crypto.rol32",
+      "count": 3
+    },
+    {
+      "caller": "function:oos_util_crypto.md5",
+      "callee": "function:oos_util_crypto.bitor",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.md5",
+      "callee": "function:oos_util_crypto.bitxor",
+      "count": 7
+    },
+    {
+      "caller": "function:oos_util_crypto.md5",
+      "callee": "function:oos_util_crypto.rol32",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.ripemd160",
+      "callee": "function:oos_util_crypto.bitor",
+      "count": 4
+    },
+    {
+      "caller": "function:oos_util_crypto.ripemd160",
+      "callee": "function:oos_util_crypto.bitxor",
+      "count": 4
+    },
+    {
+      "caller": "function:oos_util_crypto.ripemd160",
+      "callee": "function:oos_util_crypto.rol32",
+      "count": 10
+    },
+    {
+      "caller": "function:oos_util_crypto.rol32",
+      "callee": "function:oos_util_crypto.bitor",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.rol32",
+      "callee": "function:oos_util_crypto.shl",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.rol32",
+      "callee": "function:oos_util_crypto.shr",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.rol64",
+      "callee": "function:oos_util_crypto.bitor",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.rol64",
+      "callee": "function:oos_util_crypto.shl",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.rol64",
+      "callee": "function:oos_util_crypto.shr",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.ror32",
+      "callee": "function:oos_util_crypto.bitor",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.ror32",
+      "callee": "function:oos_util_crypto.shl",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.ror32",
+      "callee": "function:oos_util_crypto.shr",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.ror64",
+      "callee": "function:oos_util_crypto.bitor",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.ror64",
+      "callee": "function:oos_util_crypto.shl",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.ror64",
+      "callee": "function:oos_util_crypto.shr",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.sha1",
+      "callee": "function:oos_util_crypto.bitor",
+      "count": 3
+    },
+    {
+      "caller": "function:oos_util_crypto.sha1",
+      "callee": "function:oos_util_crypto.bitxor",
+      "count": 7
+    },
+    {
+      "caller": "function:oos_util_crypto.sha1",
+      "callee": "function:oos_util_crypto.rol32",
+      "count": 9
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.bitor",
+      "count": 18
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.bitor32",
+      "count": 24
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.bitxor",
+      "count": 89
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.bitxor32",
+      "count": 36
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.hash",
+      "count": 5
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.hash_str",
+      "count": 2
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.mac",
+      "count": 2
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.mac_str",
+      "count": 2
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.md4",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.md5",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.ripemd160",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.rol32",
+      "count": 6
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.ror32",
+      "count": 10
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.ror64",
+      "count": 10
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.sha1",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.sha256",
+      "count": 2
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.shl",
+      "count": 34
+    },
+    {
+      "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.shr",
+      "count": 79
+    },
+    {
+      "caller": "function:oos_util_lob.blob2clob",
+      "callee": "procedure:oos_util.assert",
+      "count": 2
+    },
+    {
+      "caller": "function:oos_util_lob.clob2blob",
+      "callee": "procedure:oos_util.assert",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_lob.get_lob_size",
+      "callee": "function:oos_util_lob.get_file_size",
+      "count": 2
+    },
+    {
+      "caller": "function:oos_util_string.listunagg",
+      "callee": "function:oos_util_string.string_to_table",
+      "count": 2
+    },
+    {
+      "caller": "function:oos_util_string.sprintf",
+      "callee": "function:oos_util_string.reverse",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_string.string_to_table",
+      "callee": "function:oos_util_string.string_to_table",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_string.truncate",
+      "callee": "function:oos_util_string.reverse",
+      "count": 2
+    },
+    {
+      "caller": "function:oos_util_string.truncate",
+      "callee": "procedure:oos_util.assert",
+      "count": 2
+    },
+    {
+      "caller": "function:oos_util_totp.generate_otp",
+      "callee": "function:oos_util_crypto.mac",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_totp.generate_otp",
+      "callee": "function:oos_util_totp.to_binary",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_totp.validate_otp",
+      "callee": "function:oos_util_totp.generate_otp",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_transform.refcur2csv",
+      "callee": "function:oos_util_transform.entity_decode",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_transform.refcur2csv",
+      "callee": "function:oos_util_transform.refcur2xml",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_transform.refcur2csv",
+      "callee": "function:oos_util_transform.xml_has_rows",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_transform.refcur2csv",
+      "callee": "function:oos_util_transform.xquery",
+      "count": 2
+    },
+    {
+      "caller": "function:oos_util_transform.refcur2html",
+      "callee": "function:oos_util_transform.entity_decode",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_transform.refcur2html",
+      "callee": "function:oos_util_transform.refcur2xml",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_transform.refcur2html",
+      "callee": "function:oos_util_transform.xml_has_rows",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_transform.refcur2html",
+      "callee": "function:oos_util_transform.xquery",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_transform.refcur2json",
+      "callee": "function:oos_util_transform.entity_decode",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_transform.refcur2json",
+      "callee": "function:oos_util_transform.refcur2xml",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_transform.refcur2json",
+      "callee": "function:oos_util_transform.xml_has_rows",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_transform.refcur2json",
+      "callee": "function:oos_util_transform.xslt",
+      "count": 1
+    },
+    {
+      "caller": "procedure:oos_util_apex.create_session",
+      "callee": "procedure:oos_util.assert",
+      "count": 1
+    },
+    {
+      "caller": "procedure:oos_util_apex.join_session",
+      "callee": "procedure:oos_util.assert",
+      "count": 2
+    },
+    {
+      "caller": "procedure:oos_util_apex.join_session",
+      "callee": "procedure:oos_util_apex.create_session",
+      "count": 1
+    },
+    {
+      "caller": "procedure:oos_util_apex.trim_page_items",
+      "callee": "procedure:oos_util.assert",
+      "count": 1
+    },
+    {
+      "caller": "procedure:oos_util_web.download_file",
+      "callee": "function:oos_util_lob.clob2blob",
+      "count": 1
+    },
+    {
+      "caller": "procedure:oos_util_web.download_file",
+      "callee": "function:oos_util_string.sprintf",
+      "count": 2
+    },
+    {
+      "caller": "procedure:oos_util_web.download_file",
+      "callee": "function:oos_util_web.get_mime_type",
+      "count": 1
+    },
+    {
+      "caller": "procedure:oos_util_web.download_file",
+      "callee": "procedure:oos_util_web.download_file",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+flowchart LR
+  n1["oos_util_apex"] -->|6| n0["oos_util"]
+  n5["oos_util_lob"] -->|3| n0["oos_util"]
+  n6["oos_util_string"] -->|2| n0["oos_util"]
+  n7["oos_util_totp"] --> n3["oos_util_crypto"]
+  n10["oos_util_web"] --> n5["oos_util_lob"]
+  n10["oos_util_web"] -->|2| n6["oos_util_string"]
+  n2["oos_util_bit"]
+  n4["oos_util_date"]
+  n8["oos_util_transform"]
+  n9["oos_util_validation"]
