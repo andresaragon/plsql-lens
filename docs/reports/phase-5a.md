@@ -45,6 +45,12 @@ fails if this table stops matching a fresh run.
 | MIG009 | low | 46 | 11 |
 | MIG010 | low | 14 | 8 |
 | MIG011 | high | 8 | 4 |
+| MIG012 | medium | 51 | 21 |
+| MIG013 | medium | 4 | 3 |
+| MIG014 | medium | 49 | 20 |
+| MIG015 | medium | 29 | 10 |
+| MIG016 | high | 110 | 15 |
+| MIG017 | medium | 29 | 15 |
 
 These are token counts: comments, strings and quoted text do not count, so they are not comparable with a plain text search.
 

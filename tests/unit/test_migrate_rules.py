@@ -1,4 +1,4 @@
-"""Acceptance tests for the migration rules MIG001-MIG011 (F5a, docs/migration-rules.md).
+"""Acceptance tests for the migration rules MIG001-MIG017 (F5a + F5-G4, docs/migration-rules.md).
 
 Fixtures in tests/fixtures/migrate/rules/<RULE>/{pos,neg}_N.pkb were written from the contract, not
 from the implementation. A trailing ``-- expect: MIGnnn`` marks the exact line of an expected
@@ -18,7 +18,7 @@ from plsql_lens.rules import RULES, SEVERITIES, Finding
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = ROOT / "tests" / "fixtures" / "migrate" / "rules"
 CONTRACT = ROOT / "docs" / "migration-rules.md"
-RULE_IDS = [f"MIG{i:03d}" for i in range(1, 12)]
+RULE_IDS = [f"MIG{i:03d}" for i in range(1, 18)]
 SEVERITY = {
     "MIG001": "low",
     "MIG002": "medium",  # the highest a finding can have; each finding carries its own
@@ -31,9 +31,15 @@ SEVERITY = {
     "MIG009": "low",
     "MIG010": "low",
     "MIG011": "high",
+    "MIG012": "medium",
+    "MIG013": "medium",
+    "MIG014": "medium",
+    "MIG015": "medium",
+    "MIG016": "high",  # the highest a finding can have; each finding carries its own
+    "MIG017": "medium",
 }
 EXPECT = re.compile(r"--\s*expect:\s*(MIG\d{3})(?:\s+(info|low|medium|high))?")
-PER_FINDING = {"MIG002", "MIG011"}  # severity decided from the context of each match
+PER_FINDING = {"MIG002", "MIG011", "MIG016"}  # severity decided from the context of each match
 
 
 def expected_lines(path: Path, rule: str) -> set[int]:
@@ -60,7 +66,7 @@ def found(path: Path, rule: str) -> list[Finding]:
 # --- registry ---------------------------------------------------------------------------------
 
 
-def test_the_registry_has_exactly_mig001_to_mig011_with_the_contract_severities() -> None:
+def test_the_registry_has_exactly_mig001_to_mig017_with_the_contract_severities() -> None:
     assert sorted(MIGRATION_RULES) == RULE_IDS
     assert {rid: r.severity for rid, r in MIGRATION_RULES.items()} == SEVERITY
     assert all(r.title.strip() and r.id == rid for rid, r in MIGRATION_RULES.items())
@@ -127,7 +133,12 @@ def test_the_severity_markers_cover_every_level_the_rule_can_give(rule: str) -> 
         for p in (FIXTURES / rule).glob("pos_*.pkb")
         for sev in expected_severities(p, rule).values()
     }
-    assert levels == ({"info", "medium", "high"} if rule == "MIG011" else {"low", "medium"})
+    expected = {
+        "MIG011": {"info", "medium", "high"},
+        "MIG002": {"low", "medium"},
+        "MIG016": {"medium", "high"},
+    }
+    assert levels == expected[rule]
 
 
 # --- finding text and details -----------------------------------------------------------------

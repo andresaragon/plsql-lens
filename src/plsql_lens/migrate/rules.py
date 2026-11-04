@@ -1,4 +1,4 @@
-"""Migration rules MIG001–MIG011: token checks over the whole file (docs/migration-rules.md)."""
+"""Migration rules MIG001–MIG017: token checks over the whole file (docs/migration-rules.md)."""
 
 from __future__ import annotations
 
@@ -220,6 +220,54 @@ def _empty_string(toks: Sequence[Token]) -> list[Hit]:
     return hits
 
 
+def _two_words(first: str, second: str) -> TokenCheck:
+    """``first`` immediately followed by ``second`` (the hit is the first token)."""
+    return lambda toks: [
+        Hit(t)
+        for i, t in enumerate(toks)
+        if _is(t, IDENT, first) and _is(_at(toks, i + 1), IDENT, second)
+    ]
+
+
+# Package -> (severity, rationale, fix hint) of a MIG016 finding.
+_PACKAGES: dict[str, tuple[str, str, str]] = {
+    "dbms_sql": (
+        "high",
+        "PostgreSQL has no DBMS_SQL; there is no cursor-number API for dynamic SQL.",
+        "redesign with EXECUTE format(...) USING ...",
+    ),
+    "utl_file": (
+        "high",
+        "PostgreSQL has no UTL_FILE; PL/pgSQL cannot read or write server files without "
+        "extensions.",
+        "move the file I/O to the application, or use an extension that provides it",
+    ),
+    "dbms_lob": (
+        "medium",
+        "PostgreSQL has no DBMS_LOB; large values are bytea or text and are handled with "
+        "ordinary functions.",
+        "bytea / text with substr(), length() and ||",
+    ),
+}
+
+
+def _oracle_packages(toks: Sequence[Token]) -> list[Hit]:
+    hits: list[Hit] = []
+    for i, t in enumerate(toks):
+        if t.kind != IDENT or t.text not in _PACKAGES:
+            continue
+        member = _at(toks, i + 2)
+        if not (_is(_at(toks, i + 1), OP, ".") and member and member.kind == IDENT):
+            continue
+        start = i
+        if _is(_at(toks, i - 1), OP, "."):
+            if not _is(_at(toks, i - 2), IDENT, "sys") or _is(_at(toks, i - 3), OP, "."):
+                continue
+            start = i - 2
+        hits.append(Hit(toks[start], t.text, _PACKAGES[t.text][0]))
+    return hits
+
+
 class _Spec:
     """Contract entry: severity, title and the text of the findings of one rule."""
 
@@ -335,6 +383,59 @@ _SPECS: dict[str, _Spec] = {
         "write NULL where NULL is meant; if an empty string is meant, test for it explicitly "
         "(x IS NULL OR x = '')",
     ),
+    "MIG012": _Spec(
+        "medium",
+        "BULK COLLECT",
+        _two_words("bulk", "collect"),
+        "Oracle BULK COLLECT",
+        "PL/pgSQL has no BULK COLLECT; a query result is loaded into a variable with "
+        "SELECT ... INTO or read row by row.",
+        "SELECT array_agg(...) INTO arr FROM ..., or FOR rec IN SELECT ... LOOP",
+    ),
+    "MIG013": _Spec(
+        "medium",
+        "FORALL",
+        _idents("forall"),
+        "Oracle FORALL",
+        "PL/pgSQL has no FORALL; the statement runs in a loop or as one set statement.",
+        "FOR i IN ... LOOP ... END LOOP, or one set statement such as "
+        "INSERT ... SELECT unnest(arr)",
+    ),
+    "MIG014": _Spec(
+        "medium",
+        "EXECUTE IMMEDIATE",
+        _two_words("execute", "immediate"),
+        "Oracle EXECUTE IMMEDIATE (the dynamic SQL is not analyzed)",
+        "PL/pgSQL runs dynamic SQL with EXECUTE; the text is in a string or a variable, so "
+        "Oracle constructs inside it are not reported, and the bind markers :1 / :name become $1.",
+        "EXECUTE format('...') USING ...; :1 / :name become $1",
+    ),
+    "MIG015": _Spec(
+        "medium",
+        "RAISE_APPLICATION_ERROR call",
+        _call_of("raise_application_error"),
+        "Oracle RAISE_APPLICATION_ERROR call",
+        "PostgreSQL has no RAISE_APPLICATION_ERROR; the error numbers -20000..-20999 and the "
+        "handlers that compare SQLCODE do not carry over by themselves.",
+        "RAISE EXCEPTION '...' USING ERRCODE = '...'",
+    ),
+    "MIG016": _Spec(
+        "high",
+        "Oracle-supplied package (DBMS_LOB, DBMS_SQL, UTL_FILE)",
+        _oracle_packages,
+        "Oracle-supplied package",
+        "PostgreSQL has no DBMS_LOB, DBMS_SQL or UTL_FILE; see the finding for the package.",
+        "see the finding for the package",
+    ),
+    "MIG017": _Spec(
+        "medium",
+        "PIPELINED function",
+        _idents("pipelined"),
+        "Oracle PIPELINED function",
+        "PostgreSQL has no pipelined functions; a function returns its rows as a set and "
+        "PIPE ROW disappears.",
+        "RETURNS SETOF / RETURNS TABLE with RETURN NEXT or RETURN QUERY",
+    ),
 }
 
 
@@ -350,8 +451,12 @@ def _finding(rid: str, hit: Hit, path: str) -> Finding:
     elif rid == "MIG004" and detail:
         message = f"Oracle sequence pseudo-column {detail}.{tok.text.upper()}"
         fix = f"{tok.text}('{detail}')"
+    rationale = spec.rationale
+    if rid == "MIG016" and detail in _PACKAGES:
+        message = f"Oracle package {detail.upper()}"
+        _, rationale, fix = _PACKAGES[detail]
     severity = hit.severity or spec.severity
-    return Finding(rid, severity, Location(path, tok.line, tok.col), message, spec.rationale, fix)
+    return Finding(rid, severity, Location(path, tok.line, tok.col), message, rationale, fix)
 
 
 def _unit_spans(ir: FileIR) -> list[tuple[int, int, str]]:

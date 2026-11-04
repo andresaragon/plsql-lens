@@ -35,8 +35,8 @@ rewrite; **low** = mechanical rewrite; **info** = benign, reported for completen
 **Severity is per finding.** The *Severity* column is the highest severity a finding of that rule can
 have (`Rule.severity`). Every finding carries its own severity (`Finding.severity`), which is the one
 the table, JSON and SARIF outputs (the SARIF `level` of each result) and `--fail-on` use. Most rules
-give every finding the rule's severity; MIG002 and MIG011 decide it from the context of the match, as
-described under [Severity by context](#severity-by-context). The number and the location of the
+give every finding the rule's severity; MIG002, MIG011 and MIG016 decide it from the context of the
+match, as described under [Severity by context](#severity-by-context). The number and the location of the
 findings do not depend on severity.
 
 | Rule | Severity | Flags | Location |
@@ -52,6 +52,12 @@ findings do not depend on severity.
 | MIG009 | low | A call whose dotted chain is `DBMS_OUTPUT.<name>`, with or without a `SYS.` prefix, followed by `(` or `;`, and not itself preceded by `.`. PostgreSQL: `RAISE NOTICE`. | the first token of the chain (`sys` when present, else `dbms_output`) |
 | MIG010 | low | `FROM` immediately followed by `DUAL`. PostgreSQL: the `FROM` clause is simply omitted. | the `dual` token |
 | MIG011 | high | The empty string literal `''` (or the national form `n''`), anywhere. In Oracle `''` **is** `NULL`; in PostgreSQL it is an empty string that is **not** null: a silent change of behavior. A string with content (`'a'`, `''''`) is not flagged. The severity of the finding depends on where the `''` is (see below): `high` at most. | the token |
+| MIG012 | medium | `BULK` immediately followed by `COLLECT` (`BULK COLLECT INTO`, also in `FETCH ... BULK COLLECT` and `EXECUTE IMMEDIATE ... BULK COLLECT`). PostgreSQL: `array_agg()` / `SELECT ... INTO` an array, or a `FOR` loop. | the `bulk` token |
+| MIG013 | medium | The identifier `FORALL`, anywhere. PostgreSQL: a loop, or better one set statement (`INSERT ... SELECT unnest(...)`). | the token |
+| MIG014 | medium | `EXECUTE` immediately followed by `IMMEDIATE` (dynamic SQL). **The SQL text is not analyzed**: it lives in a string or a variable, and the message says so. PostgreSQL: `EXECUTE format(...) USING ...`; the bind markers `:1` / `:name` become `$1`. | the `execute` token |
+| MIG015 | medium | A call to `RAISE_APPLICATION_ERROR`: the identifier `raise_application_error` followed by `(` and not preceded by `.`. PostgreSQL: `RAISE EXCEPTION ... USING ERRCODE`; the error numbers -20000..-20999 and the handlers that compare `SQLCODE` do not carry over by themselves. | the `raise_application_error` token |
+| MIG016 | high | A dotted chain whose first element, after an optional `SYS.`, is `DBMS_LOB`, `DBMS_SQL` or `UTL_FILE`, followed by `.` and an identifier (`utl_file.fopen(...)`, `sys.dbms_lob.substr(...)`, `utl_file.file_type`), and not itself preceded by `.`. The severity of the finding depends on the package (see below): `high` at most. | the first token of the chain (`sys` when present, else the package name), as in MIG009 |
+| MIG017 | medium | The identifier `PIPELINED`, anywhere (in practice the header of a function, in its specification and again in its body). PostgreSQL: `RETURNS SETOF` / `RETURNS TABLE` with `RETURN NEXT` / `RETURN QUERY`; `PIPE ROW` disappears. | the token |
 
 ### Severity by context
 
@@ -85,12 +91,25 @@ value may be NULL at run time, and `DECODE` matches `NULL` with `NULL`, also bet
 which a simple `CASE` never does: a naive rewrite silently changes the result. When the finding is
 `medium` the message says so.
 
+**MIG016**, from the package of the chain (the first element after an optional `SYS.`):
+
+| Package | Severity | Why |
+|---|---|---|
+| `DBMS_SQL` | `high` | No equivalent: PostgreSQL has no cursor-number API for dynamic SQL; the code has to be redesigned with `EXECUTE`. |
+| `UTL_FILE` | `high` | No equivalent: PL/pgSQL cannot read or write server files without extensions. |
+| `DBMS_LOB` | `medium` | Large values become `bytea` / `text` and the calls become string or binary functions: a manual rewrite. |
+
 ### Finding text
 
 * `message` names the Oracle construct that was found (for example ``Oracle NVL() call``); a MIG002
   finding of severity `medium` also explains the NULL matching of `DECODE`.
 * `rationale` says what is different in PostgreSQL.
 * `fix_hint` gives the PostgreSQL equivalent.
+
+For MIG012–MIG017 the equivalents are **orientation, not a rewrite**: these rules only detect and
+explain, they do not need a database, and `rewrite.py` does not touch these constructs. Each message
+is one sentence on what changes and one on what to do in PostgreSQL. The message of MIG014 says that
+the dynamic SQL is not analyzed; the message of MIG016 names the package.
 
 One finding is reported per occurrence. Findings are sorted by line, column and rule id.
 
@@ -120,9 +139,34 @@ One finding is reported per occurrence. Findings are sorted by line, column and 
   and is not flagged; neither are the quote-delimited empty string `q'[]'` nor expressions that are
   empty at run time (`rpad('', 0)`, `to_char(null)`).
   Both branches of conditional compilation are analyzed.
-* **Out of scope (v1):** `BULK COLLECT` / `FORALL`, `EXECUTE IMMEDIATE`, `RAISE_APPLICATION_ERROR`,
-  data types, Oracle-supplied packages (`DBMS_LOB`, `DBMS_SQL`, `UTL_FILE`), package state,
-  pipelined functions and DDL. Rewriting code is a separate feature; this command only reports.
+* **MIG012**: a `BULK COLLECT` inside a dynamic SQL string is not seen. `bulk` not followed by
+  `collect` (a variable `x.bulk`, `bulk_size`) is not flagged. The clause is flagged wherever it is,
+  whether in a `SELECT ... BULK COLLECT INTO`, a `FETCH` or a `RETURNING ... BULK COLLECT INTO`; the
+  rule does not tell them apart or look at `LIMIT`.
+* **MIG013**: every `FORALL` is flagged, with no look at its body, `SAVE EXCEPTIONS` or
+  `SQL%BULK_ROWCOUNT`, which also need a manual port. `forall_count` is a different identifier.
+* **MIG014**: the rule does not know what is inside the dynamic SQL (a literal, a concatenation or a
+  variable): Oracle constructs in it (`NVL`, `ROWNUM`, a `''` …) are not reported by the other rules
+  either. `EXECUTE` alone (`dbms_sql.execute(c)`, `GRANT EXECUTE`) is not flagged. `OPEN ... FOR
+  <string>` and `DBMS_SQL` are other dynamic-SQL routes: the first is not covered, the second by MIG016.
+* **MIG015**: only the unqualified name: `pkg.raise_application_error(` (and `standard.` or
+  `sys.` qualified calls) is skipped, as is a local procedure that wraps the call. The rule does not
+  look at the error number, so it does not tell -20000..-20999 from an invalid one, nor does it find
+  the handlers that compare `SQLCODE` or `SQLERRM`; those need a manual review.
+* **MIG016**: only the three packages named. Other Oracle-supplied packages (`DBMS_UTILITY`,
+  `DBMS_CRYPTO`, `UTL_HTTP`, …) are not covered. A local synonym of the package or a variable of type
+  `UTL_FILE.FILE_TYPE` used through another name is not seen, but the declaration of the variable is
+  (`utl_file.file_type`). A reference without a following `.identifier` (`grant execute on dbms_lob`)
+  is not flagged. Unlike MIG009, a call is not required: a type or a constant of the package is also a
+  hit. The severity depends on the package, not on the member called (`dbms_lob.getlength` is `medium`
+  even if it ports with `length()`).
+* **MIG017**: the identifier is flagged in the package specification and again in the body, so one
+  function gives two findings. `PIPE ROW` statements are not flagged apart from it (they go away with
+  the rewrite), nor are the collection types the function returns.
+* **Out of scope (v1):** data types, package state and DDL. Rewriting code is a separate feature; this
+  command only reports. The F5 constructs `BULK COLLECT` / `FORALL`, `EXECUTE IMMEDIATE`,
+  `RAISE_APPLICATION_ERROR`, the packages `DBMS_LOB`, `DBMS_SQL` and `UTL_FILE` and pipelined
+  functions are covered by MIG012–MIG017 (detection only); their dynamic SQL text is not analyzed.
 
 ## Suppression
 
