@@ -1,0 +1,9 @@
+project: pljson
+url: https://github.com/pljson/pljson
+commit: 09a54e4e9318af36c6d27f0e7170bd4a376276b2
+analyzed_path: src
+license_file: LICENSE
+license_sha256: 9f3aaf98473b5b9887d3e86ffe09e02374935bd3cd06872e4bad211446a19443
+license_first_line: This software has been released under the MIT license:
+plsql_lens_src_commit: 558dcee3664ca4c794e723f9c1ee574350420c1e
+plsql_lens_version: 0.1.0

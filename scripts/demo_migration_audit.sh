@@ -1,19 +1,35 @@
 #!/usr/bin/env bash
-# Regenerates the raw tool output of the sample migration audit (docs/demo/oos-utils/).
+# Regenerates the raw tool output of a sample migration audit (docs/demo/<project>/raw/).
 #
 # It clones a third-party project into a temporary directory at a pinned commit, runs the
-# read-only commands of plsql-lens on it and writes their raw output to docs/demo/oos-utils/raw/.
+# read-only commands of plsql-lens on it and writes their raw output to docs/demo/<project>/raw/.
 # The third-party code is never copied into this repository.
 #
-# Usage: bash scripts/demo_migration_audit.sh
+# Usage: bash scripts/demo_migration_audit.sh [oos-utils|pljson]    (default: oos-utils)
 # Needs: git, uv, network access to github.com.
 set -euo pipefail
 
-PROJECT="oos-utils"
-URL="https://github.com/OraOpenSource/oos-utils"
-SHA="b6217292bc744211eaee9e1d11ca7a0b495bc44d"
-SUBDIR="source" # the PL/SQL sources; install/ is a generated bundle of the same packages
-LICENSE_FILE="LICENSE"
+PROJECT="${1:-oos-utils}"
+
+# Project table: URL, pinned commit, analyzed sub-path, license file (relative to the repository root).
+case "$PROJECT" in
+  oos-utils)
+    URL="https://github.com/OraOpenSource/oos-utils"
+    SHA="b6217292bc744211eaee9e1d11ca7a0b495bc44d"
+    SUBDIR="source" # the PL/SQL sources; install/ is a generated bundle of the same packages
+    LICENSE_FILE="LICENSE"
+    ;;
+  pljson)
+    URL="https://github.com/pljson/pljson"
+    SHA="09a54e4e9318af36c6d27f0e7170bd4a376276b2"
+    SUBDIR="src" # the library; examples/, testsuite/ and testsuite-utplsql/ are not the library
+    LICENSE_FILE="LICENSE"
+    ;;
+  *)
+    echo "unknown project '$PROJECT' (known: oos-utils, pljson)" >&2
+    exit 2
+    ;;
+esac
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RAW="$ROOT/docs/demo/$PROJECT/raw"

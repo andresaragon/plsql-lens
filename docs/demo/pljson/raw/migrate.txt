@@ -1,0 +1,240 @@
+SEVERITY  RULE    LOCATION                                           MESSAGE
+--------  ------  -------------------------------------------------  -------
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:93:9             Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:96:18            Oracle package DBMS_SQL
+HIGH      MIG011  src/addons/pljson_dyn.package.sql:102:28           Empty string literal '' (NULL in Oracle)
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:107:11           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:115:11           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:118:13           Oracle package DBMS_SQL
+HIGH      MIG011  src/addons/pljson_dyn.package.sql:118:57           Empty string literal '' (NULL in Oracle)
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:120:13           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:133:12           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:154:16           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:155:7            Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:155:35           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:161:5            Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:182:9            Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:184:9            Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:186:9            Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:188:9            Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:191:9            Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:194:9            Oracle package DBMS_SQL
+LOW       MIG009  src/addons/pljson_dyn.package.sql:197:9            Oracle DBMS_OUTPUT call
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:202:19           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:206:13           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:214:11           Oracle package DBMS_SQL
+HIGH      MIG011  src/addons/pljson_dyn.package.sql:217:49           Empty string literal '' (NULL in Oracle)
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:236:11           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:242:13           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:258:13           Oracle package DBMS_SQL
+MEDIUM    MIG016  src/addons/pljson_dyn.package.sql:259:17           Oracle package DBMS_LOB
+HIGH      MIG011  src/addons/pljson_dyn.package.sql:261:51           Empty string literal '' (NULL in Oracle)
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:280:13           Oracle package DBMS_SQL
+MEDIUM    MIG016  src/addons/pljson_dyn.package.sql:281:17           Oracle package DBMS_LOB
+HIGH      MIG011  src/addons/pljson_dyn.package.sql:283:51           Empty string literal '' (NULL in Oracle)
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:294:13           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:300:13           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:311:5            Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:321:12           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:344:16           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:345:7            Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:345:35           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:350:5            Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:356:9            Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:358:9            Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:360:9            Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:362:9            Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:365:9            Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:368:9            Oracle package DBMS_SQL
+LOW       MIG009  src/addons/pljson_dyn.package.sql:371:9            Oracle DBMS_OUTPUT call
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:376:19           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:399:13           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:406:11           Oracle package DBMS_SQL
+HIGH      MIG011  src/addons/pljson_dyn.package.sql:409:32           Empty string literal '' (NULL in Oracle)
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:428:11           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:434:13           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:449:13           Oracle package DBMS_SQL
+MEDIUM    MIG016  src/addons/pljson_dyn.package.sql:450:17           Oracle package DBMS_LOB
+HIGH      MIG011  src/addons/pljson_dyn.package.sql:452:34           Empty string literal '' (NULL in Oracle)
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:471:13           Oracle package DBMS_SQL
+MEDIUM    MIG016  src/addons/pljson_dyn.package.sql:472:17           Oracle package DBMS_LOB
+HIGH      MIG011  src/addons/pljson_dyn.package.sql:474:34           Empty string literal '' (NULL in Oracle)
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:485:13           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:491:13           Oracle package DBMS_SQL
+HIGH      MIG016  src/addons/pljson_dyn.package.sql:503:5            Oracle package DBMS_SQL
+MEDIUM    MIG016  src/addons/pljson_helper.package.sql:225:12        Oracle package DBMS_LOB
+LOW       MIG009  src/addons/pljson_object_cache.impl.sql:42:5       Oracle DBMS_OUTPUT call
+LOW       MIG009  src/addons/pljson_object_cache.impl.sql:43:5       Oracle DBMS_OUTPUT call
+LOW       MIG009  src/addons/pljson_object_cache.impl.sql:44:5       Oracle DBMS_OUTPUT call
+LOW       MIG009  src/addons/pljson_object_cache.impl.sql:45:5       Oracle DBMS_OUTPUT call
+LOW       MIG009  src/addons/pljson_object_cache.impl.sql:46:5       Oracle DBMS_OUTPUT call
+MEDIUM    MIG017  src/addons/pljson_table_impl.type.decl.sql:158:3   Oracle PIPELINED function
+HIGH      MIG011  src/addons/pljson_table_impl.type.impl.sql:260:33  Empty string literal '' (NULL in Oracle)
+HIGH      MIG011  src/addons/pljson_table_impl.type.impl.sql:263:34  Empty string literal '' (NULL in Oracle)
+MEDIUM    MIG015  src/addons/pljson_table_impl.type.impl.sql:270:11  Oracle RAISE_APPLICATION_ERROR call
+LOW       MIG001  src/addons/pljson_table_impl.type.impl.sql:274:57  Oracle NVL() call
+MEDIUM    MIG015  src/addons/pljson_table_impl.type.impl.sql:277:13  Oracle RAISE_APPLICATION_ERROR call
+LOW       MIG001  src/addons/pljson_table_impl.type.impl.sql:291:49  Oracle NVL() call
+HIGH      MIG011  src/addons/pljson_table_impl.type.impl.sql:307:70  Empty string literal '' (NULL in Oracle)
+HIGH      MIG011  src/addons/pljson_table_impl.type.impl.sql:321:52  Empty string literal '' (NULL in Oracle)
+MEDIUM    MIG015  src/addons/pljson_table_impl.type.impl.sql:389:9   Oracle RAISE_APPLICATION_ERROR call
+LOW       MIG010  src/addons/pljson_util_pkg.package.sql:325:11      Oracle FROM DUAL
+LOW       MIG009  src/addons/pljson_util_pkg.package.sql:345:5       Oracle DBMS_OUTPUT call
+LOW       MIG009  src/addons/pljson_util_pkg.package.sql:346:5       Oracle DBMS_OUTPUT call
+LOW       MIG009  src/addons/pljson_util_pkg.package.sql:349:5       Oracle DBMS_OUTPUT call
+LOW       MIG009  src/addons/pljson_util_pkg.package.sql:350:5       Oracle DBMS_OUTPUT call
+HIGH      MIG011  src/addons/pljson_xml.package.sql:46:28            Empty string literal '' (NULL in Oracle)
+MEDIUM    MIG016  src/addons/pljson_xml.package.sql:69:7             Oracle package DBMS_LOB
+MEDIUM    MIG016  src/addons/pljson_xml.package.sql:78:5             Oracle package DBMS_LOB
+LOW       MIG001  src/addons/pljson_xml.package.sql:141:27           Oracle NVL() call
+HIGH      MIG011  src/addons/pljson_xml.package.sql:151:31           Empty string literal '' (NULL in Oracle)
+MEDIUM    MIG016  src/addons/pljson_xml.package.sql:154:5            Oracle package DBMS_LOB
+MEDIUM    MIG016  src/addons/pljson_xml.package.sql:160:5            Oracle package DBMS_LOB
+MEDIUM    MIG015  src/pljson.type.impl.sql:517:9                     Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_element.type.impl.sql:5:5               Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_element.type.impl.sql:58:5              Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_element.type.impl.sql:66:5              Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_element.type.impl.sql:71:5              Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_element.type.impl.sql:76:5              Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_element.type.impl.sql:81:5              Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_element.type.impl.sql:86:5              Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_element.type.impl.sql:91:5              Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_element.type.impl.sql:96:5              Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_element.type.impl.sql:101:5             Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_element.type.impl.sql:106:5             Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_element.type.impl.sql:111:5             Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_element.type.impl.sql:116:5             Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG016  src/pljson_element.type.impl.sql:141:5             Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_element.type.impl.sql:144:5             Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_element.type.impl.sql:150:5             Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_element.type.impl.sql:153:5             Oracle package DBMS_LOB
+MEDIUM    MIG015  src/pljson_element.type.impl.sql:159:5             Oracle RAISE_APPLICATION_ERROR call
+LOW       MIG002  src/pljson_ext.decl.sql:108:12                     Oracle DECODE() call
+MEDIUM    MIG015  src/pljson_ext.impl.sql:47:7                       Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_ext.impl.sql:88:7                       Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_ext.impl.sql:92:7                       Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG016  src/pljson_ext.impl.sql:116:5                      Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:116:45                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:123:18                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:125:28                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:127:31                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:129:31                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:131:31                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:139:7                      Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:141:7                      Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:158:7                      Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:158:47                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:159:28                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:160:68                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:175:9                      Oracle package DBMS_LOB
+MEDIUM    MIG015  src/pljson_ext.impl.sql:256:31                     Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_ext.impl.sql:260:11                     Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_ext.impl.sql:273:13                     Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_ext.impl.sql:288:31                     Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_ext.impl.sql:302:33                     Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_ext.impl.sql:306:35                     Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_ext.impl.sql:316:11                     Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_ext.impl.sql:319:31                     Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_ext.impl.sql:320:30                     Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_ext.impl.sql:337:9                      Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_ext.impl.sql:608:30                     Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_ext.impl.sql:637:30                     Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_ext.impl.sql:657:13                     Oracle RAISE_APPLICATION_ERROR call
+HIGH      MIG011  src/pljson_ext.impl.sql:934:14                     Empty string literal '' (NULL in Oracle)
+LOW       MIG009  src/pljson_ext.impl.sql:942:5                      Oracle DBMS_OUTPUT call
+MEDIUM    MIG016  src/pljson_ext.impl.sql:962:30                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:967:17                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:974:18                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:977:5                      Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:988:30                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:991:5                      Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:991:40                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:993:7                      Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:998:5                      Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:1005:30                    Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:1007:5                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:1007:40                    Oracle package DBMS_LOB
+LOW       MIG002  src/pljson_ext.impl.sql:1017:12                    Oracle DECODE() call
+MEDIUM    MIG016  src/pljson_ext.impl.sql:1021:30                    Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:1040:30                    Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:1041:25                    Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:1043:5                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:1043:40                    Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:1044:5                     Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_ext.impl.sql:1047:17                    Oracle package DBMS_LOB
+LOW       MIG001  src/pljson_number.type.sql:47:17                   Oracle NVL() call
+LOW       MIG001  src/pljson_number.type.sql:63:24                   Oracle NVL() call
+MEDIUM    MIG012  src/pljson_parser.impl.sql:43:7                    Oracle BULK COLLECT
+LOW       MIG010  src/pljson_parser.impl.sql:44:12                   Oracle FROM DUAL
+MEDIUM    MIG006  src/pljson_parser.impl.sql:45:7                    Oracle hierarchical query (CONNECT BY)
+MEDIUM    MIG016  src/pljson_parser.impl.sql:55:16                   Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_parser.impl.sql:58:16                   Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_parser.impl.sql:110:20                  Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_parser.impl.sql:113:20                  Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_parser.impl.sql:122:18                  Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_parser.impl.sql:125:18                  Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_parser.impl.sql:133:20                  Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_parser.impl.sql:136:20                  Oracle package DBMS_LOB
+HIGH      MIG011  src/pljson_parser.impl.sql:146:28                  Empty string literal '' (NULL in Oracle)
+MEDIUM    MIG016  src/pljson_parser.impl.sql:162:19                  Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_parser.impl.sql:165:19                  Oracle package DBMS_LOB
+LOW       MIG009  src/pljson_parser.impl.sql:187:5                   Oracle DBMS_OUTPUT call
+LOW       MIG009  src/pljson_parser.impl.sql:192:5                   Oracle DBMS_OUTPUT call
+MEDIUM    MIG015  src/pljson_parser.impl.sql:198:5                   Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_parser.impl.sql:203:5                   Oracle RAISE_APPLICATION_ERROR call
+HIGH      MIG011  src/pljson_parser.impl.sql:217:30                  Empty string literal '' (NULL in Oracle)
+HIGH      MIG011  src/pljson_parser.impl.sql:276:31                  Empty string literal '' (NULL in Oracle)
+MEDIUM    MIG016  src/pljson_parser.impl.sql:300:5                   Oracle package DBMS_LOB
+HIGH      MIG011  src/pljson_parser.impl.sql:305:31                  Empty string literal '' (NULL in Oracle)
+MEDIUM    MIG016  src/pljson_parser.impl.sql:317:11                  Oracle package DBMS_LOB
+HIGH      MIG011  src/pljson_parser.impl.sql:320:19                  Empty string literal '' (NULL in Oracle)
+MEDIUM    MIG016  src/pljson_parser.impl.sql:405:7                   Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_parser.impl.sql:538:15                  Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_parser.impl.sql:549:17                  Oracle package DBMS_LOB
+MEDIUM    MIG015  src/pljson_parser.impl.sql:577:5                   Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_parser.impl.sql:777:7                   Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_parser.impl.sql:799:7                   Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_parser.impl.sql:821:7                   Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG015  src/pljson_parser.impl.sql:844:7                   Oracle RAISE_APPLICATION_ERROR call
+HIGH      MIG011  src/pljson_parser.impl.sql:914:21                  Empty string literal '' (NULL in Oracle)
+HIGH      MIG011  src/pljson_printer.package.sql:104:32              Empty string literal '' (NULL in Oracle)
+HIGH      MIG011  src/pljson_printer.package.sql:108:34              Empty string literal '' (NULL in Oracle)
+HIGH      MIG011  src/pljson_printer.package.sql:139:55              Empty string literal '' (NULL in Oracle)
+HIGH      MIG011  src/pljson_printer.package.sql:148:23              Empty string literal '' (NULL in Oracle)
+HIGH      MIG011  src/pljson_printer.package.sql:150:33              Empty string literal '' (NULL in Oracle)
+MEDIUM    MIG016  src/pljson_printer.package.sql:188:7               Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_printer.package.sql:198:5               Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_printer.package.sql:214:26              Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_printer.package.sql:215:11              Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_printer.package.sql:331:22              Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_printer.package.sql:334:7               Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_printer.package.sql:346:22              Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_printer.package.sql:349:7               Oracle package DBMS_LOB
+HIGH      MIG011  src/pljson_printer.package.sql:362:32              Empty string literal '' (NULL in Oracle)
+MEDIUM    MIG016  src/pljson_printer.package.sql:364:22              Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_printer.package.sql:367:7               Oracle package DBMS_LOB
+MEDIUM    MIG015  src/pljson_printer.package.sql:411:7               Oracle RAISE_APPLICATION_ERROR call
+MEDIUM    MIG016  src/pljson_printer.package.sql:427:26              Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_printer.package.sql:428:11              Oracle package DBMS_LOB
+HIGH      MIG011  src/pljson_printer.package.sql:496:26              Empty string literal '' (NULL in Oracle)
+HIGH      MIG011  src/pljson_printer.package.sql:545:33              Empty string literal '' (NULL in Oracle)
+HIGH      MIG011  src/pljson_printer.package.sql:554:32              Empty string literal '' (NULL in Oracle)
+HIGH      MIG011  src/pljson_printer.package.sql:565:28              Empty string literal '' (NULL in Oracle)
+LOW       MIG009  src/pljson_printer.package.sql:603:33              Oracle DBMS_OUTPUT call
+MEDIUM    MIG016  src/pljson_printer.package.sql:606:15              Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_printer.package.sql:614:11              Oracle package DBMS_LOB
+LOW       MIG009  src/pljson_printer.package.sql:615:11              Oracle DBMS_OUTPUT call
+MEDIUM    MIG016  src/pljson_printer.package.sql:617:29              Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_printer.package.sql:625:13              Oracle package DBMS_LOB
+LOW       MIG009  src/pljson_printer.package.sql:626:13              Oracle DBMS_OUTPUT call
+MEDIUM    MIG016  src/pljson_printer.package.sql:636:11              Oracle package DBMS_LOB
+LOW       MIG009  src/pljson_printer.package.sql:637:11              Oracle DBMS_OUTPUT call
+LOW       MIG009  src/pljson_printer.package.sql:643:33              Oracle DBMS_OUTPUT call
+MEDIUM    MIG016  src/pljson_printer.package.sql:717:9               Oracle package DBMS_LOB
+HIGH      MIG011  src/pljson_string.type.sql:10:93                   Empty string literal '' (NULL in Oracle)
+HIGH      MIG011  src/pljson_string.type.sql:12:93                   Empty string literal '' (NULL in Oracle)
+HIGH      MIG011  src/pljson_string.type.sql:28:93                   Empty string literal '' (NULL in Oracle)
+HIGH      MIG011  src/pljson_string.type.sql:43:93                   Empty string literal '' (NULL in Oracle)
+MEDIUM    MIG016  src/pljson_string.type.sql:55:9                    Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_string.type.sql:59:8                    Oracle package DBMS_LOB
+MEDIUM    MIG016  src/pljson_string.type.sql:61:7                    Oracle package DBMS_LOB
