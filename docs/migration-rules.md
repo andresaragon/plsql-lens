@@ -43,7 +43,7 @@ findings do not depend on severity.
 |---|---|---|---|
 | MIG001 | low | A call to `NVL`: the identifier `nvl` followed by `(` and not preceded by `.`. PostgreSQL: `COALESCE`. | the `nvl` token |
 | MIG002 | medium | A call to `DECODE`: the identifier `decode` followed by `(` and not preceded by `.`. If a *search argument* is the literal `NULL`, the message says so: `DECODE` matches `NULL` with `NULL`, while `CASE x WHEN NULL` never matches. A search argument is an argument at an even position (2nd, 4th, …) that is followed by a result argument in the same call; the last argument (the default) is not one. An argument is "the literal `NULL`" when its tokens are exactly the identifier `null`. The severity of the finding depends on the search arguments (see below): `medium` at most. | the `decode` token |
-| MIG003 | medium | The identifier `SYSDATE` or `SYSTIMESTAMP`, anywhere (strings and comments excluded by the token stream). In Oracle `SYSDATE` is a `DATE`, so `sysdate - d` is a number of days; in PostgreSQL the same expression is an interval (and `+ 1` is an error). | the token |
+| MIG003 | medium | The identifier `SYSDATE` or `SYSTIMESTAMP`, anywhere (strings and comments excluded by the token stream). In Oracle `SYSDATE` is a `DATE`, so `sysdate - d` is a number of days; in PostgreSQL the same expression is an interval (and `+ 1` is an error). The fix hint is static, the same for every finding, and distinguishes two kinds of clock (see below). | the token |
 | MIG004 | low | A dotted chain that ends in `.nextval` or `.currval` (`seq.nextval`, `sch.seq.currval`): the identifier `nextval` or `currval` preceded by `.` and, before that, an identifier. PostgreSQL: `nextval('seq')` / `currval('seq')`. | the `nextval` / `currval` token |
 | MIG005 | medium | The identifier `ROWNUM` not preceded by `.`. PostgreSQL: `LIMIT`, or `row_number()`. | the token |
 | MIG006 | medium | `CONNECT` immediately followed by `BY` (hierarchical query). PostgreSQL: `WITH RECURSIVE`. | the `connect` token |
@@ -124,6 +124,17 @@ One finding is reported per occurrence. Findings are sorted by line, column and 
 * **MIG003**: `SYSDATE` is flagged wherever it occurs, including uses that port unchanged
   (`to_char(sysdate, …)` is still flagged: the rule asks for a review, not a rewrite). Other
   date/time sources (`CURRENT_DATE`, `LOCALTIMESTAMP`) are not flagged.
+  The fix hint tells the transaction clock from the real clock. In PostgreSQL `CURRENT_TIMESTAMP`,
+  `LOCALTIMESTAMP` and `CURRENT_DATE` return the start time of the current transaction, and
+  `clock_timestamp()` returns the real time, which changes even within one statement (PostgreSQL
+  documentation, *Date/Time Functions and Operators*, *Current Date/Time*; this is a reading of the
+  documentation, not something this repository ran). So the hint must say: use
+  `CURRENT_TIMESTAMP`, `LOCALTIMESTAMP` or `CURRENT_DATE` for "the time of the transaction", and
+  `clock_timestamp()` when the code waits, measures elapsed time or re-reads the clock several times
+  inside one transaction. A busy-wait loop that re-reads `SYSTIMESTAMP` until a deadline would never
+  end if it were rewritten with `CURRENT_TIMESTAMP`. The hint is the same text for every MIG003
+  finding: the rule does not detect loops, subtractions or any other context, and the number, the
+  location and the severity of its findings do not depend on it.
 * **MIG004**: sequences used through dynamic SQL strings are invisible (strings are opaque). A
   sequence name that is itself `nextval` is not distinguished.
 * **MIG005 / MIG006**: `ROWNUM` and `CONNECT BY` inside a dynamic SQL string are not seen.

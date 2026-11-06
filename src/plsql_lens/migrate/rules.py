@@ -310,7 +310,8 @@ _SPECS: dict[str, _Spec] = {
         "Oracle SYSDATE/SYSTIMESTAMP",
         "In Oracle SYSDATE is a DATE and `sysdate - d` is a number of days; in PostgreSQL the "
         "same subtraction gives an interval and `+ 1` is an error.",
-        "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE, depending on the type needed; "
+        "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE give the start of the transaction; "
+        "use clock_timestamp() for the real time (waiting, elapsed time, repeated reads); "
         "review the date arithmetic around it",
     ),
     "MIG004": _Spec(
