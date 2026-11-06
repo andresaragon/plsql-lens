@@ -1,0 +1,248 @@
+{
+  "note": "Manual review by Claude (provisional). verdict: real | doubtful | false_positive. The keys are the findings selected by tables.py (first 4 per rule by file, line, column).",
+  "items": [
+    {
+      "rule": "MIG001",
+      "file": "src/addons/pljson_table_impl.type.impl.sql",
+      "line": 274,
+      "col": 57,
+      "verdict": "real",
+      "en": "NVL(length(...), 0) inside substr(): a mechanical COALESCE.",
+      "es": "NVL(length(...), 0) dentro de substr(): un COALESCE mecánico."
+    },
+    {
+      "rule": "MIG001",
+      "file": "src/addons/pljson_table_impl.type.impl.sql",
+      "line": 291,
+      "col": 49,
+      "verdict": "real",
+      "en": "Same pattern as the previous row (NVL around length()).",
+      "es": "El mismo patrón que la fila anterior (NVL alrededor de length())."
+    },
+    {
+      "rule": "MIG001",
+      "file": "src/addons/pljson_xml.package.sql",
+      "line": 141,
+      "col": 27,
+      "verdict": "real",
+      "en": "NVL(tagname, 'array') as an argument: a mechanical COALESCE.",
+      "es": "NVL(tagname, 'array') como argumento: un COALESCE mecánico."
+    },
+    {
+      "rule": "MIG001",
+      "file": "src/pljson_number.type.sql",
+      "line": 47,
+      "col": 17,
+      "verdict": "real",
+      "en": "NVL(num, 0) in a type constructor: a mechanical COALESCE.",
+      "es": "NVL(num, 0) en el constructor de un tipo: un COALESCE mecánico."
+    },
+    {
+      "rule": "MIG002",
+      "file": "src/pljson_ext.decl.sql",
+      "line": 108,
+      "col": 12,
+      "verdict": "false_positive",
+      "en": "This is the declaration of the package's own function named decode (function decode(v pljson_string) return blob), not a call to Oracle DECODE. The contract says the rules have no semantics.",
+      "es": "Es la declaración de la propia función del paquete llamada decode (function decode(v pljson_string) return blob), no una llamada al DECODE de Oracle. El contrato dice que las reglas no tienen semántica."
+    },
+    {
+      "rule": "MIG002",
+      "file": "src/pljson_ext.impl.sql",
+      "line": 1017,
+      "col": 12,
+      "verdict": "false_positive",
+      "en": "The body of the same user-defined function decode; same remark as the previous row.",
+      "es": "El cuerpo de la misma función decode definida por el usuario; la misma observación que la fila anterior."
+    },
+    {
+      "rule": "MIG006",
+      "file": "src/pljson_parser.impl.sql",
+      "line": 45,
+      "col": 7,
+      "verdict": "real",
+      "en": "CONNECT BY LEVEL <= n used as a row generator over dual to split a string into characters; PostgreSQL needs generate_series() or a recursive query (my reading).",
+      "es": "CONNECT BY LEVEL <= n usado como generador de filas sobre dual para partir una cadena en caracteres; PostgreSQL necesita generate_series() o una consulta recursiva (lectura mía)."
+    },
+    {
+      "rule": "MIG009",
+      "file": "src/addons/pljson_dyn.package.sql",
+      "line": 197,
+      "col": 9,
+      "verdict": "real",
+      "en": "dbms_output.put_line of an 'unhandled col_type' message; RAISE NOTICE, mechanical.",
+      "es": "dbms_output.put_line de un mensaje 'unhandled col_type'; RAISE NOTICE, mecánico."
+    },
+    {
+      "rule": "MIG009",
+      "file": "src/addons/pljson_dyn.package.sql",
+      "line": 371,
+      "col": 9,
+      "verdict": "real",
+      "en": "Same message in a second routine of the same package; mechanical.",
+      "es": "El mismo mensaje en una segunda rutina del mismo paquete; mecánico."
+    },
+    {
+      "rule": "MIG009",
+      "file": "src/addons/pljson_object_cache.impl.sql",
+      "line": 42,
+      "col": 5,
+      "verdict": "real",
+      "en": "First of several dbms_output.put_line calls of a statistics-printing procedure; RAISE NOTICE, mechanical.",
+      "es": "La primera de varias llamadas a dbms_output.put_line de un procedimiento que imprime estadísticas; RAISE NOTICE, mecánico."
+    },
+    {
+      "rule": "MIG009",
+      "file": "src/addons/pljson_object_cache.impl.sql",
+      "line": 43,
+      "col": 5,
+      "verdict": "real",
+      "en": "Next line of the same procedure; same remark.",
+      "es": "La línea siguiente del mismo procedimiento; la misma observación."
+    },
+    {
+      "rule": "MIG010",
+      "file": "src/addons/pljson_util_pkg.package.sql",
+      "line": 325,
+      "col": 11,
+      "verdict": "real",
+      "en": "FROM DUAL in a query that also calls the XMLType methods transform() and getclobval(); dropping FROM is trivial, the XML methods need their own rewrite and are not reported.",
+      "es": "FROM DUAL en una consulta que además llama a los métodos de XMLType transform() y getclobval(); quitar el FROM es trivial, los métodos XML requieren su propio cambio y no se reportan."
+    },
+    {
+      "rule": "MIG010",
+      "file": "src/pljson_parser.impl.sql",
+      "line": 44,
+      "col": 12,
+      "verdict": "real",
+      "en": "FROM DUAL in the same statement as the CONNECT BY of the MIG006 row above.",
+      "es": "FROM DUAL en la misma sentencia que el CONNECT BY de la fila MIG006 anterior."
+    },
+    {
+      "rule": "MIG011",
+      "file": "src/addons/pljson_dyn.package.sql",
+      "line": 102,
+      "col": 28,
+      "verdict": "real",
+      "en": "'' assigned to an element of a table of strings that is later bound with dbms_sql.bind_array for a JSON null: Oracle binds NULL, PostgreSQL would bind an empty string (my reading of the semantics, not run).",
+      "es": "'' asignado a un elemento de una tabla de cadenas que luego se enlaza con dbms_sql.bind_array para un null de JSON: Oracle enlaza NULL y PostgreSQL enlazaría una cadena vacía (lectura mía de la semántica, no ejecutada)."
+    },
+    {
+      "rule": "MIG011",
+      "file": "src/addons/pljson_dyn.package.sql",
+      "line": 118,
+      "col": 57,
+      "verdict": "real",
+      "en": "'' passed as a bind value for a JSON null: NULL in Oracle, an empty string in PostgreSQL.",
+      "es": "'' pasado como valor de enlace para un null de JSON: NULL en Oracle, cadena vacía en PostgreSQL."
+    },
+    {
+      "rule": "MIG011",
+      "file": "src/addons/pljson_dyn.package.sql",
+      "line": 217,
+      "col": 49,
+      "verdict": "real",
+      "en": "The code asks for an empty string when a column is null (the comment itself says 'treat as emptystring?'), but in Oracle '' is NULL; in PostgreSQL the option would produce a real empty string, so the output differs from what Oracle produced.",
+      "es": "El código pide una cadena vacía cuando una columna es nula (el propio comentario dice 'treat as emptystring?'), pero en Oracle '' es NULL; en PostgreSQL la opción produciría una cadena vacía real, así que la salida difiere de la que daba Oracle."
+    },
+    {
+      "rule": "MIG011",
+      "file": "src/addons/pljson_dyn.package.sql",
+      "line": 261,
+      "col": 51,
+      "verdict": "real",
+      "en": "Same pattern for a CLOB column of length 0.",
+      "es": "El mismo patrón para una columna CLOB de longitud 0."
+    },
+    {
+      "rule": "MIG012",
+      "file": "src/pljson_parser.impl.sql",
+      "line": 43,
+      "col": 7,
+      "verdict": "real",
+      "en": "SELECT ... BULK COLLECT INTO s.src_array over a CONNECT BY row generator: PostgreSQL needs array_agg() or a loop.",
+      "es": "SELECT ... BULK COLLECT INTO s.src_array sobre un generador de filas con CONNECT BY: PostgreSQL necesita array_agg() o un bucle."
+    },
+    {
+      "rule": "MIG015",
+      "file": "src/addons/pljson_table_impl.type.impl.sql",
+      "line": 270,
+      "col": 11,
+      "verdict": "real",
+      "en": "Call with the error number -20120 and a message; RAISE EXCEPTION ... USING ERRCODE ports the call, callers that test the number need a mapping.",
+      "es": "Llamada con el número de error -20120 y un mensaje; RAISE EXCEPTION ... USING ERRCODE traslada la llamada, y quien pruebe el número necesita una correspondencia."
+    },
+    {
+      "rule": "MIG015",
+      "file": "src/addons/pljson_table_impl.type.impl.sql",
+      "line": 277,
+      "col": 13,
+      "verdict": "real",
+      "en": "Same error number in a second branch of the same method.",
+      "es": "El mismo número de error en una segunda rama del mismo método."
+    },
+    {
+      "rule": "MIG015",
+      "file": "src/addons/pljson_table_impl.type.impl.sql",
+      "line": 389,
+      "col": 9,
+      "verdict": "real",
+      "en": "Same error number again, in the fetch path of the table-function type.",
+      "es": "El mismo número de error otra vez, en el camino de lectura del tipo de la función de tabla."
+    },
+    {
+      "rule": "MIG015",
+      "file": "src/pljson.type.impl.sql",
+      "line": 517,
+      "col": 9,
+      "verdict": "real",
+      "en": "Error -20110 raised from the pljson object type; same remark.",
+      "es": "Error -20110 lanzado desde el tipo de objeto pljson; la misma observación."
+    },
+    {
+      "rule": "MIG016",
+      "file": "src/addons/pljson_dyn.package.sql",
+      "line": 93,
+      "col": 9,
+      "verdict": "real",
+      "en": "dbms_sql.bind_variable inside a dynamic-query runner: DBMS_SQL has no PostgreSQL equivalent, redesign with EXECUTE ... USING.",
+      "es": "dbms_sql.bind_variable dentro de un ejecutor de consultas dinámicas: DBMS_SQL no tiene equivalente en PostgreSQL, hay que rediseñar con EXECUTE ... USING."
+    },
+    {
+      "rule": "MIG016",
+      "file": "src/addons/pljson_dyn.package.sql",
+      "line": 96,
+      "col": 18,
+      "verdict": "real",
+      "en": "A variable declared with the type dbms_sql.varchar2_table: the rule counts the type reference.",
+      "es": "Una variable declarada con el tipo dbms_sql.varchar2_table: la regla cuenta la referencia al tipo."
+    },
+    {
+      "rule": "MIG016",
+      "file": "src/addons/pljson_dyn.package.sql",
+      "line": 107,
+      "col": 11,
+      "verdict": "real",
+      "en": "dbms_sql.bind_array with the array above; same redesign.",
+      "es": "dbms_sql.bind_array con el arreglo anterior; el mismo rediseño."
+    },
+    {
+      "rule": "MIG016",
+      "file": "src/addons/pljson_dyn.package.sql",
+      "line": 115,
+      "col": 11,
+      "verdict": "real",
+      "en": "dbms_sql.bind_variable with a date; same redesign.",
+      "es": "dbms_sql.bind_variable con una fecha; el mismo rediseño."
+    },
+    {
+      "rule": "MIG017",
+      "file": "src/addons/pljson_table_impl.type.decl.sql",
+      "line": 158,
+      "col": 3,
+      "verdict": "doubtful",
+      "en": "'pipelined using pljson_table_impl' is an interface-based table function (the type implements the ODCITable methods). The construct is there, but the hint (RETURNS SETOF with RETURN NEXT) does not describe the work: the interface has no PostgreSQL counterpart, so it is a redesign.",
+      "es": "'pipelined using pljson_table_impl' es una función de tabla basada en interfaz (el tipo implementa los métodos ODCITable). La construcción está, pero la sugerencia (RETURNS SETOF con RETURN NEXT) no describe el trabajo: la interfaz no tiene contraparte en PostgreSQL, así que es un rediseño."
+    }
+  ]
+}

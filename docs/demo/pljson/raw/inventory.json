@@ -1,0 +1,5681 @@
+{
+  "files": [
+    {
+      "path": "src/addons/pljson_dyn.package.sql",
+      "lines": 509,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/addons/pljson_helper.package.sql",
+      "lines": 491,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/addons/pljson_ml.package.sql",
+      "lines": 308,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/addons/pljson_object_cache.decl.sql",
+      "lines": 31,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/addons/pljson_object_cache.impl.sql",
+      "lines": 135,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/addons/pljson_table_impl.type.decl.sql",
+      "lines": 163,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/addons/pljson_table_impl.type.impl.sql",
+      "lines": 736,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/addons/pljson_util_pkg.package.sql",
+      "lines": 368,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/addons/pljson_xml.package.sql",
+      "lines": 166,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/pljson.type.decl.sql",
+      "lines": 105,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/pljson.type.impl.sql",
+      "lines": 586,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/pljson_bool.type.sql",
+      "lines": 40,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/pljson_element.type.decl.sql",
+      "lines": 70,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/pljson_element.type.impl.sql",
+      "lines": 169,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/pljson_ext.decl.sql",
+      "lines": 116,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/pljson_ext.impl.sql",
+      "lines": 1056,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/pljson_list.type.decl.sql",
+      "lines": 104,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/pljson_list.type.impl.sql",
+      "lines": 572,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/pljson_null.type.sql",
+      "lines": 29,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/pljson_number.type.sql",
+      "lines": 180,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/pljson_parser.decl.sql",
+      "lines": 76,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/pljson_parser.impl.sql",
+      "lines": 932,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/pljson_printer.package.sql",
+      "lines": 743,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "path": "src/pljson_string.type.sql",
+      "lines": 119,
+      "ok": true,
+      "issues": []
+    }
+  ],
+  "units": [
+    {
+      "key": "package:pljson_dyn",
+      "kind": "package",
+      "name": "pljson_dyn",
+      "container": null,
+      "files": [
+        "src/addons/pljson_dyn.package.sql"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_dyn.executelist",
+      "kind": "function",
+      "name": "executelist",
+      "container": "pljson_dyn",
+      "files": [
+        "src/addons/pljson_dyn.package.sql"
+      ],
+      "line": 31,
+      "params": [
+        {
+          "name": "stmt",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "bindvar",
+          "mode": "in",
+          "type": "pljson",
+          "default": true
+        },
+        {
+          "name": "cur_num",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        },
+        {
+          "name": "bindvardateformats",
+          "mode": "in",
+          "type": "pljson",
+          "default": true
+        },
+        {
+          "name": "columndateformats",
+          "mode": "in",
+          "type": "pljson",
+          "default": true
+        }
+      ],
+      "return_type": "pljson_list",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_dyn.executeobject",
+      "kind": "function",
+      "name": "executeobject",
+      "container": "pljson_dyn",
+      "files": [
+        "src/addons/pljson_dyn.package.sql"
+      ],
+      "line": 37,
+      "params": [
+        {
+          "name": "stmt",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "bindvar",
+          "mode": "in",
+          "type": "pljson",
+          "default": true
+        },
+        {
+          "name": "cur_num",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        },
+        {
+          "name": "bindvardateformats",
+          "mode": "in",
+          "type": "pljson",
+          "default": true
+        },
+        {
+          "name": "columndateformats",
+          "mode": "in",
+          "type": "pljson",
+          "default": true
+        }
+      ],
+      "return_type": "pljson",
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_dyn.bind_json",
+      "kind": "procedure",
+      "name": "bind_json",
+      "container": "pljson_dyn",
+      "files": [
+        "src/addons/pljson_dyn.package.sql"
+      ],
+      "line": 82,
+      "params": [
+        {
+          "name": "l_cur",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "bindvar",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "bindvardateformats",
+          "mode": "in",
+          "type": "pljson",
+          "default": true
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "package:pljson_helper",
+      "kind": "package",
+      "name": "pljson_helper",
+      "container": null,
+      "files": [
+        "src/addons/pljson_helper.package.sql"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_helper.merge",
+      "kind": "function",
+      "name": "merge",
+      "container": "pljson_helper",
+      "files": [
+        "src/addons/pljson_helper.package.sql"
+      ],
+      "line": 17,
+      "params": [
+        {
+          "name": "p_a_json",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "p_b_json",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        }
+      ],
+      "return_type": "pljson",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_helper.join",
+      "kind": "function",
+      "name": "join",
+      "container": "pljson_helper",
+      "files": [
+        "src/addons/pljson_helper.package.sql"
+      ],
+      "line": 21,
+      "params": [
+        {
+          "name": "p_a_list",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        },
+        {
+          "name": "p_b_list",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_list",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_helper.keep",
+      "kind": "function",
+      "name": "keep",
+      "container": "pljson_helper",
+      "files": [
+        "src/addons/pljson_helper.package.sql"
+      ],
+      "line": 25,
+      "params": [
+        {
+          "name": "p_json",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "p_keys",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        }
+      ],
+      "return_type": "pljson",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_helper.remove",
+      "kind": "function",
+      "name": "remove",
+      "container": "pljson_helper",
+      "files": [
+        "src/addons/pljson_helper.package.sql"
+      ],
+      "line": 29,
+      "params": [
+        {
+          "name": "p_json",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "p_keys",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        }
+      ],
+      "return_type": "pljson",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_helper.equals",
+      "kind": "function",
+      "name": "equals",
+      "container": "pljson_helper",
+      "files": [
+        "src/addons/pljson_helper.package.sql"
+      ],
+      "line": 32,
+      "params": [
+        {
+          "name": "p_v1",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "p_v2",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "exact",
+          "mode": "in",
+          "type": "boolean",
+          "default": true
+        }
+      ],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_helper.contains",
+      "kind": "function",
+      "name": "contains",
+      "container": "pljson_helper",
+      "files": [
+        "src/addons/pljson_helper.package.sql"
+      ],
+      "line": 48,
+      "params": [
+        {
+          "name": "p_v1",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "p_v2",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "exact",
+          "mode": "in",
+          "type": "boolean",
+          "default": true
+        }
+      ],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "package:pljson_ml",
+      "kind": "package",
+      "name": "pljson_ml",
+      "container": null,
+      "files": [
+        "src/addons/pljson_ml.package.sql"
+      ],
+      "line": 3,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ml.xml2json",
+      "kind": "function",
+      "name": "xml2json",
+      "container": "pljson_ml",
+      "files": [
+        "src/addons/pljson_ml.package.sql"
+      ],
+      "line": 31,
+      "params": [
+        {
+          "name": "xml",
+          "mode": "in",
+          "type": "xmltype",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_list",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ml.xmlstr2json",
+      "kind": "function",
+      "name": "xmlstr2json",
+      "container": "pljson_ml",
+      "files": [
+        "src/addons/pljson_ml.package.sql"
+      ],
+      "line": 32,
+      "params": [
+        {
+          "name": "xmlstr",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_list",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ml.get_jsonml_stylesheet",
+      "kind": "function",
+      "name": "get_jsonml_stylesheet",
+      "container": "pljson_ml",
+      "files": [
+        "src/addons/pljson_ml.package.sql"
+      ],
+      "line": 39,
+      "params": [],
+      "return_type": "xmltype",
+      "has_body": true
+    },
+    {
+      "key": "package:pljson_object_cache",
+      "kind": "package",
+      "name": "pljson_object_cache",
+      "container": null,
+      "files": [
+        "src/addons/pljson_object_cache.decl.sql",
+        "src/addons/pljson_object_cache.impl.sql"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_object_cache.set_names_set",
+      "kind": "procedure",
+      "name": "set_names_set",
+      "container": "pljson_object_cache",
+      "files": [
+        "src/addons/pljson_object_cache.decl.sql",
+        "src/addons/pljson_object_cache.impl.sql"
+      ],
+      "line": 19,
+      "params": [
+        {
+          "name": "names",
+          "mode": "in",
+          "type": "pljson_varray",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_object_cache.in_names_set",
+      "kind": "function",
+      "name": "in_names_set",
+      "container": "pljson_object_cache",
+      "files": [
+        "src/addons/pljson_object_cache.decl.sql",
+        "src/addons/pljson_object_cache.impl.sql"
+      ],
+      "line": 20,
+      "params": [
+        {
+          "name": "a_name",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_object_cache.reset",
+      "kind": "procedure",
+      "name": "reset",
+      "container": "pljson_object_cache",
+      "files": [
+        "src/addons/pljson_object_cache.decl.sql",
+        "src/addons/pljson_object_cache.impl.sql"
+      ],
+      "line": 22,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_object_cache.flush",
+      "kind": "procedure",
+      "name": "flush",
+      "container": "pljson_object_cache",
+      "files": [
+        "src/addons/pljson_object_cache.decl.sql",
+        "src/addons/pljson_object_cache.impl.sql"
+      ],
+      "line": 23,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_object_cache.print_stats",
+      "kind": "procedure",
+      "name": "print_stats",
+      "container": "pljson_object_cache",
+      "files": [
+        "src/addons/pljson_object_cache.decl.sql",
+        "src/addons/pljson_object_cache.impl.sql"
+      ],
+      "line": 24,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_object_cache.next_id",
+      "kind": "function",
+      "name": "next_id",
+      "container": "pljson_object_cache",
+      "files": [
+        "src/addons/pljson_object_cache.decl.sql",
+        "src/addons/pljson_object_cache.impl.sql"
+      ],
+      "line": 25,
+      "params": [],
+      "return_type": "number",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_object_cache.object_key",
+      "kind": "function",
+      "name": "object_key",
+      "container": "pljson_object_cache",
+      "files": [
+        "src/addons/pljson_object_cache.decl.sql",
+        "src/addons/pljson_object_cache.impl.sql"
+      ],
+      "line": 26,
+      "params": [
+        {
+          "name": "elem",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "piece",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_object_cache.get",
+      "kind": "function",
+      "name": "get",
+      "container": "pljson_object_cache",
+      "files": [
+        "src/addons/pljson_object_cache.decl.sql",
+        "src/addons/pljson_object_cache.impl.sql"
+      ],
+      "line": 27,
+      "params": [
+        {
+          "name": "key",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_element",
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_object_cache.set",
+      "kind": "procedure",
+      "name": "set",
+      "container": "pljson_object_cache",
+      "files": [
+        "src/addons/pljson_object_cache.decl.sql",
+        "src/addons/pljson_object_cache.impl.sql"
+      ],
+      "line": 28,
+      "params": [
+        {
+          "name": "key",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "val",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "type:pljson_varray",
+      "kind": "type",
+      "name": "pljson_varray",
+      "container": null,
+      "files": [
+        "src/addons/pljson_table_impl.type.decl.sql",
+        "src/pljson.type.decl.sql",
+        "src/pljson_list.type.decl.sql"
+      ],
+      "line": 2,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "type:pljson_narray",
+      "kind": "type",
+      "name": "pljson_narray",
+      "container": null,
+      "files": [
+        "src/addons/pljson_table_impl.type.decl.sql",
+        "src/pljson_list.type.decl.sql"
+      ],
+      "line": 4,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "type:pljson_vtab",
+      "kind": "type",
+      "name": "pljson_vtab",
+      "container": null,
+      "files": [
+        "src/addons/pljson_table_impl.type.decl.sql"
+      ],
+      "line": 8,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "type:pljson_table_impl",
+      "kind": "type",
+      "name": "pljson_table_impl",
+      "container": null,
+      "files": [
+        "src/addons/pljson_table_impl.type.decl.sql",
+        "src/addons/pljson_table_impl.type.impl.sql"
+      ],
+      "line": 11,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_table_impl.odcitabledescribe",
+      "kind": "function",
+      "name": "odcitabledescribe",
+      "container": "pljson_table_impl",
+      "files": [
+        "src/addons/pljson_table_impl.type.decl.sql",
+        "src/addons/pljson_table_impl.type.impl.sql"
+      ],
+      "line": 129,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_table_impl.odcitableprepare",
+      "kind": "function",
+      "name": "odcitableprepare",
+      "container": "pljson_table_impl",
+      "files": [
+        "src/addons/pljson_table_impl.type.decl.sql",
+        "src/addons/pljson_table_impl.type.impl.sql"
+      ],
+      "line": 135,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_table_impl.odcitablestart",
+      "kind": "function",
+      "name": "odcitablestart",
+      "container": "pljson_table_impl",
+      "files": [
+        "src/addons/pljson_table_impl.type.decl.sql",
+        "src/addons/pljson_table_impl.type.impl.sql"
+      ],
+      "line": 142,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_table_impl.odcitablefetch",
+      "kind": "function",
+      "name": "odcitablefetch",
+      "container": "pljson_table_impl",
+      "files": [
+        "src/addons/pljson_table_impl.type.decl.sql",
+        "src/addons/pljson_table_impl.type.impl.sql"
+      ],
+      "line": 148,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_table_impl.odcitableclose",
+      "kind": "function",
+      "name": "odcitableclose",
+      "container": "pljson_table_impl",
+      "files": [
+        "src/addons/pljson_table_impl.type.decl.sql",
+        "src/addons/pljson_table_impl.type.impl.sql"
+      ],
+      "line": 152,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_table_impl.json_table",
+      "kind": "function",
+      "name": "json_table",
+      "container": "pljson_table_impl",
+      "files": [
+        "src/addons/pljson_table_impl.type.decl.sql"
+      ],
+      "line": 154,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "package:pljson_util_pkg",
+      "kind": "package",
+      "name": "pljson_util_pkg",
+      "container": null,
+      "files": [
+        "src/addons/pljson_util_pkg.package.sql"
+      ],
+      "line": 3,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_util_pkg.ref_cursor_to_json",
+      "kind": "function",
+      "name": "ref_cursor_to_json",
+      "container": "pljson_util_pkg",
+      "files": [
+        "src/addons/pljson_util_pkg.package.sql"
+      ],
+      "line": 21,
+      "params": [
+        {
+          "name": "p_ref_cursor",
+          "mode": "in",
+          "type": "sys_refcursor",
+          "default": false
+        },
+        {
+          "name": "p_max_rows",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        },
+        {
+          "name": "p_skip_rows",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "pljson_list",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_util_pkg.sql_to_json",
+      "kind": "function",
+      "name": "sql_to_json",
+      "container": "pljson_util_pkg",
+      "files": [
+        "src/addons/pljson_util_pkg.package.sql"
+      ],
+      "line": 26,
+      "params": [
+        {
+          "name": "p_sql",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_max_rows",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        },
+        {
+          "name": "p_skip_rows",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "pljson_list",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_util_pkg.get_xml_to_json_stylesheet",
+      "kind": "function",
+      "name": "get_xml_to_json_stylesheet",
+      "container": "pljson_util_pkg",
+      "files": [
+        "src/addons/pljson_util_pkg.package.sql"
+      ],
+      "line": 53,
+      "params": [],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "package:pljson_xml",
+      "kind": "package",
+      "name": "pljson_xml",
+      "container": null,
+      "files": [
+        "src/addons/pljson_xml.package.sql"
+      ],
+      "line": 3,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_xml.json_to_xml",
+      "kind": "function",
+      "name": "json_to_xml",
+      "container": "pljson_xml",
+      "files": [
+        "src/addons/pljson_xml.package.sql"
+      ],
+      "line": 37,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "tagname",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        }
+      ],
+      "return_type": "xmltype",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_xml.escapestr",
+      "kind": "function",
+      "name": "escapestr",
+      "container": "pljson_xml",
+      "files": [
+        "src/addons/pljson_xml.package.sql"
+      ],
+      "line": 45,
+      "params": [
+        {
+          "name": "str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_xml.add_to_clob",
+      "kind": "procedure",
+      "name": "add_to_clob",
+      "container": "pljson_xml",
+      "files": [
+        "src/addons/pljson_xml.package.sql"
+      ],
+      "line": 65,
+      "params": [
+        {
+          "name": "buf_lob",
+          "mode": "in out",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "buf_str",
+          "mode": "in out",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_xml.flush_clob",
+      "kind": "procedure",
+      "name": "flush_clob",
+      "container": "pljson_xml",
+      "files": [
+        "src/addons/pljson_xml.package.sql"
+      ],
+      "line": 76,
+      "params": [
+        {
+          "name": "buf_lob",
+          "mode": "in out",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "buf_str",
+          "mode": "in out",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_xml.tostring",
+      "kind": "procedure",
+      "name": "tostring",
+      "container": "pljson_xml",
+      "files": [
+        "src/addons/pljson_xml.package.sql"
+      ],
+      "line": 84,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "tagname",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "xmlstr",
+          "mode": "in out",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "xmlbuf",
+          "mode": "in out",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "type:pljson",
+      "kind": "type",
+      "name": "pljson",
+      "container": null,
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 6,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.pljson",
+      "kind": "function",
+      "name": "pljson",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 35,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.is_object",
+      "kind": "function",
+      "name": "is_object",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 42,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.value_of",
+      "kind": "function",
+      "name": "value_of",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 43,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson.remove",
+      "kind": "procedure",
+      "name": "remove",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 46,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson.put",
+      "kind": "procedure",
+      "name": "put",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 48,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.count",
+      "kind": "function",
+      "name": "count",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 59,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.get",
+      "kind": "function",
+      "name": "get",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 60,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.get_string",
+      "kind": "function",
+      "name": "get_string",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 62,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.get_clob",
+      "kind": "function",
+      "name": "get_clob",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 63,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.get_number",
+      "kind": "function",
+      "name": "get_number",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 64,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.get_double",
+      "kind": "function",
+      "name": "get_double",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 65,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.get_bool",
+      "kind": "function",
+      "name": "get_bool",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 66,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.get_pljson",
+      "kind": "function",
+      "name": "get_pljson",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 67,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.get_pljson_list",
+      "kind": "function",
+      "name": "get_pljson_list",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 68,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.index_of",
+      "kind": "function",
+      "name": "index_of",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 71,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.exist",
+      "kind": "function",
+      "name": "exist",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 72,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson.check_duplicate",
+      "kind": "procedure",
+      "name": "check_duplicate",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 74,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson.remove_duplicates",
+      "kind": "procedure",
+      "name": "remove_duplicates",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 75,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.path",
+      "kind": "function",
+      "name": "path",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 78,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson.path_put",
+      "kind": "procedure",
+      "name": "path_put",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 81,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson.path_remove",
+      "kind": "procedure",
+      "name": "path_remove",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 92,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.get_keys",
+      "kind": "function",
+      "name": "get_keys",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 95,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.get_values",
+      "kind": "function",
+      "name": "get_values",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 96,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson.get_internal_path",
+      "kind": "procedure",
+      "name": "get_internal_path",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 99,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson.put_internal_path",
+      "kind": "function",
+      "name": "put_internal_path",
+      "container": "pljson",
+      "files": [
+        "src/pljson.type.decl.sql",
+        "src/pljson.type.impl.sql"
+      ],
+      "line": 102,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "type:pljson_bool",
+      "kind": "type",
+      "name": "pljson_bool",
+      "container": null,
+      "files": [
+        "src/pljson_bool.type.sql"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_bool.pljson_bool",
+      "kind": "function",
+      "name": "pljson_bool",
+      "container": "pljson_bool",
+      "files": [
+        "src/pljson_bool.type.sql"
+      ],
+      "line": 5,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_bool.is_bool",
+      "kind": "function",
+      "name": "is_bool",
+      "container": "pljson_bool",
+      "files": [
+        "src/pljson_bool.type.sql"
+      ],
+      "line": 6,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_bool.value_of",
+      "kind": "function",
+      "name": "value_of",
+      "container": "pljson_bool",
+      "files": [
+        "src/pljson_bool.type.sql"
+      ],
+      "line": 7,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_bool.get_bool",
+      "kind": "function",
+      "name": "get_bool",
+      "container": "pljson_bool",
+      "files": [
+        "src/pljson_bool.type.sql"
+      ],
+      "line": 9,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "type:pljson_path_segment",
+      "kind": "type",
+      "name": "pljson_path_segment",
+      "container": null,
+      "files": [
+        "src/pljson_element.type.decl.sql"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "type:pljson_element",
+      "kind": "type",
+      "name": "pljson_element",
+      "container": null,
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.pljson_element",
+      "kind": "function",
+      "name": "pljson_element",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 3,
+      "params": [],
+      "return_type": "self",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.is_object",
+      "kind": "function",
+      "name": "is_object",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 12,
+      "params": [],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.is_array",
+      "kind": "function",
+      "name": "is_array",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 17,
+      "params": [],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.is_string",
+      "kind": "function",
+      "name": "is_string",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 22,
+      "params": [],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.is_number",
+      "kind": "function",
+      "name": "is_number",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 27,
+      "params": [],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.is_bool",
+      "kind": "function",
+      "name": "is_bool",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 32,
+      "params": [],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.is_null",
+      "kind": "function",
+      "name": "is_null",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 37,
+      "params": [],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.get_type",
+      "kind": "function",
+      "name": "get_type",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 42,
+      "params": [],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.value_of",
+      "kind": "function",
+      "name": "value_of",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 56,
+      "params": [
+        {
+          "name": "max_byte_size",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        },
+        {
+          "name": "max_char_size",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.get_string",
+      "kind": "function",
+      "name": "get_string",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 64,
+      "params": [
+        {
+          "name": "max_byte_size",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        },
+        {
+          "name": "max_char_size",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.get_clob",
+      "kind": "function",
+      "name": "get_clob",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 69,
+      "params": [],
+      "return_type": "clob",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.get_number",
+      "kind": "function",
+      "name": "get_number",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 74,
+      "params": [],
+      "return_type": "number",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.get_double",
+      "kind": "function",
+      "name": "get_double",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 79,
+      "params": [],
+      "return_type": "binary_double",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.is_number_repr_number",
+      "kind": "function",
+      "name": "is_number_repr_number",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 84,
+      "params": [],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.is_number_repr_double",
+      "kind": "function",
+      "name": "is_number_repr_double",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 89,
+      "params": [],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.get_bool",
+      "kind": "function",
+      "name": "get_bool",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 94,
+      "params": [],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.count",
+      "kind": "function",
+      "name": "count",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 99,
+      "params": [],
+      "return_type": "number",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.get",
+      "kind": "function",
+      "name": "get",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 104,
+      "params": [
+        {
+          "name": "pair_name",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_element",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.path",
+      "kind": "function",
+      "name": "path",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 114,
+      "params": [
+        {
+          "name": "json_path",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "base",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "pljson_element",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.to_char",
+      "kind": "function",
+      "name": "to_char",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 120,
+      "params": [
+        {
+          "name": "spaces",
+          "mode": "in",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "name": "chars_per_line",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_element.to_clob",
+      "kind": "procedure",
+      "name": "to_clob",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 129,
+      "params": [
+        {
+          "name": "self",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "buf",
+          "mode": "in out",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "spaces",
+          "mode": "in",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "name": "chars_per_line",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        },
+        {
+          "name": "erase_clob",
+          "mode": "in",
+          "type": "boolean",
+          "default": true
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_element.print",
+      "kind": "procedure",
+      "name": "print",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 138,
+      "params": [
+        {
+          "name": "self",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "spaces",
+          "mode": "in",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "name": "chars_per_line",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        },
+        {
+          "name": "jsonp",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_element.htp",
+      "kind": "procedure",
+      "name": "htp",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 147,
+      "params": [
+        {
+          "name": "self",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "spaces",
+          "mode": "in",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "name": "chars_per_line",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        },
+        {
+          "name": "jsonp",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_element.get_internal_path",
+      "kind": "procedure",
+      "name": "get_internal_path",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 157,
+      "params": [
+        {
+          "name": "self",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "path",
+          "mode": "in",
+          "type": "pljson_path",
+          "default": false
+        },
+        {
+          "name": "path_position",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        },
+        {
+          "name": "ret",
+          "mode": "out",
+          "type": "pljson_element",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_element.put_internal_path",
+      "kind": "function",
+      "name": "put_internal_path",
+      "container": "pljson_element",
+      "files": [
+        "src/pljson_element.type.impl.sql"
+      ],
+      "line": 163,
+      "params": [
+        {
+          "name": "self",
+          "mode": "in out",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "path",
+          "mode": "in",
+          "type": "pljson_path",
+          "default": false
+        },
+        {
+          "name": "elem",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "path_position",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        }
+      ],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "package:pljson_ext",
+      "kind": "package",
+      "name": "pljson_ext",
+      "container": null,
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.parsepath",
+      "kind": "function",
+      "name": "parsepath",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 26,
+      "params": [
+        {
+          "name": "json_path",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "base",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "pljson_list",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.get_json_element",
+      "kind": "function",
+      "name": "get_json_element",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 29,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "path",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_element",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.get_string",
+      "kind": "function",
+      "name": "get_string",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 30,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "path",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.get_number",
+      "kind": "function",
+      "name": "get_number",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 31,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "path",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        }
+      ],
+      "return_type": "number",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.get_double",
+      "kind": "function",
+      "name": "get_double",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 32,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "path",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        }
+      ],
+      "return_type": "binary_double",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.get_json",
+      "kind": "function",
+      "name": "get_json",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 33,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "path",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        }
+      ],
+      "return_type": "pljson",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.get_json_list",
+      "kind": "function",
+      "name": "get_json_list",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 34,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "path",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_list",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.get_bool",
+      "kind": "function",
+      "name": "get_bool",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 35,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "path",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        }
+      ],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.get_date",
+      "kind": "function",
+      "name": "get_date",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 36,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "path",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        }
+      ],
+      "return_type": "date",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.get_json_element_original",
+      "kind": "function",
+      "name": "get_json_element_original",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 39,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "v_path",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "base",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "pljson_element",
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_ext.put",
+      "kind": "procedure",
+      "name": "put",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 51,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in out",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "path",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        },
+        {
+          "name": "elem",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_ext.remove",
+      "kind": "procedure",
+      "name": "remove",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 69,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in out",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "path",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.pp",
+      "kind": "function",
+      "name": "pp",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 73,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "v_path",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_ext.pp_htp",
+      "kind": "procedure",
+      "name": "pp_htp",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 75,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "v_path",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.is_integer",
+      "kind": "function",
+      "name": "is_integer",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 78,
+      "params": [
+        {
+          "name": "v",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        }
+      ],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.to_json_string",
+      "kind": "function",
+      "name": "to_json_string",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 82,
+      "params": [
+        {
+          "name": "d",
+          "mode": "in",
+          "type": "date",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_string",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.is_date",
+      "kind": "function",
+      "name": "is_date",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 84,
+      "params": [
+        {
+          "name": "v",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        }
+      ],
+      "return_type": "boolean",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.to_date",
+      "kind": "function",
+      "name": "to_date",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 86,
+      "params": [
+        {
+          "name": "v",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        }
+      ],
+      "return_type": "date",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.to_date2",
+      "kind": "function",
+      "name": "to_date2",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 88,
+      "params": [
+        {
+          "name": "v",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        }
+      ],
+      "return_type": "date",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.encodebase64blob2clob",
+      "kind": "function",
+      "name": "encodebase64blob2clob",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 96,
+      "params": [
+        {
+          "name": "p_blob",
+          "mode": "in",
+          "type": "blob",
+          "default": false
+        }
+      ],
+      "return_type": "clob",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.decodebase64clob2blob",
+      "kind": "function",
+      "name": "decodebase64clob2blob",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 102,
+      "params": [
+        {
+          "name": "p_clob",
+          "mode": "in",
+          "type": "clob",
+          "default": false
+        }
+      ],
+      "return_type": "blob",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.base64",
+      "kind": "function",
+      "name": "base64",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 104,
+      "params": [
+        {
+          "name": "binarydata",
+          "mode": "in",
+          "type": "blob",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_list",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.encode",
+      "kind": "function",
+      "name": "encode",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 107,
+      "params": [
+        {
+          "name": "binarydata",
+          "mode": "in",
+          "type": "blob",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_string",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_ext.decode",
+      "kind": "function",
+      "name": "decode",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 108,
+      "params": [
+        {
+          "name": "v",
+          "mode": "in",
+          "type": "pljson_string",
+          "default": false
+        }
+      ],
+      "return_type": "blob",
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_ext.blob2clob",
+      "kind": "procedure",
+      "name": "blob2clob",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.decl.sql",
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 113,
+      "params": [
+        {
+          "name": "b",
+          "mode": "in",
+          "type": "blob",
+          "default": false
+        },
+        {
+          "name": "c",
+          "mode": "out",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "charset",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_ext.put_internal_preparsed",
+      "kind": "procedure",
+      "name": "put_internal_preparsed",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 604,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in out",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "path",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        },
+        {
+          "name": "elem",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_ext.put_internal_original",
+      "kind": "procedure",
+      "name": "put_internal_original",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 625,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in out",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "v_path",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "elem",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "base",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_ext.put_internal",
+      "kind": "procedure",
+      "name": "put_internal",
+      "container": "pljson_ext",
+      "files": [
+        "src/pljson_ext.impl.sql"
+      ],
+      "line": 762,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in out",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "v_path",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "elem",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "base",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "type:pljson_list",
+      "kind": "type",
+      "name": "pljson_list",
+      "container": null,
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 8,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.pljson_list",
+      "kind": "function",
+      "name": "pljson_list",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 36,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.is_array",
+      "kind": "function",
+      "name": "is_array",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 44,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.value_of",
+      "kind": "function",
+      "name": "value_of",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 45,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_list.append",
+      "kind": "procedure",
+      "name": "append",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 48,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_list.replace",
+      "kind": "procedure",
+      "name": "replace",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 57,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_list.remove",
+      "kind": "procedure",
+      "name": "remove",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 66,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_list.remove_first",
+      "kind": "procedure",
+      "name": "remove_first",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 67,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_list.remove_last",
+      "kind": "procedure",
+      "name": "remove_last",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 68,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.count",
+      "kind": "function",
+      "name": "count",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 70,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.get",
+      "kind": "function",
+      "name": "get",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 71,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.get_string",
+      "kind": "function",
+      "name": "get_string",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 72,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.get_clob",
+      "kind": "function",
+      "name": "get_clob",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 73,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.get_number",
+      "kind": "function",
+      "name": "get_number",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 74,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.get_double",
+      "kind": "function",
+      "name": "get_double",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 75,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.get_bool",
+      "kind": "function",
+      "name": "get_bool",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 76,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.get_pljson_list",
+      "kind": "function",
+      "name": "get_pljson_list",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 77,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.head",
+      "kind": "function",
+      "name": "head",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 78,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.last",
+      "kind": "function",
+      "name": "last",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 79,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.tail",
+      "kind": "function",
+      "name": "tail",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 80,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.path",
+      "kind": "function",
+      "name": "path",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 83,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_list.path_put",
+      "kind": "procedure",
+      "name": "path_put",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 85,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_list.path_remove",
+      "kind": "procedure",
+      "name": "path_remove",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 95,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_list.get_internal_path",
+      "kind": "procedure",
+      "name": "get_internal_path",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 98,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_list.put_internal_path",
+      "kind": "function",
+      "name": "put_internal_path",
+      "container": "pljson_list",
+      "files": [
+        "src/pljson_list.type.decl.sql",
+        "src/pljson_list.type.impl.sql"
+      ],
+      "line": 101,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "type:pljson_null",
+      "kind": "type",
+      "name": "pljson_null",
+      "container": null,
+      "files": [
+        "src/pljson_null.type.sql"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_null.pljson_null",
+      "kind": "function",
+      "name": "pljson_null",
+      "container": "pljson_null",
+      "files": [
+        "src/pljson_null.type.sql"
+      ],
+      "line": 3,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_null.is_null",
+      "kind": "function",
+      "name": "is_null",
+      "container": "pljson_null",
+      "files": [
+        "src/pljson_null.type.sql"
+      ],
+      "line": 4,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_null.value_of",
+      "kind": "function",
+      "name": "value_of",
+      "container": "pljson_null",
+      "files": [
+        "src/pljson_null.type.sql"
+      ],
+      "line": 5,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "type:pljson_number",
+      "kind": "type",
+      "name": "pljson_number",
+      "container": null,
+      "files": [
+        "src/pljson_number.type.sql"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_number.pljson_number",
+      "kind": "function",
+      "name": "pljson_number",
+      "container": "pljson_number",
+      "files": [
+        "src/pljson_number.type.sql"
+      ],
+      "line": 8,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_number.is_number",
+      "kind": "function",
+      "name": "is_number",
+      "container": "pljson_number",
+      "files": [
+        "src/pljson_number.type.sql"
+      ],
+      "line": 11,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_number.value_of",
+      "kind": "function",
+      "name": "value_of",
+      "container": "pljson_number",
+      "files": [
+        "src/pljson_number.type.sql"
+      ],
+      "line": 12,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_number.get_number",
+      "kind": "function",
+      "name": "get_number",
+      "container": "pljson_number",
+      "files": [
+        "src/pljson_number.type.sql"
+      ],
+      "line": 14,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_number.get_double",
+      "kind": "function",
+      "name": "get_double",
+      "container": "pljson_number",
+      "files": [
+        "src/pljson_number.type.sql"
+      ],
+      "line": 16,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_number.is_number_repr_number",
+      "kind": "function",
+      "name": "is_number_repr_number",
+      "container": "pljson_number",
+      "files": [
+        "src/pljson_number.type.sql"
+      ],
+      "line": 21,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_number.is_number_repr_double",
+      "kind": "function",
+      "name": "is_number_repr_double",
+      "container": "pljson_number",
+      "files": [
+        "src/pljson_number.type.sql"
+      ],
+      "line": 24,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "procedure:pljson_number.parse_number",
+      "kind": "procedure",
+      "name": "parse_number",
+      "container": "pljson_number",
+      "files": [
+        "src/pljson_number.type.sql"
+      ],
+      "line": 33,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_number.number_tostring",
+      "kind": "function",
+      "name": "number_tostring",
+      "container": "pljson_number",
+      "files": [
+        "src/pljson_number.type.sql"
+      ],
+      "line": 37,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "package:pljson_parser",
+      "kind": "package",
+      "name": "pljson_parser",
+      "container": null,
+      "files": [
+        "src/pljson_parser.decl.sql",
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_parser.set_buffer_amount",
+      "kind": "procedure",
+      "name": "set_buffer_amount",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.decl.sql",
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 44,
+      "params": [
+        {
+          "name": "amount",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.lengthcc",
+      "kind": "function",
+      "name": "lengthcc",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.decl.sql",
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 46,
+      "params": [
+        {
+          "name": "buf",
+          "mode": "in",
+          "type": "clob",
+          "default": false
+        }
+      ],
+      "return_type": "number",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.next_char",
+      "kind": "function",
+      "name": "next_char",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.decl.sql",
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 48,
+      "params": [
+        {
+          "name": "indx",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "s",
+          "mode": "in out",
+          "type": "json_src",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.next_char2",
+      "kind": "function",
+      "name": "next_char2",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.decl.sql",
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 49,
+      "params": [
+        {
+          "name": "indx",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "s",
+          "mode": "in out",
+          "type": "json_src",
+          "default": false
+        },
+        {
+          "name": "amount",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.parseobj",
+      "kind": "function",
+      "name": "parseobj",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.decl.sql",
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 50,
+      "params": [
+        {
+          "name": "tokens",
+          "mode": "in",
+          "type": "ltokens",
+          "default": false
+        },
+        {
+          "name": "indx",
+          "mode": "in out",
+          "type": "pls_integer",
+          "default": false
+        }
+      ],
+      "return_type": "pljson",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.prepareclob",
+      "kind": "function",
+      "name": "prepareclob",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.decl.sql",
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 52,
+      "params": [
+        {
+          "name": "buf",
+          "mode": "in",
+          "type": "clob",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_parser.json_src",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.preparevarchar2",
+      "kind": "function",
+      "name": "preparevarchar2",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.decl.sql",
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 53,
+      "params": [
+        {
+          "name": "buf",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_parser.json_src",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.lexer",
+      "kind": "function",
+      "name": "lexer",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.decl.sql",
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 54,
+      "params": [
+        {
+          "name": "jsrc",
+          "mode": "in out",
+          "type": "json_src",
+          "default": false
+        }
+      ],
+      "return_type": "ltokens",
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_parser.print_token",
+      "kind": "procedure",
+      "name": "print_token",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.decl.sql",
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 55,
+      "params": [
+        {
+          "name": "t",
+          "mode": "in",
+          "type": "rtoken",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.parser",
+      "kind": "function",
+      "name": "parser",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.decl.sql",
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 64,
+      "params": [
+        {
+          "name": "str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "pljson",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.parse_list",
+      "kind": "function",
+      "name": "parse_list",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.decl.sql",
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 65,
+      "params": [
+        {
+          "name": "str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_list",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.parse_any",
+      "kind": "function",
+      "name": "parse_any",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.decl.sql",
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 66,
+      "params": [
+        {
+          "name": "str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_element",
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_parser.remove_duplicates",
+      "kind": "procedure",
+      "name": "remove_duplicates",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.decl.sql",
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 70,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in out",
+          "type": "pljson",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.get_version",
+      "kind": "function",
+      "name": "get_version",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.decl.sql",
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 71,
+      "params": [],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_parser.set_src_array",
+      "kind": "procedure",
+      "name": "set_src_array",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 36,
+      "params": [
+        {
+          "name": "s",
+          "mode": "in out",
+          "type": "json_src",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_parser.update_decimalpoint",
+      "kind": "procedure",
+      "name": "update_decimalpoint",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 68,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_parser.debug",
+      "kind": "procedure",
+      "name": "debug",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 185,
+      "params": [
+        {
+          "name": "text",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_parser.s_error",
+      "kind": "procedure",
+      "name": "s_error",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 196,
+      "params": [
+        {
+          "name": "text",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "line",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "col",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.mt",
+      "kind": "function",
+      "name": "mt",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 206,
+      "params": [
+        {
+          "name": "t",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "l",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        },
+        {
+          "name": "c",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        },
+        {
+          "name": "d",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "rtoken",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.lexnumber",
+      "kind": "function",
+      "name": "lexnumber",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 216,
+      "params": [
+        {
+          "name": "jsrc",
+          "mode": "in out",
+          "type": "json_src",
+          "default": false
+        },
+        {
+          "name": "tok",
+          "mode": "in out",
+          "type": "rtoken",
+          "default": false
+        },
+        {
+          "name": "indx",
+          "mode": "in out",
+          "type": "pls_integer",
+          "default": false
+        }
+      ],
+      "return_type": "pls_integer",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.lexname",
+      "kind": "function",
+      "name": "lexname",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 275,
+      "params": [
+        {
+          "name": "jsrc",
+          "mode": "in out",
+          "type": "json_src",
+          "default": false
+        },
+        {
+          "name": "tok",
+          "mode": "in out",
+          "type": "rtoken",
+          "default": false
+        },
+        {
+          "name": "indx",
+          "mode": "in out",
+          "type": "pls_integer",
+          "default": false
+        }
+      ],
+      "return_type": "pls_integer",
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_parser.updateclob",
+      "kind": "procedure",
+      "name": "updateclob",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 297,
+      "params": [
+        {
+          "name": "v_extended",
+          "mode": "in out",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "v_str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.lexstring",
+      "kind": "function",
+      "name": "lexstring",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 303,
+      "params": [
+        {
+          "name": "jsrc",
+          "mode": "in out",
+          "type": "json_src",
+          "default": false
+        },
+        {
+          "name": "tok",
+          "mode": "in out",
+          "type": "rtoken",
+          "default": false
+        },
+        {
+          "name": "indx",
+          "mode": "in out",
+          "type": "pls_integer",
+          "default": false
+        },
+        {
+          "name": "endchar",
+          "mode": "in",
+          "type": "char",
+          "default": false
+        }
+      ],
+      "return_type": "pls_integer",
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_parser.p_error",
+      "kind": "procedure",
+      "name": "p_error",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 575,
+      "params": [
+        {
+          "name": "text",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "tok",
+          "mode": "in",
+          "type": "rtoken",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.parsearr",
+      "kind": "function",
+      "name": "parsearr",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 580,
+      "params": [
+        {
+          "name": "tokens",
+          "mode": "in",
+          "type": "ltokens",
+          "default": false
+        },
+        {
+          "name": "indx",
+          "mode": "in out",
+          "type": "pls_integer",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_list",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_parser.parsemem",
+      "kind": "function",
+      "name": "parsemem",
+      "container": "pljson_parser",
+      "files": [
+        "src/pljson_parser.impl.sql"
+      ],
+      "line": 636,
+      "params": [
+        {
+          "name": "tokens",
+          "mode": "in",
+          "type": "ltokens",
+          "default": false
+        },
+        {
+          "name": "indx",
+          "mode": "in out",
+          "type": "pls_integer",
+          "default": false
+        },
+        {
+          "name": "mem_name",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "mem_indx",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        }
+      ],
+      "return_type": "pljson_element",
+      "has_body": true
+    },
+    {
+      "key": "package:pljson_printer",
+      "kind": "package",
+      "name": "pljson_printer",
+      "container": null,
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_printer.pretty_print",
+      "kind": "function",
+      "name": "pretty_print",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 29,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "spaces",
+          "mode": "in",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "name": "line_length",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_printer.pretty_print_list",
+      "kind": "function",
+      "name": "pretty_print_list",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 30,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        },
+        {
+          "name": "spaces",
+          "mode": "in",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "name": "line_length",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_printer.pretty_print_any",
+      "kind": "function",
+      "name": "pretty_print_any",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 31,
+      "params": [
+        {
+          "name": "json_part",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "spaces",
+          "mode": "in",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "name": "line_length",
+          "mode": "in",
+          "type": "number",
+          "default": true
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_printer.dbms_output_clob",
+      "kind": "procedure",
+      "name": "dbms_output_clob",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 36,
+      "params": [
+        {
+          "name": "my_clob",
+          "mode": "in",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "delim",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "jsonp",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_printer.htp_output_clob",
+      "kind": "procedure",
+      "name": "htp_output_clob",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 37,
+      "params": [
+        {
+          "name": "my_clob",
+          "mode": "in",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "jsonp",
+          "mode": "in",
+          "type": "varchar2",
+          "default": true
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_printer.escapestring",
+      "kind": "function",
+      "name": "escapestring",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 39,
+      "params": [
+        {
+          "name": "str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_printer.llcheck",
+      "kind": "function",
+      "name": "llcheck",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 61,
+      "params": [
+        {
+          "name": "str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_printer.escapechar",
+      "kind": "function",
+      "name": "escapechar",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 74,
+      "params": [
+        {
+          "name": "ch",
+          "mode": "in",
+          "type": "char",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_printer.newline",
+      "kind": "function",
+      "name": "newline",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 136,
+      "params": [
+        {
+          "name": "spaces",
+          "mode": "in",
+          "type": "boolean",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_printer.tab",
+      "kind": "function",
+      "name": "tab",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 147,
+      "params": [
+        {
+          "name": "indent",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "spaces",
+          "mode": "in",
+          "type": "boolean",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_printer.string_delim",
+      "kind": "function",
+      "name": "string_delim",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 155,
+      "params": [
+        {
+          "name": "elem",
+          "mode": "in",
+          "type": "pljson_string",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_printer.getcommasep",
+      "kind": "function",
+      "name": "getcommasep",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 166,
+      "params": [
+        {
+          "name": "spaces",
+          "mode": "in",
+          "type": "boolean",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:pljson_printer.getmemname",
+      "kind": "function",
+      "name": "getmemname",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 171,
+      "params": [
+        {
+          "name": "mem",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "spaces",
+          "mode": "in",
+          "type": "boolean",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_printer.add_to_clob",
+      "kind": "procedure",
+      "name": "add_to_clob",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 183,
+      "params": [
+        {
+          "name": "buf_lob",
+          "mode": "in out",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "buf_str",
+          "mode": "in out",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_printer.flush_clob",
+      "kind": "procedure",
+      "name": "flush_clob",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 195,
+      "params": [
+        {
+          "name": "buf_lob",
+          "mode": "in out",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "buf_str",
+          "mode": "in out",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_printer.ppobj",
+      "kind": "procedure",
+      "name": "ppobj",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 201,
+      "params": [
+        {
+          "name": "obj",
+          "mode": "in",
+          "type": "pljson",
+          "default": false
+        },
+        {
+          "name": "indent",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "buf",
+          "mode": "in out",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "spaces",
+          "mode": "in",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "buf_str",
+          "mode": "in out",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_printer.ppstring",
+      "kind": "procedure",
+      "name": "ppstring",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 203,
+      "params": [
+        {
+          "name": "elem",
+          "mode": "in",
+          "type": "pljson_string",
+          "default": false
+        },
+        {
+          "name": "buf",
+          "mode": "in out",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "buf_str",
+          "mode": "in out",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_printer.ppea",
+      "kind": "procedure",
+      "name": "ppea",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 238,
+      "params": [
+        {
+          "name": "input",
+          "mode": "in",
+          "type": "pljson_list",
+          "default": false
+        },
+        {
+          "name": "indent",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "buf",
+          "mode": "in out",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "spaces",
+          "mode": "in",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "buf_str",
+          "mode": "in out",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_printer.ppmem",
+      "kind": "procedure",
+      "name": "ppmem",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 280,
+      "params": [
+        {
+          "name": "mem",
+          "mode": "in",
+          "type": "pljson_element",
+          "default": false
+        },
+        {
+          "name": "indent",
+          "mode": "in",
+          "type": "number",
+          "default": false
+        },
+        {
+          "name": "buf",
+          "mode": "in out",
+          "type": "clob",
+          "default": false
+        },
+        {
+          "name": "spaces",
+          "mode": "in",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "buf_str",
+          "mode": "in out",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:pljson_printer.add_buf",
+      "kind": "procedure",
+      "name": "add_buf",
+      "container": "pljson_printer",
+      "files": [
+        "src/pljson_printer.package.sql"
+      ],
+      "line": 408,
+      "params": [
+        {
+          "name": "buf",
+          "mode": "in out",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "str",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "type:pljson_string",
+      "kind": "type",
+      "name": "pljson_string",
+      "container": null,
+      "files": [
+        "src/pljson_string.type.sql"
+      ],
+      "line": 1,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_string.pljson_string",
+      "kind": "function",
+      "name": "pljson_string",
+      "container": "pljson_string",
+      "files": [
+        "src/pljson_string.type.sql"
+      ],
+      "line": 9,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_string.is_string",
+      "kind": "function",
+      "name": "is_string",
+      "container": "pljson_string",
+      "files": [
+        "src/pljson_string.type.sql"
+      ],
+      "line": 13,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_string.value_of",
+      "kind": "function",
+      "name": "value_of",
+      "container": "pljson_string",
+      "files": [
+        "src/pljson_string.type.sql"
+      ],
+      "line": 14,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_string.get_string",
+      "kind": "function",
+      "name": "get_string",
+      "container": "pljson_string",
+      "files": [
+        "src/pljson_string.type.sql"
+      ],
+      "line": 16,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    },
+    {
+      "key": "function:pljson_string.get_clob",
+      "kind": "function",
+      "name": "get_clob",
+      "container": "pljson_string",
+      "files": [
+        "src/pljson_string.type.sql"
+      ],
+      "line": 17,
+      "params": [],
+      "return_type": null,
+      "has_body": false
+    }
+  ],
+  "edges": [
+    {
+      "caller": "function:pljson.exist",
+      "callee": "function:pljson.get",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson.get_bool",
+      "callee": "function:pljson.get",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson.get_clob",
+      "callee": "function:pljson.get",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson.get_double",
+      "callee": "function:pljson.get",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson.get_number",
+      "callee": "function:pljson.get",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson.get_pljson",
+      "callee": "function:pljson.get",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson.get_pljson",
+      "callee": "function:pljson.pljson",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson.get_pljson_list",
+      "callee": "function:pljson.get",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson.get_string",
+      "callee": "function:pljson.get",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson.path",
+      "callee": "function:pljson_ext.get_json_element",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson.pljson",
+      "callee": "function:pljson.pljson",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson.pljson",
+      "callee": "function:pljson_parser.parser",
+      "count": 3
+    },
+    {
+      "caller": "function:pljson.pljson",
+      "callee": "procedure:pljson.put",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson.pljson",
+      "callee": "procedure:pljson_ext.blob2clob",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson.put_internal_path",
+      "callee": "function:pljson.pljson",
+      "count": 3
+    },
+    {
+      "caller": "function:pljson.put_internal_path",
+      "callee": "procedure:pljson.put",
+      "count": 5
+    },
+    {
+      "caller": "function:pljson_dyn.executelist",
+      "callee": "function:pljson_ext.encode",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_dyn.executelist",
+      "callee": "function:pljson_ext.to_json_string",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_dyn.executelist",
+      "callee": "procedure:pljson_dyn.bind_json",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_dyn.executeobject",
+      "callee": "function:pljson_ext.encode",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_dyn.executeobject",
+      "callee": "function:pljson_ext.to_json_string",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_dyn.executeobject",
+      "callee": "procedure:pljson_dyn.bind_json",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_element.count",
+      "callee": "function:pljson_element.get_type",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_element.get",
+      "callee": "function:pljson_element.get_type",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_element.get_bool",
+      "callee": "function:pljson_element.get_type",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_element.get_clob",
+      "callee": "function:pljson_element.get_type",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_element.get_double",
+      "callee": "function:pljson_element.get_type",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_element.get_number",
+      "callee": "function:pljson_element.get_type",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_element.get_string",
+      "callee": "function:pljson_element.get_type",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_element.is_number_repr_double",
+      "callee": "function:pljson_element.get_type",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_element.is_number_repr_number",
+      "callee": "function:pljson_element.get_type",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_element.path",
+      "callee": "function:pljson_element.get_type",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_element.to_char",
+      "callee": "function:pljson_printer.pretty_print_any",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_ext.base64",
+      "callee": "function:pljson_ext.decodebase64clob2blob",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_ext.base64",
+      "callee": "function:pljson_ext.encodebase64blob2clob",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_ext.decode",
+      "callee": "function:pljson_ext.decodebase64clob2blob",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_ext.encode",
+      "callee": "function:pljson_ext.encodebase64blob2clob",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_ext.get_bool",
+      "callee": "function:pljson_ext.get_json_element",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_ext.get_date",
+      "callee": "function:pljson_ext.get_json_element",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_ext.get_date",
+      "callee": "function:pljson_ext.is_date",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_ext.get_date",
+      "callee": "function:pljson_ext.to_date",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_ext.get_double",
+      "callee": "function:pljson_ext.get_json_element",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_ext.get_json",
+      "callee": "function:pljson_ext.get_json_element",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_ext.get_json_element",
+      "callee": "function:pljson_ext.get_json_element",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_ext.get_json_element",
+      "callee": "function:pljson_ext.parsepath",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_ext.get_json_element_original",
+      "callee": "function:pljson_ext.parsepath",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_ext.get_json_list",
+      "callee": "function:pljson_ext.get_json_element",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_ext.get_number",
+      "callee": "function:pljson_ext.get_json_element",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_ext.get_string",
+      "callee": "function:pljson_ext.get_json_element",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_ext.is_date",
+      "callee": "function:pljson_ext.to_date",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_ext.pp",
+      "callee": "function:pljson_ext.get_json_element",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_ext.pp",
+      "callee": "function:pljson_ext.pp",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_ext.pp",
+      "callee": "function:pljson_printer.pretty_print_any",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_ext.to_date2",
+      "callee": "function:pljson_ext.to_date",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_helper.contains",
+      "callee": "function:pljson_helper.contains",
+      "count": 14
+    },
+    {
+      "caller": "function:pljson_helper.contains",
+      "callee": "function:pljson_helper.equals",
+      "count": 4
+    },
+    {
+      "caller": "function:pljson_helper.equals",
+      "callee": "function:pljson_helper.equals",
+      "count": 12
+    },
+    {
+      "caller": "function:pljson_list.get_bool",
+      "callee": "function:pljson_list.get",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_list.get_clob",
+      "callee": "function:pljson_list.get",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_list.get_double",
+      "callee": "function:pljson_list.get",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_list.get_number",
+      "callee": "function:pljson_list.get",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_list.get_pljson_list",
+      "callee": "function:pljson_list.get",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_list.get_pljson_list",
+      "callee": "function:pljson_list.pljson_list",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_list.get_string",
+      "callee": "function:pljson_list.get",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_list.path",
+      "callee": "function:pljson_ext.get_json_element",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_list.pljson_list",
+      "callee": "function:pljson_list.pljson_list",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_list.pljson_list",
+      "callee": "function:pljson_parser.parse_list",
+      "count": 3
+    },
+    {
+      "caller": "function:pljson_list.pljson_list",
+      "callee": "procedure:pljson_ext.blob2clob",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_list.pljson_list",
+      "callee": "procedure:pljson_list.append",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_list.put_internal_path",
+      "callee": "function:pljson_list.pljson_list",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_list.tail",
+      "callee": "function:pljson_list.pljson_list",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_ml.xml2json",
+      "callee": "function:pljson_ml.get_jsonml_stylesheet",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_ml.xmlstr2json",
+      "callee": "function:pljson_ml.xml2json",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.lexer",
+      "callee": "function:pljson_parser.lengthcc",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_parser.lexer",
+      "callee": "function:pljson_parser.lexname",
+      "count": 4
+    },
+    {
+      "caller": "function:pljson_parser.lexer",
+      "callee": "function:pljson_parser.lexnumber",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.lexer",
+      "callee": "function:pljson_parser.lexstring",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_parser.lexer",
+      "callee": "function:pljson_parser.mt",
+      "count": 17
+    },
+    {
+      "caller": "function:pljson_parser.lexer",
+      "callee": "function:pljson_parser.next_char",
+      "count": 10
+    },
+    {
+      "caller": "function:pljson_parser.lexer",
+      "callee": "function:pljson_parser.next_char2",
+      "count": 3
+    },
+    {
+      "caller": "function:pljson_parser.lexer",
+      "callee": "procedure:pljson_parser.s_error",
+      "count": 5
+    },
+    {
+      "caller": "function:pljson_parser.lexname",
+      "callee": "function:pljson_parser.next_char",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_parser.lexnumber",
+      "callee": "function:pljson_parser.next_char",
+      "count": 10
+    },
+    {
+      "caller": "function:pljson_parser.lexnumber",
+      "callee": "procedure:pljson_parser.s_error",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_parser.lexstring",
+      "callee": "function:pljson_parser.next_char",
+      "count": 8
+    },
+    {
+      "caller": "function:pljson_parser.lexstring",
+      "callee": "function:pljson_parser.next_char2",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.lexstring",
+      "callee": "procedure:pljson_parser.s_error",
+      "count": 5
+    },
+    {
+      "caller": "function:pljson_parser.lexstring",
+      "callee": "procedure:pljson_parser.updateclob",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_parser.next_char",
+      "callee": "procedure:pljson_parser.set_src_array",
+      "count": 3
+    },
+    {
+      "caller": "function:pljson_parser.next_char2",
+      "callee": "function:pljson_parser.next_char",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.parse_any",
+      "callee": "function:pljson_parser.lexer",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_parser.parse_any",
+      "callee": "function:pljson_parser.parsearr",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_parser.parse_any",
+      "callee": "function:pljson_parser.prepareclob",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.parse_any",
+      "callee": "function:pljson_parser.preparevarchar2",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.parse_any",
+      "callee": "procedure:pljson_parser.p_error",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_parser.parse_list",
+      "callee": "function:pljson_parser.lexer",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_parser.parse_list",
+      "callee": "function:pljson_parser.parsearr",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_parser.parse_list",
+      "callee": "function:pljson_parser.prepareclob",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.parse_list",
+      "callee": "function:pljson_parser.preparevarchar2",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.parse_list",
+      "callee": "procedure:pljson_parser.p_error",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_parser.parsearr",
+      "callee": "function:pljson_parser.parsearr",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.parsearr",
+      "callee": "function:pljson_parser.parseobj",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.parsearr",
+      "callee": "procedure:pljson_parser.p_error",
+      "count": 6
+    },
+    {
+      "caller": "function:pljson_parser.parsemem",
+      "callee": "function:pljson_parser.parsearr",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.parsemem",
+      "callee": "function:pljson_parser.parseobj",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.parsemem",
+      "callee": "procedure:pljson_parser.p_error",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.parseobj",
+      "callee": "function:pljson_parser.parsemem",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.parseobj",
+      "callee": "procedure:pljson_parser.p_error",
+      "count": 10
+    },
+    {
+      "caller": "function:pljson_parser.parser",
+      "callee": "function:pljson_parser.lexer",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_parser.parser",
+      "callee": "function:pljson_parser.parseobj",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_parser.parser",
+      "callee": "function:pljson_parser.prepareclob",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.parser",
+      "callee": "function:pljson_parser.preparevarchar2",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.parser",
+      "callee": "procedure:pljson_parser.p_error",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_parser.prepareclob",
+      "callee": "function:pljson_parser.lengthcc",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.prepareclob",
+      "callee": "procedure:pljson_parser.set_src_array",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_parser.preparevarchar2",
+      "callee": "procedure:pljson_parser.set_src_array",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_printer.escapestring",
+      "callee": "function:pljson_printer.escapechar",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_printer.getmemname",
+      "callee": "function:pljson_printer.escapestring",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_printer.getmemname",
+      "callee": "function:pljson_printer.llcheck",
+      "count": 4
+    },
+    {
+      "caller": "function:pljson_printer.pretty_print",
+      "callee": "procedure:pljson_printer.flush_clob",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_printer.pretty_print",
+      "callee": "procedure:pljson_printer.ppobj",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_printer.pretty_print_any",
+      "callee": "function:pljson_printer.pretty_print",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_printer.pretty_print_any",
+      "callee": "function:pljson_printer.pretty_print_list",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_printer.pretty_print_any",
+      "callee": "procedure:pljson_printer.add_to_clob",
+      "count": 5
+    },
+    {
+      "caller": "function:pljson_printer.pretty_print_any",
+      "callee": "procedure:pljson_printer.flush_clob",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_printer.pretty_print_any",
+      "callee": "procedure:pljson_printer.ppstring",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_printer.pretty_print_list",
+      "callee": "function:pljson_printer.llcheck",
+      "count": 4
+    },
+    {
+      "caller": "function:pljson_printer.pretty_print_list",
+      "callee": "procedure:pljson_printer.add_buf",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_printer.pretty_print_list",
+      "callee": "procedure:pljson_printer.add_to_clob",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_printer.pretty_print_list",
+      "callee": "procedure:pljson_printer.flush_clob",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_printer.pretty_print_list",
+      "callee": "procedure:pljson_printer.ppea",
+      "count": 2
+    },
+    {
+      "caller": "function:pljson_table_impl.odcitablefetch",
+      "callee": "function:pljson_ext.get_json_element",
+      "count": 5
+    },
+    {
+      "caller": "function:pljson_table_impl.odcitablefetch",
+      "callee": "function:pljson_object_cache.in_names_set",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_table_impl.odcitablestart",
+      "callee": "function:pljson_ext.get_json_element",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_table_impl.odcitablestart",
+      "callee": "function:pljson_parser.parse_any",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_table_impl.odcitablestart",
+      "callee": "procedure:pljson_object_cache.reset",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_table_impl.odcitablestart",
+      "callee": "procedure:pljson_object_cache.set_names_set",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_util_pkg.ref_cursor_to_json",
+      "callee": "function:pljson_util_pkg.get_xml_to_json_stylesheet",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_util_pkg.sql_to_json",
+      "callee": "function:pljson_util_pkg.ref_cursor_to_json",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_xml.json_to_xml",
+      "callee": "procedure:pljson_xml.flush_clob",
+      "count": 1
+    },
+    {
+      "caller": "function:pljson_xml.json_to_xml",
+      "callee": "procedure:pljson_xml.tostring",
+      "count": 1
+    },
+    {
+      "caller": "package:pljson_parser",
+      "callee": "procedure:pljson_parser.update_decimalpoint",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson.path_put",
+      "callee": "procedure:pljson_ext.put",
+      "count": 15
+    },
+    {
+      "caller": "procedure:pljson.path_remove",
+      "callee": "procedure:pljson_ext.remove",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson.put",
+      "callee": "function:pljson.get",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson.put",
+      "callee": "procedure:pljson.put",
+      "count": 14
+    },
+    {
+      "caller": "procedure:pljson.remove",
+      "callee": "function:pljson.get",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson.remove_duplicates",
+      "callee": "procedure:pljson_parser.remove_duplicates",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson_element.get_internal_path",
+      "callee": "function:pljson_element.get_type",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson_element.htp",
+      "callee": "function:pljson_printer.pretty_print_any",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson_element.htp",
+      "callee": "procedure:pljson_printer.htp_output_clob",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson_element.print",
+      "callee": "function:pljson_printer.pretty_print_any",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson_element.print",
+      "callee": "procedure:pljson_printer.dbms_output_clob",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson_element.to_clob",
+      "callee": "function:pljson_printer.pretty_print_any",
+      "count": 2
+    },
+    {
+      "caller": "procedure:pljson_ext.pp_htp",
+      "callee": "function:pljson_ext.get_json_element",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson_ext.pp_htp",
+      "callee": "function:pljson_printer.pretty_print_any",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson_ext.put",
+      "callee": "function:pljson_ext.to_json_string",
+      "count": 2
+    },
+    {
+      "caller": "procedure:pljson_ext.put",
+      "callee": "procedure:pljson_ext.put_internal",
+      "count": 16
+    },
+    {
+      "caller": "procedure:pljson_ext.put",
+      "callee": "procedure:pljson_ext.put_internal_preparsed",
+      "count": 16
+    },
+    {
+      "caller": "procedure:pljson_ext.put_internal",
+      "callee": "function:pljson_ext.parsepath",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson_ext.put_internal",
+      "callee": "procedure:pljson_ext.put_internal_preparsed",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson_ext.put_internal_original",
+      "callee": "function:pljson_ext.parsepath",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson_ext.remove",
+      "callee": "procedure:pljson_ext.put_internal",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson_ext.remove",
+      "callee": "procedure:pljson_ext.put_internal_preparsed",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson_list.append",
+      "callee": "procedure:pljson_list.append",
+      "count": 12
+    },
+    {
+      "caller": "procedure:pljson_list.path_put",
+      "callee": "function:pljson_ext.parsepath",
+      "count": 7
+    },
+    {
+      "caller": "procedure:pljson_list.path_put",
+      "callee": "procedure:pljson_ext.put",
+      "count": 13
+    },
+    {
+      "caller": "procedure:pljson_list.path_remove",
+      "callee": "procedure:pljson_ext.remove",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson_list.replace",
+      "callee": "procedure:pljson_list.replace",
+      "count": 12
+    },
+    {
+      "caller": "procedure:pljson_object_cache.reset",
+      "callee": "procedure:pljson_object_cache.flush",
+      "count": 1
+    },
+    {
+      "caller": "procedure:pljson_printer.ppea",
+      "callee": "function:pljson_printer.getcommasep",
+      "count": 2
+    },
+    {
+      "caller": "procedure:pljson_printer.ppea",
+      "callee": "function:pljson_printer.llcheck",
+      "count": 16
+    },
+    {
+      "caller": "procedure:pljson_printer.ppea",
+      "callee": "procedure:pljson_printer.add_buf",
+      "count": 8
+    },
+    {
+      "caller": "procedure:pljson_printer.ppea",
+      "callee": "procedure:pljson_printer.add_to_clob",
+      "count": 8
+    },
+    {
+      "caller": "procedure:pljson_printer.ppea",
+      "callee": "procedure:pljson_printer.ppea",
+      "count": 2
+    },
+    {
+      "caller": "procedure:pljson_printer.ppea",
+      "callee": "procedure:pljson_printer.ppobj",
+      "count": 2
+    },
+    {
+      "caller": "procedure:pljson_printer.ppea",
+      "callee": "procedure:pljson_printer.ppstring",
+      "count": 2
+    },
+    {
+      "caller": "procedure:pljson_printer.ppmem",
+      "callee": "function:pljson_printer.getmemname",
+      "count": 2
+    },
+    {
+      "caller": "procedure:pljson_printer.ppmem",
+      "callee": "function:pljson_printer.llcheck",
+      "count": 17
+    },
+    {
+      "caller": "procedure:pljson_printer.ppmem",
+      "callee": "function:pljson_printer.tab",
+      "count": 2
+    },
+    {
+      "caller": "procedure:pljson_printer.ppmem",
+      "callee": "procedure:pljson_printer.add_buf",
+      "count": 8
+    },
+    {
+      "caller": "procedure:pljson_printer.ppmem",
+      "callee": "procedure:pljson_printer.add_to_clob",
+      "count": 8
+    },
+    {
+      "caller": "procedure:pljson_printer.ppmem",
+      "callee": "procedure:pljson_printer.ppea",
+      "count": 2
+    },
+    {
+      "caller": "procedure:pljson_printer.ppmem",
+      "callee": "procedure:pljson_printer.ppobj",
+      "count": 2
+    },
+    {
+      "caller": "procedure:pljson_printer.ppmem",
+      "callee": "procedure:pljson_printer.ppstring",
+      "count": 2
+    },
+    {
+      "caller": "procedure:pljson_printer.ppobj",
+      "callee": "function:pljson_printer.llcheck",
+      "count": 8
+    },
+    {
+      "caller": "procedure:pljson_printer.ppobj",
+      "callee": "function:pljson_printer.newline",
+      "count": 6
+    },
+    {
+      "caller": "procedure:pljson_printer.ppobj",
+      "callee": "function:pljson_printer.tab",
+      "count": 2
+    },
+    {
+      "caller": "procedure:pljson_printer.ppobj",
+      "callee": "procedure:pljson_printer.add_buf",
+      "count": 4
+    },
+    {
+      "caller": "procedure:pljson_printer.ppobj",
+      "callee": "procedure:pljson_printer.add_to_clob",
+      "count": 4
+    },
+    {
+      "caller": "procedure:pljson_printer.ppobj",
+      "callee": "procedure:pljson_printer.ppmem",
+      "count": 2
+    },
+    {
+      "caller": "procedure:pljson_printer.ppstring",
+      "callee": "function:pljson_printer.escapestring",
+      "count": 4
+    },
+    {
+      "caller": "procedure:pljson_printer.ppstring",
+      "callee": "function:pljson_printer.string_delim",
+      "count": 4
+    },
+    {
+      "caller": "procedure:pljson_printer.ppstring",
+      "callee": "procedure:pljson_printer.add_buf",
+      "count": 7
+    },
+    {
+      "caller": "procedure:pljson_printer.ppstring",
+      "callee": "procedure:pljson_printer.add_to_clob",
+      "count": 7
+    },
+    {
+      "caller": "procedure:pljson_xml.tostring",
+      "callee": "function:pljson_xml.escapestr",
+      "count": 4
+    },
+    {
+      "caller": "procedure:pljson_xml.tostring",
+      "callee": "procedure:pljson_xml.add_to_clob",
+      "count": 10
+    },
+    {
+      "caller": "procedure:pljson_xml.tostring",
+      "callee": "procedure:pljson_xml.tostring",
+      "count": 3
+    }
+  ]
+}

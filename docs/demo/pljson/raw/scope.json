@@ -1,0 +1,30 @@
+{
+  "files": 24,
+  "lines": 7801,
+  "per_file": {
+    "src/addons/pljson_dyn.package.sql": 509,
+    "src/addons/pljson_helper.package.sql": 490,
+    "src/addons/pljson_ml.package.sql": 308,
+    "src/addons/pljson_object_cache.decl.sql": 31,
+    "src/addons/pljson_object_cache.impl.sql": 135,
+    "src/addons/pljson_table_impl.type.decl.sql": 163,
+    "src/addons/pljson_table_impl.type.impl.sql": 736,
+    "src/addons/pljson_util_pkg.package.sql": 368,
+    "src/addons/pljson_xml.package.sql": 166,
+    "src/pljson.type.decl.sql": 105,
+    "src/pljson.type.impl.sql": 586,
+    "src/pljson_bool.type.sql": 40,
+    "src/pljson_element.type.decl.sql": 70,
+    "src/pljson_element.type.impl.sql": 169,
+    "src/pljson_ext.decl.sql": 116,
+    "src/pljson_ext.impl.sql": 1056,
+    "src/pljson_list.type.decl.sql": 104,
+    "src/pljson_list.type.impl.sql": 572,
+    "src/pljson_null.type.sql": 29,
+    "src/pljson_number.type.sql": 180,
+    "src/pljson_parser.decl.sql": 75,
+    "src/pljson_parser.impl.sql": 931,
+    "src/pljson_printer.package.sql": 743,
+    "src/pljson_string.type.sql": 119
+  }
+}

@@ -6,15 +6,17 @@ Reports produced with `plsql-lens migrate` on public PL/SQL code that the tool w
 | Project | Commit | License | Report |
 |---|---|---|---|
 | [oos-utils](https://github.com/OraOpenSource/oos-utils) | `b6217292bc744211eaee9e1d11ca7a0b495bc44d` | MIT | [English](oos-utils/migration-audit.md) · [Español](oos-utils/migration-audit.es.md) |
+| [pljson](https://github.com/pljson/pljson) (built on object types) | `09a54e4e9318af36c6d27f0e7170bd4a376276b2` | MIT | [English](pljson/migration-audit.md) · [Español](pljson/migration-audit.es.md) |
 
 Uses the migration rules MIG001–MIG017 of `main` (revision 2, 2026-11-04); the report must be regenerated when newer rules are merged.
 
-## Contents of `oos-utils/`
+## Contents of each project folder (`oos-utils/`, `pljson/`)
 
 * `raw/` — raw output of the tool: `migrate.json`, `migrate.txt`, `inventory.json`, `callgraph.mmd`, `scope.json` (files and
   lines analyzed) and `meta.txt` (URL, commit, license file hash, tool version).
 * `review.json` — the manual review of the sample (verdict and reason per finding).
-* `tables.py` — generates the numeric blocks of both reports from `raw/` and `review.json`, and checks that they match.
+* `tables.py` — generates the numeric blocks of both reports from `raw/` and `review.json`, and checks that they match. The one in
+  `pljson/` also generates the unit-kind table and the comparison with `oos-utils`.
 * `migration-audit.md`, `migration-audit.es.md` — the reports.
 
 The third-party code is **not** stored here: only its URL, the pinned commit and the tool's output.
@@ -22,10 +24,11 @@ The third-party code is **not** stored here: only its URL, the pinned commit and
 ## Reproduce
 
 ```bash
-bash scripts/demo_migration_audit.sh                 # needs git, uv and access to github.com
+bash scripts/demo_migration_audit.sh [oos-utils|pljson]   # default oos-utils; needs git, uv and access to github.com
 uv run python docs/demo/oos-utils/tables.py          # fails if a report no longer matches raw/ and review.json
+uv run python docs/demo/pljson/tables.py             # the same for pljson
 ```
 
-The script clones the project into a temporary directory at the pinned commit, checks that it got that commit, runs the tool
+The script has a table of projects (URL, pinned commit, analyzed sub-path, license file) at its top. It clones the project into a temporary directory at the pinned commit, checks that it got that commit, runs the tool
 with a relative path (so the output does not depend on the temporary directory) and rewrites `raw/`. Running it twice gives
 identical files while `src/` does not change (`meta.txt` records the last commit that changed `src/`).
