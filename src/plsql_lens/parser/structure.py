@@ -345,6 +345,12 @@ class _Parser:
                     if nxt is not None and nxt.kind == IDENT and nxt.text in ("if", "loop", "case"):
                         if stack and stack[-1] == nxt.text:
                             stack.pop()
+                        elif nxt.text == "loop" and stack and stack[-1] == "case":
+                            # `END` closes a CASE expression (`FOR i IN 1 .. CASE ... END LOOP`);
+                            # the LOOP that follows opens a loop and is read on its own.
+                            stack.pop()
+                            self.i += 1
+                            continue
                         self.i += 2
                         continue
                     if stack:

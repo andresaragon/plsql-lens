@@ -1,12 +1,12 @@
 {
- "engine_sha256": "114ad81d3b5ee6e2296c536ba80924cb8fa67ad2bd01ceaa6ef756dcd53032bf",
+ "engine_sha256": "1129ca4fb4b54050b3fe261547edbead8a1fe9f0f06d76ae718446fa12a0131e",
  "files": {
   "docs/rules.md": "ee676f02b8c196f69e63a91406f2c34939cc29981437dec5ee1b388f0604970e",
   "src/plsql_lens/parser/__init__.py": "5d8e16d507e6d661541a99ddf0da3a4fd763e15c818eddd19ce380b4726a8df4",
   "src/plsql_lens/parser/ir.py": "ec05073d5fea66ed8ac7e8d8581311f8f51b5494870108a800c0cbe66bc61f91",
   "src/plsql_lens/parser/lexer.py": "d1c0449be0a07cae3eb9011b0752fb878f34aeecb1cd892998a0008496560149",
   "src/plsql_lens/parser/statements.py": "4bc24b3e5691c39a8f79b1929c1cb89da2b2a6f84b87200fccb6342898922eaf",
-  "src/plsql_lens/parser/structure.py": "529e9c2d753fc790298278e5bc5e1f0db0d084be54271f7dc9ee800387242ed3",
+  "src/plsql_lens/parser/structure.py": "2e9ef0b7bcdae991ed9b2ee5eab79539ed0676b7bdda7322b430e286c1dedce4",
   "src/plsql_lens/rules/__init__.py": "299f2eadcfa3a699931921dff69a936e9449357ee16f0af276f2389fff1729bf",
   "src/plsql_lens/rules/model.py": "3b5e3d5a05e87f5a807a7759f8c56e802a329e98dfb67593697ef9ef2fb78916",
   "src/plsql_lens/rules/output.py": "7f4e7bfd08ea94103d2e3f661e6d763218abb956b944b44389cc59f6a6c701e5",

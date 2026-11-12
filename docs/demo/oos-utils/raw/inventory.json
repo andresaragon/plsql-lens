@@ -57,11 +57,8 @@
     {
       "path": "source/packages/oos_util_crypto.pkb",
       "lines": 2417,
-      "ok": false,
-      "issues": [
-        "721: unterminated body of sha256",
-        "2416: unexpected end of file in package oos_util_crypto"
-      ]
+      "ok": true,
+      "issues": []
     },
     {
       "path": "source/packages/oos_util_crypto.pks",
@@ -1261,11 +1258,38 @@
       "has_body": true
     },
     {
+      "key": "function:oos_util_crypto.sha512",
+      "kind": "function",
+      "name": "sha512",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 845,
+      "params": [
+        {
+          "name": "p_msg",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        },
+        {
+          "name": "p_512",
+          "mode": "in",
+          "type": "boolean",
+          "default": false
+        }
+      ],
+      "return_type": "raw",
+      "has_body": true
+    },
+    {
       "key": "function:oos_util_crypto.hash",
       "kind": "function",
       "name": "hash",
       "container": "oos_util_crypto",
       "files": [
+        "source/packages/oos_util_crypto.pkb",
         "source/packages/oos_util_crypto.pks"
       ],
       "line": 65,
@@ -1284,7 +1308,7 @@
         }
       ],
       "return_type": "raw",
-      "has_body": false
+      "has_body": true
     },
     {
       "key": "function:oos_util_crypto.hash_str",
@@ -1292,6 +1316,7 @@
       "name": "hash_str",
       "container": "oos_util_crypto",
       "files": [
+        "source/packages/oos_util_crypto.pkb",
         "source/packages/oos_util_crypto.pks"
       ],
       "line": 70,
@@ -1310,7 +1335,7 @@
         }
       ],
       "return_type": "varchar2",
-      "has_body": false
+      "has_body": true
     },
     {
       "key": "function:oos_util_crypto.mac",
@@ -1318,6 +1343,7 @@
       "name": "mac",
       "container": "oos_util_crypto",
       "files": [
+        "source/packages/oos_util_crypto.pkb",
         "source/packages/oos_util_crypto.pks"
       ],
       "line": 75,
@@ -1342,7 +1368,7 @@
         }
       ],
       "return_type": "raw",
-      "has_body": false
+      "has_body": true
     },
     {
       "key": "function:oos_util_crypto.mac_str",
@@ -1350,6 +1376,7 @@
       "name": "mac_str",
       "container": "oos_util_crypto",
       "files": [
+        "source/packages/oos_util_crypto.pkb",
         "source/packages/oos_util_crypto.pks"
       ],
       "line": 81,
@@ -1374,7 +1401,303 @@
         }
       ],
       "return_type": "varchar2",
-      "has_body": false
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.randombytes",
+      "kind": "function",
+      "name": "randombytes",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 1213,
+      "params": [
+        {
+          "name": "number_bytes",
+          "mode": "in",
+          "type": "positive",
+          "default": false
+        }
+      ],
+      "return_type": "raw",
+      "has_body": true
+    },
+    {
+      "key": "procedure:oos_util_crypto.aes_encrypt_key",
+      "kind": "procedure",
+      "name": "aes_encrypt_key",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 1275,
+      "params": [
+        {
+          "name": "key",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_encrypt_key",
+          "mode": "out",
+          "type": "tp_aes_tab",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "procedure:oos_util_crypto.aes_decrypt_key",
+      "kind": "procedure",
+      "name": "aes_decrypt_key",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 1368,
+      "params": [
+        {
+          "name": "key",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_decrypt_key",
+          "mode": "out",
+          "type": "tp_aes_tab",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.aes_encrypt",
+      "kind": "function",
+      "name": "aes_encrypt",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 1508,
+      "params": [
+        {
+          "name": "src",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "klen",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        },
+        {
+          "name": "p_decrypt_key",
+          "mode": "in",
+          "type": "tp_aes_tab",
+          "default": false
+        }
+      ],
+      "return_type": "raw",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.aes_decrypt",
+      "kind": "function",
+      "name": "aes_decrypt",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 1593,
+      "params": [
+        {
+          "name": "src",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "klen",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        },
+        {
+          "name": "p_decrypt_key",
+          "mode": "in",
+          "type": "tp_aes_tab",
+          "default": false
+        }
+      ],
+      "return_type": "raw",
+      "has_body": true
+    },
+    {
+      "key": "procedure:oos_util_crypto.deskey",
+      "kind": "procedure",
+      "name": "deskey",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 1678,
+      "params": [
+        {
+          "name": "p_key",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        },
+        {
+          "name": "p_keys",
+          "mode": "out",
+          "type": "tp_crypto",
+          "default": false
+        },
+        {
+          "name": "p_encrypt",
+          "mode": "in",
+          "type": "boolean",
+          "default": false
+        }
+      ],
+      "return_type": null,
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.des",
+      "kind": "function",
+      "name": "des",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 1947,
+      "params": [
+        {
+          "name": "p_block",
+          "mode": "in",
+          "type": "varchar2",
+          "default": false
+        },
+        {
+          "name": "p_keys",
+          "mode": "in",
+          "type": "tp_crypto",
+          "default": false
+        }
+      ],
+      "return_type": "varchar2",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.encrypt__rc4",
+      "kind": "function",
+      "name": "encrypt__rc4",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 2036,
+      "params": [
+        {
+          "name": "src",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        },
+        {
+          "name": "key",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        }
+      ],
+      "return_type": "raw",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.encrypt",
+      "kind": "function",
+      "name": "encrypt",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 2083,
+      "params": [
+        {
+          "name": "src",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        },
+        {
+          "name": "typ",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        },
+        {
+          "name": "key",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        },
+        {
+          "name": "iv",
+          "mode": "in",
+          "type": "raw",
+          "default": true
+        }
+      ],
+      "return_type": "raw",
+      "has_body": true
+    },
+    {
+      "key": "function:oos_util_crypto.decrypt",
+      "kind": "function",
+      "name": "decrypt",
+      "container": "oos_util_crypto",
+      "files": [
+        "source/packages/oos_util_crypto.pkb"
+      ],
+      "line": 2251,
+      "params": [
+        {
+          "name": "src",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        },
+        {
+          "name": "typ",
+          "mode": "in",
+          "type": "pls_integer",
+          "default": false
+        },
+        {
+          "name": "key",
+          "mode": "in",
+          "type": "raw",
+          "default": false
+        },
+        {
+          "name": "iv",
+          "mode": "in",
+          "type": "raw",
+          "default": true
+        }
+      ],
+      "return_type": "raw",
+      "has_body": true
     },
     {
       "key": "package:oos_util_date",
@@ -2217,6 +2540,141 @@
       "count": 1
     },
     {
+      "caller": "function:oos_util_crypto.aes_decrypt",
+      "callee": "function:oos_util_crypto.bitxor",
+      "count": 24
+    },
+    {
+      "caller": "function:oos_util_crypto.aes_decrypt",
+      "callee": "function:oos_util_crypto.shr",
+      "count": 18
+    },
+    {
+      "caller": "function:oos_util_crypto.aes_encrypt",
+      "callee": "function:oos_util_crypto.bitxor",
+      "count": 24
+    },
+    {
+      "caller": "function:oos_util_crypto.aes_encrypt",
+      "callee": "function:oos_util_crypto.shr",
+      "count": 18
+    },
+    {
+      "caller": "function:oos_util_crypto.decrypt",
+      "callee": "function:oos_util_crypto.aes_decrypt",
+      "count": 4
+    },
+    {
+      "caller": "function:oos_util_crypto.decrypt",
+      "callee": "function:oos_util_crypto.des",
+      "count": 7
+    },
+    {
+      "caller": "function:oos_util_crypto.decrypt",
+      "callee": "function:oos_util_crypto.encrypt__rc4",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.decrypt",
+      "callee": "procedure:oos_util_crypto.aes_decrypt_key",
+      "count": 4
+    },
+    {
+      "caller": "function:oos_util_crypto.decrypt",
+      "callee": "procedure:oos_util_crypto.deskey",
+      "count": 6
+    },
+    {
+      "caller": "function:oos_util_crypto.des",
+      "callee": "function:oos_util_crypto.bitor32",
+      "count": 16
+    },
+    {
+      "caller": "function:oos_util_crypto.des",
+      "callee": "function:oos_util_crypto.bitxor32",
+      "count": 36
+    },
+    {
+      "caller": "function:oos_util_crypto.des",
+      "callee": "function:oos_util_crypto.shl",
+      "count": 12
+    },
+    {
+      "caller": "function:oos_util_crypto.des",
+      "callee": "function:oos_util_crypto.shr",
+      "count": 24
+    },
+    {
+      "caller": "function:oos_util_crypto.encrypt",
+      "callee": "function:oos_util_crypto.aes_encrypt",
+      "count": 4
+    },
+    {
+      "caller": "function:oos_util_crypto.encrypt",
+      "callee": "function:oos_util_crypto.des",
+      "count": 7
+    },
+    {
+      "caller": "function:oos_util_crypto.encrypt",
+      "callee": "function:oos_util_crypto.encrypt__rc4",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.encrypt",
+      "callee": "procedure:oos_util_crypto.aes_encrypt_key",
+      "count": 4
+    },
+    {
+      "caller": "function:oos_util_crypto.encrypt",
+      "callee": "procedure:oos_util_crypto.deskey",
+      "count": 6
+    },
+    {
+      "caller": "function:oos_util_crypto.hash",
+      "callee": "function:oos_util_crypto.md4",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.hash",
+      "callee": "function:oos_util_crypto.md5",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.hash",
+      "callee": "function:oos_util_crypto.ripemd160",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.hash",
+      "callee": "function:oos_util_crypto.sha1",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.hash",
+      "callee": "function:oos_util_crypto.sha256",
+      "count": 2
+    },
+    {
+      "caller": "function:oos_util_crypto.hash",
+      "callee": "function:oos_util_crypto.sha512",
+      "count": 2
+    },
+    {
+      "caller": "function:oos_util_crypto.hash_str",
+      "callee": "function:oos_util_crypto.hash",
+      "count": 1
+    },
+    {
+      "caller": "function:oos_util_crypto.mac",
+      "callee": "function:oos_util_crypto.hash",
+      "count": 3
+    },
+    {
+      "caller": "function:oos_util_crypto.mac_str",
+      "callee": "function:oos_util_crypto.mac",
+      "count": 1
+    },
+    {
       "caller": "function:oos_util_crypto.md4",
       "callee": "function:oos_util_crypto.bitor",
       "count": 3
@@ -2338,63 +2796,8 @@
     },
     {
       "caller": "function:oos_util_crypto.sha256",
-      "callee": "function:oos_util_crypto.bitor",
-      "count": 18
-    },
-    {
-      "caller": "function:oos_util_crypto.sha256",
-      "callee": "function:oos_util_crypto.bitor32",
-      "count": 24
-    },
-    {
-      "caller": "function:oos_util_crypto.sha256",
       "callee": "function:oos_util_crypto.bitxor",
-      "count": 89
-    },
-    {
-      "caller": "function:oos_util_crypto.sha256",
-      "callee": "function:oos_util_crypto.bitxor32",
-      "count": 36
-    },
-    {
-      "caller": "function:oos_util_crypto.sha256",
-      "callee": "function:oos_util_crypto.hash",
-      "count": 5
-    },
-    {
-      "caller": "function:oos_util_crypto.sha256",
-      "callee": "function:oos_util_crypto.hash_str",
-      "count": 2
-    },
-    {
-      "caller": "function:oos_util_crypto.sha256",
-      "callee": "function:oos_util_crypto.mac",
-      "count": 2
-    },
-    {
-      "caller": "function:oos_util_crypto.sha256",
-      "callee": "function:oos_util_crypto.mac_str",
-      "count": 2
-    },
-    {
-      "caller": "function:oos_util_crypto.sha256",
-      "callee": "function:oos_util_crypto.md4",
-      "count": 1
-    },
-    {
-      "caller": "function:oos_util_crypto.sha256",
-      "callee": "function:oos_util_crypto.md5",
-      "count": 1
-    },
-    {
-      "caller": "function:oos_util_crypto.sha256",
-      "callee": "function:oos_util_crypto.ripemd160",
-      "count": 1
-    },
-    {
-      "caller": "function:oos_util_crypto.sha256",
-      "callee": "function:oos_util_crypto.rol32",
-      "count": 6
+      "count": 11
     },
     {
       "caller": "function:oos_util_crypto.sha256",
@@ -2403,28 +2806,23 @@
     },
     {
       "caller": "function:oos_util_crypto.sha256",
+      "callee": "function:oos_util_crypto.shr",
+      "count": 2
+    },
+    {
+      "caller": "function:oos_util_crypto.sha512",
+      "callee": "function:oos_util_crypto.bitxor",
+      "count": 11
+    },
+    {
+      "caller": "function:oos_util_crypto.sha512",
       "callee": "function:oos_util_crypto.ror64",
       "count": 10
     },
     {
-      "caller": "function:oos_util_crypto.sha256",
-      "callee": "function:oos_util_crypto.sha1",
-      "count": 1
-    },
-    {
-      "caller": "function:oos_util_crypto.sha256",
-      "callee": "function:oos_util_crypto.sha256",
-      "count": 2
-    },
-    {
-      "caller": "function:oos_util_crypto.sha256",
-      "callee": "function:oos_util_crypto.shl",
-      "count": 34
-    },
-    {
-      "caller": "function:oos_util_crypto.sha256",
+      "caller": "function:oos_util_crypto.sha512",
       "callee": "function:oos_util_crypto.shr",
-      "count": 79
+      "count": 2
     },
     {
       "caller": "function:oos_util_lob.blob2clob",
@@ -2560,6 +2958,61 @@
       "caller": "procedure:oos_util_apex.trim_page_items",
       "callee": "procedure:oos_util.assert",
       "count": 1
+    },
+    {
+      "caller": "procedure:oos_util_crypto.aes_decrypt_key",
+      "callee": "function:oos_util_crypto.bitor",
+      "count": 9
+    },
+    {
+      "caller": "procedure:oos_util_crypto.aes_decrypt_key",
+      "callee": "function:oos_util_crypto.bitxor",
+      "count": 14
+    },
+    {
+      "caller": "procedure:oos_util_crypto.aes_decrypt_key",
+      "callee": "function:oos_util_crypto.rol32",
+      "count": 3
+    },
+    {
+      "caller": "procedure:oos_util_crypto.aes_decrypt_key",
+      "callee": "function:oos_util_crypto.shl",
+      "count": 11
+    },
+    {
+      "caller": "procedure:oos_util_crypto.aes_decrypt_key",
+      "callee": "function:oos_util_crypto.shr",
+      "count": 9
+    },
+    {
+      "caller": "procedure:oos_util_crypto.aes_encrypt_key",
+      "callee": "function:oos_util_crypto.bitor",
+      "count": 9
+    },
+    {
+      "caller": "procedure:oos_util_crypto.aes_encrypt_key",
+      "callee": "function:oos_util_crypto.bitxor",
+      "count": 5
+    },
+    {
+      "caller": "procedure:oos_util_crypto.aes_encrypt_key",
+      "callee": "function:oos_util_crypto.rol32",
+      "count": 3
+    },
+    {
+      "caller": "procedure:oos_util_crypto.aes_encrypt_key",
+      "callee": "function:oos_util_crypto.shl",
+      "count": 11
+    },
+    {
+      "caller": "procedure:oos_util_crypto.aes_encrypt_key",
+      "callee": "function:oos_util_crypto.shr",
+      "count": 6
+    },
+    {
+      "caller": "procedure:oos_util_crypto.deskey",
+      "callee": "function:oos_util_crypto.bitor32",
+      "count": 8
     },
     {
       "caller": "procedure:oos_util_web.download_file",

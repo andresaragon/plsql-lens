@@ -269,9 +269,6 @@ findings do not allow an estimate of precision for the 95, and none of the 33 *r
 * **False negatives.** The rules match tokens, without semantics: a user-defined `nvl`, a `decode` of another package or a quoted
   identifier is not told apart, and a construct hidden in a string, or written in a way the contract does not list (for example
   `FROM SYS.DUAL`), is missed. The precision above is about what was reported; nothing is known about what was not.
-* **The tool's own limits.** The `unit` field of some findings is imprecise: it names `oos_util_crypto.sha256` for lines that, by
-  the line ranges I read, belong to `sha512` (line 943) and `randombytes` (lines 1229 and 1237). I report it (issue #4) and did not change the
-  tool.
 * **A single project, a single commit.** Nothing here generalizes to other code bases.
 
 ## 7. What a full audit would look like

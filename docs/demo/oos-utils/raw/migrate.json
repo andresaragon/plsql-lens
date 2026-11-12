@@ -604,7 +604,7 @@
       "message": "Oracle NVL() call",
       "rationale": "PostgreSQL has no NVL(); the portable function is COALESCE.",
       "fix_hint": "COALESCE(a, b)",
-      "unit": "oos_util_crypto.sha256"
+      "unit": "oos_util_crypto.sha512"
     },
     {
       "rule_id": "MIG011",
@@ -615,7 +615,7 @@
       "message": "Empty string literal '' (NULL in Oracle)",
       "rationale": "In Oracle '' is NULL; in PostgreSQL it is an empty string that is not NULL, so comparisons, concatenations and IS NULL tests silently behave differently.",
       "fix_hint": "write NULL where NULL is meant; if an empty string is meant, test for it explicitly (x IS NULL OR x = '')",
-      "unit": "oos_util_crypto.sha256"
+      "unit": "oos_util_crypto.sha512"
     },
     {
       "rule_id": "MIG001",
@@ -626,7 +626,7 @@
       "message": "Oracle NVL() call",
       "rationale": "PostgreSQL has no NVL(); the portable function is COALESCE.",
       "fix_hint": "COALESCE(a, b)",
-      "unit": "oos_util_crypto.sha256"
+      "unit": "oos_util_crypto.sha512"
     },
     {
       "rule_id": "MIG003",
@@ -637,7 +637,7 @@
       "message": "Oracle SYSTIMESTAMP",
       "rationale": "In Oracle SYSDATE is a DATE and `sysdate - d` is a number of days; in PostgreSQL the same subtraction gives an interval and `+ 1` is an error.",
       "fix_hint": "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE give the start of the transaction; use clock_timestamp() for the real time (waiting, elapsed time, repeated reads); review the date arithmetic around it",
-      "unit": "oos_util_crypto.sha256"
+      "unit": "oos_util_crypto.randombytes"
     },
     {
       "rule_id": "MIG003",
@@ -648,7 +648,7 @@
       "message": "Oracle SYSTIMESTAMP",
       "rationale": "In Oracle SYSDATE is a DATE and `sysdate - d` is a number of days; in PostgreSQL the same subtraction gives an interval and `+ 1` is an error.",
       "fix_hint": "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE give the start of the transaction; use clock_timestamp() for the real time (waiting, elapsed time, repeated reads); review the date arithmetic around it",
-      "unit": "oos_util_crypto.sha256"
+      "unit": "oos_util_crypto.randombytes"
     },
     {
       "rule_id": "MIG016",

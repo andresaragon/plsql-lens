@@ -20,8 +20,11 @@ from pathlib import Path
 
 import pytest
 
-from plsql_lens.migrate import migrate_source
-from plsql_lens.parser import Subprogram, parse_source
+from plsql_lens.migrate import migrate_file, migrate_source
+from plsql_lens.parser import Subprogram, parse_file, parse_source
+
+ROOT = Path(__file__).resolve().parents[2]
+FIXTURE = ROOT / "tests" / "fixtures" / "migrate" / "case_end_before_loop.pkb"
 
 XFAIL = pytest.mark.xfail(
     strict=True,
@@ -61,16 +64,19 @@ def routine_names(src: str) -> list[str]:
 # --- the reproducers (they fail until the parser is changed) -----------------------------------
 
 
-@XFAIL
 def test_the_inventory_lists_the_routine_after_a_case_expression_that_ends_before_loop() -> None:
     assert routine_names(MINIMAL) == ["first_fn", "second_fn"]
+    ir = parse_file(FIXTURE)
+    assert [sp.name for u in ir.units for sp in u.subprograms] == ["first_fn", "second_fn"]
 
 
-@XFAIL
 def test_a_finding_in_the_routine_after_it_gets_that_routine_as_its_unit() -> None:
     (f,) = migrate_source(MINIMAL, "min.pkb", ["MIG003"])
     assert f.location.line == SECOND_FN_LINE
     assert f.unit == "pkg_min.second_fn"
+    (f_file,) = migrate_file(FIXTURE, ["MIG003"])
+    assert f_file.location.line == SECOND_FN_LINE
+    assert f_file.unit == "pkg_min.second_fn"
 
 
 # --- what holds today (controls: they pass, and they say what the defect is not) --------------

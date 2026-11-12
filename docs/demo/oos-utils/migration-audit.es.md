@@ -275,9 +275,6 @@ hallazgos no permiten estimar la precisión de los 95, y ninguno de los 33 *acie
   otro paquete o un identificador entre comillas, y se les escapa una construcción escondida en una cadena o escrita de una forma
   que el contrato no lista (por ejemplo `FROM SYS.DUAL`). La precisión de arriba es sobre lo reportado; de lo no reportado no se
   sabe nada.
-* **Límites de la propia herramienta.** El campo `unit` de algunos hallazgos es impreciso: nombra `oos_util_crypto.sha256` para
-  líneas que, según los rangos de líneas que leí, pertenecen a `sha512` (línea 943) y `randombytes` (líneas 1229 y 1237). Lo
-  lo reporto (issue #4) y no cambié la herramienta.
 * **Un solo proyecto, un solo commit.** Nada de esto se generaliza a otras bases de código.
 
 ## 7. Cómo sería la auditoría completa
