@@ -416,7 +416,7 @@
       "col": 24,
       "message": "Oracle SYSTIMESTAMP",
       "rationale": "In Oracle SYSDATE is a DATE and `sysdate - d` is a number of days; in PostgreSQL the same subtraction gives an interval and `+ 1` is an error.",
-      "fix_hint": "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE, depending on the type needed; review the date arithmetic around it",
+      "fix_hint": "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE give the start of the transaction; use clock_timestamp() for the real time (waiting, elapsed time, repeated reads); review the date arithmetic around it",
       "unit": "oos_util.sleep"
     },
     {
@@ -427,7 +427,7 @@
       "col": 16,
       "message": "Oracle SYSTIMESTAMP",
       "rationale": "In Oracle SYSDATE is a DATE and `sysdate - d` is a number of days; in PostgreSQL the same subtraction gives an interval and `+ 1` is an error.",
-      "fix_hint": "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE, depending on the type needed; review the date arithmetic around it",
+      "fix_hint": "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE give the start of the transaction; use clock_timestamp() for the real time (waiting, elapsed time, repeated reads); review the date arithmetic around it",
       "unit": "oos_util.sleep"
     },
     {
@@ -438,7 +438,7 @@
       "col": 11,
       "message": "Oracle SYSDATE",
       "rationale": "In Oracle SYSDATE is a DATE and `sysdate - d` is a number of days; in PostgreSQL the same subtraction gives an interval and `+ 1` is an error.",
-      "fix_hint": "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE, depending on the type needed; review the date arithmetic around it",
+      "fix_hint": "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE give the start of the transaction; use clock_timestamp() for the real time (waiting, elapsed time, repeated reads); review the date arithmetic around it",
       "unit": "oos_util_apex.is_session_valid"
     },
     {
@@ -449,7 +449,7 @@
       "col": 11,
       "message": "Oracle SYSDATE",
       "rationale": "In Oracle SYSDATE is a DATE and `sysdate - d` is a number of days; in PostgreSQL the same subtraction gives an interval and `+ 1` is an error.",
-      "fix_hint": "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE, depending on the type needed; review the date arithmetic around it",
+      "fix_hint": "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE give the start of the transaction; use clock_timestamp() for the real time (waiting, elapsed time, repeated reads); review the date arithmetic around it",
       "unit": "oos_util_apex.is_session_valid"
     },
     {
@@ -636,7 +636,7 @@
       "col": 64,
       "message": "Oracle SYSTIMESTAMP",
       "rationale": "In Oracle SYSDATE is a DATE and `sysdate - d` is a number of days; in PostgreSQL the same subtraction gives an interval and `+ 1` is an error.",
-      "fix_hint": "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE, depending on the type needed; review the date arithmetic around it",
+      "fix_hint": "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE give the start of the transaction; use clock_timestamp() for the real time (waiting, elapsed time, repeated reads); review the date arithmetic around it",
       "unit": "oos_util_crypto.sha256"
     },
     {
@@ -647,7 +647,7 @@
       "col": 64,
       "message": "Oracle SYSTIMESTAMP",
       "rationale": "In Oracle SYSDATE is a DATE and `sysdate - d` is a number of days; in PostgreSQL the same subtraction gives an interval and `+ 1` is an error.",
-      "fix_hint": "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE, depending on the type needed; review the date arithmetic around it",
+      "fix_hint": "CURRENT_TIMESTAMP, LOCALTIMESTAMP or CURRENT_DATE give the start of the transaction; use clock_timestamp() for the real time (waiting, elapsed time, repeated reads); review the date arithmetic around it",
       "unit": "oos_util_crypto.sha256"
     },
     {
