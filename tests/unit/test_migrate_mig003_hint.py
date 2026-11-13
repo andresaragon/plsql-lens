@@ -62,6 +62,17 @@ def test_the_wait_loop_fixture_flags_exactly_the_marked_reads_with_the_rule_seve
     assert all("clock_timestamp()" in (f.fix_hint or "") for f in findings)
 
 
+def test_the_wait_loop_in_while_condition_fixture_flags_systimestamp() -> None:
+    path = FIXTURES / "pos_6.pkb"
+    findings = migrate_file(path, ["MIG003"])
+    marked = {
+        n for n, line in enumerate(path.read_text().splitlines(), 1) if "-- expect: MIG003" in line
+    }
+    assert marked and {f.location.line for f in findings} == marked
+    assert {f.severity for f in findings} == {"medium"}
+    assert all("clock_timestamp()" in (f.fix_hint or "") for f in findings)
+
+
 def test_the_contract_explains_the_two_clocks_and_when_to_use_each() -> None:
     for text in ("clock_timestamp()", "start time of the current transaction", "busy-wait"):
         assert text in CONTRACT, text
